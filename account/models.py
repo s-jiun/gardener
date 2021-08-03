@@ -62,7 +62,7 @@ class GeneralUser(AbstractBaseUser, PermissionsMixin):
         default=0,
     )
     Image = models.ImageField(
-        default='base/baseimg.png', upload_to='profile/%y/%m/%d/')
+        default='base/baseimg.png', upload_to='profile/%y/%m/%d/', blank=True, null=True)
 
     profile = models.TextField(
         blank=True
