@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
+from django.db.models.deletion import CASCADE
 
 
 class UserManager(BaseUserManager):
@@ -90,3 +91,10 @@ class GeneralUser(AbstractBaseUser, PermissionsMixin):
         "Is the user a member of staff?"
         # Simplest possible answer: All superusers are staff
         return self.is_superuser
+
+
+class Follow(models.Model):
+    user = models.ForeignKey(
+        GeneralUser, on_delete=CASCADE, related_name='following')
+    following_user = models.ForeignKey(
+        GeneralUser, related_name='followers', on_delete=CASCADE)
