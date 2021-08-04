@@ -4,21 +4,20 @@ from django.db.models.deletion import CASCADE
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, userid, name, password=None):
+    def create_user(self, userid, email, name, password=None):
         if not email:
             raise ValueError(('Users must have an email address'))
 
         user = self.model(
             email=self.normalize_email(email),
             userid=userid,
-            password=password,
             name=name,
         )
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, userid, name, password):
+    def create_superuser(self, userid, email, name, password):
         user = self.create_user(
             email=email,
             password=password,
@@ -26,7 +25,7 @@ class UserManager(BaseUserManager):
             name=name
         )
 
-        user.is_superuser = True
+        user.is_admin = True
         user.save(using=self._db)
         return user
 
@@ -67,15 +66,18 @@ class GeneralUser(AbstractBaseUser, PermissionsMixin):
     profile = models.TextField(
         blank=True
     )
+    # django usermodel의 필수 필드
+    is_active = models.BooleanField(default=True)
+    is_admin = models.BooleanField(default=False)
 
     objects = UserManager()
 
     USERNAME_FIELD = 'userid'
     REQUIRED_FIELDS = ['email', 'name']
 
-    class Meta:
-        verbose_name = 'user'
-        verbose_name_plural = 'users'
+    # class Meta:
+    #     verbose_name = 'user'
+    #     verbose_name_plural = 'users'
 
     def __str__(self):
         return self.userid
@@ -85,12 +87,17 @@ class GeneralUser(AbstractBaseUser, PermissionsMixin):
 
     # def get_short_name(self):
     #     return self.userid
+    def has_perm(self, perm, obj=None):
+        return True
+
+    def has_module_perms(self, app_label):
+        return True
 
     @property
     def is_staff(self):
         "Is the user a member of staff?"
         # Simplest possible answer: All superusers are staff
-        return self.is_superuser
+        return self.is_admin
 
 
 class Follow(models.Model):

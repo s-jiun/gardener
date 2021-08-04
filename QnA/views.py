@@ -27,7 +27,7 @@ def make_question(request, question=None):
     else:
         form = QuestionForm(instance=question)
         ctx = {'form': form}
-    return render(request, 'QnA/makequestion.html', form)
+    return render(request, 'QnA/makequestion.html', ctx)
 
 
 def edit_question(request, pk):
@@ -39,3 +39,28 @@ def delete_question(request, pk):
     question = CommunityQuestion.objects.get(pk=pk)
     question.delete()
     return redirect('QnA:qna_list')
+
+
+def make_answer(request, answer=None):
+    if request.method == "POST":
+        form = AnswerForm(request.POST, request.Files, instance=answer)
+        if form.is_valid():
+            answer = form.save()
+            pk = answer.communityquestion.pk
+            return redirect('QnA:question_detail', pk=pk)
+    else:
+        form = QuestionForm(instance=answer)
+        ctx = {'form': form}
+    return render(request, 'QnA/makeanswer.html', ctx)
+
+
+def edit_answer(request, pk):
+    answer = get_object_or_404(CommunityAnswer, pk=pk)
+    return make_answer(request, question=answer)
+
+
+def delete_answer(request, pk):
+    answer = CommunityAnswer.objects.get(pk=pk)
+    pk = answer.communityquestion.pk
+    answer.delete()
+    return redirect('QnA:question_detail', pk=pk)
