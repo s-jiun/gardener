@@ -1,3 +1,13 @@
 from django.shortcuts import render
 
-# Create your views here.
+def login(request):
+    pass
+
+def signup(request):
+    pass
+
+def main_page(request):
+    pass
+
+def start_page(request):
+    pass
