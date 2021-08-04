@@ -9,5 +9,5 @@ urlpatterns = [
     path('makequestion/', views.make_question, name='makequestion'),
     path('editquestion/<int:pk>/', views.edit_question, name='editquestion'),
     path('deletequestion/<int:pk>/', views.delete_question, name='deletequestion'),
-    path('comment_ajax/', views.comment_ajax, name='comment_ajax'),
+    #path('comment_ajax/', views.comment_ajax, name='comment_ajax'),
 ]
