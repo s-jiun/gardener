@@ -48,6 +48,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    # taggit
+    'taggit',
 
     'account',
     'community',
@@ -147,3 +150,8 @@ AUTH_USER_MODEL = 'account.GeneralUser'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# taggit
+TAGGIT_CASE_INSENSITIVE = True
+TAGGIT_TAGS_FROM_STRING = 'community.utils.hashtag_splitter'
+TAGGIT_STRING_FROM_TAGS = 'community.utils.hashtag_joiner'
