@@ -31,9 +31,9 @@ def post_create(request):
             return redirect('Posts:post_detail')
     else:
         form = PostForm()
-        ctx = {'form': form}
+        ctx = {'form': form, 'is_create': 0}
 
-        return render(request, template_name='post_form.html', context=ctx)
+    return render(request, template_name='post_form.html', context=ctx)
 
 
 @login_required
@@ -49,7 +49,7 @@ def post_update(request, pk):
             return redirect('Post:post_detail', pk)
     else:
         form = PostForm(instance=post)
-        ctx = {'form': form}
+        ctx = {'form': form, 'is_create': 1}
     return render(request, template_name='post_form.html', context=ctx)
 
 
