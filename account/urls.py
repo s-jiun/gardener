@@ -5,7 +5,11 @@ app_name ='account'
 
 urlpatterns = [
     path('login/', views.login, name='login'),
+    path('logout/', views.logout, name='logout'),
     path('signup/', views.signup, name='signup'),
+    path('signout/', views.member_del, name='signout'),
+    path('update/',views.member_modification, name='update'),
+    path('profile/<int:pk>',views.profile, name='profile'),
     path('',views.start_page, name ="start_page"),
     path('main/', views.main_page , name= "main_page"),
 ]
