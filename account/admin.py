@@ -8,6 +8,7 @@ from . import models
 class UserAdmin(admin.ModelAdmin):
     pass
 
+
 @admin.register(models.Follow)
 class FollowAdmin(admin.ModelAdmin):
     pass
