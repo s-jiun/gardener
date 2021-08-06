@@ -1,5 +1,10 @@
 {{user.image}}
 {{user.name}}
 {{user.profile}}
+{{user.userid}}
 {{following}}
 {{follower}}
+{%if user.id == request.user.id%}
+    <p>게시물 수정</p>
+    <p>게시물 삭제</p>
+{%endif%}

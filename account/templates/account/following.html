@@ -1,0 +1,9 @@
+<p>팔로잉</p>
+{% for following in followings %}
+    {{following.id}}
+    {{following.user.image}}
+    {{following.user.name}}
+    {{following.user.userid}}
+    {{following.user.profile}}
+    <p>팔로우</p>
+{% endfor %}
