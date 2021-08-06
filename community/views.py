@@ -79,7 +79,7 @@ def add_comment(request, pk):
     comment = Comments()
     comment.user_id = get_object_or_404(
         GeneralUser, userid=request.user.get_username())
-    comment.post_id = get_object_or_404(Post, pk=post_id)
+    comment.post_id = get_object_or_404(Post, pk=pk)
     comment.content = comment_content
     comment.save()
     return JsonResponse({'id': post_id, 'ct': comment_content, 'comment_id': comment.pk})

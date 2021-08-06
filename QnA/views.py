@@ -1,10 +1,14 @@
+from django.db.models.fields.files import ImageField
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import CommunityAnswer, CommunityQuestion
+from .models import CommunityAnswer, CommunityQuestion, Tag
 from .forms import QuestionForm, AnswerForm
 from account.models import GeneralUser
 from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
 # Create your views here.
+
+
+from taggit.managers import TaggableManager
 
 
 def qna_list(request):
@@ -33,18 +37,46 @@ def question_detail(request, pk):
     return render(request, 'QnA/questiondetail.html', ctx)
 
 
-@login_required
-def make_question(request, question=None):
+# def make_question(request, question=None):
+#     if request.method == "POST":
+#         form = QuestionForm(request.POST, request.FILES, instance=question)
+#         tag_list = request.POST['tag'].split(" ")
+#         question = CommunityQuestion(
+#             user_id=GeneralUser.objects.get(pk =1), #여기 나중에 로그인된 유저로바꾸면 되요!
+#             title=request.POST['title'],
+#             content= request.POST['content'],
+#             photo = request.FILES['image'],
+#         )
+#         for tag in tag_list:
+#                 tag =Tag(tag.strip("#"))
+#                 tag.save()
+#                 question.tags.add(tag)
+#         question.save()
+#         return redirect('QnA:questiondetail', pk=question.pk)
+#     else:
+#         return render(request, 'QnA/makequestion.html')
+
+
+def make_question(request):
     if request.method == "POST":
-        form = QuestionForm(request.POST, request.FILES, instance=question)
+        form = QuestionForm(request.POST, request.FILES)
         if form.is_valid():
+            # question = CommunityQuestion()
+            # question.user_id = GeneralUser.objects.get(pk=1)
+            # question.title = form.cleaned_data['title']
+            # question.content = form.cleaned_data['content']
+            # question.photo = form.cleaned_data['photo']
+            # question.tags=form.cleaned_data['tags']
+            # # request.POST['i']
+            question = form.save(commit=False)
+            question.user_id = GeneralUser.objects.get(pk=1)
             question = form.save()
+            # question.save()
+            # question.save_m2m()
+            # question.save()
             return redirect('QnA:questiondetail', pk=question.pk)
     else:
-        user_id = GeneralUser.objects.get(
-            userid=request.user.get_username())
-        form = QuestionForm(instance=question, initial={
-                            'user_id': user_id})
+        form = QuestionForm()
         ctx = {'form': form}
     return render(request, 'QnA/makequestion.html', ctx)
 
@@ -63,15 +95,21 @@ def delete_question(request, pk):
 
 
 @login_required
-def make_answer(request, answer=None):
+def make_answer(request, pk, answer=None):
     if request.method == "POST":
         form = AnswerForm(request.POST, request.FILES, instance=answer)
         if form.is_valid():
-            answer = form.save()
+            answer = form.save(commit=False)
+            answer.user_id = GeneralUser.objects.get(
+                userid=request.user.get_username())
+            answer.question = CommunityQuestion.objects.get(pk=pk)
             pk = answer.question.pk
-
+            answer = form.save()
             return redirect('QnA:questiondetail', pk=pk)
     else:
+        # user_id = GeneralUser.objects.get(
+        #     userid=request.user.get_username())
+        # question = CommunityQuestion.objects.get(pk=pk)
         form = AnswerForm(instance=answer)
         ctx = {'form': form}
     return render(request, 'QnA/makeanswer.html', ctx)
@@ -80,12 +118,13 @@ def make_answer(request, answer=None):
 @login_required
 def edit_answer(request, pk):
     answer = get_object_or_404(CommunityAnswer, pk=pk)
-    return make_answer(request, question=answer)
+    pk = answer.question.pk
+    return make_answer(request, pk, answer=answer)
 
 
 @login_required
 def delete_answer(request, pk):
     answer = CommunityAnswer.objects.get(pk=pk)
-    pk = answer.communityquestion.pk
+    pk = answer.question.pk
     answer.delete()
-    return redirect('QnA:question_detail', pk=pk)
+    return redirect('QnA:questiondetail', pk=pk)
