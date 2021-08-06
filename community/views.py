@@ -1,7 +1,7 @@
 import json
 from django.http.response import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Post, Comments, Tag, TaggedPost
+from .models import Post, Comments, Tag, TaggedPost, Image
 from .forms import PostForm
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
