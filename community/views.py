@@ -11,13 +11,15 @@ from django.contrib.auth.decorators import login_required
 
 def post_list(request):
     posts = Post.objects.all().order_by('-created_at')
-    ctx = {'posts': posts}
+    images = Image.objects.all()
+    ctx = {'posts': posts, 'images': images}
     return render(request, template_name='post_list.html', context=ctx)
 
 
 def post_detail(request, pk):
     post = Post.objects.get(id=pk)
-    ctx = {'post': post}
+    images = Image.objects.filter(post=post)
+    ctx = {'post': post, 'images': images}
     return render(request, template_name='post_detail.html', context=ctx)
 
 
