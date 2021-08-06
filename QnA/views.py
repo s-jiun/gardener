@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import CommunityAnswer, CommunityQuestion
 from .forms import QuestionForm, AnswerForm
-from django.views.decorators.csrf import csrf_exempt
+from account.models import GeneralUser
+from django.views.generic import ListView
 # Create your views here.
 
 
@@ -9,6 +10,19 @@ def qna_list(request):
     question_list = CommunityQuestion.objects.all()
     ctx = {'question_list': question_list}
     return render(request, 'QnA/qnalist.html', ctx)
+
+
+class TaggedObjectLV(ListView):
+    template_name = 'taggit/taggit_post_list.html'
+    model = CommunityQuestion
+
+    def get_queryset(self):
+        return CommunityQuestion.objects.filter(tags__name=self.kwargs.get('tag'))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tagname'] = self.kwargs['tag']
+        return context
 
 
 def question_detail(request, pk):
@@ -20,12 +34,15 @@ def question_detail(request, pk):
 
 def make_question(request, question=None):
     if request.method == "POST":
-        form = QuestionForm(request.POST, request.Files, instance=question)
+        form = QuestionForm(request.POST, request.FILES, instance=question)
         if form.is_valid():
             question = form.save()
             return redirect('QnA:questiondetail', pk=question.pk)
     else:
-        form = QuestionForm(instance=question)
+        user_id = GeneralUser.objects.get(
+            userid=request.user.get_username())
+        form = QuestionForm(instance=question, initial={
+                            'user_id': user_id})
         ctx = {'form': form}
     return render(request, 'QnA/makequestion.html', ctx)
 
@@ -38,18 +55,19 @@ def edit_question(request, pk):
 def delete_question(request, pk):
     question = CommunityQuestion.objects.get(pk=pk)
     question.delete()
-    return redirect('QnA:qna_list')
+    return redirect('QnA:qnalist')
 
 
 def make_answer(request, answer=None):
     if request.method == "POST":
-        form = AnswerForm(request.POST, request.Files, instance=answer)
+        form = AnswerForm(request.POST, request.FILES, instance=answer)
         if form.is_valid():
             answer = form.save()
-            pk = answer.communityquestion.pk
-            return redirect('QnA:question_detail', pk=pk)
+            pk = answer.question.pk
+
+            return redirect('QnA:questiondetail', pk=pk)
     else:
-        form = QuestionForm(instance=answer)
+        form = AnswerForm(instance=answer)
         ctx = {'form': form}
     return render(request, 'QnA/makeanswer.html', ctx)
 
