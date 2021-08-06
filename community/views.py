@@ -71,7 +71,7 @@ def post_delete(request, pk):
 
 @login_required
 @csrf_exempt
-def add_comment(request):
+def add_comment(request, pk):
     req = json.loads(request.body)
     post_id = req['id']
     comment_content = req['ct']
@@ -96,7 +96,7 @@ def add_comment(request):
 
 @login_required
 @csrf_exempt
-def delete_comment(request):
+def delete_comment(request,pk):
     req = json.loads(request.body)
     post_id = req['post_id']
     comment_id = req['comment_id']
