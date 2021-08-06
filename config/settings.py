@@ -155,5 +155,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # taggit
 TAGGIT_CASE_INSENSITIVE = True
+TAGGIT_LIMIT = 50
 TAGGIT_TAGS_FROM_STRING = 'community.utils.hashtag_splitter'
 TAGGIT_STRING_FROM_TAGS = 'community.utils.hashtag_joiner'
