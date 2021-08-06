@@ -12,7 +12,7 @@ urlpatterns = [
     path('tag/<str:tag>', views.TaggedObjectLV.as_view(),
          name='tagged_object_list'),
 
-    path('makeanswer/', views.make_answer, name='makeanswer'),
+    path('<int:pk>/makeanswer/', views.make_answer, name='makeanswer'),
     path('editanswer/<int:pk>/', views.edit_answer, name='editanswer'),
     path('deleteanswer/<int:pk>/', views.delete_answer, name='deleteanswer'),
 

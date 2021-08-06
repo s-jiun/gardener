@@ -1,0 +1,18 @@
+{{user.image}}
+{{user.name}}
+{{user.profile}}
+{%if user.id == request.user.id%}
+    <p>프로필 수정</p>
+{%endif%}
+{{user.userid}}
+<p>팔로잉 {{following}}</p>
+<p>팔로워 {{follower}}</p>
+<p>포스트</p>
+{%for post in posts%}
+    {{post.title}}
+{%endfor%}
+<p>사이드바</p>
+{%if user.id == request.user.id%}
+    <p>게시물 수정</p>
+    <p>게시물 삭제</p>
+{%endif%}
