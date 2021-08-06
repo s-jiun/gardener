@@ -10,11 +10,12 @@ class QuestionForm(forms.ModelForm):
     #     widget=forms.TextInput()
     # )
     widgets = {
-            'tags': TagWidget(),
+        'tags': TagWidget(),
     }
+
     class Meta:
         model = CommunityQuestion
-        fields = ['title', 'photo', 'content','tags']
+        fields = ['title', 'photo', 'content', 'tags']
         # fields = '__all__'
 
 
@@ -33,7 +34,7 @@ class AnswerForm(forms.ModelForm):
 
     class Meta:
         model = CommunityAnswer
-        fields = '__all__'
+        fields = ['title', 'image', 'content']
 
 
 # from django.forms.fields import EmailField
