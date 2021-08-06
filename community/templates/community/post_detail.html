@@ -19,12 +19,14 @@
     {% endfor %}
     <h3 class = 'hheight'>댓글</h3>
     <div class='comments-{{post.id}}'>
-        {% for comment in post.comments.all %}
-            <span class = 'comment-{{comment.id}} spanlength'>{{ comment.content }}
-                <button class = 'deletecomment-{{comment.id}}' type = 'submit'  onclick='onclickDeleteComment({{comment.id}},{{post.id}})'>삭제</button>
-            </span>
-            <br/>
-        {% endfor %}
+
+    {% for comment in comments %}
+        <span class = 'comment-{{comment.id}} spanlength'}>{{ comment.content }}</span>
+        <button class = 'deletecomment-{{comment.id}}' type = 'submit'  onclick='onClickDelete({{comment.id}},{{post.id}})'>삭제</button>
+        <br/>
+    {% endfor %}
+
+        
     </div>
     <div>
         <input type= 'text' id = 'comment-{{post.id}}' name='content' placeholder = '댓글을 입력하시오' />

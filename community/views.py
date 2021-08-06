@@ -19,8 +19,9 @@ def post_list(request):
 
 def post_detail(request, pk):
     post = Post.objects.get(id=pk)
+    comments = Comments.objects.filter(post_id=post)
     images = Image.objects.filter(post=post)
-    ctx = {'post': post, 'images': images}
+    ctx = {'post': post, 'images': images, 'comments': comments}
     return render(request, template_name='community/post_detail.html', context=ctx)
 
 
@@ -79,7 +80,7 @@ def add_comment(request, pk):
     comment = Comments()
     comment.user_id = get_object_or_404(
         GeneralUser, userid=request.user.get_username())
-    comment.post_id = get_object_or_404(Post, pk=post_id)
+    comment.post_id = get_object_or_404(Post, pk=pk)
     comment.content = comment_content
     comment.save()
     post.save()
