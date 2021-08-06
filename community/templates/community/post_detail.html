@@ -20,7 +20,7 @@
     <h3 class = 'hheight'>댓글</h3>
     <div class='comments-{{post.id}}'>
     {% for comment in post.comment_set.all %}
-        <span class = 'comment-{{comment.id}} spanlength'}>{{ comment.comment }}</span>
+        <span class = 'comment-{{comment.id}} spanlength'>{{ comment.comment }}</span>
         <button class = 'deletecomment-{{comment.id}}' type = 'submit'  onclick='onClickDelete({{comment.id}},{{post.id}})'>삭제</button>
         <br/>
     {% endfor %}

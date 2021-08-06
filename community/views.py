@@ -2,7 +2,7 @@ from account.models import GeneralUser
 import json
 from django.http.response import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Post, Comments, Tag, TaggedPost, Image
+from .models import Post, Comments, TaggedPost, Image
 from .forms import PostForm
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
@@ -14,7 +14,7 @@ def post_list(request):
     posts = Post.objects.all().order_by('-created_at')
     images = Image.objects.all()
     ctx = {'posts': posts, 'images': images}
-    return render(request, template_name='post_list.html', context=ctx)
+    return render(request, template_name='community/post_list.html', context=ctx)
 
 
 def post_detail(request, pk):
@@ -25,18 +25,21 @@ def post_detail(request, pk):
 
 
 @login_required
-def post_create(request):
+def post_create(request, post=None):
     if request.method == 'POST':
-        form = PostForm(request.POST)
+        form = PostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
             post = form.save()
             form.save_m2m()
-            return redirect('Posts:post_detail')
-    else:
+            return redirect('community:post_detail')
+        else:
+            ctx = {'form': form, 'is_create': 0}
+            return render(request, template_name='community/post_form.html', context=ctx)
+    elif request.method == 'GET':
         form = PostForm()
         ctx = {'form': form, 'is_create': 0}
 
-    return render(request, template_name='post_form.html', context=ctx)
+    return render(request, template_name='community/post_form.html', context=ctx)
 
 
 @login_required
@@ -44,23 +47,26 @@ def post_update(request, pk):
     post = get_object_or_404(Post, id=pk)
 
     if request.method == 'POST':
-        form = PostForm(request.Post, instance=post)
+        form = PostForm(request.Post, request.FILES, instance=post)
         if form.is_valid():
             post.tags.clear()
             post = form.save()
             form.save_m2m()
-            return redirect('Post:post_detail', pk)
-    else:
+            return redirect('community:post_detail', pk)
+        else:
+            ctx = {'form': form, 'is_create': 1}
+            return render(request, template_name='community/post_form.html', context=ctx)
+    elif request.method == 'GET':
         form = PostForm(instance=post)
         ctx = {'form': form, 'is_create': 1}
-    return render(request, template_name='post_form.html', context=ctx)
+    return render(request, template_name='community/post_form.html', context=ctx)
 
 
 @login_required
 def post_delete(request, pk):
     post = Post.objects.get(id=pk)
     post.delete()
-    return redirect('Post:post_list')
+    return redirect('community:post_list')
 
 
 @login_required
@@ -107,7 +113,7 @@ def search_tag(request):
         posts = TaggedPost.objects.filter(tag=keyword).values('content_object')
 
         ctx = {'posts': posts}
-        return render(request, template_name='search_post.html', context=ctx)
+        return render(request, template_name='community/search_post.html', context=ctx)
 
     elif request.method == 'GET':
-        return redirect('Post:post_list')
+        return redirect('community:post_list')
