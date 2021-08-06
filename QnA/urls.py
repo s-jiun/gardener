@@ -9,5 +9,11 @@ urlpatterns = [
     path('makequestion/', views.make_question, name='makequestion'),
     path('editquestion/<int:pk>/', views.edit_question, name='editquestion'),
     path('deletequestion/<int:pk>/', views.delete_question, name='deletequestion'),
+    path('tag/<str:tag>', views.TaggedObjectLV.as_view(),
+         name='tagged_object_list'),
+
+    path('makeanswer/', views.make_answer, name='makeanswer'),
+    path('editanswer/<int:pk>/', views.edit_answer, name='editanswer'),
+    path('deleteanswer/<int:pk>/', views.delete_answer, name='deleteanswer'),
 
 ]
