@@ -1,2 +1,65 @@
-{% load static %}
 {% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    <div>
+        <p> {{post.user_id}}</p>
+    </div>
+    <h1>{{ post.title }}</h1>
+    <div>
+        {{ post.content }}
+    </div>
+    {% for tag in tags %}
+        # {{tag.name}}
+    {% endfor %}
+    {% for image in images %}
+        {% if image.files %}
+            <img src = '{{ image.files.url }}'/>
+        {% endif %}
+    {% endfor %}
+    <h3 class = 'hheight'>댓글</h3>
+    <div class='comments-{{post.id}}'>
+    {% for comment in post.comment_set.all %}
+        <span class = 'comment-{{comment.id}} spanlength'}>{{ comment.comment }}</span>
+        <button class = 'deletecomment-{{comment.id}}' type = 'submit'  onclick='onClickDelete({{comment.id}},{{post.id}})'>삭제</button>
+        <br/>
+    {% endfor %}
+    </div>
+    <div>
+        <input type= 'text' id = 'comment-{{post.id}}' name='content' placeholder = '댓글을 입력하시오'>
+        <button class = 'comment-plus' type = 'submit'  onclick='onClickComment({{post.id}})'>제출</button>
+    </div>
+    <script>
+        const requestComment = new XMLHttpRequest();
+
+        const onClickComment = (id) => {
+            const ct = document.getElementById(`comment-${id}`).value;
+            const url = 'comment_ajax/';
+            requestComment.open('POST', url, true);
+            requestComment.setRequestHeader(
+                'Content-Type',
+                'application/x-www-form-urlencoded'
+            );
+            requestComment.send(JSON.stringify({id: id, ct:ct}));
+
+        };
+
+        const commentHandleResponse = () => {
+            if (requestComment.status <400) {
+                const {id,ct,comment_id} = JSON.parse(requestComment.response);
+                const comments = document.querySelector(`.comments-${id}`)
+                const makecomment = document.querySelector(`#comment-${id}`)
+                const newcomment = ct
+                comments.innerHTML += `<span class = 'comment-${comment_id} spanlength'}>${newcomment}</span>`
+                comments.innerHTML += `<button class = 'deletecomment-${comment_id}' type = 'submit'  onclick='onClickDelete(${comment_id},${id})'>삭제</button>`
+                comments.innerHTML += '<br/>'
+                makecomment.value= ''
+            };
+        };
+        requestComment.onreadystatechange = () => {
+            if (requestComment.readyState === XMLHttpRequest.DONE) {
+                commentHandleResponse();
+            }
+        };
+    </script>
+{% endblock %}

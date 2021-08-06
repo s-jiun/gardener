@@ -1,3 +1,4 @@
+from account.models import GeneralUser
 import json
 from django.http.response import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
@@ -20,7 +21,7 @@ def post_detail(request, pk):
     post = Post.objects.get(id=pk)
     images = Image.objects.filter(post=post)
     ctx = {'post': post, 'images': images}
-    return render(request, template_name='post_detail.html', context=ctx)
+    return render(request, template_name='community/post_detail.html', context=ctx)
 
 
 @login_required
@@ -65,15 +66,26 @@ def post_delete(request, pk):
 @login_required
 @csrf_exempt
 def add_comment(request):
-    print('view')
     req = json.loads(request.body)
     post_id = req['id']
-    content = req['content']
-    post = Post.objects.get(id=post_id)
-    comment = Comments.objects.create(board=post, text=content)
+    comment_content = req['ct']
+    comment = Comments()
+    comment.user_id = get_object_or_404(
+        GeneralUser, userid=request.user.get_username())
+    comment.post_id = get_object_or_404(Post, pk=post_id)
+    comment.content = comment_content
+    comment.save()
+    return JsonResponse({'id': post_id, 'ct': comment_content, 'comment_id': comment.id})
+# def add_comment(request):
+#     print('view')
+#     req = json.loads(request.body)
+#     post_id = req['id']
+#     content = req['content']
+#     post = Post.objects.get(id=post_id)
+#     comment = Comments.objects.create(board=post, text=content)
 
-    post.save()
-    return JsonResponse({'post_id': post_id, 'comment_id': comment.id, 'content': comment.text})
+#     post.save()
+#     return JsonResponse({'post_id': post_id, 'comment_id': comment.id, 'content': comment.text})
 
 
 @login_required

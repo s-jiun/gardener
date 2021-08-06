@@ -11,4 +11,6 @@ urlpatterns = [
          view=views.post_update, name='post_update'),
     path('post/<int:pk>/delete/',
          view=views.post_delete, name='post_delete'),
+
+    path('post/<int:pk>/comment_ajax/', views.add_comment, name='comment_ajax'),
 ]

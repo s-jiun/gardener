@@ -29,8 +29,8 @@
                         <img src = '{{ans.image.url}}' />
                     {% endif %}
                     <div>{{ans.content}}</div>
-                    <a href = '{% url "QnA:deleteanswer" pk = ans.pk %}'>답글 삭제하기</a>
-                    <a href = '{% url "QnA:editanswer" pk = ans.pk %}'>답글 편집하기</a>
+                    <a href = '{% url "QnA:deleteanswer" ans.pk %}'>답글 삭제하기</a>
+                    <a href = '{% url "QnA:editanswer" ans.pk %}'>답글 편집하기</a>
 
                 {% endfor %}
             </div>
