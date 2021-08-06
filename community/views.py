@@ -75,28 +75,20 @@ def add_comment(request, pk):
     req = json.loads(request.body)
     post_id = req['id']
     comment_content = req['ct']
+    post = Post.objects.get(id=post_id)
     comment = Comments()
     comment.user_id = get_object_or_404(
         GeneralUser, userid=request.user.get_username())
     comment.post_id = get_object_or_404(Post, pk=post_id)
     comment.content = comment_content
     comment.save()
+    post.save()
     return JsonResponse({'id': post_id, 'ct': comment_content, 'comment_id': comment.id})
-# def add_comment(request):
-#     print('view')
-#     req = json.loads(request.body)
-#     post_id = req['id']
-#     content = req['content']
-#     post = Post.objects.get(id=post_id)
-#     comment = Comments.objects.create(board=post, text=content)
-
-#     post.save()
-#     return JsonResponse({'post_id': post_id, 'comment_id': comment.id, 'content': comment.text})
 
 
 @login_required
 @csrf_exempt
-def delete_comment(request,pk):
+def delete_comment(request, pk):
     req = json.loads(request.body)
     post_id = req['post_id']
     comment_id = req['comment_id']
@@ -104,7 +96,7 @@ def delete_comment(request,pk):
     Comments.objects.get(board=post, id=comment_id).delete()
 
     post.save()
-    return JsonResponse({'post_id': post_id, 'comment_id': comment_id})
+    return JsonResponse({'comment_id': comment_id, 'post_id': post_id})
 
 
 def search_tag(request):
