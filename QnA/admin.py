@@ -12,3 +12,6 @@ class QuestionAdmin(admin.ModelAdmin):
 @admin.register(models.CommunityAnswer)
 class Answerdmin(admin.ModelAdmin):
     pass
+@admin.register(models.TaggedQuestion)
+class TaggedPostAdmin(admin.ModelAdmin):
+    pass
