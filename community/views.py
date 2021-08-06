@@ -19,7 +19,7 @@ def post_list(request):
 
 def post_detail(request, pk):
     post = Post.objects.get(id=pk)
-    comments = Comments.objects.filter(post_id=post)
+    comments = Comments.objects.filter(post_id=pk)
     images = Image.objects.filter(post=post)
     ctx = {'post': post, 'images': images, 'comments': comments}
     return render(request, template_name='community/post_detail.html', context=ctx)
@@ -76,15 +76,13 @@ def add_comment(request, pk):
     req = json.loads(request.body)
     post_id = req['id']
     comment_content = req['ct']
-    post = Post.objects.get(id=post_id)
     comment = Comments()
     comment.user_id = get_object_or_404(
         GeneralUser, userid=request.user.get_username())
     comment.post_id = get_object_or_404(Post, pk=pk)
     comment.content = comment_content
     comment.save()
-    post.save()
-    return JsonResponse({'id': post_id, 'ct': comment_content, 'comment_id': comment.id})
+    return JsonResponse({'id': post_id, 'ct': comment_content, 'comment_id': comment.pk})
 
 
 @login_required
@@ -94,8 +92,7 @@ def delete_comment(request, pk):
     post_id = req['post_id']
     comment_id = req['comment_id']
     post = Post.objects.get(id=post_id)
-    Comments.objects.get(board=post, id=comment_id).delete()
-
+    Comments.objects.get(post_id=post_id, id=comment_id).delete()
     post.save()
     return JsonResponse({'comment_id': comment_id, 'post_id': post_id})
 
