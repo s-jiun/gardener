@@ -4,11 +4,8 @@ from .models import CommunityAnswer, CommunityQuestion,Tag
 from .forms import QuestionForm, AnswerForm
 from account.models import GeneralUser
 from django.views.generic import ListView
-<<<<<<< HEAD
-=======
 from django.contrib.auth.decorators import login_required
 # Create your views here.
->>>>>>> 35e5ef7b8be7ec8be196de737274b18edbd3ad55
 
 
 from taggit.managers import TaggableManager
@@ -59,20 +56,26 @@ def question_detail(request, pk):
 #         return render(request, 'QnA/makequestion.html')
 
 
-def make_question(request, question=None):
+def make_question(request):
     if request.method == "POST":
-        form = QuestionForm(request.POST, request.FILES, instance=question)
+        form = QuestionForm(request.POST, request.FILES)
         if form.is_valid():
-            question = CommunityQuestion()
+            # question = CommunityQuestion()
+            # question.user_id = GeneralUser.objects.get(pk=1)
+            # question.title = form.cleaned_data['title']
+            # question.content = form.cleaned_data['content']
+            # question.photo = form.cleaned_data['photo']
+            # question.tags=form.cleaned_data['tags']
+            # # request.POST['i']
+            question = form.save(commit= False)
             question.user_id = GeneralUser.objects.get(pk=1)
-            question.title = form.cleaned_data['title']
-            question.content = form.cleaned_data['content']
-            question.photo = form.cleaned_data['photo']
-            question.tags=form.cleaned_data['tags']
-            question.save()
+            question = form.save()
+            # question.save()
+            # question.save_m2m()
+            # question.save()
             return redirect('QnA:questiondetail', pk=question.pk)
     else:
-        form = QuestionForm(instance=question)
+        form = QuestionForm()
         ctx = {'form': form}
     return render(request, 'QnA/makequestion.html', ctx)
 
