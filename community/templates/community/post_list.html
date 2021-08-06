@@ -1,0 +1,14 @@
+{% load static %}
+{% extends "base.html" %}
+
+{% block content %}
+    {% for post in posts %}
+        <p>제목: {{ post.title }}</p>
+        <p>{{ post.user_id }}</p>
+        {% for image in images %}
+            <p><img src="{{ image.files.url }}" /></p>
+        {% endfor %}
+        <p>{{ post.content }}</p>
+        <p>{{ post.tags }}</p>
+    {% endfor %}
+{% endblock %}
