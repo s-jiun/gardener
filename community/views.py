@@ -19,8 +19,9 @@ def post_list(request):
 
 def post_detail(request, pk):
     post = Post.objects.get(id=pk)
+    comments = Comments.objects.filter(post_id=post)
     images = Image.objects.filter(post=post)
-    ctx = {'post': post, 'images': images}
+    ctx = {'post': post, 'images': images, 'comments': comments}
     return render(request, template_name='community/post_detail.html', context=ctx)
 
 
@@ -65,14 +66,14 @@ def post_delete(request, pk):
 
 @login_required
 @csrf_exempt
-def add_comment(request):
+def add_comment(request, pk):
     req = json.loads(request.body)
     post_id = req['id']
     comment_content = req['ct']
     comment = Comments()
     comment.user_id = get_object_or_404(
         GeneralUser, userid=request.user.get_username())
-    comment.post_id = get_object_or_404(Post, pk=post_id)
+    comment.post_id = get_object_or_404(Post, pk=pk)
     comment.content = comment_content
     comment.save()
     return JsonResponse({'id': post_id, 'ct': comment_content, 'comment_id': comment.id})

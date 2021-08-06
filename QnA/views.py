@@ -63,7 +63,7 @@ def delete_question(request, pk):
 
 
 @login_required
-def make_answer(request, answer=None):
+def make_answer(request, pk, answer=None):
     if request.method == "POST":
         form = AnswerForm(request.POST, request.FILES, instance=answer)
         if form.is_valid():
@@ -72,6 +72,9 @@ def make_answer(request, answer=None):
 
             return redirect('QnA:questiondetail', pk=pk)
     else:
+        # user_id = GeneralUser.objects.get(
+        #     userid=request.user.get_username())
+        # question = CommunityQuestion.objects.get(pk=pk)
         form = AnswerForm(instance=answer)
         ctx = {'form': form}
     return render(request, 'QnA/makeanswer.html', ctx)
