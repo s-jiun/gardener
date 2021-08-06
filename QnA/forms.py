@@ -8,8 +8,6 @@ class QuestionForm(forms.ModelForm):
     #     label=('user_id'),
     #     widget=forms.TextInput()
     # )
-    # user_id = forms.CharField(widget=forms.HiddenInput())
-
     class Meta:
         model = CommunityQuestion
         fields = ['title', 'photo', 'content','tags']

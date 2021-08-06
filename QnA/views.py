@@ -4,12 +4,17 @@ from .models import CommunityAnswer, CommunityQuestion,Tag
 from .forms import QuestionForm, AnswerForm
 from account.models import GeneralUser
 from django.views.generic import ListView
+<<<<<<< HEAD
+=======
+from django.contrib.auth.decorators import login_required
+# Create your views here.
+>>>>>>> 35e5ef7b8be7ec8be196de737274b18edbd3ad55
 
 
 from taggit.managers import TaggableManager
 
 def qna_list(request):
-    question_list = CommunityQuestion.objects.all()
+    question_list = CommunityQuestion.objects.all().order_by('updated_at')
     ctx = {'question_list': question_list}
     return render(request, 'QnA/qnalist.html', ctx)
 
@@ -72,17 +77,20 @@ def make_question(request, question=None):
     return render(request, 'QnA/makequestion.html', ctx)
 
 
+@login_required
 def edit_question(request, pk):
     question = get_object_or_404(CommunityQuestion, pk=pk)
     return make_question(request, question=question)
 
 
+@login_required
 def delete_question(request, pk):
     question = CommunityQuestion.objects.get(pk=pk)
     question.delete()
     return redirect('QnA:qnalist')
 
 
+@login_required
 def make_answer(request, answer=None):
     if request.method == "POST":
         form = AnswerForm(request.POST, request.FILES, instance=answer)
@@ -97,11 +105,13 @@ def make_answer(request, answer=None):
     return render(request, 'QnA/makeanswer.html', ctx)
 
 
+@login_required
 def edit_answer(request, pk):
     answer = get_object_or_404(CommunityAnswer, pk=pk)
     return make_answer(request, question=answer)
 
 
+@login_required
 def delete_answer(request, pk):
     answer = CommunityAnswer.objects.get(pk=pk)
     pk = answer.communityquestion.pk

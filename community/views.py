@@ -1,7 +1,8 @@
+from account.models import GeneralUser
 import json
 from django.http.response import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Post, Comments, Tag, TaggedPost, Image
+from .models import Post, Comments, TaggedPost, Image
 from .forms import PostForm
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
@@ -70,21 +71,32 @@ def post_delete(request, pk):
 
 @login_required
 @csrf_exempt
-def add_comment(request):
-    print('view')
+def add_comment(request, pk):
     req = json.loads(request.body)
     post_id = req['id']
-    content = req['content']
-    post = Post.objects.get(id=post_id)
-    comment = Comments.objects.create(board=post, text=content)
+    comment_content = req['ct']
+    comment = Comments()
+    comment.user_id = get_object_or_404(
+        GeneralUser, userid=request.user.get_username())
+    comment.post_id = get_object_or_404(Post, pk=post_id)
+    comment.content = comment_content
+    comment.save()
+    return JsonResponse({'id': post_id, 'ct': comment_content, 'comment_id': comment.id})
+# def add_comment(request):
+#     print('view')
+#     req = json.loads(request.body)
+#     post_id = req['id']
+#     content = req['content']
+#     post = Post.objects.get(id=post_id)
+#     comment = Comments.objects.create(board=post, text=content)
 
-    post.save()
-    return JsonResponse({'post_id': post_id, 'comment_id': comment.id, 'content': comment.text})
+#     post.save()
+#     return JsonResponse({'post_id': post_id, 'comment_id': comment.id, 'content': comment.text})
 
 
 @login_required
 @csrf_exempt
-def delete_comment(request):
+def delete_comment(request,pk):
     req = json.loads(request.body)
     post_id = req['post_id']
     comment_id = req['comment_id']
@@ -104,4 +116,4 @@ def search_tag(request):
         return render(request, template_name='community/search_post.html', context=ctx)
 
     elif request.method == 'GET':
-        return redirect('communtiy:post_list')
+        return redirect('community:post_list')
