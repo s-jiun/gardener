@@ -32,11 +32,6 @@ class TaggedPost(TaggedItemBase):
 class Post(models.Model):
     user_id = models.ForeignKey(GeneralUser, on_delete=CASCADE)
     title = models.CharField(max_length=100)
-    # photo1 = models.ImageField(null=True, blank=True, upload_to='Post/%y/%m/%d')
-    # photo2 = models.ImageField(null=True, blank=True, upload_to='Post/%y/%m/%d')
-    # photo3 = models.ImageField(null=True, blank=True, upload_to='Post/%y/%m/%d')
-    # photo4 = models.ImageField(null=True, blank=True, upload_to='Post/%y/%m/%d')
-    # photo5 = models.ImageField(null=True, blank=True, upload_to='Post/%y/%m/%d')
     content = models.TextField()
     # 태그 부분 taggit 설치  & admin 부분 확인 필요!
     tags = TaggableManager(

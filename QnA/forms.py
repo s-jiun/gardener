@@ -1,4 +1,5 @@
 from django import forms
+from taggit.forms import TagWidget
 from .models import CommunityQuestion, CommunityAnswer
 from account.models import GeneralUser
 
@@ -8,10 +9,13 @@ class QuestionForm(forms.ModelForm):
     #     label=('user_id'),
     #     widget=forms.TextInput()
     # )
+    widgets = {
+            'tags': TagWidget(),
+    }
     class Meta:
         model = CommunityQuestion
-        # fields = ['user_id', 'title', 'photo', 'content']
-        fields = '__all__'
+        fields = ['title', 'photo', 'content','tags']
+        # fields = '__all__'
 
 
 class AnswerForm(forms.ModelForm):
