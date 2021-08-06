@@ -12,5 +12,7 @@ urlpatterns = [
     path('post/<int:pk>/delete/',
          view=views.post_delete, name='post_delete'),
 
-    path('post/<int:pk>/comment_ajax/', views.add_comment, name='comment_ajax'),
+    path('post/<int:pk>/add_comment/', views.add_comment, name='add_comment'),
+    path('post/<int:pk>/delete_comment/',
+         views.delete_comment, name='delete_comment'),
 ]
