@@ -1,10 +1,12 @@
+from django.db.models.fields.files import ImageField
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import CommunityAnswer, CommunityQuestion
+from .models import CommunityAnswer, CommunityQuestion,Tag
 from .forms import QuestionForm, AnswerForm
 from account.models import GeneralUser
 from django.views.generic import ListView
-# Create your views here.
 
+
+from taggit.managers import TaggableManager
 
 def qna_list(request):
     question_list = CommunityQuestion.objects.all()
@@ -32,17 +34,40 @@ def question_detail(request, pk):
     return render(request, 'QnA/questiondetail.html', ctx)
 
 
+# def make_question(request, question=None):
+#     if request.method == "POST":
+#         form = QuestionForm(request.POST, request.FILES, instance=question)
+#         tag_list = request.POST['tag'].split(" ")
+#         question = CommunityQuestion(
+#             user_id=GeneralUser.objects.get(pk =1), #여기 나중에 로그인된 유저로바꾸면 되요!
+#             title=request.POST['title'],
+#             content= request.POST['content'],
+#             photo = request.FILES['image'],
+#         )
+#         for tag in tag_list:
+#                 tag =Tag(tag.strip("#"))
+#                 tag.save()
+#                 question.tags.add(tag)
+#         question.save()
+#         return redirect('QnA:questiondetail', pk=question.pk)
+#     else:
+#         return render(request, 'QnA/makequestion.html')
+
+
 def make_question(request, question=None):
     if request.method == "POST":
         form = QuestionForm(request.POST, request.FILES, instance=question)
         if form.is_valid():
-            question = form.save()
+            question = CommunityQuestion()
+            question.user_id = GeneralUser.objects.get(pk=1)
+            question.title = form.cleaned_data['title']
+            question.content = form.cleaned_data['content']
+            question.photo = form.cleaned_data['photo']
+            question.tags=form.cleaned_data['tags']
+            question.save()
             return redirect('QnA:questiondetail', pk=question.pk)
     else:
-        user_id = GeneralUser.objects.get(
-            userid=request.user.get_username())
-        form = QuestionForm(instance=question, initial={
-                            'user_id': user_id})
+        form = QuestionForm(instance=question)
         ctx = {'form': form}
     return render(request, 'QnA/makequestion.html', ctx)
 
