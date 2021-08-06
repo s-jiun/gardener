@@ -60,19 +60,9 @@ def make_question(request):
     if request.method == "POST":
         form = QuestionForm(request.POST, request.FILES)
         if form.is_valid():
-            # question = CommunityQuestion()
-            # question.user_id = GeneralUser.objects.get(pk=1)
-            # question.title = form.cleaned_data['title']
-            # question.content = form.cleaned_data['content']
-            # question.photo = form.cleaned_data['photo']
-            # question.tags=form.cleaned_data['tags']
-            # # request.POST['i']
             question = form.save(commit= False)
-            question.user_id = GeneralUser.objects.get(pk=1)
+            question.user_id = GeneralUser.objects.get(pk=1) #로그인된 유저로 변경
             question = form.save()
-            # question.save()
-            # question.save_m2m()
-            # question.save()
             return redirect('QnA:questiondetail', pk=question.pk)
     else:
         form = QuestionForm()
