@@ -1,8 +1,9 @@
 import django
+from django.db.models.query import InstanceCheckMeta
 from django.http import request
 from account.models import GeneralUser, Follow
 from django.shortcuts import render, redirect
-from .forms import UserCreationForm, CustomUserChangeForm
+from .forms import UserCreationForm, CustomUserChangeForm, UserProfileChangeForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
@@ -36,7 +37,7 @@ def logout(request):
 def signup(request):
     if request.user.is_authenticated:
         # 수정 필요
-        return redirect('posts:update')
+        return redirect('account:update')
     if request.method == 'POST':
         res = {}
         form = UserCreationForm(request.POST)
@@ -80,11 +81,12 @@ def profile(request, pk):
     user = GeneralUser.objects.get(id=pk)
     follower = Follow.objects.filter(user=user).count()
     following = Follow.objects.filter(following_user=user).count()
-    
+    posts = user.post_set.all()
     ctx = {
         'user':user,
         'follower': follower,
         'following':following,
+        'posts':posts
     }
     return render(request, template_name='account/profile.html', context=ctx)
 def follower_list(request,pk):
@@ -109,7 +111,30 @@ def following_list(request,pk):
 
     return render(request, template_name='account/following.html',context=ctx)
 
+def profile_update(request):
+    user = GeneralUser.objects.get(id = request.user.id)
+    if request.method == 'POST':
+        form = UserProfileChangeForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            follower = Follow.objects.filter(user=user).count()
+            following = Follow.objects.filter(following_user=user).count()
+    
+            ctx = {
+               'user':request.user,
+               'follower':follower,
+               'following':following, 
+            }
+            return redirect('account:profile',pk=request.user.id)
+    else:
+        form = UserProfileChangeForm(instance=request.user)
+        ctx = {
+            'form':form
+        }
+    return render(request, template_name='account/profile_update.html', context=ctx)
 
+def my_profile(request):
+    return redirect('account:profile',pk=request.user.id)
 
 def main_page(request):
     pass

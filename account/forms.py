@@ -1,3 +1,4 @@
+from django.db import models
 from django.forms.fields import EmailField
 from .models import GeneralUser, UserManager
 from django import forms
@@ -90,3 +91,23 @@ class CustomUserChangeForm(UserChangeForm):
         if password1 and password2 and password1 != password2:
             raise forms.ValidationError("비밀번호가 일치하지 않습니다.")
         return password2
+
+class UserProfileChangeForm(UserChangeForm):
+    image = forms.ImageField(
+        label=('image'),
+        required=False,
+        widget=forms.FileInput()
+    )
+    name = forms.CharField(
+        label=('name'),
+        required=True,
+        widget=forms.TextInput(
+        )
+    )
+    profile = forms.CharField(
+        label=('profile'),
+        required=False
+    )
+    class Meta:
+        model = get_user_model()
+        fields = ['image', 'name', 'profile']
