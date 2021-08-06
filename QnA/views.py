@@ -1,6 +1,6 @@
 from django.db.models.fields.files import ImageField
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import CommunityAnswer, CommunityQuestion,Tag
+from .models import CommunityAnswer, CommunityQuestion, Tag
 from .forms import QuestionForm, AnswerForm
 from account.models import GeneralUser
 from django.views.generic import ListView
@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 
 
 from taggit.managers import TaggableManager
+
 
 def qna_list(request):
     question_list = CommunityQuestion.objects.all().order_by('updated_at')
@@ -67,7 +68,7 @@ def make_question(request):
             # question.photo = form.cleaned_data['photo']
             # question.tags=form.cleaned_data['tags']
             # # request.POST['i']
-            question = form.save(commit= False)
+            question = form.save(commit=False)
             question.user_id = GeneralUser.objects.get(pk=1)
             question = form.save()
             # question.save()
@@ -98,9 +99,12 @@ def make_answer(request, pk, answer=None):
     if request.method == "POST":
         form = AnswerForm(request.POST, request.FILES, instance=answer)
         if form.is_valid():
-            answer = form.save()
+            answer = form.save(commit=False)
+            answer.user_id = GeneralUser.objects.get(
+                userid=request.user.get_username())
+            answer.question = CommunityQuestion.objects.get(pk=pk)
             pk = answer.question.pk
-
+            answer = form.save()
             return redirect('QnA:questiondetail', pk=pk)
     else:
         # user_id = GeneralUser.objects.get(
@@ -114,12 +118,13 @@ def make_answer(request, pk, answer=None):
 @login_required
 def edit_answer(request, pk):
     answer = get_object_or_404(CommunityAnswer, pk=pk)
-    return make_answer(request, question=answer)
+    pk = answer.question.pk
+    return make_answer(request, pk, answer=answer)
 
 
 @login_required
 def delete_answer(request, pk):
     answer = CommunityAnswer.objects.get(pk=pk)
-    pk = answer.communityquestion.pk
+    pk = answer.question.pk
     answer.delete()
-    return redirect('QnA:question_detail', pk=pk)
+    return redirect('QnA:questiondetail', pk=pk)
