@@ -51,7 +51,6 @@ class PlantListView(ListView):
             if len(search_keyword) > 1 :
                 if search_type == 'all':
                     search_plant_list = plant_list.filter(Q (name__icontains=search_keyword))
-                    print("hello")
                 elif search_type == 'title_content':
                     search_plant_list = plant_list.filter(Q (name__icontains=search_keyword))
                 return search_plant_list
