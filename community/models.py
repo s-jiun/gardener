@@ -3,6 +3,7 @@ from django.db.models.deletion import CASCADE
 from django.db.models.fields import IntegerField
 from account.models import GeneralUser
 
+
 # tag 관련 module import
 from taggit.managers import TaggableManager
 from taggit.models import (

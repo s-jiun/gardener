@@ -17,7 +17,7 @@
                 {% for post in post_list %}
                     <p><a href="{% url 'community:post_detail' pk=post.pk %}">제목: {{ post.title }}</a></p>
                     <p>{{ post.user_id }}</p>
-                    {% for image in images %}
+                    {% for image in post.image_set.all %}
                         {% if image.post == post %}
                             {% if image.files %}
                                 <p><img src="{{ image.files.url }}" /></p>
