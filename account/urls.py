@@ -16,4 +16,6 @@ urlpatterns = [
     path('myprofile',views.my_profile, name='my_profile'),
     path('',views.start_page, name ="start_page"),
     path('main/', views.main_page , name= "main_page"),
+    path('following_ajax/', views.following_ajax, name='following_ajax'),
+    path('follow_ajax/', views.follow_ajax, name='follow_ajax'),
 ]

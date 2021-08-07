@@ -8,6 +8,9 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
+import json
+from django.http.response import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 def login(request):
     if request.user.is_authenticated:
@@ -82,11 +85,19 @@ def profile(request, pk):
     follower = Follow.objects.filter(user=user).count()
     following = Follow.objects.filter(following_user=user).count()
     posts = user.post_set.all()
+    login_user_followings = Follow.objects.filter(following_user=request.user.id)
+    is_following = False
+    for i in login_user_followings:
+        if user.id == i.user_id:
+            is_following = True
+            break
+     
     ctx = {
         'user':user,
         'follower': follower,
         'following':following,
-        'posts':posts
+        'posts':posts,
+        'is_following':is_following
     }
     return render(request, template_name='account/profile.html', context=ctx)
 def follower_list(request,pk):
@@ -94,9 +105,14 @@ def follower_list(request,pk):
     user = GeneralUser.objects.get(id=pk)
     # user가 팔로잉에 해당하는 팔로우 오브젝트
     followers = user.following.all()
+    cur_users_followings = request.user.followers.all()
+    cur_users_followings_list = []
+    for cur_users_following in cur_users_followings:
+        cur_users_followings_list.append(cur_users_following.user_id)
 
     ctx = {
-        'followers':followers
+        'followers':followers,
+        'cur_users_followings_list':cur_users_followings_list
     }
 
     return render(request, template_name='account/follower.html',context=ctx)
@@ -105,8 +121,14 @@ def following_list(request,pk):
     user = GeneralUser.objects.get(id=pk)
     # user가 팔로워에 해당하는 팔로우 오브젝트 
     followings = user.followers.all()
+    cur_users_followings = request.user.followers.all()
+    cur_users_followings_list = []
+    for cur_users_following in cur_users_followings:
+        cur_users_followings_list.append(cur_users_following.user_id)
+
     ctx = {
-        'followings':followings
+        'followings':followings,
+        'cur_users_followings_list':cur_users_followings_list
     }
 
     return render(request, template_name='account/following.html',context=ctx)
@@ -141,3 +163,20 @@ def main_page(request):
 
 def start_page(request):
     pass
+
+@csrf_exempt
+def following_ajax(request):
+    req = json.loads(request.body)
+    user_id = req['user_id']
+    following = Follow.objects.filter(user_id=user_id).filter(following_user=request.user.id)
+    following.delete()
+    return JsonResponse({'user_id':user_id})
+
+@csrf_exempt
+def follow_ajax(request):
+    req = json.loads(request.body)
+    user_id = req['user_id']
+    user = GeneralUser.objects.get(id=user_id)
+    follow = Follow(user=user, following_user = request.user)
+    follow.save()
+    return JsonResponse({'user_id':user_id})
