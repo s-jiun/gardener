@@ -36,8 +36,9 @@
             </div>
         </div>        
     </div>
-    <a href = '{% url "QnA:makeanswer" %}'>답글달기</a>
+    <a href = '{% url "QnA:makeanswer" pk=question.pk%}'>답글달기</a>
     <a href = '{% url "QnA:deletequestion" pk=question.pk %}'>게시글 삭제하기</a>
     <a href = '{% url "QnA:editquestion" pk=question.pk %}'>게시글 수정하기</a>
+    <a href = '{% url "QnA:communityquestion_list" %}'>질문 목록으로</a>
 </body>
 </html>
