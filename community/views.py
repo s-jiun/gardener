@@ -3,9 +3,11 @@ import json
 from django.http.response import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Post, Comments, TaggedPost, Image
-from .forms import PostForm
+from .forms import ImageForm, PostForm, ImageFormSet
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
+from django.db import transaction
+
 
 # Create your views here.
 
@@ -28,17 +30,23 @@ def post_detail(request, pk):
 @login_required
 def post_create(request, post=None):
     if request.method == 'POST':
-        form = PostForm(request.POST, request.FILES, instance=post)
-        if form.is_valid():
-            post = form.save()
-            form.save_m2m()
-            return redirect('community:post_detail')
+        form = PostForm(request.POST)
+        image_formset = ImageFormSet(request.POST, request.FILES)
+        if form.is_valid() and image_formset.is_valid():
+            post = form.save(commit=False)
+            post.user_id = request.user
+            with transaction.atomic():
+                post = form.save()
+                image_formset.instance = post
+                image_formset.save()
+                return redirect('community:post_detail', pk=post.pk)
         else:
-            ctx = {'form': form, 'is_create': 0}
+            ctx = {'form': form, 'image_formset': image_formset, 'is_create': 0}
             return render(request, template_name='community/post_form.html', context=ctx)
     elif request.method == 'GET':
         form = PostForm()
-        ctx = {'form': form, 'is_create': 0}
+        image_formset = ImageFormSet()
+        ctx = {'form': form, 'image_formset': image_formset, 'is_create': 0}
 
     return render(request, template_name='community/post_form.html', context=ctx)
 
@@ -46,20 +54,25 @@ def post_create(request, post=None):
 @login_required
 def post_update(request, pk):
     post = get_object_or_404(Post, id=pk)
-
     if request.method == 'POST':
-        form = PostForm(request.Post, request.FILES, instance=post)
-        if form.is_valid():
+        form = PostForm(request.POST, request.FILES, instance=post)
+        image_formset = ImageFormSet(
+            request.POST, request.FILES, instance=post)
+        if form.is_valid() and image_formset.is_valid():
+            post = form.save(commit=False)
             post.tags.clear()
-            post = form.save()
-            form.save_m2m()
-            return redirect('community:post_detail', pk)
+            with transaction.atomic():
+                post = form.save()
+                image_formset.instance = post
+                image_formset.save()
+                return redirect('community:post_detail', pk=post.pk)
         else:
-            ctx = {'form': form, 'is_create': 1}
+            ctx = {'form': form, 'image_formset': image_formset, 'is_create': 1}
             return render(request, template_name='community/post_form.html', context=ctx)
     elif request.method == 'GET':
         form = PostForm(instance=post)
-        ctx = {'form': form, 'is_create': 1}
+        image_formset = ImageFormSet(instance=post)
+        ctx = {'form': form, 'image_formset': image_formset, 'is_create': 1}
     return render(request, template_name='community/post_form.html', context=ctx)
 
 
