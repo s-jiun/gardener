@@ -9,7 +9,9 @@
         <p>{{ post.user_id }}</p>
         {% for image in images %}
             {% if image.post == post %}
+                {% if image.files %}
                     <p><img src="{{ image.files.url }}" /></p>
+                {% endif %}
             {% endif %}
         {% endfor %}
         <p>{{ post.content }}</p>

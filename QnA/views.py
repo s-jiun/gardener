@@ -12,7 +12,7 @@ from django.contrib import messages
 
 class QuestionListView(ListView):
     model = CommunityQuestion
-    paginate_by = 10
+    paginate_by = 5
     # DEFAULT : <app_label>/<model_name>_list.html
     template_name = 'QnA/communityquestion.html'
     context_object_name = 'communityquestion_list'  # DEFAULT : <model_name>_list
@@ -32,7 +32,7 @@ class QuestionListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         paginator = context['paginator']
-        page_numbers_range = 10
+        page_numbers_range = 5
         max_index = len(paginator.page_range)
 
         page = self.request.GET.get('page')
