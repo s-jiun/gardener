@@ -3,10 +3,12 @@ import json
 from django.http.response import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Post, Comments, TaggedPost, Image
+
 from .forms import PostForm, ImageFormSet
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
+
 
 # Create your views here.
 
@@ -29,7 +31,8 @@ def post_detail(request, pk):
 @login_required
 def post_create(request, post=None):
     if request.method == 'POST':
-        form = PostForm(request.POST, instance=post)
+
+        form = PostForm(request.POST)
         image_formset = ImageFormSet(request.POST, request.FILES)
 
         if form.is_valid() and image_formset.is_valid():
@@ -39,6 +42,7 @@ def post_create(request, post=None):
                 post = form.save()
                 image_formset.instance = post
                 image_formset.save()
+
             # form.save_m2m()
                 return redirect('community:post_detail', pk=post.pk)
         else:
@@ -50,29 +54,17 @@ def post_create(request, post=None):
         image_formset = ImageFormSet(instance=post)
         ctx = {'form': form, 'is_create': 0, 'image_formset': image_formset}
 
+
     return render(request, template_name='community/post_form.html', context=ctx)
 
 
 @login_required
 def post_update(request, pk):
-    # post = get_object_or_404(Post, id=pk)
 
-    # if request.method == 'POST':
-    #     form = PostForm(request.POST, request.FILES, instance=post)
-    #     if form.is_valid():
-    #         post.tags.clear()
-    #         post = form.save()
-    #         # form.save_m2m()
-    #         return redirect('community:post_detail', pk)
-    #     else:
-    #         ctx = {'form': form, 'is_create': 1}
-    #         return render(request, template_name='community/post_form.html', context=ctx)
-    # elif request.method == 'GET':
-    #     form = PostForm(instance=post)
-    #     ctx = {'form': form, 'is_create': 1}
-    # return render(request, template_name='community/post_form.html', context=ctx)
+
     post = get_object_or_404(Post, pk=pk)
     return post_create(request, post=post)
+
 
 
 @login_required
