@@ -12,7 +12,7 @@ from django.contrib import messages
 
 class QuestionListView(ListView):
     model = CommunityQuestion
-    paginate_by = 10
+    paginate_by = 27
     # DEFAULT : <app_label>/<model_name>_list.html
     template_name = 'QnA/communityquestion.html'
     context_object_name = 'communityquestion_list'  # DEFAULT : <model_name>_list
@@ -32,7 +32,7 @@ class QuestionListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         paginator = context['paginator']
-        page_numbers_range = 10
+        page_numbers_range = 5
         max_index = len(paginator.page_range)
 
         page = self.request.GET.get('page')
@@ -60,8 +60,9 @@ class TaggedObjectLV(ListView):
     model = CommunityQuestion
 
     def get_queryset(self):
-        return CommunityQuestion.objects.filter(tags__name=self.kwargs.get('tag'))
-
+        tag_list=CommunityQuestion.objects.filter(tags__name=self.kwargs.get('tag'))
+        return tag_list
+        
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['tagname'] = self.kwargs['tag']
@@ -89,9 +90,6 @@ def make_question(request):
             question = form.save(commit=False)
             question.user_id = GeneralUser.objects.get(pk=1)
             question = form.save()
-            # question.save()
-            # question.save_m2m()
-            # question.save()
             return redirect('QnA:questiondetail', pk=question.pk)
     else:
         form = QuestionForm()
