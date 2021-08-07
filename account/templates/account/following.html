@@ -1,19 +1,19 @@
 <p>팔로잉</p>
 {% for following in followings %}
+    {{following.id}}
+    {{following.user.image}}
+    {{following.user.name}}
+    {{following.user.userid}}
+    {{following.user.profile}}
     {% if request.user != following.user%}
-        {{following.id}}
-        {{following.user.image}}
-        {{following.user.name}}
-        {{following.user.userid}}
-        {{following.user.profile}}
-        {% if following.user_id in cur_users_followings_list %}
-        <div class='following-{{following.user_id}}'>
-            <button onclick="onClickFollowing({{following.user_id}})">팔로잉</button>
-        </div>
-        {% else %}
-        <div class="follow-{{following.user_id}}">
-            <button  onclick="onClickFollow({{following.user_id}})">팔로우</button>
-        </div>
+            {% if following.user_id in cur_users_followings_list %}
+            <div class='following-{{following.user_id}}'>
+                <button onclick="onClickFollowing({{following.user_id}})">팔로잉</button>
+            </div>
+            {% else %}
+            <div class="follow-{{following.user_id}}">
+                <button  onclick="onClickFollow({{following.user_id}})">팔로우</button>
+            </div>
         {% endif %}
     {% endif %}
 {% endfor %}
