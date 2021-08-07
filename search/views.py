@@ -51,8 +51,12 @@ class PlantListView(ListView):
             if len(search_keyword) > 1 :
                 if search_type == 'all':
                     search_plant_list = plant_list.filter(Q (name__icontains=search_keyword))
-                elif search_type == 'title_content':
+                elif search_type == 'name':
                     search_plant_list = plant_list.filter(Q (name__icontains=search_keyword))
+                elif search_type =='content':
+                    search_plant_list = plant_list.filter(Q (content__icontains=search_keyword))
+                elif search_type =='managelevel':
+                     search_plant_list = plant_list.filter(Q (management_level__icontains=search_keyword))
                 return search_plant_list
             else:
                 messages.error(self.request, '검색어는 2글자 이상 입력해주세요.')
