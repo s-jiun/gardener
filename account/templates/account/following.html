@@ -1,83 +1,29 @@
-<p>팔로잉</p>
-{% for following in followings %}
-    {{following.id}}
-    {{following.user.image}}
-    {{following.user.name}}
-    {{following.user.userid}}
-    {{following.user.profile}}
-    {% if request.user != following.user%}
-            {% if following.user_id in cur_users_followings_list %}
-            <div class='following-{{following.user_id}}'>
-                <button onclick="onClickFollowing({{following.user_id}})">팔로잉</button>
-            </div>
-            {% else %}
-            <div class="follow-{{following.user_id}}">
-                <button  onclick="onClickFollow({{following.user_id}})">팔로우</button>
-            </div>
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    <p>팔로잉</p>
+    {% for following in followings %}
+        {{following.id}}
+        {{following.user.image}}
+        {{following.user.name}}
+        {{following.user.userid}}
+        {{following.user.profile}}
+        {% if request.user != following.user%}
+                {% if following.user_id in cur_users_followings_list %}
+                <div class='following-{{following.user_id}}'>
+                    <button onclick="onClickFollowing({{following.user_id}})">팔로잉</button>
+                </div>
+                {% else %}
+                <div class="follow-{{following.user_id}}">
+                    <button  onclick="onClickFollow({{following.user_id}})">팔로우</button>
+                </div>
+            {% endif %}
         {% endif %}
-    {% endif %}
-{% endfor %}
+    {% endfor %}
+{% endblock %}
 
-<script>
-        const requestFollowing = new XMLHttpRequest()
 
-    const onClickFollowing = (user_id) => {
-        const url = '/following_ajax/';
-        requestFollowing.open('POST', url, true);
-        requestFollowing.setRequestHeader(
-            'Content-Type',
-            'application/x-www-form-urlencoded',
-        );
-        requestFollowing.send(JSON.stringify({user_id:user_id}))
-    }
-    
-    const followingHandleResponse = () => {
-        if (requestFollowing.status < 400) {
-            const {user_id} = JSON.parse(requestFollowing.response);
-            const element = document.querySelector(`.following-${user_id}`)
-            console.log(element)
-            element.innerHTML = `
-            <div class="follow-${user_id}">
-                <button  onclick="onClickFollow(${user_id})">팔로우</button>
-            </div>
-            `
-        }
-    
-    }
-    
-    requestFollowing.onreadystatechange = () => {
-    if (requestFollowing.readyState === XMLHttpRequest.DONE) {
-        followingHandleResponse();
-        }
-    }
-    const requestFollow = new XMLHttpRequest()
-
-    const onClickFollow = (user_id) => {
-        const url = '/follow_ajax/';
-        requestFollow.open('POST', url, true);
-        requestFollow.setRequestHeader(
-            'Content-Type',
-            'application/x-www-form-urlencoded',
-        );
-        requestFollow.send(JSON.stringify({user_id:user_id}))
-    }
-
-    const followHandleResponse = () => {
-        if (requestFollow.status < 400) {
-            const {user_id} = JSON.parse(requestFollow.response);
-            const element = document.querySelector(`.follow-${user_id}`)
-            console.log(element)
-            element.innerHTML = `    
-            <div class='following-${user_id}'>
-                <button onclick="onClickFollowing(${user_id})">팔로잉</button>
-            </div>
-        `
-        }
-
-    }
-    requestFollow.onreadystatechange = () => {
-    if (requestFollow.readyState === XMLHttpRequest.DONE) {
-        followHandleResponse();
-        }
-    }
-</script>
+{% block js %}
+    <script src="{% static 'javascripts/follow_list.js' %}"></script>
+{% endblock %}
