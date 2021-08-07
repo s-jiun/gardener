@@ -8,14 +8,15 @@
     <title>Plant</title>
 </head>
 <body>
-    반려식물의 정보를 검색해보세요!
+    반려식물의 정보를 검색해보세요! <br>
+    <br>
     {% if q %}
     <h5>'{{ q }}' 검색 결과입니다.</h5>
     {% endif %}
 
         {% if plant_list %}
         {% for plant in plant_list %}
-            <p>{{ plant.name }}</p>
+            <a href="{% url 'search:plant_detail' plant.pk %}">{{ plant.name }}</a>
             <p>{{ plant.content}}</p>
         {% endfor %}
         {% else %}
