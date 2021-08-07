@@ -1,20 +1,58 @@
 from django.db.models.fields.files import ImageField
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import CommunityAnswer, CommunityQuestion, Tag
+from .models import CommunityAnswer, CommunityQuestion
 from .forms import QuestionForm, AnswerForm
 from account.models import GeneralUser
 from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
+from taggit.managers import TaggableManager
+from django.contrib import messages
 # Create your views here.
 
 
-from taggit.managers import TaggableManager
+class QuestionListView(ListView):
+    model = CommunityQuestion
+    paginate_by = 10
+    # DEFAULT : <app_label>/<model_name>_list.html
+    template_name = 'QnA/communityquestion.html'
+    context_object_name = 'communityquestion_list'  # DEFAULT : <model_name>_list
 
+    def get_queryset(self):
+        search_keyword = self.request.GET.get('q', '')
+        communityquestion_list = CommunityQuestion.objects.order_by('-id')
+        if search_keyword:
+            if len(search_keyword) > 1:
+                search_communityquestion_list = communityquestion_list.filter(
+                    tags__name=search_keyword)
+                return search_communityquestion_list
+            else:
+                messages.error(self.request, '검색어는 2글자 이상 입력해주세요.')
+        return communityquestion_list
 
-def qna_list(request):
-    question_list = CommunityQuestion.objects.all().order_by('updated_at')
-    ctx = {'question_list': question_list}
-    return render(request, 'QnA/qnalist.html', ctx)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        paginator = context['paginator']
+        page_numbers_range = 10
+        max_index = len(paginator.page_range)
+
+        page = self.request.GET.get('page')
+        current_page = int(page) if page else 1
+
+        start_index = int((current_page - 1) /
+                          page_numbers_range) * page_numbers_range
+        end_index = start_index + page_numbers_range
+        if end_index >= max_index:
+            end_index = max_index
+
+        page_range = paginator.page_range[start_index:end_index]
+        context['page_range'] = page_range
+
+        search_keyword = self.request.GET.get('q', '')
+
+        if len(search_keyword) > 1:
+            context['q'] = search_keyword
+
+        return context
 
 
 class TaggedObjectLV(ListView):
@@ -35,26 +73,6 @@ def question_detail(request, pk):
     answer = question.communityanswer_set.all()
     ctx = {'question': question, 'answer': answer}
     return render(request, 'QnA/questiondetail.html', ctx)
-
-
-# def make_question(request, question=None):
-#     if request.method == "POST":
-#         form = QuestionForm(request.POST, request.FILES, instance=question)
-#         tag_list = request.POST['tag'].split(" ")
-#         question = CommunityQuestion(
-#             user_id=GeneralUser.objects.get(pk =1), #여기 나중에 로그인된 유저로바꾸면 되요!
-#             title=request.POST['title'],
-#             content= request.POST['content'],
-#             photo = request.FILES['image'],
-#         )
-#         for tag in tag_list:
-#                 tag =Tag(tag.strip("#"))
-#                 tag.save()
-#                 question.tags.add(tag)
-#         question.save()
-#         return redirect('QnA:questiondetail', pk=question.pk)
-#     else:
-#         return render(request, 'QnA/makequestion.html')
 
 
 def make_question(request):

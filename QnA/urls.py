@@ -4,7 +4,7 @@ from . import views
 app_name = 'QnA'
 
 urlpatterns = [
-    path('', views.qna_list, name='qnalist'),
+    path('', views.QuestionListView.as_view(), name='communityquestion_list'),
     path('questiondetail/<int:pk>/', views.question_detail, name='questiondetail'),
     path('makequestion/', views.make_question, name='makequestion'),
     path('editquestion/<int:pk>/', views.edit_question, name='editquestion'),
