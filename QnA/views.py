@@ -12,7 +12,9 @@ from django.contrib import messages
 
 class QuestionListView(ListView):
     model = CommunityQuestion
-    paginate_by = 27
+
+    paginate_by = 5
+
     # DEFAULT : <app_label>/<model_name>_list.html
     template_name = 'QnA/communityquestion.html'
     context_object_name = 'communityquestion_list'  # DEFAULT : <model_name>_list
