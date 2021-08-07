@@ -2,6 +2,11 @@
 {% load static %}
 
 {% block content %}
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="text" name="search" id="search">
+        <button>제출</button>
+    </form>
     {% for post in posts %}
         <p><a href="{% url 'community:post_detail' pk=post.pk %}">제목: {{ post.title }}</a></p>
         <p>{{ post.user_id }}</p>
