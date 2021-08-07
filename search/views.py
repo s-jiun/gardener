@@ -62,7 +62,7 @@ class PlantListView(ListView):
                 messages.error(self.request, '검색어는 2글자 이상 입력해주세요.')
         return plant_list
 
- 
+
 
 
 
@@ -70,3 +70,9 @@ def main_plant(request):
     return render(request, 'search/main_plant.html')
 
 
+def plant_detail(request,pk):
+    plant = Plant.objects.get(pk=pk)
+    ctx={
+        "plant":plant
+    }
+    return render(request, "search/plant_detail.html", ctx)
