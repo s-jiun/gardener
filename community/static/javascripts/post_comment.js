@@ -55,3 +55,34 @@ requestDeleteComment.onreadystatechange = () => {
         deleteCommentHandleResponse();
     }
 };
+
+
+
+const requestDelete = new XMLHttpRequest();
+
+const onClickDelete = (id, post_id) => {
+    const url = '/delete_ajax/';
+    requestDelete.open('POST', url, true);
+    requestDelete.setRequestHeader(
+        'Content-Type',
+        'application/x-www-form-urlencoded'
+    );
+    requestDelete.send(JSON.stringify({id: id, post_id:post_id}));
+
+};
+
+const deleteHandleResponse = () => {
+    if (requestDelete.status < 400) {
+        const {id,post_id} = JSON.parse(requestDelete.response);
+        const parent = document.querySelector(`.comments-${post_id}`);
+        const comment = document.querySelector(`.comment-${id}`);
+        const deletebutton = document.querySelector(`.deletecomment-${id}`);
+        parent.removeChild(comment)
+        parent.removeChild(deletebutton)
+    };
+};
+requestDelete.onreadystatechange = () => {
+    if (requestDelete.readyState === XMLHttpRequest.DONE) {
+        deleteHandleResponse();
+    }
+};

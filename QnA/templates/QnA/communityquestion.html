@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QnA</title>
+</head>
+<body>
+    <a href = '{% url "QnA:makequestion" %}'>질문하기</a>
+    {% if q %}
+            <h5>'{{ q }}' 검색 결과입니다.</h5>
+    {% endif %}
+    <table>
+        <thead>
+            <tr class="text-center">
+                <th>번호</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>등록일</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if communityquestion_list %}
+            {% for question in communityquestion_list %}
+            <tr class="text-center">
+                <td>{{ question.id }}</td>
+                <td>{{ question.title|truncatechars:30 }}</td>
+                <td>{{ question.user_id }}</td>
+                <td>{{ question.created_at|date:'Y. m. d' }}</td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            {% if q %}
+                <tr>
+                    <td>
+                        일치하는 검색 결과가 없습니다.
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td>
+                        작성된 게시글이 없습니다.
+                    </td>
+                </tr>
+            {% endif %}
+
+            {% endif %}
+        </tbody>
+    </table>
+    <form action = '' method="GET">
+        <div>
+            <input type="text" name ='q' value="{{q}}" placeholder="검색어를 입력하세요" />
+            <button type="submit">검색</button>
+        </div>
+    </form>
+    {% if q %}
+        <a href = '{% url "QnA:communityquestion_list" %}'>뒤로가기</a>
+    {% endif %}
+
+
+    {% comment %}
+    {% if is_paginated %}
+    <ul class="pagination">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}"
+                tabindex="-1">이전</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1">이전</a>
+        </li>
+        {% endif %}
+
+        {% for page in page_range %}
+        <li class="page-item {% if page == page_obj.number %} activate {% endif %}">
+            <a class="page-link" href="?page={{ page }}">{{ page }}</a>
+        </li>
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+        <li class="page-item">
+            <a class="page-link"
+                href="?page={{ page_obj.next_page_number }}">다음</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" href="#">다음</a>
+        </li>
+        {% endif %}
+    </ul>
+    {% endif %}
+    {% endcomment %}
+</body>
+</html>
