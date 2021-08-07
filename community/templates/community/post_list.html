@@ -2,21 +2,52 @@
 {% load static %}
 
 {% block content %}
-
-    <p><a href="{% url 'community:post_create' %}">포스트 작성</a></p>
-    {% for post in posts %}
-        <p><a href="{% url 'community:post_detail' pk=post.pk %}">제목: {{ post.title }}</a></p>
-        <p>{{ post.user_id }}</p>
-        {% for image in images %}
-            {% if image.post == post %}
-                {% if image.files %}
-                    <p><img src="{{ image.files.url }}" /></p>
-                {% endif %}
+    <form action = '' method="GET">
+        <div>
+            <input type="text" name ='q' value="{{q}}" placeholder="검색어를 입력하세요" />
+            <button type="submit">검색</button>
+        </div>
+    </form>
+    {% if q %}
+            <h5>'{{ q }}' 검색 결과입니다.</h5>
+    {% endif %}
+    <table>
+        <tbody>
+            {% if post_list %}
+                {% for post in post_list %}
+                    <p><a href="{% url 'community:post_detail' pk=post.pk %}">제목: {{ post.title }}</a></p>
+                    <p>{{ post.user_id }}</p>
+                    {% for image in images %}
+                        {% if image.post == post %}
+                            {% if image.files %}
+                                <p><img src="{{ image.files.url }}" /></p>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    <p>{{ post.content }}</p>
+                    {% for tag in post.tags.all %}
+                        <span>#{{tag.name}}</span>
+                    {% endfor %}
+                {% endfor %}
+            {% else %}
+            {% if q %}
+                <tr>
+                    <td>
+                        일치하는 검색 결과가 없습니다.
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td>
+                        작성된 게시글이 없습니다.
+                    </td>
+                </tr>
             {% endif %}
-        {% endfor %}
-        <p>{{ post.content }}</p>
-        {% for tag in post.tags.all %}
-            <span>#{{tag.name}}</span>
-        {% endfor %}
-    {% endfor %}
+
+            {% endif %}
+        </tbody>
+    </table>
+    {% if q %}
+        <a href = '{% url "community:post_list" %}'>뒤로가기</a>
+    {% endif %}
 {% endblock %}
