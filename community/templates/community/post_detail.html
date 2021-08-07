@@ -22,7 +22,9 @@
         {% for comment in comments %}
             <div class = 'comment-{{comment.id}} spanlength'>
                 {{ comment.content }}
-                <button class = 'deletecomment-{{comment.id}}' type = 'submit'  onclick='onclickDeleteComment({{comment.id}},{{post.id}})'>삭제</button>
+
+                <button class = 'deletecomment-{{comment.id}}' type = 'submit'  onclick='onClickDeleteComment({{comment.id}},{{post.id}})'>삭제</button>
+
             </div>
         {% endfor %}
     </div>

@@ -32,7 +32,9 @@ requestAddComment.onreadystatechange = () => {
 
 const requestDeleteComment = new XMLHttpRequest();
 
-const onclickDeleteComment = (comment_id, post_id) => {
+
+const onClickDeleteComment = (comment_id, post_id) => {
+
     const url = 'delete_comment/';
     requestDeleteComment.open('POST', url, true);
     requestDeleteComment.setRequestHeader(
@@ -44,8 +46,9 @@ const onclickDeleteComment = (comment_id, post_id) => {
 
 const deleteCommentHandleResponse = () => {
     if(requestDeleteComment.status < 400) {
-        const {post_id, comment_id} = JSON.parse(requestDeleteComment.response);
-        const comment = document.querySelector(`.comments-${post_id} .comment-${comment_id}`)
+
+        const {comment_id, post_id} = JSON.parse(requestDeleteComment.response);
+        const comment = document.querySelector(`.comment-${comment_id}`)
         comment.innerHTML = '';
     }
 };
@@ -54,35 +57,6 @@ requestDeleteComment.onreadystatechange = () => {
     if (requestDeleteComment.readyState === XMLHttpRequest.DONE) {
         deleteCommentHandleResponse();
     }
-};
-
-
-
-const requestDelete = new XMLHttpRequest();
-
-const onClickDelete = (id, post_id) => {
-    const url = '/delete_ajax/';
-    requestDelete.open('POST', url, true);
-    requestDelete.setRequestHeader(
-        'Content-Type',
-        'application/x-www-form-urlencoded'
-    );
-    requestDelete.send(JSON.stringify({id: id, post_id:post_id}));
 
 };
 
-const deleteHandleResponse = () => {
-    if (requestDelete.status < 400) {
-        const {id,post_id} = JSON.parse(requestDelete.response);
-        const parent = document.querySelector(`.comments-${post_id}`);
-        const comment = document.querySelector(`.comment-${id}`);
-        const deletebutton = document.querySelector(`.deletecomment-${id}`);
-        parent.removeChild(comment)
-        parent.removeChild(deletebutton)
-    };
-};
-requestDelete.onreadystatechange = () => {
-    if (requestDelete.readyState === XMLHttpRequest.DONE) {
-        deleteHandleResponse();
-    }
-};
