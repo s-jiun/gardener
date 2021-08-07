@@ -28,11 +28,13 @@ def post_detail(request, pk):
 @login_required
 def post_create(request, post=None):
     if request.method == 'POST':
-        form = PostForm(request.POST, request.FILES, instance=post)
+        form = PostForm(request.POST, request.FILES)
         if form.is_valid():
+            post = form.save(commit=False)
+            post.user_id = request.user
             post = form.save()
             form.save_m2m()
-            return redirect('community:post_detail')
+            return redirect('community:post_detail', pk=post.pk)
         else:
             ctx = {'form': form, 'is_create': 0}
             return render(request, template_name='community/post_form.html', context=ctx)
@@ -91,9 +93,7 @@ def delete_comment(request, pk):
     req = json.loads(request.body)
     post_id = req['post_id']
     comment_id = req['comment_id']
-    post = Post.objects.get(id=post_id)
     Comments.objects.get(post_id=post_id, id=comment_id).delete()
-    post.save()
     return JsonResponse({'comment_id': comment_id, 'post_id': post_id})
 
 
