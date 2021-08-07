@@ -1,5 +1,10 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
 <form action="" method="POST">
     {% csrf_token %}
     {{ form.as_p }}
     <button>로그인</button>
 </form>
+{% endblock %}
