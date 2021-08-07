@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="http://code.jquery.com/jquery-3.1.1.js"></script>
+    <title>Plant</title>
+</head>
+<body>
+    반려식물의 정보를 검색해보세요! <br>
+    <br>
+    {% if q %}
+    <h5>'{{ q }}' 검색 결과입니다.</h5>
+    {% endif %}
+
+        {% if plant_list %}
+        {% for plant in plant_list %}
+            <a href="{% url 'search:plant_detail' plant.pk %}">{{ plant.name }}</a>
+            <p>{{ plant.content}}</p>
+        {% endfor %}
+        {% else %}
+            {%if q%}
+            <tr class="text-center">
+                <td colspan="5">
+                일치하는 검색 결과가 없습니다.
+                </td>
+            </tr>
+            {% else %}
+            <tr class="text-center">
+                <td colspan="5">
+                저장된 식물 정보가 없습니다.
+                </td>
+            </tr>
+            {%endif%}
+        {% endif %}
+        <form action = '' method="GET">
+            <select name="type" id="search-type">
+                <option value="all">전체</option>
+                <option value="name">식물 이름</option>
+                <option value="content">내용</option>  
+                <option value="managelevel">경험자</option>      
+            </select>
+
+            <div id="search_option">
+                <input type="text" id="search" name ='q' value="{{q}}" placeholder="검색어를 입력하세요" />
+                <button type="submit">검색</button>
+            </div>
+        </form>
+
+        {% if is_paginated %}
+        <ul class="pagination">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?type={{type}}&q={{q}}&page={{ page_obj.previous_page_number }}"
+            tabindex="-1">이전</a>
+         </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1">이전</a>
+         </li>
+        {% endif %}
+
+        {% for page in page_range %}
+        <li class="page-item {% if page == page_obj.number %} activate {% endif %}">
+            <a class="page-link" href="?type={{type}}&q={{q}}&page={{ page }}">{{ page }}</a>
+        </li>
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+        <li class="page-item">
+        <a class="page-link"
+            href="?type={{type}}&q={{q}}&page={{ page_obj.next_page_number }}">다음</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" href="#">다음</a>
+        </li>
+        {% endif %}
+    </ul>
+    {% endif %}
+</body>
+
+<script>
+    $(function(){	
+	$(document).on("change", "select[name=type]", function(){
+        var search_box =document.getElementById("search_option")
+		var value = $(this).find("option:selected").val();
+        var search = document.getElementById("search");
+        var search2 = document.getElementById("search2");
+		var inputText = $(this).closest('input');
+		if (value == 'managelevel') {
+            search_box.innerHTML = ""
+            search_box.innerHTML +="<a href='?type=managelevel&q=초보자'>초보자 </a>"
+            search_box.innerHTML +="<a href='?type=managelevel&q=경험자'>경험자 </a>"
+            search_box.innerHTML +="<a href='?type=managelevel&q=전문가'>전문가 </a>"
+		}
+		
+		$(inputText).attr("disabled", flag);
+	});
+
+})
+
+</script>
+
+</html>

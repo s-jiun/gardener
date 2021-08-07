@@ -32,7 +32,9 @@ requestAddComment.onreadystatechange = () => {
 
 const requestDeleteComment = new XMLHttpRequest();
 
+
 const onClickDeleteComment = (comment_id, post_id) => {
+
     const url = 'delete_comment/';
     requestDeleteComment.open('POST', url, true);
     requestDeleteComment.setRequestHeader(
@@ -44,6 +46,7 @@ const onClickDeleteComment = (comment_id, post_id) => {
 
 const deleteCommentHandleResponse = () => {
     if(requestDeleteComment.status < 400) {
+
         const {comment_id, post_id} = JSON.parse(requestDeleteComment.response);
         const comment = document.querySelector(`.comment-${comment_id}`)
         comment.innerHTML = '';
@@ -54,4 +57,6 @@ requestDeleteComment.onreadystatechange = () => {
     if (requestDeleteComment.readyState === XMLHttpRequest.DONE) {
         deleteCommentHandleResponse();
     }
+
 };
+

@@ -56,6 +56,8 @@ INSTALLED_APPS = [
     'community',
     'search',
     'QnA',
+
+    'imagekit'
 ]
 
 MIDDLEWARE = [

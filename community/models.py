@@ -2,6 +2,8 @@ from django.db import models
 from django.db.models.deletion import CASCADE
 from django.db.models.fields import IntegerField
 from account.models import GeneralUser
+from imagekit.models import ProcessedImageField
+from imagekit.processors import Thumbnail
 
 # tag 관련 module import
 from taggit.managers import TaggableManager
@@ -44,7 +46,7 @@ class Post(models.Model):
 
 
 class Image(models.Model):
-    post = models.ForeignKey(Post, on_delete=CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
     files = models.ImageField(null=True, blank=True, upload_to='Post/%y/%m/%d')
 
 
