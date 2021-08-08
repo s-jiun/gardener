@@ -11,6 +11,7 @@
     {% if q %}
             <h5>'{{ q }}' 검색 결과입니다.</h5>
     {% endif %}
+    <p><a href="{% url 'community:post_create' %}">포스트 생성</a></p>
     <table>
         <tbody>
             {% if post_list %}
