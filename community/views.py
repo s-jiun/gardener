@@ -70,8 +70,9 @@ def post_detail(request, pk):
 def post_create(request, post=None):
     if request.method == 'POST':
 
-        form = PostForm(request.POST,instance=post)
-        image_formset = ImageFormSet(request.POST, request.FILES, instance =post)
+        form = PostForm(request.POST, instance=post)
+        image_formset = ImageFormSet(
+            request.POST, request.FILES, instance=post)
 
         if form.is_valid() and image_formset.is_valid():
             post = form.save(commit=False)
