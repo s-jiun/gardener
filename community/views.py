@@ -12,6 +12,7 @@ from django.views.generic import ListView
 from django.contrib import messages
 # Create your views here.
 
+
 class PostListView(ListView):
     model = Post
     paginate_by = 10
@@ -56,6 +57,7 @@ class PostListView(ListView):
 
         return context
 
+
 def post_detail(request, pk):
     post = Post.objects.get(id=pk)
     comments = Comments.objects.filter(post_id=pk)
@@ -68,8 +70,9 @@ def post_detail(request, pk):
 def post_create(request, post=None):
     if request.method == 'POST':
 
-        form = PostForm(request.POST,instance=post)
-        image_formset = ImageFormSet(request.POST, request.FILES, instance =post)
+        form = PostForm(request.POST, instance=post)
+        image_formset = ImageFormSet(
+            request.POST, request.FILES, instance=post)
 
         if form.is_valid() and image_formset.is_valid():
             post = form.save(commit=False)
@@ -90,17 +93,13 @@ def post_create(request, post=None):
         image_formset = ImageFormSet(instance=post)
         ctx = {'form': form, 'is_create': 0, 'image_formset': image_formset}
 
-
     return render(request, template_name='community/post_form.html', context=ctx)
 
 
 @login_required
 def post_update(request, pk):
-
-
     post = get_object_or_404(Post, pk=pk)
     return post_create(request, post=post)
-
 
 
 @login_required
@@ -140,9 +139,9 @@ def delete_comment(request, pk):
 def search_tag(request):
     if request.method == 'POST':
         keyword = request.POST.get('search')
-        
+
         posts = TaggedPost.objects.filter(tag=keyword).values('content_object')
-        
+
         ctx = {'posts': posts}
         return render(request, template_name='community/search_post.html', context=ctx)
 
