@@ -3,6 +3,7 @@ from django.db.models.deletion import CASCADE
 from django.db.models.fields import IntegerField
 from account.models import GeneralUser
 
+
 # tag 관련 module import
 from taggit.managers import TaggableManager
 from taggit.models import (
@@ -72,4 +73,4 @@ class Reply(models.Model):  # 대댓글 까지 가능한 댓글?
 class Like(models.Model):
     user_id = models.ForeignKey(GeneralUser, on_delete=CASCADE)
     post_id = models.ForeignKey(Post, on_delete=CASCADE)
-    is_like = models.BooleanField()
+    is_like = models.BooleanField(default=True)
