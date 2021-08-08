@@ -34,7 +34,7 @@
         <span>#{{tag.name}}</span>
     {% endfor %}
     <div class='likes post-id-{{ post.id }}'>
-        {% if post.like_set %}
+        {% if user.pk in liked_user %}
             <span><button class = 'heart' onclick="onClickLike({{ post.id }})">❤️</button></span>
             <span class='like_num'>좋아요 {{post.like_set.all.count}}</span>
         {% else %}

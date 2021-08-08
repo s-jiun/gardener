@@ -62,7 +62,9 @@ def post_detail(request, pk):
     post = Post.objects.get(id=pk)
     comments = Comments.objects.filter(post_id=pk)
     images = Image.objects.filter(post=post)
-    ctx = {'post': post, 'images': images, 'comments': comments}
+    liked_user = Like.objects.values_list('user_id', flat=True)
+    ctx = {'post': post, 'images': images,
+           'comments': comments, 'liked_user': liked_user}
     return render(request, template_name='community/post_detail.html', context=ctx)
 
 
