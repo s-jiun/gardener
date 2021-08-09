@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    <p>Userid</p>
+    {{user_change_form.userid}}
+    <p>Email</p>
+    {{user_change_form.email}}
+    <p>password</p>
+    {{user_change_form.password1}}
+    <p>password confirm</p>
+    {{user_change_form.password2}}
+    {{user_change_form.password}}
+    <input type="submit" value="수정하기"/>
+</form>
+{% endblock %}

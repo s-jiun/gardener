@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<form action="" method="POST" enctype="multipart/form-data" >
+    {% csrf_token %}
+    <div>
+        <label for="username">이름</label>
+        {{form.name}}
+    </div>
+    <div>
+        {% for error in form.userid.errors %}
+            {{error}}
+        {% endfor %}            
+        <label for="username">아이디</label>
+        {{form.userid}}
+    </div>
+    <div>
+        {% for error in form.email.errors %}
+            {{error}}
+        {% endfor %}
+        <label for="username">이메일</label>
+        {{form.email}}
+        
+    </div>
+    <div>
+        {{form.password1.errors}}
+        <label for="username">비밀번호</label>
+        {{form.password1}}
+    </div>
+    <div>
+        {{form.password2.errors}}
+        <label for="username">비밀번호 확인</label>
+        {{form.password2}}
+    </div>
+    <input type="submit" value="저장하기">
+</form>
+{% endblock %}

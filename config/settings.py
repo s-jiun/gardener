@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
     # taggit
     'taggit',
 
@@ -56,6 +56,10 @@ INSTALLED_APPS = [
     'community',
     'search',
     'QnA',
+
+    # editor
+    'ckeditor',
+    'ckeditor_uploader',
 ]
 
 MIDDLEWARE = [
@@ -73,7 +77,9 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'config', 'templates'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -151,7 +157,14 @@ AUTH_USER_MODEL = 'account.GeneralUser'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+
 # taggit
 TAGGIT_CASE_INSENSITIVE = True
+TAGGIT_LIMIT = 50
 TAGGIT_TAGS_FROM_STRING = 'community.utils.hashtag_splitter'
 TAGGIT_STRING_FROM_TAGS = 'community.utils.hashtag_joiner'
+
+
+# texteditor
+CKEDITOR_UPLOAD_PATH = 'uploads/'
+CKEDITOR_IMAGE_BACKEND = 'pillow'

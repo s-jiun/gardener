@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tagged_post</title>
+</head>
+
+<body>
+    <h2>List of posts of the tag "{{ tag }}"</h2>
+
+    {% if questions %}
+
+    <ul>
+
+        {% for question in questions %}
+
+            <li>
+                {{question.title}}
+            </li>
+            <li>
+                {% if question.photo %}
+                <img src = '{{ question.photo.url }}' />
+                {% endif %}
+            </li>
+            <li>
+                {{question.content}}
+            </li>
+
+        {% endfor %}
+
+    </ul>
+
+    {% else %}
+
+    <p>No post related to that tag yet.</p>
+
+    {% endif%}
+
+</body>
+
+</html>

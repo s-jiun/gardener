@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question Detail Page</title>
+</head>
+<body>
+    <div>
+        <div>
+            <h1>{{question.title}}</h1>
+            <div>
+                {{question.content|safe}}
+            </div>
+            {% for tag in question.tags.all %}
+                <a href="{% url 'QnA:tagged' tag %}">#{{ tag.name }}</a>
+            {% endfor %}
+
+
+            <div>
+                {% for ans in answer %}
+                    <div>{{ans.user_id}}</div>
+                    <div>{{ans.title}}</div>
+                    <div>{{ans.content|safe}}</div>
+                    <a href = '{% url "QnA:deleteanswer" ans.pk %}'>답글 삭제하기</a>
+                    <a href = '{% url "QnA:editanswer" ans.pk %}'>답글 편집하기</a>
+
+                {% endfor %}
+            </div>
+        </div>        
+    </div>
+    <a href = '{% url "QnA:makeanswer" pk=question.pk%}'>답글달기</a>
+    <a href = '{% url "QnA:deletequestion" pk=question.pk %}'>게시글 삭제하기</a>
+    <a href = '{% url "QnA:editquestion" pk=question.pk %}'>게시글 수정하기</a>
+    <a href = '{% url "QnA:communityquestion_list" %}'>질문 목록으로</a>
+</body>
+</html>

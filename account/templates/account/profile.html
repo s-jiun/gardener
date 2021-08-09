@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+
+<img src="{{user.Image.url}}" alt="">
+{{user.name}}
+{{user.profile}}
+{{user.userid}}
+{%if user.id == request.user.id%}
+    <p>프로필 수정</p>
+{%endif%}
+{%if user.id != request.user.id%}
+    {% if is_following%}
+    <div class='following'>
+        <button onclick="onClickFollowing({{user.id}})">팔로잉</button>
+    </div>
+    {% else %}
+    <div class="follow">
+        <button  onclick="onClickFollow({{user.id}})">팔로우</button>
+    </div>
+    {% endif %}
+{%endif%}
+
+<p>팔로잉 
+    <div class="following-count">
+        {{following}}
+    </div>
+</p>
+<p>팔로워 
+    <div class="follower-count">    
+        {{follower}}
+    </div>
+</p>
+<p>포스트</p>
+{%for post in posts%}
+    {{post.title}}
+{%endfor%}
+<p>사이드바</p>
+{%if user.id == request.user.id%}
+    <p>게시물 수정</p>
+    <p>게시물 삭제</p>
+{%endif%}
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'javascripts/profile_follow.js' %}"></script>
+{% endblock %}
