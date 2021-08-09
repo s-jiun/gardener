@@ -15,13 +15,14 @@ footer {
 
 .navbar {
   background-color: #ccdfcc;
-  background-image: url("../images/flowers.svg") no-repeat;
+  z-index: 0;
 }
 
 .navbar-brand {
   font-weight: bold;
   font-size: x-large;
   margin: 0 30px 0 20px;
+  z-index: 2;
 }
 
 .nav-item {
@@ -33,4 +34,13 @@ footer {
   margin-bottom: 5px;
   font-size: medium;
   font-weight: bold;
+}
+
+.logo-image {
+  width: 120px;
+  height: 100%;
+  position: absolute;
+  z-index: 1;
+  bottom: 0;
+  left: 20px;
 }
