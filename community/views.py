@@ -1,4 +1,4 @@
-from account.models import GeneralUser
+from user.models import GeneralUser
 import json
 from django.http.response import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
