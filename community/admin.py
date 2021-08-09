@@ -5,13 +5,9 @@ from . import models
 # Photo 클래스를 inline으로 나타낸다.
 
 
-class ImageInline(admin.TabularInline):
-    model = models.Image
-
-
 @admin.register(models.Post)
 class PostAdmin(admin.ModelAdmin):
-    inlines = [ImageInline, ]
+    pass
 
 
 @admin.register(models.TaggedPost)
