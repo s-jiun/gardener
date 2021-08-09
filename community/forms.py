@@ -12,12 +12,4 @@ class PostForm(forms.ModelForm):
 class ReplyForm(forms.ModelForm):
     class Meta:
         model = Reply
-        fields = '__all__'
-# class ImageForm(forms.ModelForm):
-#     class Meta:
-#         model = Image
-#         fields = ['files']
-
-
-# ImageFormSet = forms.inlineformset_factory(
-#     Post, Image, form=ImageForm, extra=4)
+        fields = ['content']

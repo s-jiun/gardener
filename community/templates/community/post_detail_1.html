@@ -21,7 +21,6 @@
         {% csrf_token %}
         {{comment_form.media}}
         {{ comment_form.as_p }}
-
         <button type="submit">Add comment</button>
     </form>
     
@@ -31,7 +30,7 @@
         <p class="info">{{ comment.content|safe}} | {{ comment.created_at }}</p>
 
         {% for replay in comment.replies.all %}
-        <p class="info">{{ replay.name }} | {{ replay.created_at }}</p>
+        <p class="info">{{ replay.content }} | {{ replay.created_at }}</p>
         {% endfor %}
 
         <h5>Replay</h5>

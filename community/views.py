@@ -74,7 +74,7 @@ def post_detail(request, pk):
     comments = post.reply_set.filter(parent_reply__isnull=True)
     if request.method == 'POST':
         # comment has been added
-        comment_form = ReplyForm(request.POST, request.FILES, instance=post)
+        comment_form = ReplyForm(request.POST, request.FILES)
         if comment_form.is_valid():
             parent_obj = None
             # get parent comment id from hidden input
@@ -91,12 +91,14 @@ def post_detail(request, pk):
                     # create replay comment object
                     replay_comment = comment_form.save(commit=False)
                     # assign parent_obj to replay comment
-                    replay_comment.parent = parent_obj
+                    replay_comment.parent_reply = parent_obj
             # normal comment
             # create comment object but do not save to database
             new_comment = comment_form.save(commit=False)
             # assign ship to the comment
             new_comment.post_id = post
+
+            new_comment.user_id = GeneralUser.objects.get( userid=request.user.get_username())
             # save
             new_comment.save()
             return redirect('community:post_detail', pk=post.pk)

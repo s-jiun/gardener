@@ -62,7 +62,7 @@ class Reply(models.Model):  # 대댓글 까지 가능한 댓글?
     post_id = models.ForeignKey(Post, on_delete=CASCADE)  # 게시글 번호
     content = RichTextUploadingField(blank=True, null=True)
     parent_reply = models.ForeignKey(
-        'self', on_delete=CASCADE, null=True, blank=True)
+        'self', on_delete=CASCADE, null=True, blank=True, related_name='replies')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
