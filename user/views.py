@@ -8,6 +8,8 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import PasswordResetConfirmView, PasswordResetDoneView,PasswordResetView
+from django.urls import reverse_lazy
 import json
 from django.http.response import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -189,3 +191,19 @@ def send_email(request):
     from_email = "ok3062@gmail.com"
     message = "메지시 테스트"
     EmailMessage(subject=subject, body=message, to=to, from_email=from_email).send()
+
+class MyPasswordResetView(PasswordResetView):
+    success_url=reverse_lazy('user:login')
+    template_name = 'user/password_reset_form.html'
+    email_template_name = 'user/password_reset.html'
+    mail_title="비밀번호 재설정"
+
+    def form_valid(self, form):
+        return super().form_valid(form)
+
+class MyPasswordResetConfirmView(PasswordResetConfirmView):
+    success_url=reverse_lazy('user:login')
+    template_name = 'user/password_reset_confirm.html'
+
+    def form_valid(self, form):
+        return super().form_valid(form)
