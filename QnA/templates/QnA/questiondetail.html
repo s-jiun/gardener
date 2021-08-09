@@ -10,14 +10,11 @@
     <div>
         <div>
             <h1>{{question.title}}</h1>
-            {% if question.photo %}
-                <img src = '{{ question.photo.url }}' />
-            {% endif %}
             <div>
-                {{question.content}}
+                {{question.content|safe}}
             </div>
             {% for tag in question.tags.all %}
-                {{ tag.name }}
+                <a href="{% url 'QnA:tagged' tag %}">#{{ tag.name }}</a>
             {% endfor %}
 
 
@@ -25,10 +22,7 @@
                 {% for ans in answer %}
                     <div>{{ans.user_id}}</div>
                     <div>{{ans.title}}</div>
-                    {% if ans.image %}
-                        <img src = '{{ans.image.url}}' />
-                    {% endif %}
-                    <div>{{ans.content}}</div>
+                    <div>{{ans.content|safe}}</div>
                     <a href = '{% url "QnA:deleteanswer" ans.pk %}'>답글 삭제하기</a>
                     <a href = '{% url "QnA:editanswer" ans.pk %}'>답글 편집하기</a>
 

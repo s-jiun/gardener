@@ -9,15 +9,10 @@
     </div>
     <h1>{{ post.title }}</h1>
     <div>
-        {{ post.content }}
+        {{ post.content|safe }}
     </div>
     {% for tag in tags %}
         # {{tag.name}}
-    {% endfor %}
-    {% for image in images %}
-        {% if image.files %}
-            <img src = '{{ image.files.url }}'/>
-        {% endif %}
     {% endfor %}
     <h3 class = 'hheight'>댓글</h3>
     <div class='comments-{{post.id}}'>

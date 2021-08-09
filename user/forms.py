@@ -4,6 +4,7 @@ from .models import GeneralUser, UserManager
 from django import forms
 from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth import get_user_model
+from allauth.account.forms import SignupForm
 
 class UserCreationForm(forms.ModelForm):
     # 사용자 생성 폼
@@ -93,7 +94,7 @@ class CustomUserChangeForm(UserChangeForm):
         return password2
 
 class UserProfileChangeForm(UserChangeForm):
-    image = forms.ImageField(
+    Image = forms.ImageField(
         label=('image'),
         required=False,
         widget=forms.FileInput()
@@ -110,4 +111,15 @@ class UserProfileChangeForm(UserChangeForm):
     )
     class Meta:
         model = get_user_model()
-        fields = ['image', 'name', 'profile']
+        fields = ['Image', 'name', 'profile']
+
+class MyCustomSignupForm(SignupForm):
+    agree_terms = forms.BooleanField(label='서비스 이용약관 및 개인정보방침 동의')
+    agree_marketing = forms.BooleanField(label='마케팅 이용 동의')
+
+    def save(self, request):
+        user = super(MyCustomSignupForm, self).save(request)
+        user.agree_terms = self.cleaned_data['agree_terms']
+        user.agree_marketing = self.cleaned_data['agree_marketing']
+        user.save()
+        return user

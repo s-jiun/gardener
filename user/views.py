@@ -1,7 +1,7 @@
 import django
 from django.db.models.query import InstanceCheckMeta
 from django.http import request
-from account.models import GeneralUser, Follow
+from user.models import GeneralUser, Follow
 from django.shortcuts import render, redirect
 from .forms import UserCreationForm, CustomUserChangeForm, UserProfileChangeForm
 from django.contrib.auth.forms import AuthenticationForm
@@ -15,7 +15,7 @@ from django.views.decorators.csrf import csrf_exempt
 def login(request):
     if request.user.is_authenticated:
         ## 수정 요
-         return redirect('account:update')
+         return redirect('user:update')
     if request.method == 'POST':
         # 사용자가 보낸 값 -> form
         form = AuthenticationForm(request, request.POST)
@@ -29,18 +29,18 @@ def login(request):
     context = {
         'form': form
     }
-    return render(request, 'account/login.html', context)
+    return render(request, 'user/login.html', context)
 
 def logout(request):
     if not request.user.is_authenticated:
-        return redirect('account:login')
+        return redirect('user:login')
     auth_logout(request)
     return redirect('/')
 
 def signup(request):
     if request.user.is_authenticated:
         # 수정 필요
-        return redirect('account:update')
+        return redirect('user:update')
     if request.method == 'POST':
         res = {}
         form = UserCreationForm(request.POST)
@@ -48,25 +48,25 @@ def signup(request):
             user = form.save(commit = False)
             user.set_password(form.cleaned_data['password1'])
             user.save()
-            return redirect('account:login')
+            return redirect('user:login')
     elif request.method == 'GET':
         form = UserCreationForm()
     
-    return render(request, 'account/signup.html', {'form':form})
+    return render(request, 'user/signup.html', {'form':form})
     
 def member_del(request):
     if not request.user.is_authenticated:
-        return redirect('account:login')
+        return redirect('user:login')
     if request.method == 'POST':
         user = request.user
         user.delete()
         return redirect('/')
-    return render(request, template_name='account/signout.html')
+    return render(request, template_name='user/signout.html')
 
 
 def member_modification(request):
     if not request.user.is_authenticated:
-        return redirect('account:login')
+        return redirect('user:login')
     if request.method == 'POST':
         user_change_form = CustomUserChangeForm(request.POST, instance=request.user)
         if user_change_form.is_valid():
@@ -78,7 +78,7 @@ def member_modification(request):
     else:
 	    user_change_form = CustomUserChangeForm(instance = request.user)
 
-    return render(request, 'account/update.html', {'user_change_form':user_change_form})
+    return render(request, 'user/update.html', {'user_change_form':user_change_form})
 
 def profile(request, pk):
     user = GeneralUser.objects.get(id=pk)
@@ -99,7 +99,7 @@ def profile(request, pk):
         'posts':posts,
         'is_following':is_following
     }
-    return render(request, template_name='account/profile.html', context=ctx)
+    return render(request, template_name='user/profile.html', context=ctx)
 def follower_list(request,pk):
     
     user = GeneralUser.objects.get(id=pk)
@@ -115,7 +115,7 @@ def follower_list(request,pk):
         'cur_users_followings_list':cur_users_followings_list
     }
 
-    return render(request, template_name='account/follower.html',context=ctx)
+    return render(request, template_name='user/follower.html',context=ctx)
 
 def following_list(request,pk):
     user = GeneralUser.objects.get(id=pk)
@@ -131,12 +131,12 @@ def following_list(request,pk):
         'cur_users_followings_list':cur_users_followings_list
     }
 
-    return render(request, template_name='account/following.html',context=ctx)
+    return render(request, template_name='user/following.html',context=ctx)
 
 def profile_update(request):
     user = GeneralUser.objects.get(id = request.user.id)
     if request.method == 'POST':
-        form = UserProfileChangeForm(request.POST, instance=user)
+        form = UserProfileChangeForm(request.POST,request.FILES, instance=user)
         if form.is_valid():
             form.save()
             follower = Follow.objects.filter(user=user).count()
@@ -147,16 +147,16 @@ def profile_update(request):
                'follower':follower,
                'following':following, 
             }
-            return redirect('account:profile',pk=request.user.id)
+            return redirect('user:profile',pk=request.user.id)
     else:
         form = UserProfileChangeForm(instance=request.user)
         ctx = {
             'form':form
         }
-    return render(request, template_name='account/profile_update.html', context=ctx)
+    return render(request, template_name='user/profile_update.html', context=ctx)
 
 def my_profile(request):
-    return redirect('account:profile',pk=request.user.id)
+    return redirect('user:profile',pk=request.user.id)
 
 def main_page(request):
     pass
@@ -180,3 +180,12 @@ def follow_ajax(request):
     follow = Follow(user=user, following_user = request.user)
     follow.save()
     return JsonResponse({'user_id':user_id})
+
+from django.core.mail.message import EmailMessage
+
+def send_email(request):
+    subject = "message"
+    to = ["gu3062@naver.com"]
+    from_email = "ok3062@gmail.com"
+    message = "메지시 테스트"
+    EmailMessage(subject=subject, body=message, to=to, from_email=from_email).send()

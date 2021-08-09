@@ -38,8 +38,30 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# # Email 전송
+# # 메일을 호스트하는 서버
+# EMAIL_HOST = 'smtp.gmail.com'
 
-# Application definition
+# # gmail과의 통신하는 포트
+# EMAIL_PORT = '587'
+
+# # 발신할 이메일
+# # EMAIL_HOST_USER = '구글아이디@gmail.com'
+# EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
+# # get_secret("EMAIL_HOST_USER")
+
+# # 발신할 메일의 비밀번호
+# # EMAIL_HOST_PASSWORD = '구글비밀번호'
+# EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
+# # get_secret("EMAIL_HOST_PASSWORD")
+
+# # TLS 보안 방법
+# EMAIL_USE_TLS = True
+
+# # 사이트와 관련한 자동응답을 받을 이메일 주소
+# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+# # Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -48,16 +70,26 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'django.contrib.sites',
     # taggit
     'taggit',
 
-    'account',
+    'user',
     'community',
     'search',
     'QnA',
 
+    # editor
+    'ckeditor',
+    'ckeditor_uploader',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -149,7 +181,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'account.GeneralUser'
+AUTH_USER_MODEL = 'user.GeneralUser'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -160,3 +192,38 @@ TAGGIT_CASE_INSENSITIVE = True
 TAGGIT_LIMIT = 50
 TAGGIT_TAGS_FROM_STRING = 'community.utils.hashtag_splitter'
 TAGGIT_STRING_FROM_TAGS = 'community.utils.hashtag_joiner'
+
+
+# texteditor
+CKEDITOR_UPLOAD_PATH = 'uploads/'
+CKEDITOR_IMAGE_BACKEND = 'pillow'
+
+LOGIN_REDIRECT_URL = '/update'  # 로그인 후 리디렉션
+ACCOUNT_LOGOUT_REDIRECT_URL = "/"  # 로그아웃 후 리디렉션
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'FIELDS': [
+            'id',
+            'name',
+            'email'
+            'password'
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USER_MODEL_USERNAME_FIELD = 'userid'
+ACCOUNT_AUTHENTICATION_METHOD = 'username'
+# ACCOUNT_USERNAME_REQUIRED = False
+
+
+ACCOUNT_FORMS = {'signup': 'user.forms.MyCustomSignupForm'}
