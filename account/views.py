@@ -136,7 +136,7 @@ def following_list(request,pk):
 def profile_update(request):
     user = GeneralUser.objects.get(id = request.user.id)
     if request.method == 'POST':
-        form = UserProfileChangeForm(request.POST, instance=user)
+        form = UserProfileChangeForm(request.POST,request.FILES, instance=user)
         if form.is_valid():
             form.save()
             follower = Follow.objects.filter(user=user).count()

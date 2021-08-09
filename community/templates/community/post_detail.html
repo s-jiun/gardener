@@ -33,12 +33,22 @@
     {% for tag in post.tags.all %}
         <span>#{{tag.name}}</span>
     {% endfor %}
+    <div class='likes post-id-{{ post.id }}'>
+        {% if user.pk in liked_user %}
+            <span><button class = 'heart' onclick="onClickLike({{ post.id }})">❤️</button></span>
+            <span class='like_num'>좋아요 {{post.like_set.all.count}}</span>
+        {% else %}
+            <span><button class = 'heart' onclick="onClickLike({{ post.id }})">🤍</button></span>
+            <span class='like_num'>좋아요 {{post.like_set.all.count}}</span>
+        {% endif %}
+    </div>
     <div>
         <input type= 'text' id = 'comment-{{post.id}}' name='content' placeholder = '댓글을 입력하시오' />
-        <button class = 'comment-plus' type = 'submit'  onclick='onClickAddComment({{post.id}})'>제출</button>
+        <button class = 'comment-plus' type = 'submit' onclick='onClickAddComment({{post.id}})'>제출</button>
     </div>
 {% endblock %}
 
 {% block js %}
     <script src="{% static 'javascripts/post_comment.js' %}"></script>
+    <script src="{% static 'javascripts/likes.js' %}"></script>
 {% endblock %}

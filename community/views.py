@@ -2,7 +2,7 @@ from account.models import GeneralUser
 import json
 from django.http.response import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Post, Comments, TaggedPost, Image
+from .models import Post, Comments, Image, Like
 
 from .forms import PostForm, ImageFormSet
 from django.views.decorators.csrf import csrf_exempt
@@ -62,7 +62,9 @@ def post_detail(request, pk):
     post = Post.objects.get(id=pk)
     comments = Comments.objects.filter(post_id=pk)
     images = Image.objects.filter(post=post)
-    ctx = {'post': post, 'images': images, 'comments': comments}
+    liked_user = Like.objects.values_list('user_id', flat=True)
+    ctx = {'post': post, 'images': images,
+           'comments': comments, 'liked_user': liked_user}
     return render(request, template_name='community/post_detail.html', context=ctx)
 
 
@@ -137,14 +139,19 @@ def delete_comment(request, pk):
     return JsonResponse({'comment_id': comment_id, 'post_id': post_id})
 
 
-def search_tag(request):
-    if request.method == 'POST':
-        keyword = request.POST.get('search')
 
-        posts = TaggedPost.objects.filter(tag=keyword).values('content_object')
+@login_required
+@csrf_exempt
+def like_ajax(request, pk):
+    req = json.loads(request.body)
+    post_id = req['id']
 
-        ctx = {'posts': posts}
-        return render(request, template_name='community/search_post.html', context=ctx)
+    post = Post.objects.get(id=post_id)
+    if(Like.objects.filter(user_id=request.user, post_id=post).count() != 0):
+        Like.objects.get(user_id=request.user, post_id=post).delete()
+    else:
+        Like.objects.create(user_id=request.user, post_id=post)
 
-    elif request.method == 'GET':
-        return redirect('community:post_list')
+    like_count = Like.objects.filter(post_id=post).count()
+    post.save()
+    return JsonResponse({'id': post_id, 'like_count': like_count})
