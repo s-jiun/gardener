@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 import os
+import json
 import environ
 from pathlib import Path
 import json
@@ -34,6 +35,7 @@ secret_file = os.path.join(BASE_DIR, 'secrets.json')
 with open(secret_file) as f:
     secrets = json.loads(f.read())
 
+
 def get_secret(setting, secrets=secrets):
     try:
         return secrets[setting]
@@ -43,6 +45,7 @@ def get_secret(setting, secrets=secrets):
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
+
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ['SECRET_KEY']
@@ -62,10 +65,12 @@ EMAIL_PORT = '587'
 # 발신할 이메일
 # EMAIL_HOST_USER = '구글아이디@gmail.com'
 EMAIL_HOST_USER = get_secret("EMAIL_HOST_USER")
+# get_secret("EMAIL_HOST_USER")
 
 # 발신할 메일의 비밀번호
 # EMAIL_HOST_PASSWORD = '구글비밀번호'
 EMAIL_HOST_PASSWORD = get_secret("EMAIL_HOST_PASSWORD")
+# get_secret("EMAIL_HOST_PASSWORD")
 
 # TLS 보안 방법
 EMAIL_USE_TLS = True
@@ -209,7 +214,7 @@ TAGGIT_STRING_FROM_TAGS = 'community.utils.hashtag_joiner'
 CKEDITOR_UPLOAD_PATH = 'uploads/'
 CKEDITOR_IMAGE_BACKEND = 'pillow'
 
-LOGIN_REDIRECT_URL = '/update' # 로그인 후 리디렉션
+LOGIN_REDIRECT_URL = '/update'  # 로그인 후 리디렉션
 ACCOUNT_LOGOUT_REDIRECT_URL = "/"  # 로그아웃 후 리디렉션
 
 SOCIALACCOUNT_PROVIDERS = {
