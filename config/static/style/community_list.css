@@ -1,0 +1,32 @@
+#search-header {
+  height: 50%;
+  border: solid 3px black;
+  background: url("/static/images/1.jpg");
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-size: cover;
+  padding-left: 0;
+  padding-right: 0;
+  color: white;
+  text-align: center;
+}
+
+#search-header-p {
+  font-size: 45px;
+}
+#search-header-form {
+  height: 30%;
+}
+.search-input {
+  width: 80%;
+  border-radius: 10px;
+}
+
+.search-input-1 {
+  border-radius: 10px;
+  background-color: #ccdfcc;
+}
+
+#thumbnail-p {
+  margin-bottom: 0;
+}

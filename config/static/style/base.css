@@ -4,6 +4,15 @@ header {
 
 body {
   font-family: "Gowun Batang", serif;
+  overflow: scroll;
+}
+
+.main-body {
+  width: 80%;
+  height: 1500px;
+  border: solid 3px black;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 footer {
@@ -11,11 +20,15 @@ footer {
   font-size: small;
   background-color: #ccdfcc;
   height: 120px;
+  position: relative;
+  width: 100%;
+  bottom: 0;
 }
 
 .navbar {
   background-color: #ccdfcc;
   z-index: 0;
+  position: sticky;
 }
 
 .navbar-brand {
@@ -43,4 +56,16 @@ footer {
   z-index: 1;
   bottom: 0;
   left: 20px;
+}
+
+.profile-image img {
+  overflow: hidden;
+  width: 35px;
+  height: 30px;
+  padding: 2px;
+  border-radius: 100%;
+}
+
+.nav-dropdown {
+  margin-left: 0;
 }

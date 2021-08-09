@@ -12,9 +12,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap" rel="stylesheet">
     <link href="{% static 'style/base.css' %}" rel="stylesheet">
+    <link href="{% static 'style/community_list.css' %}" rel="stylesheet">
     {% block head %}
     {% endblock %}
-    <title>Document</title>
+    <title>Gardener</title>
 </head>
 <header>
     <nav class="navbar navbar-expand-lg navbar-light">
@@ -39,7 +40,8 @@
                 {% if user.is_authenticated %}
                     <div class="d-flex justify-content-end">
                         <ul class="navbar-nav align-items-center">
-                            <li class="nav-item dropdown">
+                            <div class='profile-image'><img src="{{ user.Image.url }}"></div>
+                            <li class="nav-item dropdown nav-dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     {{ user.userid }}
                                 </a>
@@ -74,10 +76,12 @@
     </nav>
 </header>
 <body>
+    
     {% block content %}
     {% endblock %}
+    
 </body>
-<footer class="d-flex align-items-center fixed-bottom">
+<footer class="d-flex align-items-center">
     <div class="d-flex container-fluid justify-content-between">
         <div class="flex-column">
             <div class="contact">Contact Us</div>
