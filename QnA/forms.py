@@ -1,7 +1,7 @@
 from django import forms
 from taggit.forms import TagWidget
 from .models import CommunityQuestion, CommunityAnswer
-from account.models import GeneralUser
+from user.models import GeneralUser
 
 
 class QuestionForm(forms.ModelForm):
@@ -15,7 +15,7 @@ class QuestionForm(forms.ModelForm):
 
     class Meta:
         model = CommunityQuestion
-        fields = ['title', 'photo', 'content', 'tags']
+        fields = ['title', 'content', 'tags']
         # fields = '__all__'
 
 
@@ -34,7 +34,7 @@ class AnswerForm(forms.ModelForm):
 
     class Meta:
         model = CommunityAnswer
-        fields = ['title', 'image', 'content']
+        fields = ['title', 'content']
 
 
 # from django.forms.fields import EmailField

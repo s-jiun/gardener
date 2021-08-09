@@ -2,7 +2,7 @@ from django.db.models.fields.files import ImageField
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import CommunityAnswer, CommunityQuestion, Tag
 from .forms import QuestionForm, AnswerForm
-from account.models import GeneralUser
+from user.models import GeneralUser
 from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
 from taggit.managers import TaggableManager
@@ -90,7 +90,8 @@ def make_question(request, question=None):
             # question.tags=form.cleaned_data['tags']
             # # request.POST['i']
             question = form.save(commit=False)
-            question.user_id = GeneralUser.objects.get(pk=1)
+            question.user_id = GeneralUser.objects.get(
+                userid=request.user.get_username())
             question = form.save()
             return redirect('QnA:questiondetail', pk=question.pk)
     else:
@@ -150,10 +151,7 @@ def delete_answer(request, pk):
 
 def Tagging(request, tag):
 
-    # tags = Tag.objects.filter(slug=slug).values_list('name', flat=True)
-    print(tag)
     questions = CommunityQuestion.objects.filter(tags__name=tag)
-    print(questions)
     context = {
         'tag': tag,
         'questions': questions,
