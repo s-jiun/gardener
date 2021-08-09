@@ -10,27 +10,15 @@ from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.views.generic import ListView
 from django.contrib import messages
-# Create your views here.
+from django.db.models import Q
 
 
 class PostListView(ListView):
     model = Post
-    paginate_by = 10
+    paginate_by = 2
     # DEFAULT : <app_label>/<model_name>_list.html
     template_name = 'community/post_list.html'
     context_object_name = 'post_list'  # DEFAULT : <model_name>_list
-
-    def get_queryset(self):
-        search_keyword = self.request.GET.get('q', '')
-        post_list = Post.objects.order_by('-id')
-        if search_keyword:
-            if len(search_keyword) > 1:
-                search_post_list = post_list.filter(
-                    tags__name=search_keyword)
-                return search_post_list
-            else:
-                messages.error(self.request, '검색어는 2글자 이상 입력해주세요.')
-        return post_list
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -56,6 +44,26 @@ class PostListView(ListView):
             context['q'] = search_keyword
 
         return context
+
+    def get_queryset(self):
+        
+        search_keyword = self.request.GET.get('q', '')
+        search_type = self.request.GET.get('type', '')
+        post_list = Post.objects.order_by('-id')
+        if search_keyword:
+            if len(search_keyword) > 1:
+                if search_type == 'tag':
+                    search_post_list = post_list.filter(Q (tags__name=search_keyword))
+                elif search_type == 'title':
+                    search_post_list = post_list.filter(Q (title__icontains = search_keyword))
+                elif search_type == 'content':
+                    search_post_list = post_list.filter(Q (content__icontains = search_keyword))
+                return search_post_list
+            else:
+                messages.error(self.request, '검색어는 2글자 이상 입력해주세요.')
+        return post_list
+
+
 
 
 def post_detail(request, pk):

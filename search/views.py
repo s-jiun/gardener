@@ -43,7 +43,6 @@ class PlantListView(ListView):
 
     def get_queryset(self):
         search_keyword = self.request.GET.get('q', '')
-        print(search_keyword)
         search_type = self.request.GET.get('type', '')
         plant_list = Plant.objects.order_by('name') 
     
