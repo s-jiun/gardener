@@ -33,6 +33,8 @@ class TaggedPost(TaggedItemBase):
 class Post(models.Model):
     user_id = models.ForeignKey(GeneralUser, on_delete=CASCADE)
     title = models.CharField(max_length=100)
+    image = models.ImageField(
+        default='base/baseimg.png', upload_to='Community/%y/%m/%d/')
     content = RichTextUploadingField(blank=True, null=True)
     # 태그 부분 taggit 설치  & admin 부분 확인 필요!
     tags = TaggableManager(
