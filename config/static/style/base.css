@@ -6,6 +6,11 @@ body {
   font-family: "Gowun Batang", serif;
 }
 
+#main-body {
+  width: 80%;
+  border: solid 3px black;
+}
+
 footer {
   font-family: "Gowun Batang", serif;
   font-size: small;
