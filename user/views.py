@@ -8,9 +8,15 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import PasswordResetConfirmView, PasswordResetDoneView,PasswordResetView
+from django.urls import reverse_lazy
 import json
 from django.http.response import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.views import LoginView, LogoutView, PasswordResetView, PasswordResetDoneView
+from django.contrib.auth.forms import (
+    AuthenticationForm, PasswordChangeForm, PasswordResetForm, SetPasswordForm,
+)
 
 def login(request):
     if request.user.is_authenticated:
@@ -180,12 +186,3 @@ def follow_ajax(request):
     follow = Follow(user=user, following_user = request.user)
     follow.save()
     return JsonResponse({'user_id':user_id})
-
-from django.core.mail.message import EmailMessage
-
-def send_email(request):
-    subject = "message"
-    to = ["gu3062@naver.com"]
-    from_email = "ok3062@gmail.com"
-    message = "메지시 테스트"
-    EmailMessage(subject=subject, body=message, to=to, from_email=from_email).send()
