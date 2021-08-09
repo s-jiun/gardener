@@ -1,11 +1,9 @@
-from django.db.models.fields.files import ImageField
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import CommunityAnswer, CommunityQuestion, Tag
+from .models import CommunityAnswer, CommunityQuestion
 from .forms import QuestionForm, AnswerForm
 from user.models import GeneralUser
 from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
-from taggit.managers import TaggableManager
 from django.contrib import messages
 # Create your views here.
 
@@ -54,22 +52,6 @@ class QuestionListView(ListView):
 
         return context
 
-# 3차 tag를 가진 게시물 리스트 출력
-
-# class TaggedObjectLV(ListView):
-#     template_name = 'taggit/taggit_post_list.html'
-#     model = CommunityQuestion
-
-#     def get_queryset(self):
-#         tag_list = CommunityQuestion.objects.filter(
-#             tags__name=self.kwargs.get('tag'))
-#         return tag_list
-
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['tagname'] = self.kwargs['tag']
-#         return context
-
 
 def question_detail(request, pk):
     question = get_object_or_404(CommunityQuestion, pk=pk)
@@ -82,13 +64,6 @@ def make_question(request, question=None):
     if request.method == "POST":
         form = QuestionForm(request.POST, request.FILES, instance=question)
         if form.is_valid():
-            # question = CommunityQuestion()
-            # question.user_id = GeneralUser.objects.get(pk=1)
-            # question.title = form.cleaned_data['title']
-            # question.content = form.cleaned_data['content']
-            # question.photo = form.cleaned_data['photo']
-            # question.tags=form.cleaned_data['tags']
-            # # request.POST['i']
             question = form.save(commit=False)
             question.user_id = GeneralUser.objects.get(
                 userid=request.user.get_username())
@@ -126,9 +101,6 @@ def make_answer(request, pk, answer=None):
             answer = form.save()
             return redirect('QnA:questiondetail', pk=pk)
     else:
-        # user_id = GeneralUser.objects.get(
-        #     userid=request.user.get_username())
-        # question = CommunityQuestion.objects.get(pk=pk)
         form = AnswerForm(instance=answer)
         ctx = {'form': form}
     return render(request, 'QnA/makeanswer.html', ctx)
