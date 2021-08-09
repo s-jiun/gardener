@@ -15,7 +15,7 @@ from django.db.models import Q
 
 class PostListView(ListView):
     model = Post
-    paginate_by = 2
+    paginate_by = 6
     # DEFAULT : <app_label>/<model_name>_list.html
     template_name = 'community/post_list.html'
     context_object_name = 'post_list'  # DEFAULT : <model_name>_list
@@ -98,7 +98,8 @@ def post_detail(request, pk):
             # assign ship to the comment
             new_comment.post_id = post
 
-            new_comment.user_id = GeneralUser.objects.get( userid=request.user.get_username())
+            new_comment.user_id = GeneralUser.objects.get(
+                userid=request.user.get_username())
             # save
             new_comment.save()
             return redirect('community:post_detail', pk=post.pk)
