@@ -13,6 +13,10 @@ from django.urls import reverse_lazy
 import json
 from django.http.response import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.views import LoginView, LogoutView, PasswordResetView, PasswordResetDoneView
+from django.contrib.auth.forms import (
+    AuthenticationForm, PasswordChangeForm, PasswordResetForm, SetPasswordForm,
+)
 
 def login(request):
     if request.user.is_authenticated:
@@ -182,28 +186,3 @@ def follow_ajax(request):
     follow = Follow(user=user, following_user = request.user)
     follow.save()
     return JsonResponse({'user_id':user_id})
-
-from django.core.mail.message import EmailMessage
-
-def send_email(request):
-    subject = "message"
-    to = ["gu3062@naver.com"]
-    from_email = "ok3062@gmail.com"
-    message = "메지시 테스트"
-    EmailMessage(subject=subject, body=message, to=to, from_email=from_email).send()
-
-class MyPasswordResetView(PasswordResetView):
-    success_url=reverse_lazy('user:login')
-    template_name = 'user/password_reset_form.html'
-    email_template_name = 'user/password_reset.html'
-    mail_title="비밀번호 재설정"
-
-    def form_valid(self, form):
-        return super().form_valid(form)
-
-class MyPasswordResetConfirmView(PasswordResetConfirmView):
-    success_url=reverse_lazy('user:login')
-    template_name = 'user/password_reset_confirm.html'
-
-    def form_valid(self, form):
-        return super().form_valid(form)

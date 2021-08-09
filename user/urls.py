@@ -19,8 +19,5 @@ urlpatterns = [
     path('main/', views.main_page , name= "main_page"),
     path('following_ajax/', views.following_ajax, name='following_ajax'),
     path('follow_ajax/', views.follow_ajax, name='follow_ajax'),
-    path('password_reset/', views.MyPasswordResetView.as_view(), name='password_reset'),
-    path('reset/<uidb64>/<token>/', views.MyPasswordResetConfirmView.as_view(), name='password_reset_confirm'),
-    path('send_email/', views.send_email, name='send_email'),
 
 ]
