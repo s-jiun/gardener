@@ -1,8 +1,6 @@
 from django import forms
 
-from .models import Post
-from .models import Image
-
+from .models import Post, Reply
 
 
 class PostForm(forms.ModelForm):
@@ -11,11 +9,15 @@ class PostForm(forms.ModelForm):
         fields = ['title', 'content', 'tags']
 
 
-class ImageForm(forms.ModelForm):
+class ReplyForm(forms.ModelForm):
     class Meta:
-        model = Image
-        fields = ['files']
+        model = Reply
+        fields = '__all__'
+# class ImageForm(forms.ModelForm):
+#     class Meta:
+#         model = Image
+#         fields = ['files']
 
 
-ImageFormSet = forms.inlineformset_factory(
-    Post, Image, form=ImageForm, extra=4)
+# ImageFormSet = forms.inlineformset_factory(
+#     Post, Image, form=ImageForm, extra=4)

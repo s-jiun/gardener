@@ -57,6 +57,9 @@ INSTALLED_APPS = [
     'search',
     'QnA',
 
+    # editor
+    'ckeditor',
+    'ckeditor_uploader',
 ]
 
 MIDDLEWARE = [
@@ -160,3 +163,8 @@ TAGGIT_CASE_INSENSITIVE = True
 TAGGIT_LIMIT = 50
 TAGGIT_TAGS_FROM_STRING = 'community.utils.hashtag_splitter'
 TAGGIT_STRING_FROM_TAGS = 'community.utils.hashtag_joiner'
+
+
+# texteditor
+CKEDITOR_UPLOAD_PATH = 'uploads/'
+CKEDITOR_IMAGE_BACKEND = 'pillow'
