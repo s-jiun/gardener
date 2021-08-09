@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block head %}
+    
+{% endblock %}
+
 {% block content %}
     <form action = '' method="GET">
         <select name="type" id="search-type">
@@ -23,7 +27,6 @@
                 {% for post in post_list %}
                     <p><a href="{% url 'community:post_detail' pk=post.pk %}">제목: {{ post.title }}</a></p>
                     <p>{{ post.user_id }}</p>
-                    
                     <p>{{ post.content|safe }}</p>
                     {% for tag in post.tags.all %}
                         <span>#{{tag.name}}</span>

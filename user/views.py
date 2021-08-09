@@ -9,7 +9,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.views import PasswordResetConfirmView, PasswordResetDoneView,PasswordResetView
+from django.contrib.auth.views import PasswordResetConfirmView, PasswordResetDoneView, PasswordResetView
 from django.urls import reverse_lazy
 import json
 from django.http.response import JsonResponse
@@ -31,7 +31,7 @@ def login(request):
         if form.is_valid():
             # 검증 완료시 로그인!
             auth_login(request, form.get_user())
-            return redirect('/')
+            return redirect('/community')
     else:
         form = AuthenticationForm()
     context = {
@@ -184,7 +184,7 @@ def main_page(request):
 
 
 def start_page(request):
-    pass
+    return render(request, template_name='welcome.html')
 
 
 @csrf_exempt
@@ -204,4 +204,4 @@ def follow_ajax(request):
     user = GeneralUser.objects.get(id=user_id)
     follow = Follow(user=user, following_user=request.user)
     follow.save()
-    return JsonResponse({'user_id':user_id})
+    return JsonResponse({'user_id': user_id})
