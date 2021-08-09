@@ -93,7 +93,7 @@ class CustomUserChangeForm(UserChangeForm):
         return password2
 
 class UserProfileChangeForm(UserChangeForm):
-    image = forms.ImageField(
+    Image = forms.ImageField(
         label=('image'),
         required=False,
         widget=forms.FileInput()
@@ -110,4 +110,4 @@ class UserProfileChangeForm(UserChangeForm):
     )
     class Meta:
         model = get_user_model()
-        fields = ['image', 'name', 'profile']
+        fields = ['Image', 'name', 'profile']

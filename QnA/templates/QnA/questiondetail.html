@@ -17,7 +17,7 @@
                 {{question.content}}
             </div>
             {% for tag in question.tags.all %}
-                {{ tag.name }}
+                <a href="{% url 'QnA:tagged' tag %}">#{{ tag.name }}</a>
             {% endfor %}
 
 
