@@ -8,19 +8,88 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap" rel="stylesheet">
+    <link href="{% static 'style/base.css' %}" rel="stylesheet">
     {% block head %}
     {% endblock %}
     <title>Document</title>
 </head>
 <header>
-
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <img class="logo-image" src ="{% static 'images/flowers.svg' %}" />
+        <div class="container-fluid d-flex">
+            <a class="navbar-brand" href="{% url 'community:post_list' %}">Gardener</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="{% url 'community:post_list' %}">커뮤니티</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'search:plant_list' %}">식물검색</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'QnA:communityquestion_list' %}">질문게시판</a>
+                    </li>
+                </ul>
+                {% if user.is_authenticated %}
+                    <div class="d-flex justify-content-end">
+                        <ul class="navbar-nav align-items-center">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    {{ user.userid }}
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <li><a class="dropdown-item" href="{% url 'user:my_profile' %}">My Profile</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'user:profile_update' %}">회원정보 수정</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'user:signout' %}">회원탈퇴</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="navbar-nav align-items-center">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'user:logout' %}">로그아웃</a>
+                            </li>
+                        </ul>
+                    </div>
+                {% else %}
+                    <div class="d-flex justify-content-end">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'user:signup' %}">회원가입</a>
+                            </li>
+                            <li class="nav-item">
+                                <a 
+                                class="nav-link" href="{% url 'user:login' %}">로그인</a>
+                            </li>
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
 </header>
 <body>
     {% block content %}
     {% endblock %}
 </body>
-<footer>
-
+<footer class="d-flex align-items-center">
+    <div class="d-flex container-fluid justify-content-between">
+        <div class="flex-column">
+            <div class="contact">Contact Us</div>
+            <div>주소: _____________________________</div>
+            <div>문의전화: 000-0000-0000</div>
+        </div>
+        <div class="flex-column">
+            <div>&copy;Pirogramming 15th Team Gardner</div>
+            <div>All rights reserved</div>
+            <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+        </div>
+    </div>
 </footer>
 {% block js %}
 {% endblock %}
