@@ -1,6 +1,6 @@
 from django.db.models.fields.files import ImageField
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import CommunityAnswer, CommunityQuestion
+from .models import CommunityAnswer, CommunityQuestion, Tag
 from .forms import QuestionForm, AnswerForm
 from account.models import GeneralUser
 from django.views.generic import ListView
@@ -36,10 +36,8 @@ class QuestionListView(ListView):
         paginator = context['paginator']
         page_numbers_range = 5
         max_index = len(paginator.page_range)
-
         page = self.request.GET.get('page')
         current_page = int(page) if page else 1
-
         start_index = int((current_page - 1) /
                           page_numbers_range) * page_numbers_range
         end_index = start_index + page_numbers_range
@@ -56,19 +54,21 @@ class QuestionListView(ListView):
 
         return context
 
+# 3차 tag를 가진 게시물 리스트 출력
 
-class TaggedObjectLV(ListView):
-    template_name = 'taggit/taggit_post_list.html'
-    model = CommunityQuestion
+# class TaggedObjectLV(ListView):
+#     template_name = 'taggit/taggit_post_list.html'
+#     model = CommunityQuestion
 
-    def get_queryset(self):
-        tag_list=CommunityQuestion.objects.filter(tags__name=self.kwargs.get('tag'))
-        return tag_list
-        
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['tagname'] = self.kwargs['tag']
-        return context
+#     def get_queryset(self):
+#         tag_list = CommunityQuestion.objects.filter(
+#             tags__name=self.kwargs.get('tag'))
+#         return tag_list
+
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['tagname'] = self.kwargs['tag']
+#         return context
 
 
 def question_detail(request, pk):
@@ -78,9 +78,9 @@ def question_detail(request, pk):
     return render(request, 'QnA/questiondetail.html', ctx)
 
 
-def make_question(request):
+def make_question(request, question=None):
     if request.method == "POST":
-        form = QuestionForm(request.POST, request.FILES)
+        form = QuestionForm(request.POST, request.FILES, instance=question)
         if form.is_valid():
             # question = CommunityQuestion()
             # question.user_id = GeneralUser.objects.get(pk=1)
@@ -94,7 +94,7 @@ def make_question(request):
             question = form.save()
             return redirect('QnA:questiondetail', pk=question.pk)
     else:
-        form = QuestionForm()
+        form = QuestionForm(instance=question)
         ctx = {'form': form}
     return render(request, 'QnA/makequestion.html', ctx)
 
@@ -109,7 +109,7 @@ def edit_question(request, pk):
 def delete_question(request, pk):
     question = CommunityQuestion.objects.get(pk=pk)
     question.delete()
-    return redirect('QnA:qnalist')
+    return redirect('QnA:communityquestion_list')
 
 
 @login_required
@@ -146,3 +146,16 @@ def delete_answer(request, pk):
     pk = answer.question.pk
     answer.delete()
     return redirect('QnA:questiondetail', pk=pk)
+
+
+def Tagging(request, tag):
+
+    # tags = Tag.objects.filter(slug=slug).values_list('name', flat=True)
+    print(tag)
+    questions = CommunityQuestion.objects.filter(tags__name=tag)
+    print(questions)
+    context = {
+        'tag': tag,
+        'questions': questions,
+    }
+    return render(request, 'taggit/taggit_post_list.html', context)
