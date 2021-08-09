@@ -1,0 +1,36 @@
+header {
+  font-family: "Gowun Batang", serif;
+}
+
+body {
+  font-family: "Gowun Batang", serif;
+}
+
+footer {
+  font-family: "Gowun Batang", serif;
+  font-size: small;
+  background-color: #ccdfcc;
+  height: 120px;
+}
+
+.navbar {
+  background-color: #ccdfcc;
+  background-image: url("../images/flowers.svg") no-repeat;
+}
+
+.navbar-brand {
+  font-weight: bold;
+  font-size: x-large;
+  margin: 0 30px 0 20px;
+}
+
+.nav-item {
+  font-weight: 600;
+  margin: 0 10px;
+}
+
+.contact {
+  margin-bottom: 5px;
+  font-size: medium;
+  font-weight: bold;
+}
