@@ -15,7 +15,7 @@ from django.db.models import Q
 
 class PostListView(ListView):
     model = Post
-    paginate_by = 2
+    paginate_by = 6
     # DEFAULT : <app_label>/<model_name>_list.html
     template_name = 'community/post_list.html'
     context_object_name = 'post_list'  # DEFAULT : <model_name>_list

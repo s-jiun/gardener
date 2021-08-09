@@ -4,11 +4,15 @@ header {
 
 body {
   font-family: "Gowun Batang", serif;
+  overflow: scroll;
 }
 
-#main-body {
+.main-body {
   width: 80%;
+  height: 1500px;
   border: solid 3px black;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 footer {
@@ -16,9 +20,9 @@ footer {
   font-size: small;
   background-color: #ccdfcc;
   height: 120px;
-  position: absolute;
-  bottom: 0;
+  position: relative;
   width: 100%;
+  bottom: 0;
 }
 
 .navbar {
