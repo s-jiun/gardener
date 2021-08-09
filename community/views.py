@@ -100,6 +100,7 @@ def post_create(request, post=None):
 
 @login_required
 def post_update(request, pk):
+
     post = get_object_or_404(Post, pk=pk)
     return post_create(request, post=post)
 
@@ -136,6 +137,7 @@ def delete_comment(request, pk):
     Comments.objects.get(post_id=post_id, id=comment_id).delete()
 
     return JsonResponse({'comment_id': comment_id, 'post_id': post_id})
+
 
 
 @login_required
