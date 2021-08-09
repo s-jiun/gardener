@@ -10,9 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
-import os,json
+import os
 import environ
 from pathlib import Path
+import json
 from django.core.exceptions import ImproperlyConfigured
 
 env = environ.Env(

@@ -1,0 +1,46 @@
+header {
+  font-family: "Gowun Batang", serif;
+}
+
+body {
+  font-family: "Gowun Batang", serif;
+}
+
+footer {
+  font-family: "Gowun Batang", serif;
+  font-size: small;
+  background-color: #ccdfcc;
+  height: 120px;
+}
+
+.navbar {
+  background-color: #ccdfcc;
+  z-index: 0;
+}
+
+.navbar-brand {
+  font-weight: bold;
+  font-size: x-large;
+  margin: 0 30px 0 20px;
+  z-index: 2;
+}
+
+.nav-item {
+  font-weight: 600;
+  margin: 0 10px;
+}
+
+.contact {
+  margin-bottom: 5px;
+  font-size: medium;
+  font-weight: bold;
+}
+
+.logo-image {
+  width: 120px;
+  height: 100%;
+  position: absolute;
+  z-index: 1;
+  bottom: 0;
+  left: 20px;
+}
