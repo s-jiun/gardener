@@ -2,7 +2,7 @@ from django.db.models.fields.files import ImageField
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import CommunityAnswer, CommunityQuestion, Tag
 from .forms import QuestionForm, AnswerForm
-from account.models import GeneralUser
+from user.models import GeneralUser
 from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
 from taggit.managers import TaggableManager

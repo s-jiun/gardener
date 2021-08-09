@@ -1,7 +1,7 @@
 from django.db import models
 from django.db.models.deletion import CASCADE
-from account.models import GeneralUser
 from ckeditor_uploader.fields import RichTextUploadingField
+from user.models import GeneralUser
 
 
 # tag 관련 module import

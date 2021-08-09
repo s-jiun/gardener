@@ -1,6 +1,6 @@
 from django.db import models
 from django.db.models.deletion import CASCADE
-from account.models import GeneralUser
+from user.models import GeneralUser
 from taggit.managers import TaggableManager
 from taggit.models import (TagBase, TaggedItemBase)
 # editor
