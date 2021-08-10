@@ -71,7 +71,7 @@ def member_del(request):
     if request.method == 'POST':
         user = request.user
         user.delete()
-        return redirect('/')
+        return render(request, template_name='user/signout_done.html')
     return render(request, template_name='user/signout.html')
 
 

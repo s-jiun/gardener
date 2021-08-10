@@ -134,6 +134,17 @@ class CustomUserChangeForm(UserChangeForm):
         if password1 and password2 and password1 != password2:
             raise forms.ValidationError("비밀번호가 일치하지 않습니다.")
         return password2
+    
+    def clean_email(self):
+        if GeneralUser.objects.filter(email=self.cleaned_data['email']).exists():
+            raise forms.ValidationError('이미 존재하는 이메일입니다.')
+        return self.cleaned_data['email']
+
+    def clean_userid(self):
+        if GeneralUser.objects.filter(userid=self.cleaned_data['userid']).exists():
+            raise forms.ValidationError('이미 존재하는 아이디입니다.')
+        return self.cleaned_data['userid']
+
 
 class UserProfileChangeForm(UserChangeForm):
     Image = forms.ImageField(
@@ -154,23 +165,6 @@ class UserProfileChangeForm(UserChangeForm):
     class Meta:
         model = get_user_model()
         fields = ['Image', 'name', 'profile']
-    def clean_password2(self):
-        # 두 비밀번호 입력 일치 확인
-        password1 = self.cleaned_data.get("password1")
-        password2 = self.cleaned_data.get("password2")
-        if password1 and password2 and password1 != password2:
-            raise forms.ValidationError("비밀번호가 일치하지 않습니다.")
-        return password2
-
-    def clean_email(self):
-        if GeneralUser.objects.filter(email=self.cleaned_data['email']).exists():
-            raise forms.ValidationError('이미 존재하는 이메일입니다.')
-        return self.cleaned_data['email']
-
-    def clean_userid(self):
-        if GeneralUser.objects.filter(userid=self.cleaned_data['userid']).exists():
-            raise forms.ValidationError('이미 존재하는 아이디입니다.')
-        return self.cleaned_data['userid']
         
 class MyCustomSignupForm(SignupForm):
     agree_terms = forms.BooleanField(label='서비스 이용약관 및 개인정보방침 동의')
