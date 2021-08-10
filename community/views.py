@@ -106,7 +106,7 @@ def post_detail(request, pk):
     else:
         comment_form = ReplyForm()
     return render(request,
-                  'community/post_detail_1.html',
+                  'community/post_detail.html',
                   {'post': post,
                    'comments': comments,
                    'comment_form': comment_form})
