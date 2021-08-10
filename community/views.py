@@ -72,6 +72,8 @@ def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
     # list of active parent comments
     comments = post.reply_set.filter(parent_reply__isnull=True)
+    liked_user = Like.objects.filter(
+        post_id=pk).values_list('user_id', flat=True)
     if request.method == 'POST':
         # comment has been added
         comment_form = ReplyForm(request.POST, request.FILES)
@@ -109,21 +111,44 @@ def post_detail(request, pk):
                   'community/post_detail.html',
                   {'post': post,
                    'comments': comments,
-                   'comment_form': comment_form})
+                   'comment_form': comment_form,
+                   'liked_user': liked_user})
 
 
 @login_required
 def post_create(request, post=None):
     if request.method == 'POST':
 
-        form = PostForm(request.POST, instance=post)
+        form = PostForm(request.POST, request.FILES)
 
         if form.is_valid():
             post = form.save(commit=False)
             post.user_id = request.user
             post = form.save()
+            request.user.point += 30
+            request.user.save()
+            return redirect('community:post_detail', pk=post.pk)
+        else:
+            ctx = {'form': form, 'is_post': post}
+            return render(request, template_name='community/post_form.html', context=ctx)
+    elif request.method == 'GET':
+        form = PostForm()
+        ctx = {'form': form, 'is_post': post}
 
-            # form.save_m2m()
+    return render(request, template_name='community/post_form.html', context=ctx)
+
+
+@login_required
+def post_update(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == 'POST':
+
+        form = PostForm(request.POST, request.FILES, instance=post)
+
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.user_id = request.user
+            post = form.save()
             return redirect('community:post_detail', pk=post.pk)
         else:
             ctx = {'form': form, 'is_post': post}
@@ -133,12 +158,6 @@ def post_create(request, post=None):
         ctx = {'form': form, 'is_post': post}
 
     return render(request, template_name='community/post_form.html', context=ctx)
-
-
-@login_required
-def post_update(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    return post_create(request, post=post)
 
 
 @login_required

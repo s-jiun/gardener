@@ -22,9 +22,15 @@
         <input class="look-around" type="submit" value="둘 러 보 기"></input>
     </form>
     <br />
-    <form action="{% url 'user:login' %}">
-        <input class="login" type="submit" value="로 그 인"></input>
-    </form>
+    {% if user.is_authenticated %}
+        <form action="{% url 'user:logout' %}">
+            <input class="login" type="submit" value="로 그 아 웃"></input>
+        </form>
+    {% else %}
+        <form action="{% url 'user:login' %}">
+            <input class="login" type="submit" value="로 그 인"></input>
+        </form>
+    {% endif %}
     <br />
     <a class="signup" href="{% url 'user:signup' %}">회원가입</a>
 </body>

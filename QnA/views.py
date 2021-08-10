@@ -91,6 +91,29 @@ def delete_question(request, pk):
 @login_required
 def make_answer(request, pk, answer=None):
     if request.method == "POST":
+        form = AnswerForm(request.POST, request.FILES)
+        if form.is_valid():
+            answer = form.save(commit=False)
+            answer.user_id = GeneralUser.objects.get(
+                userid=request.user.get_username())
+            answer.question = CommunityQuestion.objects.get(pk=pk)
+            pk = answer.question.pk
+            answer = form.save()
+            request.user.point += 10
+            print(request.user.point)
+            request.user.save()
+            return redirect('QnA:questiondetail', pk=pk)
+    else:
+        form = AnswerForm()
+        ctx = {'form': form}
+    return render(request, 'QnA/makeanswer.html', ctx)
+
+
+@login_required
+def edit_answer(request, pk):
+    answer = get_object_or_404(CommunityAnswer, pk=pk)
+    pk = answer.question.pk
+    if request.method == "POST":
         form = AnswerForm(request.POST, request.FILES, instance=answer)
         if form.is_valid():
             answer = form.save(commit=False)
@@ -104,13 +127,6 @@ def make_answer(request, pk, answer=None):
         form = AnswerForm(instance=answer)
         ctx = {'form': form}
     return render(request, 'QnA/makeanswer.html', ctx)
-
-
-@login_required
-def edit_answer(request, pk):
-    answer = get_object_or_404(CommunityAnswer, pk=pk)
-    pk = answer.question.pk
-    return make_answer(request, pk, answer=answer)
 
 
 @login_required
