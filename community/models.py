@@ -34,8 +34,10 @@ class TaggedPost(TaggedItemBase):
 class Post(models.Model):
     user_id = models.ForeignKey(GeneralUser, on_delete=CASCADE)
     title = models.CharField(max_length=100)
-    image = ImageField(null=True, blank=True, upload_to='Community/%y/%m/%d/')
-    content = RichTextUploadingField(blank=True, null=True)
+    image = ImageField(default='../static/images/baseimg.png',
+                       upload_to='Community/%y/%m/%d/')
+    content = RichTextUploadingField(
+        blank=True, null=True, config_name='answer_ckeditor')
     # 태그 부분 taggit 설치  & admin 부분 확인 필요!
     tags = TaggableManager(
         verbose_name='tags', help_text='A hashtag-separated list of tags.', blank=True, through=TaggedPost)
@@ -62,7 +64,8 @@ class Comments(models.Model):  # 댓글
 class Reply(models.Model):  # 대댓글 까지 가능한 댓글?
     user_id = models.ForeignKey(GeneralUser, on_delete=CASCADE)
     post_id = models.ForeignKey(Post, on_delete=CASCADE)  # 게시글 번호
-    content = RichTextUploadingField(blank=True, null=True)
+    content = RichTextUploadingField(
+        blank=True, null=True, config_name='answer_ckeditor')
     parent_reply = models.ForeignKey(
         'self', on_delete=CASCADE, null=True, blank=True, related_name='replies')
     created_at = models.DateTimeField(auto_now_add=True)

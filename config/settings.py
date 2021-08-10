@@ -105,6 +105,7 @@ INSTALLED_APPS = [
     'imagekit',
 ]
 
+
 SITE_ID = 1
 
 MIDDLEWARE = [
@@ -213,6 +214,35 @@ TAGGIT_STRING_FROM_TAGS = 'community.utils.hashtag_joiner'
 # texteditor
 CKEDITOR_UPLOAD_PATH = 'uploads/'
 CKEDITOR_IMAGE_BACKEND = 'pillow'
+CKEDITOR_CONFIGS = {
+    'answer_ckeditor': {
+        'skin': 'moono',
+        # 'skin': 'office2013',
+        'toolbar': 'Custom',
+        'toolbar_Custom': [
+            ['Font', 'FontSize'],
+
+            ['BGColor', 'TextColor'],
+
+            ['Bold', 'Italic', 'Strike', 'Superscript',
+                'Subscript', 'Underline', 'RemoveFormat'],
+
+            ['BidiLtr', 'BidiRtl'],
+
+            '/',
+
+            ['Image', 'SpecialChar', 'Smiley'],
+
+            ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+
+            ['Blockquote', 'NumberedList', 'BulletedList'],
+
+            ['Link', 'Unlink'],
+
+            ['Undo', 'Redo']
+        ]
+    }
+}
 
 LOGIN_REDIRECT_URL = '/update'  # 로그인 후 리디렉션
 ACCOUNT_LOGOUT_REDIRECT_URL = "/"  # 로그아웃 후 리디렉션
