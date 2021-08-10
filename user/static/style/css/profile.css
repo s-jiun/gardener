@@ -20,7 +20,7 @@
    overflow: auto;
 }
 
-.profile_in .row img{
+.profile_in img{
    width: 160px;
    height:160px;
    border-radius:50%;
@@ -42,7 +42,8 @@
   padding: 5px;
   display: inline-block; 
   margin-top: 10px; 
-  border:solid 3px#CCDFCC; 
+  border:solid 3px#CCDFCC;
+  border-radius: 5px; 
   overflow: auto;
 }
 .sidebar{

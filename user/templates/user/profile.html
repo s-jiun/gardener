@@ -26,21 +26,34 @@
                             <img style="width:2vw; height:auto;" src="{% static 'images/planting.png'%}" />
                             <span style="font-size:20px; margin-left:10px; vertical-align:text-top">{{user.name}} 님은 현재 새싹 등급입니다.<br></span>
                             <div id="profile-content">
-                            <span>{{user.profile}}</span><br>
+                                <span>
+                                {%if user.profile}
+                                    {{user.profile}}
+                                {% elif %}
+                                    프로필 정보가 없습니다. 
+                                {%endif%}
+                                </span><br>
                             </div><br>
                             <div style="margin-top:10px;">
-                            <img style="width:2vw; height:auto;" src="{% static 'images/follower.png'%}" />
-                            <span>팔로잉 {{follower}}</span>
-                            <img style="width:2vw; height:auto;" src="{% static 'images/following.png'%}" />
-                            <span>팔로잉 {{following}}</span>
+                                <img style="width:2vw; height:auto;" src="{% static 'images/follower.png'%}" />
+                                <span>팔로우 {{follower}}</span>
+                                <img style="width:2vw; height:auto;" src="{% static 'images/following.png'%}" />
+                                <span>팔로잉 {{following}}</span>
                             </div>
                         </div>
-                        <hr style="margin-top: 30px; color: #5C5427; height:2px;">
-                        <hr style="margin-top: -10px; color: #5C5427; height:2px;">
                     </div>
+                        <hr style="margin-top: 30px; color: #5C5427; height:2px;">
+                        <div style="text-align:center; margin-top:-20px;">
+                        <span>My post</span>
+                        </div>
+                        <hr style="margin-top: -5px; color: #5C5427;height:2px;">
+                        {%for post in posts%}
+                        {{post.title}}
+                        <img src={{post.Image.url}} />
+                        {%endfor%}
                 </div>
-
             </div>
+
         </div>
         <div class="col">
             <div class="container sidebar">
@@ -67,9 +80,6 @@
                 </div>
                 </p> {% endcomment %}
                 <p>포스트</p>
-                {%for post in posts%}
-                {{post.title}}
-                {%endfor%}
                 <p>사이드바</p>
                 {%if user.id == request.user.id%}
                 <p>게시물 수정</p>
