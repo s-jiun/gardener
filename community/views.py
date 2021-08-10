@@ -120,7 +120,6 @@ def post_create(request, post=None):
     if request.method == 'POST':
 
         form = PostForm(request.POST, request.FILES)
-
         if form.is_valid():
             post = form.save(commit=False)
             post.user_id = request.user

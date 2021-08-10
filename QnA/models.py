@@ -27,7 +27,8 @@ class TaggedQuestion(TaggedItemBase):
 class CommunityQuestion(models.Model):
     user_id = models.ForeignKey(GeneralUser, on_delete=CASCADE)
     title = models.CharField(max_length=100)
-    content = RichTextUploadingField(blank=True, null=True)
+    content = RichTextUploadingField(
+        blank=True, null=True, config_name='answer_ckeditor')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     tags = TaggableManager(
@@ -38,6 +39,7 @@ class CommunityAnswer(models.Model):
     user_id = models.ForeignKey(GeneralUser, on_delete=CASCADE)
     question = models.ForeignKey(CommunityQuestion, on_delete=CASCADE)
     title = models.CharField(max_length=100)
-    content = RichTextUploadingField(blank=True, null=True)
+    content = RichTextUploadingField(
+        blank=True, null=True, config_name='answer_ckeditor')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
