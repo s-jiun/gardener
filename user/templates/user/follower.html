@@ -2,7 +2,6 @@
 {% load static %}
 
 {% block content %}
-
     <p>팔로워</p>
     <div>
         {% for follower in followers %}
@@ -13,17 +12,44 @@
             {{follower.following_user.profile}}
             {% if request.user != follower.following_user%}
                     {% if follower.following_user_id in cur_users_followings_list %}
+                    <div class="follow-wraper-{{follower.following_user_id}}">
                         <div class='following-{{follower.following_user_id}}'>
                             <button onclick="onClickFollowing({{follower.following_user_id}})">팔로잉</button>
                         </div>
+                    </div>
                     {% else %}
+                    <div class="follow-wraper-{{follower.following_user_id}}">
                         <div class="follow-{{follower.following_user_id}}">
                             <button  onclick="onClickFollow({{follower.following_user_id}})">팔로우</button>
                         </div>
+                    </div>
                     {% endif %}
             {%endif%}
         {% endfor %}
     </div>
+    <p>팔로잉</p>
+    {% for following in followings %}
+        {{following.id}}
+        {{following.user.image}}
+        {{following.user.name}}
+        {{following.user.userid}}
+        {{following.user.profile}}
+        {% if request.user != following.user%}
+                {% if following.user_id in cur_users_followings_list %}
+                <div class="follow-wraper-{{following.user_id}}">
+                    <div class='following-{{following.user_id}}'>
+                        <button onclick="onClickFollowing({{following.user_id}})">팔로잉</button>
+                    </div>
+                </div>
+                    {% else %}
+                    <div class="follow-wraper-{{following.user_id}}">
+                        <div class="follow-{{following.user_id}}">
+                            <button  onclick="onClickFollow({{following.user_id}})">팔로우</button>
+                        </div>
+                    </div>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
 {% endblock %}
 
 {% block js %}

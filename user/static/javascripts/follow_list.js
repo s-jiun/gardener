@@ -13,9 +13,15 @@ const onClickFollowing = (user_id) => {
 const followingHandleResponse = () => {
     if (requestFollowing.status < 400) {
         const {user_id} = JSON.parse(requestFollowing.response);
-        const element = document.querySelector(`.following-${user_id}`)
+        const element = document.querySelectorAll(`.follow-wraper-${user_id}`)
         console.log(element)
-        element.innerHTML = `
+        element[0].innerHTML = `
+        <div class="follow-${user_id}">
+            <button  onclick="onClickFollow(${user_id})">팔로우</button>
+        </div>
+        `
+
+        element[1].innerHTML = `
         <div class="follow-${user_id}">
             <button  onclick="onClickFollow(${user_id})">팔로우</button>
         </div>
@@ -44,13 +50,18 @@ const onClickFollow = (user_id) => {
 const followHandleResponse = () => {
     if (requestFollow.status < 400) {
         const {user_id} = JSON.parse(requestFollow.response);
-        const element = document.querySelector(`.follow-${user_id}`)
+        const element = document.querySelectorAll(`.follow-wraper-${user_id}`)
         console.log(element)
-        element.innerHTML = `    
+        element[0].innerHTML = `    
         <div class='following-${user_id}'>
             <button onclick="onClickFollowing(${user_id})">팔로잉</button>
         </div>
-    `
+        `
+        element[1].innerHTML = `    
+        <div class='following-${user_id}'>
+            <button onclick="onClickFollowing(${user_id})">팔로잉</button>
+        </div>
+        `
     }
 
 }
