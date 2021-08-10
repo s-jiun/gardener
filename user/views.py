@@ -183,13 +183,8 @@ def main_page(request):
     pass
 
 
-<<<<<<< Updated upstream
-def start_page(request):
-    pass
-=======
 def start_page(request):    
     return render(request, template_name='welcome.html')
->>>>>>> Stashed changes
 
 
 @csrf_exempt
