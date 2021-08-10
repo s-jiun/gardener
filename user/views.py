@@ -4,12 +4,12 @@ from django.db.models.query import InstanceCheckMeta
 from django.http import request
 from user.models import GeneralUser, Follow
 from django.shortcuts import render, redirect
-from .forms import UserCreationForm, CustomUserChangeForm, UserProfileChangeForm
+from .forms import UserCreationForm, CustomUserChangeForm, UserProfileChangeForm, UserAuthenticationForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.views import PasswordResetConfirmView, PasswordResetDoneView, PasswordResetView
+from django.contrib.auth.views import PasswordResetConfirmView, PasswordResetDoneView,PasswordResetView
 from django.urls import reverse_lazy
 import json
 from django.http.response import JsonResponse
@@ -26,14 +26,14 @@ def login(request):
         return redirect('user:update')
     if request.method == 'POST':
         # 사용자가 보낸 값 -> form
-        form = AuthenticationForm(request, request.POST)
+        form = UserAuthenticationForm(request, request.POST)
         # 검증
         if form.is_valid():
             # 검증 완료시 로그인!
             auth_login(request, form.get_user())
-            return redirect('/community')
+            return redirect('/')
     else:
-        form = AuthenticationForm()
+        form = UserAuthenticationForm()
     context = {
         'form': form
     }
@@ -71,7 +71,7 @@ def member_del(request):
     if request.method == 'POST':
         user = request.user
         user.delete()
-        return redirect('/')
+        return render(request, template_name='user/signout_done.html')
     return render(request, template_name='user/signout.html')
 
 
@@ -184,7 +184,7 @@ def main_page(request):
 
 
 def start_page(request):
-    return render(request, template_name='welcome.html')
+    pass
 
 
 @csrf_exempt
@@ -204,4 +204,4 @@ def follow_ajax(request):
     user = GeneralUser.objects.get(id=user_id)
     follow = Follow(user=user, following_user=request.user)
     follow.save()
-    return JsonResponse({'user_id': user_id})
+    return JsonResponse({'user_id':user_id})
