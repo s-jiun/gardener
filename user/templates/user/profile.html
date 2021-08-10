@@ -1,49 +1,89 @@
 {% extends "base.html" %}
 {% load static %}
+{%block head%}
+<link href="{% static 'style/css/profile.css' %}" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet"> <!--CDN 링크 -->
 
+{%endblock%}
 {% block content %}
 
+<div class="container main-body">
+    <div class="row">
+        <div class="col col-10">
+            <div class="container profile">
+                <div class="container profile_in">
+                    <div class="row"  >
+                        <div style="position: relative;">
+                            <div style=" position: absolute; left: 80px;">
+                                <img id="profile-line" src="{% static 'images/profile_img_line.png'%}" />
+                            </div>
+                            <div style="position:  absolute; left: 138px; top: 33px;">
+                                <img src={{user.Image.url}} />
+                            </div>
+                        </div>
+                        <div style="margin-left:360px;margin-top:15px; width:auto; ">
+                            <span style="font-size:40px;">{{user.userid}}</span><br>
+                            <img style="width:2vw; height:auto;" src="{% static 'images/planting.png'%}" />
+                            <span style="font-size:20px; margin-left:10px; vertical-align:text-top">{{user.name}} 님은 현재 새싹 등급입니다.<br></span>
+                            <div id="profile-content">
+                            <span>{{user.profile}}</span><br>
+                            </div><br>
+                            <div style="margin-top:10px;">
+                            <img style="width:2vw; height:auto;" src="{% static 'images/follower.png'%}" />
+                            <span>팔로잉 {{follower}}</span>
+                            <img style="width:2vw; height:auto;" src="{% static 'images/following.png'%}" />
+                            <span>팔로잉 {{following}}</span>
+                            </div>
+                        </div>
+                        <hr style="margin-top: 30px; color: #5C5427; height:2px;">
+                        <hr style="margin-top: -10px; color: #5C5427; height:2px;">
+                    </div>
+                </div>
 
-<img src="{{user.Image.url}}" alt="">
-{{user.name}}
-{{user.profile}}
-{{user.userid}}
-{%if user.id == request.user.id%}
-    <p>프로필 수정</p>
-{%endif%}
-{%if user.id != request.user.id%}
-    {% if is_following%}
-    <div class='following'>
-        <button onclick="onClickFollowing({{user.id}})">팔로잉</button>
-    </div>
-    {% else %}
-    <div class="follow">
-        <button  onclick="onClickFollow({{user.id}})">팔로우</button>
-    </div>
-    {% endif %}
-{%endif%}
+            </div>
+        </div>
+        <div class="col">
+            <div class="container sidebar">
+                {%if user.id != request.user.id%}
+                {% if is_following%}
+                <div class='following'>
+                    <button onclick="onClickFollowing({{user.id}})">팔로잉</button>
+                </div>
+                {% else %}
+                <div class="follow">
+                    <button onclick="onClickFollow({{user.id}})">팔로우</button>
+                </div>
+                {% endif %}
+                {%endif%}
 
-<p>팔로잉 
-    <div class="following-count">
-        {{following}}
+                {% comment %} <p>팔로잉
+                <div class="following-count">
+                    {{following}}
+                </div>
+                </p>
+                <p>팔로워
+                <div class="follower-count">
+                    {{follower}}
+                </div>
+                </p> {% endcomment %}
+                <p>포스트</p>
+                {%for post in posts%}
+                {{post.title}}
+                {%endfor%}
+                <p>사이드바</p>
+                {%if user.id == request.user.id%}
+                <p>게시물 수정</p>
+                <p>게시물 삭제</p>
+                {%endif%}
+                {%if user.id == request.user.id%}
+                <p style="margin-top:20px;">프로필 수정</p>
+                {%endif%}
+            </div>
+        </div>
     </div>
-</p>
-<p>팔로워 
-    <div class="follower-count">    
-        {{follower}}
-    </div>
-</p>
-<p>포스트</p>
-{%for post in posts%}
-    {{post.title}}
-{%endfor%}
-<p>사이드바</p>
-{%if user.id == request.user.id%}
-    <p>게시물 수정</p>
-    <p>게시물 삭제</p>
-{%endif%}
+</div>
 {% endblock %}
 
 {% block js %}
-    <script src="{% static 'javascripts/profile_follow.js' %}"></script>
+<script src="{% static 'javascripts/profile_follow.js' %}"></script>
 {% endblock %}
