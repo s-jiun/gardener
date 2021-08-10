@@ -43,7 +43,7 @@
                             <div class='profile-image'><img src="{{ user.Image.url }}"></div>
                             <li class="nav-item dropdown nav-dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    {{ user.userid }}
+                                    {{ request.user.userid }}
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                     <li><a class="dropdown-item" href="{% url 'user:my_profile' %}">My Profile</a></li>

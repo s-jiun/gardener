@@ -7,9 +7,9 @@
 
 {% block content %}
 <div class='container main-body'>
-    <div class='row'>
-        <div class='col col-10'>
-            <div id='search-header' class='d-flex flex-column justify-content-center'>
+    <div class='row' style='height:100%;'>
+        <div class='col col-10' style='height:100%;'>
+            <div id='search-header' class='d-flex flex-column justify-content-center' style='height:30%;'>
                 <div id='search-header-p'>
                     {% if q %}
                     '{{ q }}' 검색 결과입니다.
@@ -29,30 +29,30 @@
                     </form>
                 </div>
             </div>
-        
             <div class='container-fluid mb-3'>
+                {% if post_list %}
                 <div class='row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3'>
-                    {% if post_list %}
                     {% for post in post_list %}
                     <div class='col'>
                         <p id='thumbnail-p'>{{ post.user_id }}</p>
                         <a href="{% url 'community:post_detail' pk=post.pk %}">
                             {% if post.image %}
-                            <image src='{{ post.image.url }}' width="80%" height="auto" />
+                            <image src='{{ post.image.url }}' class='img-thumbnail' style='height:80%;'/>
                             {% endif %}
                         </a>
                     </div>
                     {% endfor %}
-        
-                    {% else %}
+                </div>
+                {% else %}
+                <div class='row row-cols-1' style='text-align:center; margin-top: 2rem;'>
                     {% if q %}
                     <h1>일치하는 검색 결과가 없습니다.</h1>
         
                     {% else %}
-                    <h2>작성된 게시글이 없습니다.</h2>
-                    {% endif %}
+                    <h1>작성된 게시글이 없습니다.</h1>
                     {% endif %}
                 </div>
+                {% endif %}
             </div>
             <div id='list-paginator' style = 'margin-bottom:1rem;'>
                 {% if is_paginated %}
@@ -91,14 +91,14 @@
         <div class='col d-flex flex-column justify-content-center' style="margin-left:30px;">
             <div>
                 <button style = 'border-radius:10px;margin-bottom:1rem;'>
-                    <a href="">
+                    <a href="{% url 'community:post_create' %}">
                         <img class='post-button' src="{% static 'images/writing.png' %}">
                     </a>
                 </button>
             </div>
             <div>
                 <button style = 'border-radius:10px; margin-bottom:1rem;'>
-                    <a href="{% url 'community:post_create' %}">
+                    <a href="">
                         <img class='post-button' src="{% static 'images/rating.png' %}">
                     </a>
                 </button>
@@ -113,8 +113,6 @@
         </div>
 
     </div>
-    
-
 </div>
 
 

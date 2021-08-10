@@ -1,18 +1,31 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block head %}
+    <link href="{% static 'style/login.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
-<form method="POST">
-    {% csrf_token %}
-    <p>Userid</p>
-    {{user_change_form.userid}}
-    <p>Email</p>
-    {{user_change_form.email}}
-    <p>password</p>
-    {{user_change_form.password1}}
-    <p>password confirm</p>
-    {{user_change_form.password2}}
-    {{user_change_form.password}}
-    <input type="submit" value="수정하기"/>
-</form>
+<div class="d-flex justify-content-center align-items-center main-container" style="background-color: #D8D8D8;">
+    <img src="{%static 'images/login_background.jpg'%}" alt="" style="max-width: 70%; max-height: 100%; z-index: 1; position: absolute; overflow: hidden; height: 90vh;">
+    <div class="d-flex justify-content-center align-items-center update-container">
+        
+        <form action="" method="POST" enctype="multipart/form-data" class="update-form" >
+            <h1 style="margin-bottom: 30px;">회원가입</h1>
+            {% csrf_token %}
+            {{user_change_form.userid.errors}}
+            <p>아이디</p>
+            {{user_change_form.userid}}
+            {{user_change_form.email.errors}}
+            <p>이메일</p>
+            {{user_change_form.email}}
+            <p>비밀번호</p>
+            {{user_change_form.password1}}
+            <p>비밀번호 확인</p>
+            {{user_change_form.password2}}
+            {{user_change_form.password2.errors}}
+            <button class="signup-btn" type="submit">저장하기</button>
+        </form>
+    </div>
+</div>
 {% endblock %}
