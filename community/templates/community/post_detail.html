@@ -2,6 +2,8 @@
 {% load static %}
 
 {% block content %}
+    <p><a href="{% url 'community:post_update' post.pk %}">포스트 수정</a></p>
+    <p><a href="{% url 'community:post_delete' post.pk %}">포스트 삭제</a></p>
     <div>
         <p> {{post.user_id}}</p>
     </div>

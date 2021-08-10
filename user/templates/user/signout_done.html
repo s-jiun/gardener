@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+{% block head %}
+    <link href="{% static 'style/login.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center main-container" style="background-color: #D8D8D8;">
+    <img src="{%static 'images/login_background.jpg'%}" alt="" style="max-width: 70%; max-height: 100%; z-index: 1; position: absolute; overflow: hidden; height: 90vh;">
+    <div style="z-index: 10; text-align: center;">
+        <h1 style="margin-bottom: 50px;">회원 완료</h1>
+        <p>그 동안 Gardener를 이용해주셔서 감사합니다.</p>
+        <a href="{% url 'user:start_page'%}"><button class="signout-btn" style="width: 20vw;">메인페이지로 돌아가기</button></a>
+    </div>
+</div>
+{% endblock %}
