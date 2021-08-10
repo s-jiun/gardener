@@ -106,7 +106,7 @@ def post_detail(request, pk):
     else:
         comment_form = ReplyForm()
     return render(request,
-                  'community/post_detail_1.html',
+                  'community/post_detail.html',
                   {'post': post,
                    'comments': comments,
                    'comment_form': comment_form})
@@ -126,18 +126,17 @@ def post_create(request, post=None):
             # form.save_m2m()
             return redirect('community:post_detail', pk=post.pk)
         else:
-            ctx = {'form': form, 'is_create': 0}
+            ctx = {'form': form, 'is_post': post}
             return render(request, template_name='community/post_form.html', context=ctx)
     elif request.method == 'GET':
         form = PostForm(instance=post)
-        ctx = {'form': form, 'is_create': 0}
+        ctx = {'form': form, 'is_post': post}
 
     return render(request, template_name='community/post_form.html', context=ctx)
 
 
 @login_required
 def post_update(request, pk):
-
     post = get_object_or_404(Post, pk=pk)
     return post_create(request, post=post)
 

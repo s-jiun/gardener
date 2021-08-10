@@ -1,0 +1,31 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'style/welcome.css' %}"/>
+    <title>Gardener</title>
+</head>
+<body>
+    <img class="welcome-img" src="{% static  'images/welcome.jpg'%}" />
+    <div class="rectangle"></div>
+    <div class="site-name">GARDENER</div>
+    <br />
+    <br />
+    <form action="{% url 'community:post_list' %}">
+        <input class="look-around" type="submit" value="둘 러 보 기"></input>
+    </form>
+    <br />
+    <form action="{% url 'user:login' %}">
+        <input class="login" type="submit" value="로 그 인"></input>
+    </form>
+    <br />
+    <a class="signup" href="{% url 'user:signup' %}">회원가입</a>
+</body>
+</html>
