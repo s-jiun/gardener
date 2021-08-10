@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.deletion import CASCADE
 from ckeditor_uploader.fields import RichTextUploadingField
+from django.db.models.fields.files import ImageField
 from user.models import GeneralUser
 
 
@@ -33,8 +34,7 @@ class TaggedPost(TaggedItemBase):
 class Post(models.Model):
     user_id = models.ForeignKey(GeneralUser, on_delete=CASCADE)
     title = models.CharField(max_length=100)
-    image = models.ImageField(
-        default='../static/images/default_profile.svg', upload_to='Community/%y/%m/%d/')
+    image = ImageField(null=True, blank=True, upload_to='Community/%y/%m/%d/')
     content = RichTextUploadingField(blank=True, null=True)
     # 태그 부분 taggit 설치  & admin 부분 확인 필요!
     tags = TaggableManager(
