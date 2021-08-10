@@ -1,5 +1,5 @@
 #search-header {
-  height: 50%;
+  height: 20%;
   border: solid 3px black;
   background: url("/static/images/1.jpg");
   background-repeat: no-repeat;
@@ -29,4 +29,15 @@
 
 #thumbnail-p {
   margin-bottom: 0;
+}
+
+#list-paginator {
+  display: flex;
+  justify-content: center;
+  margin-top: 5;
+}
+
+.post-button {
+  width: 3vw;
+  height: 3vh;
 }

@@ -6,92 +6,116 @@
 {% endblock %}
 
 {% block content %}
-    <div class='container main-body'>
-        <div id= 'search-header' class= 'd-flex flex-column justify-content-around'>
-            <div id= 'search-header-p'>
-                {% if q %}
+<div class='container main-body'>
+    <div class='row'>
+        <div class='col col-10'>
+            <div id='search-header' class='d-flex flex-column justify-content-center'>
+                <div id='search-header-p'>
+                    {% if q %}
                     '{{ q }}' 검색 결과입니다.
-                {% else %}
-                마음에 드는 플렌테리어를 찾아보세요.
-                {% endif %}
-            </div>
-            <div id='search-header-form'>
-                <form action = '' method="GET">
-                    <select class = 'search-input-1' name="type" id="search-type">
+                    {% else %}
+                    마음에 드는 플렌테리어를 찾아보세요.
+                    {% endif %}
+                </div>
+                <div id='search-header-form'>
+                    <form action='' method="GET">
+                        <select class='search-input-1' name="type" id="search-type">
                             <option value="tag">태그</option>
                             <option value="title">제목</option>
                             <option value="content">내용</option>
-                    </select>
-                        <input class = 'search-input' type="text" name ='q' value="{{q}}" placeholder="검색어를 입력하세요" />
-                        <button class = 'search-input-1' type="submit">검색</button>
-                </form>
+                        </select>
+                        <input class='search-input' type="text" name='q' value="{{q}}" placeholder="검색어를 입력하세요" />
+                        <button class='search-input-1' type="submit">검색</button>
+                    </form>
+                </div>
             </div>
-            <p><a href="{% url 'community:post_create' %}">포스트 생성</a></p>
-        </div>
-        {% comment %}
-        <p><a href="{% url 'community:post_create' %}">포스트 생성</a></p>
-        {% endcomment %}
-        <div class = 'container-fluid'>
-            <div class = 'row row-cols-lg-3'>
-                {% if post_list %}
+        
+            <div class='container-fluid mb-3'>
+                <div class='row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3'>
+                    {% if post_list %}
                     {% for post in post_list %}
-                    <div class = 'col'>
+                    <div class='col'>
                         <p id='thumbnail-p'>{{ post.user_id }}</p>
                         <a href="{% url 'community:post_detail' pk=post.pk %}">
-                            <image src= '{{ post.image.url }}' width="80%" height="auto" />
+                            {% if post.image %}
+                            <image src='{{ post.image.url }}' width="80%" height="auto" />
+                            {% endif %}
                         </a>
                     </div>
                     {% endfor %}
-                    
-                {% else %}
-                    {% if q %}
-                        <tr>
-                            <td>
-                                일치하는 검색 결과가 없습니다.
-                            </td>
-                        </tr>
+        
                     {% else %}
-                        <tr>
-                            <td>
-                                작성된 게시글이 없습니다.
-                            </td>
-                        </tr>
+                    {% if q %}
+                    <h1>일치하는 검색 결과가 없습니다.</h1>
+        
+                    {% else %}
+                    <h2>작성된 게시글이 없습니다.</h2>
                     {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+            <div id='list-paginator' style = 'margin-bottom:1rem;'>
+                {% if is_paginated %}
+                <ul class="pagination">
+                    {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?type={{type}}&q={{q}}&page={{ page_obj.previous_page_number }}"
+                            tabindex="-1">이전</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1">이전</a>
+                    </li>
+                    {% endif %}
+        
+                    {% for page in page_range %}
+                    <li class="page-item {% if page == page_obj.number %} activate {% endif %}">
+                        <a class="page-link" href="?type={{type}}&q={{q}}&page={{ page }}">{{ page }}</a>
+                    </li>
+                    {% endfor %}
+        
+                    {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?type={{type}}&q={{q}}&page={{ page_obj.next_page_number }}">다음</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">다음</a>
+                    </li>
+                    {% endif %}
+                </ul>
                 {% endif %}
             </div>
         </div>
-        {% if is_paginated %}
-            <ul class="pagination">
-            {% if page_obj.has_previous %}
-            <li class="page-item">
-                <a class="page-link" href="?type={{type}}&q={{q}}&page={{ page_obj.previous_page_number }}"
-                tabindex="-1">이전</a>
-             </li>
-            {% else %}
-            <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1">이전</a>
-             </li>
-            {% endif %}
-    
-            {% for page in page_range %}
-            <li class="page-item {% if page == page_obj.number %} activate {% endif %}">
-                <a class="page-link" href="?type={{type}}&q={{q}}&page={{ page }}">{{ page }}</a>
-            </li>
-            {% endfor %}
-    
-            {% if page_obj.has_next %}
-            <li class="page-item">
-            <a class="page-link"
-                href="?type={{type}}&q={{q}}&page={{ page_obj.next_page_number }}">다음</a>
-            </li>
-            {% else %}
-            <li class="page-item disabled">
-                <a class="page-link" href="#">다음</a>
-            </li>
-            {% endif %}
-        </ul>
-        {% endif %}
+        
+        <div class='col d-flex flex-column justify-content-center' style="margin-left:30px;">
+            <div>
+                <button style = 'border-radius:10px;margin-bottom:1rem;'>
+                    <a href="">
+                        <img class='post-button' src="{% static 'images/writing.png' %}">
+                    </a>
+                </button>
+            </div>
+            <div>
+                <button style = 'border-radius:10px; margin-bottom:1rem;'>
+                    <a href="{% url 'community:post_create' %}">
+                        <img class='post-button' src="{% static 'images/rating.png' %}">
+                    </a>
+                </button>
+            </div>
+            <div>
+                <button style = 'border-radius:10px';>
+                    <a href="">
+                        <img class='post-button' src="{% static 'images/rate.png' %}">
+                    </a>
+                </button>
+            </div>
+        </div>
+
     </div>
     
+
+</div>
+
 
 {% endblock %}
