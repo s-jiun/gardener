@@ -154,27 +154,10 @@ def profile(request, pk):
 #         return context
 
 
-def follower_list(request, pk):
-
+def follow_list(request,pk):
     user = GeneralUser.objects.get(id=pk)
     # user가 팔로잉에 해당하는 팔로우 오브젝트
     followers = user.following.all()
-    cur_users_followings = request.user.followers.all()
-    cur_users_followings_list = []
-    for cur_users_following in cur_users_followings:
-        cur_users_followings_list.append(cur_users_following.user_id)
-
-    ctx = {
-        'followers': followers,
-        'cur_users_followings_list': cur_users_followings_list
-    }
-
-    return render(request, template_name='user/follower.html', context=ctx)
-
-
-def following_list(request, pk):
-    user = GeneralUser.objects.get(id=pk)
-    # user가 팔로워에 해당하는 팔로우 오브젝트
     followings = user.followers.all()
     cur_users_followings = request.user.followers.all()
     cur_users_followings_list = []
@@ -183,10 +166,46 @@ def following_list(request, pk):
 
     ctx = {
         'followings': followings,
+        'followers': followers,
         'cur_users_followings_list': cur_users_followings_list
     }
 
-    return render(request, template_name='user/following.html', context=ctx)
+    return render(request, template_name='user/follower.html', context=ctx)
+
+
+# def follower_list(request, pk):
+
+#     user = GeneralUser.objects.get(id=pk)
+#     # user가 팔로잉에 해당하는 팔로우 오브젝트
+#     followers = user.following.all()
+#     cur_users_followings = request.user.followers.all()
+#     cur_users_followings_list = []
+#     for cur_users_following in cur_users_followings:
+#         cur_users_followings_list.append(cur_users_following.user_id)
+
+#     ctx = {
+#         'followers': followers,
+#         'cur_users_followings_list': cur_users_followings_list
+#     }
+
+#     return render(request, template_name='user/follower.html', context=ctx)
+
+
+# def following_list(request, pk):
+#     user = GeneralUser.objects.get(id=pk)
+#     # user가 팔로워에 해당하는 팔로우 오브젝트
+#     followings = user.followers.all()
+#     cur_users_followings = request.user.followers.all()
+#     cur_users_followings_list = []
+#     for cur_users_following in cur_users_followings:
+#         cur_users_followings_list.append(cur_users_following.user_id)
+
+#     ctx = {
+#         'followings': followings,
+#         'cur_users_followings_list': cur_users_followings_list
+#     }
+
+#     return render(request, template_name='user/following.html', context=ctx)
 
 
 def profile_update(request):
