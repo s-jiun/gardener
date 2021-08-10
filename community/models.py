@@ -40,7 +40,7 @@ class Post(models.Model):
         blank=True, null=True, config_name='answer_ckeditor')
     # 태그 부분 taggit 설치  & admin 부분 확인 필요!
     tags = TaggableManager(
-        verbose_name='tags', help_text='A hashtag-separated list of tags.', blank=True, through=TaggedPost)
+        verbose_name='tags', help_text='해시태그를 남겨주세요.', blank=True, through=TaggedPost)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
