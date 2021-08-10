@@ -1,10 +1,31 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.forms.fields import EmailField
 from .models import GeneralUser, UserManager
 from django import forms
-from django.contrib.auth.forms import UserChangeForm
-from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import UserChangeForm, AuthenticationForm, UsernameField
+from django.contrib.auth import get_user_model, authenticate
+from django.contrib.auth.hashers import check_password
 from allauth.account.forms import SignupForm
+
+class UserAuthenticationForm(AuthenticationForm):
+    username = UsernameField(widget=forms.TextInput(attrs={'autofocus': True, 'class':'form-control', 'placeholder':'아이디'}))
+    password = forms.CharField(
+        label=("Password"),
+        strip=False,
+        widget=forms.PasswordInput(attrs={'autocomplete': 'current-password', 'class':'form-control', 'placeholder':'비밀번호'}),
+    )
+    def clean_password(self):
+        username = self.cleaned_data.get('username')
+        password = self.cleaned_data.get('password')
+
+        if username is not None and password:
+            if authenticate(self.request, username=username, password=password) is None:
+                raise ValidationError('아이디와 비밀번호가 일치하지 않습니다!')
+            return password
+
+
+
 
 class UserCreationForm(forms.ModelForm):
     # 사용자 생성 폼
@@ -12,27 +33,32 @@ class UserCreationForm(forms.ModelForm):
         label=('name'),
         required=True,
         widget=forms.TextInput(
+            attrs={'class':'signup-form-control'}
         )
     )
     email = forms.EmailField(
         label=('Email'),
         required=True,
         widget=forms.EmailInput(
+            attrs={'class':'signup-form-control'}
         )
     )
     userid = forms.CharField(
         label=('userid'),
-        widget=forms.TextInput()
+        widget=forms.TextInput(
+            attrs={'class':'signup-form-control'})
     )
     password1 = forms.CharField(
         label=('Password'),
         widget=forms.PasswordInput(
+            attrs={'class':'signup-form-control'}
             
         )
     )
     password2 = forms.CharField(
         label=('Password confirmation'),
         widget=forms.PasswordInput(
+            attrs={'class':'signup-form-control'}
             
         )
     )
@@ -69,15 +95,31 @@ class UserCreationForm(forms.ModelForm):
         return user
     
 class CustomUserChangeForm(UserChangeForm):
+    userid = forms.CharField(
+        label=('Userid'),
+        widget=forms.TextInput(
+            attrs={'class':'update-form-control'}
+            
+        )
+    )
+    email = forms.EmailField(
+        label=('Email'),
+        widget=forms.EmailInput(
+            attrs={'class':'update-form-control'}
+            
+        )
+    )
     password1 = forms.CharField(
         label=('Password'),
         widget=forms.PasswordInput(
+            attrs={'class':'update-form-control'}
             
         )
     )
     password2 = forms.CharField(
         label=('Password confirmation'),
         widget=forms.PasswordInput(
+            attrs={'class':'update-form-control'}
             
         )
     )
@@ -112,7 +154,24 @@ class UserProfileChangeForm(UserChangeForm):
     class Meta:
         model = get_user_model()
         fields = ['Image', 'name', 'profile']
+    def clean_password2(self):
+        # 두 비밀번호 입력 일치 확인
+        password1 = self.cleaned_data.get("password1")
+        password2 = self.cleaned_data.get("password2")
+        if password1 and password2 and password1 != password2:
+            raise forms.ValidationError("비밀번호가 일치하지 않습니다.")
+        return password2
 
+    def clean_email(self):
+        if GeneralUser.objects.filter(email=self.cleaned_data['email']).exists():
+            raise forms.ValidationError('이미 존재하는 이메일입니다.')
+        return self.cleaned_data['email']
+
+    def clean_userid(self):
+        if GeneralUser.objects.filter(userid=self.cleaned_data['userid']).exists():
+            raise forms.ValidationError('이미 존재하는 아이디입니다.')
+        return self.cleaned_data['userid']
+        
 class MyCustomSignupForm(SignupForm):
     agree_terms = forms.BooleanField(label='서비스 이용약관 및 개인정보방침 동의')
     agree_marketing = forms.BooleanField(label='마케팅 이용 동의')
