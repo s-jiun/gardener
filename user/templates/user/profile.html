@@ -12,81 +12,102 @@
         <div class="col col-10">
             <div class="container profile">
                 <div class="container profile_in">
-                    <div class="row"  >
-                        <div style="position: relative;">
-                            <div style=" position: absolute; left: 80px;">
-                                <img id="profile-line" src="{% static 'images/profile_img_line.png'%}" />
+                        <div class="row">
+                            <div style="position: relative;">
+                                <div style=" position: absolute; left: 80px;">
+                                    <img id="profile-line" src="{% static 'images/profile_img_line.png'%}" />
+                                </div>
+                                <div style="position:  absolute; left: 138px; top: 33px;">
+                                    <img id="user-img" src={{user.Image.url}} />
+                                </div>
                             </div>
-                            <div style="position:  absolute; left: 138px; top: 33px;">
-                                <img src={{user.Image.url}} />
-                            </div>
-                        </div>
-                        <div style="margin-left:360px;margin-top:15px; width:auto; ">
-                            <span style="font-size:40px;">{{user.userid}}</span><br>
-                            <img style="width:2vw; height:auto;" src="{% static 'images/planting.png'%}" />
-                            <span style="font-size:20px; margin-left:10px; vertical-align:text-top">{{user.name}} 님은 현재 새싹 등급입니다.<br></span>
-                            <div id="profile-content">
-                                <span>
-                                {%if user.profile}
+                            <div id="user-info">
+                                <span id="user-id">{{user.userid}}</span><br>
+                                <img id="plant-icon" src="{% static 'images/planting.png'%}" />
+                                <span id="user-level">{{user.name}} 님은 현재 새싹 등급입니다.<br></span>
+                                <div id="profile-content">
+                                    <span>
+                                    {%if user.profile%}
                                     {{user.profile}}
-                                {% elif %}
-                                    프로필 정보가 없습니다. 
-                                {%endif%}
-                                </span><br>
-                            </div><br>
-                            <div style="margin-top:10px;">
-                                <img style="width:2vw; height:auto;" src="{% static 'images/follower.png'%}" />
-                                <span>팔로우 {{follower}}</span>
-                                <img style="width:2vw; height:auto;" src="{% static 'images/following.png'%}" />
-                                <span>팔로잉 {{following}}</span>
+                                    {% else %}
+                                        프로필 정보가 없습니다. 
+                                    {%endif%}
+                                    </span><br>
+                                </div><br>
+                                <div id="user-follow" class="mt-2">
+                                    <img src="{% static 'images/follower.png'%}" />
+                                    <span>팔로워 {{follower}}</span>
+                                    <img src="{% static 'images/following.png'%}" />
+                                    <span>팔로잉 {{following}}</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
                         <hr style="margin-top: 30px; color: #5C5427; height:2px;">
                         <div style="text-align:center; margin-top:-20px;">
                         <span>My post</span>
                         </div>
                         <hr style="margin-top: -5px; color: #5C5427;height:2px;">
-                        {%for post in posts%}
-                        {{post.title}}
-                        <img src={{post.Image.url}} />
-                        {%endfor%}
+
+                        {% comment %} <div style="display:flex;flex-wrap:wrap; justify-content:space-between;">  {% endcomment %}
+                        <div class ="row row-cols-1 row-cols-sm-2 row-cols-lg-3" style="margin-left:20px;">
+                        <!--포스트 리스트-->
+                            {% if posts%}
+                                {%for post in posts%}
+                                    <div class="col col-lg-4">
+                                        <div id="card-post" class="card text-center m-3" >
+                                            <img src={{post.image.url}} class="card-img-top" alt="..." style="height:150px; max-height: 160px;">
+                                            <div class="card-body ">
+                                                <p class="card-title" id="post-title"> {{post.title}}</p>
+                                                <hr style="margin:0px 0px 5px 0px;">
+                                                {{post.created_at}}<br>
+                                                {% if post.tags.all %}
+                                                {% for tag in post.tags.all %}
+                                                <img style="width: 1rem;" src="{% static 'images/label.png'%}" />
+                                                <span>{{tag.name}}</span>
+                                                {% endfor %}
+                                                {%else%}
+                                                <span>태그가 없어요!</span>
+                                                {%endif%}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {%else%}
+                            <div id="no-post" class="text-center" >
+                            <img style="width: 2rem;" src="{% static 'images/flower.png'%}" />
+                            <span> 현재 게시글이 없습니다. </span>
+                            <img style="width: 2rem;" src="{% static 'images/flower.png'%}" />
+
+                            </div>
+                            {% endif %}
+                        </div>
                 </div>
             </div>
-
         </div>
         <div class="col">
-            <div class="container sidebar">
-                {%if user.id != request.user.id%}
-                {% if is_following%}
-                <div class='following'>
-                    <button onclick="onClickFollowing({{user.id}})">팔로잉</button>
-                </div>
-                {% else %}
-                <div class="follow">
-                    <button onclick="onClickFollow({{user.id}})">팔로우</button>
-                </div>
-                {% endif %}
+            <div class="container sidebar text-center p-1">
+                {%if user.id != request.user.id%} <!--다른 사람의 프로필을 보는 경우-->
+                    {% if is_following%}
+                    <div class='following'>
+                        <button onclick="onClickFollowing({{user.id}})">팔로잉</button>
+                    </div>
+                    {% else %}
+                    <div class="follow">
+                        <button onclick="onClickFollow({{user.id}})">팔로우</button>
+                    </div>
+                    {% endif %}
                 {%endif%}
-
-                {% comment %} <p>팔로잉
-                <div class="following-count">
-                    {{following}}
-                </div>
-                </p>
-                <p>팔로워
-                <div class="follower-count">
-                    {{follower}}
-                </div>
-                </p> {% endcomment %}
-                <p>포스트</p>
-                <p>사이드바</p>
+                <!--내 프로필 경우-->
+                {% comment %} <p>포스트</p>
+                <p>사이드바</p> {% endcomment %}
                 {%if user.id == request.user.id%}
-                <p>게시물 수정</p>
-                <p>게시물 삭제</p>
-                {%endif%}
-                {%if user.id == request.user.id%}
-                <p style="margin-top:20px;">프로필 수정</p>
+                    <div class="btn-group-vertical" role="group" aria-label="Basic outlined example">
+                        <a href="#" type="button" >My Pick</a>
+                        <a href="#" type="button" >My Scrab</a>
+                        <a href="#" type="button" >게시물 수정</a>
+                        <a href="#" type="button" >게시물 삭제</a>
+                        <a href="#" type="button" >프로필 수정</a>
+                    </div>
                 {%endif%}
             </div>
         </div>
