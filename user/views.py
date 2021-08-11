@@ -4,7 +4,7 @@ from django.db.models.query import InstanceCheckMeta
 from django.http import request
 from user.models import GeneralUser, Follow
 from django.shortcuts import render, redirect
-from .forms import UserCreationForm, CustomUserChangeForm, UserProfileChangeForm, UserAuthenticationForm
+from .forms import UserCreationForm, CustomUserChangeForm, UserProfileChangeForm, UserAuthenticationForm, UserIdfindForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
@@ -233,14 +233,31 @@ def profile_update(request):
 def my_profile(request):
     return redirect('user:profile', pk=request.user.id)
 
-
-def main_page(request):
-    pass
-
-
 def start_page(request):
     return render(request, template_name='welcome.html')
 
+def find_id(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+        try:
+            user = GeneralUser.objects.get(email=email)
+            ctx = {
+                'user':user,
+                'email':email
+            }
+            return render(request, template_name='user/find_id_done.html',context=ctx)
+        except:
+            ctx = {
+                'email':email
+            }
+            return render(request, template_name='user/find_id_fail.html', context=ctx)
+            
+    else:  
+        form = UserIdfindForm()
+        ctx = {
+            'form':form
+        }
+    return render(request, template_name='user/find_id.html', context=ctx)
 
 @csrf_exempt
 def following_ajax(request):
