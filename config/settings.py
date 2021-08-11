@@ -103,6 +103,7 @@ INSTALLED_APPS = [
 
     # image-resize
     'imagekit',
+
 ]
 
 
