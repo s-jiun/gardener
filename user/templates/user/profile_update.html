@@ -1,13 +1,31 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block head %}
+    <link href="{% static 'style/login.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
-<form action="" method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    <img src="{{request.user.Image.url}}" alt="" style="height: 200px; width: 250px;">
-    {{form.Image}}
-    <p>이름{{form.name}}</p>
-    <p>소개{{form.profile}}</p>
-    <input type="submit" value="수정하기"/>
-</form>
+<div class="d-flex justify-content-center align-items-center main-container" style="background-color: #D8D8D8;">
+    <img src="{%static 'images/profile_update.png'%}" alt="" style="max-width: 70%; max-height: 100%; z-index: 1; position: absolute; overflow: hidden; height: 90vh; ">
+    <div style="background-color: rgba(0, 0, 0,0.5); z-index: 5; max-width: 70%; max-height: 100%; height: 90vh; width: 100vw; position: absolute;"></div>
+    <div class="d-flex justify-content-center align-items-center profile-update-container">
+        <form action="" method="POST" enctype="multipart/form-data" class="profile-update-form">
+            {% csrf_token %}
+            <div>
+                <img src="{{request.user.Image.url}}" alt="" style="height: 200px; width: 250px; margin-bottom: 10px;">
+            </div>    
+            {{form.Image}}
+            <div>
+                이름
+                <p>{{form.name}}</p>
+            </div>
+            <div>
+                소개
+                <p>{{form.profile}}</p>
+            </div>
+            <button class="profile-update-btn" type="submit">저장하기</button>
+        </form>
+    </div>
+</div>
 {% endblock %}
