@@ -1,0 +1,72 @@
+.main-plant{
+    background: url("/static/images/top-background.jpg");
+    background-position: 70% 70%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 300px;
+    width: 100%;
+    padding:0
+}
+#plant-header {
+    padding-left: 0;
+    padding-right: 0;
+    margin-top : 80px;
+    color: white;
+    text-align: center;
+    height:30%;
+}
+#plant-header-p{
+    margin-top :50px;
+    margin-bottom: 20px;
+    
+}
+#plant-header-p h2{
+    text-shadow:
+    -1px -1px 0 #5a3e0a,
+    1px -1px 0 #5a3e0a,
+    -1px 1px 0 #5a3e0a,
+    1px 1px 0 #5a3e0a;
+    /* text-shadow: 0px 0px 10px #1a1003; */
+}
+#plant-header-form form{
+    height:30%;
+    margin-bottom: 5vh;
+}
+#plant-header-form .plant-input{
+    width: 50%;
+    height: 40px;
+    border : solid 2px #CCDFCC;
+    border-radius: 10px;
+}
+#plant-header-form .plant-input::placeholder{
+    color:#5c5427;
+    opacity : 80%;
+}
+#plant-header-form .plant-select{
+    height: 37px;
+    border : solid 2px #CCDFCC;
+    border-radius: 10px;
+    vertical-align: top;
+    background: #CCDFCC;
+    color:white;
+    font-weight:bold;
+    text-shadow: -1px 0 #A0CAB5, 0 1px #A0CAB5, 1px 0 #A0CAB5, 0 -1px #A0CAB5; 
+}
+
+#plant-header-form .plant-input-1{
+    width:60px;
+    height: 37px;
+    border : solid 2px #CCDFCC;
+    border-radius: 10px;
+    vertical-align: top;
+    background: #CCDFCC;
+    color:white;
+    font-weight:bold;
+    text-shadow: -1px 0 #A0CAB5, 0 1px #A0CAB5, 1px 0 #A0CAB5, 0 -1px #A0CAB5; 
+}
+
+#plant-paginator {
+    display: flex;
+    justify-content: center;
+    margin-top: 5;
+}

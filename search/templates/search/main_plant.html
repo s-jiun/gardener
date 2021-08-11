@@ -1,12 +1,116 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="http://code.jquery.com/jquery-3.1.1.js"></script>
-    <title>Plant</title>
-</head>
+{% extends "base.html" %}
+{% load static %}
+
+{%block head%}
+<link href="{% static 'style/css/main_plant.css' %}" rel="stylesheet">
+
+{%endblock%}
+
+{% block content %}
+        <div class= "main-plant">
+            <div class='row'>
+                <div id='plant-header' class='d-flex flex-column justify-content-center'>
+                    <div id='plant-header-p'>
+                        {% if q %}
+                        <span>'{{ q }}' 검색 결과입니다. </span>
+                        {% else %}
+                        <h2>
+                            <img src ={% static 'images/flower_plant.png' %} style="width:2rem;">
+                            반려식물의 정보를 검색해보세요! 
+                            <img src ={% static 'images/flower_plant.png' %} style="width:2rem;">
+                        </h2>
+                        {% endif %}
+                    </div>
+                    <div id='plant-header-form'>
+                        <form action = '' method="GET" >
+                            <select class="plant-select" name="type" id="search-type" >
+                                <option value="all">전체</option>
+                                <option value="name">식물 이름</option>
+                                <option value="content">내용</option>  
+                                <option value="managelevel">경험자</option>      
+                            </select>
+                            <div id="search_option" style="display:inline">
+                            <input class="plant-input" type="text" name ='q' value="{{q}}" placeholder="검색어를 입력하세요" />
+                            <button class="plant-input-1" type="submit">검색</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div><!--header 닫힘-->
+        <div class="container-fluid main-body mt-4 mb-4" id="plant-body">
+        {% if plant_list %}
+        <div class='row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3'>
+            {% for plant in plant_list %}
+                <div class="col">
+                    <div class="card p-2 m-3" style="width: 19rem; border-radius:10px;">
+                        <img src={{plant.photo_url}} class="card-img-top" alt="..." style=" width:100%; height: 14rem;border-radius:10px;">
+                        <div class="card-body">
+                            <h5 class="card-title"><a href="{% url 'search:plant_detail' plant.pk %}" style="text-decoration:none;">{{ plant.name }}</a></h5>
+                            <hr class="m-0">
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            {% else %}
+                {%if q%}
+                <tr class="text-center">
+                    <td colspan="5">
+                    일치하는 검색 결과가 없습니다.
+                    </td>
+                </tr>
+                {% else %}
+                <tr class="text-center">
+                    <td colspan="5">
+                    저장된 식물 정보가 없습니다.
+                    </td>
+                </tr>
+                {%endif%}
+        </div>
+        {% endif %}
+
+    </div>
+
+
+        <!--pagination-->
+    <div id="plant-paginator">
+        {% if is_paginated %}
+        <ul class="pagination">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?type={{type}}&q={{q}}&page={{ page_obj.previous_page_number }}"
+            tabindex="-1">이전</a>
+         </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1">이전</a>
+         </li>
+        {% endif %}
+
+        {% for page in page_range %}
+        <li class="page-item {% if page == page_obj.number %} activate {% endif %}">
+            <a class="page-link" href="?type={{type}}&q={{q}}&page={{ page }}">{{ page }}</a>
+        </li>
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+        <li class="page-item">
+        <a class="page-link"
+            href="?type={{type}}&q={{q}}&page={{ page_obj.next_page_number }}">다음</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" href="#">다음</a>
+        </li>
+        {% endif %}
+    </ul>
+    {% endif %}
+
+    </div>
+{%endblock%}
+
+
+
 <body>
     반려식물의 정보를 검색해보세요! <br>
     <br>
