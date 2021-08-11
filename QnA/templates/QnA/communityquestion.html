@@ -1,11 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QnA</title>
-</head>
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+    <link href="{% static 'style/css/question_list.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div id='question-header'>
+    {% if q %}
+        <h1 style='padding-top:100px; margin-bottom: 20px;'>'{{ q }}' 검색 결과입니다.</h1>
+    {% else %}
+        <h1 style='padding-top:100px; margin-bottom: 20px;'>Gardener QnA</h1>
+    {% endif %}
+    <form action='' method="GET" style='height: 20%;'>
+        <input class='search-input'  type="text" name='q' value="{{q}}" placeholder="태그를 검색해보세요" style='width:50%; height:70%; border:0;'/>
+        <button class='search-input-1' type="submit"style='width: 10%; height:70%; border:0; border-radius:10px;'>검색</button>
+    </form>
+</div>
+<a href = '{% url "QnA:makequestion" %}'>질문하기</a>
+<div class='container main-body'>
+    <div class='low low-cols-1 low-cols-md-2 low-cols-lg-3'>
+        <div class= 'col'>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
 <body>
     <a href = '{% url "QnA:makequestion" %}'>질문하기</a>
     {% if q %}

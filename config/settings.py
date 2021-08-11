@@ -240,7 +240,8 @@ CKEDITOR_CONFIGS = {
             ['Link', 'Unlink'],
 
             ['Undo', 'Redo']
-        ]
+        ],
+        'width': '100%'
     }
 }
 

@@ -15,7 +15,7 @@ from django.db.models import Q
 
 class PostListView(ListView):
     model = Post
-    paginate_by = 6
+    paginate_by = 9
     # DEFAULT : <app_label>/<model_name>_list.html
     template_name = 'community/post_list.html'
     context_object_name = 'post_list'  # DEFAULT : <model_name>_list
@@ -154,7 +154,8 @@ def post_update(request, pk):
             return render(request, template_name='community/post_form.html', context=ctx)
     elif request.method == 'GET':
         form = PostForm(instance=post)
-        ctx = {'form': form, 'is_post': post}
+        pk = post.pk
+        ctx = {'form': form, 'is_post': post, 'pk': pk}
 
     return render(request, template_name='community/post_form.html', context=ctx)
 
