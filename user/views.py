@@ -100,7 +100,7 @@ def profile(request, pk):
     following = Follow.objects.filter(following_user=user).count()
     posts = user.post_set.all()
     page = request.GET.get('page', '1')  # GET 방식으로 정보를 받아오는 데이터
-    paginator = Paginator(posts, '2')  # Paginator(분할될 객체, 페이지 당 담길 객체수)
+    paginator = Paginator(posts, '9')  # Paginator(분할될 객체, 페이지 당 담길 객체수)
     page_obj = paginator.page(page)  # 페이지 번호를 받아 해당 페이지를 리턴 get_page 권장
 
     login_user_followings = Follow.objects.filter(
@@ -115,7 +115,7 @@ def profile(request, pk):
         'user': user,
         'follower': follower,
         'following': following,
-        'posts': posts,
+        'posts': page_obj,
         'is_following': is_following,
         'page_obj': page_obj,
     }
@@ -154,27 +154,44 @@ def profile(request, pk):
 #         return context
 
 
-def follower_list(request, pk):
+# def follower_list(request, pk):
 
+#     user = GeneralUser.objects.get(id=pk)
+#     # user가 팔로잉에 해당하는 팔로우 오브젝트
+#     followers = user.following.all()
+#     cur_users_followings = request.user.followers.all()
+#     cur_users_followings_list = []
+#     for cur_users_following in cur_users_followings:
+#         cur_users_followings_list.append(cur_users_following.user_id)
+
+#     ctx = {
+#         'followers': followers,
+#         'cur_users_followings_list': cur_users_followings_list
+#     }
+
+#     return render(request, template_name='user/follower.html', context=ctx)
+
+
+# def following_list(request, pk):
+#     user = GeneralUser.objects.get(id=pk)
+#     # user가 팔로워에 해당하는 팔로우 오브젝트
+#     followings = user.followers.all()
+#     cur_users_followings = request.user.followers.all()
+#     cur_users_followings_list = []
+#     for cur_users_following in cur_users_followings:
+#         cur_users_followings_list.append(cur_users_following.user_id)
+
+#     ctx = {
+#         'followings': followings,
+#         'cur_users_followings_list': cur_users_followings_list
+#     }
+
+#     return render(request, template_name='user/following.html', context=ctx)
+
+def follow_list(request,pk):
     user = GeneralUser.objects.get(id=pk)
     # user가 팔로잉에 해당하는 팔로우 오브젝트
     followers = user.following.all()
-    cur_users_followings = request.user.followers.all()
-    cur_users_followings_list = []
-    for cur_users_following in cur_users_followings:
-        cur_users_followings_list.append(cur_users_following.user_id)
-
-    ctx = {
-        'followers': followers,
-        'cur_users_followings_list': cur_users_followings_list
-    }
-
-    return render(request, template_name='user/follower.html', context=ctx)
-
-
-def following_list(request, pk):
-    user = GeneralUser.objects.get(id=pk)
-    # user가 팔로워에 해당하는 팔로우 오브젝트
     followings = user.followers.all()
     cur_users_followings = request.user.followers.all()
     cur_users_followings_list = []
@@ -183,11 +200,11 @@ def following_list(request, pk):
 
     ctx = {
         'followings': followings,
+        'followers': followers,
         'cur_users_followings_list': cur_users_followings_list
     }
 
-    return render(request, template_name='user/following.html', context=ctx)
-
+    return render(request, template_name='user/follower.html', context=ctx)
 
 def profile_update(request):
     user = GeneralUser.objects.get(id=request.user.id)
