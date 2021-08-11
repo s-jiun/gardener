@@ -2,13 +2,14 @@ from django.contrib import auth
 from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
-app_name ='user'
+app_name = 'user'
 
 urlpatterns = [
     path('login/', views.login, name='login'),
     path('logout/', views.logout, name='logout'),
     path('signup/', views.signup, name='signup'),
     path('signout/', views.member_del, name='signout'),
+
     path('update/',views.member_modification, name='update'),
     path('profile/<int:pk>',views.profile, name='profile'),
     path('profile/<int:pk>/follow', views.follow_list, name='follow'),
