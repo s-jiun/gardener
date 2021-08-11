@@ -11,7 +11,7 @@ from django.contrib import messages
 class QuestionListView(ListView):
     model = CommunityQuestion
 
-    paginate_by = 5
+    paginate_by = 2
 
     # DEFAULT : <app_label>/<model_name>_list.html
     template_name = 'QnA/communityquestion.html'
@@ -44,7 +44,6 @@ class QuestionListView(ListView):
 
         page_range = paginator.page_range[start_index:end_index]
         context['page_range'] = page_range
-
         search_keyword = self.request.GET.get('q', '')
 
         if len(search_keyword) > 1:
