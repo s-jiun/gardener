@@ -1,63 +1,113 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block head %}
+    <link rel="stylesheet" href="{% static 'style/post_detail.css' %}" />
+{% endblock %}
+
 {% block content %}
-    <p><a href="{% url 'community:post_update' post.pk %}">포스트 수정</a></p>
-    <p><a href="{% url 'community:post_delete' post.pk %}">포스트 삭제</a></p>
-    <div>
-        <p> {{post.user_id}}</p>
+<div class="d-flex justify-content-between" style="height: 750px;">
+    <div style="width: 25%;">
+        <img class="page-image" src="{% static 'images/post_detail.jpg' %}" />
     </div>
-    <h1>{{ post.title }}</h1>
-    <div>
-        {{ post.content|safe }}
+    <div class="d-flex justify-content-around" style="width: 1100px;">
+        <div class="post">
+            <br />
+            <div class="content">
+                <span><img class="title-image" src="{% static 'images/title_img.svg' %}" /></span>
+                <span class="post-title"> {{ post.title }}</span>
+                <hr />
+                <div class="d-flex flex-column">
+                    {{ post.content|safe }}
+                </div>
+                <hr />
+                <div>
+                    <span><img class="tag-image" src="{% static 'images/tag_img.svg' %}" /></span>
+                    <span style="font-weight: bold;">Tags</span>
+                </div>
+                {% for tag in post.tags.all %}
+                <form action="#">
+                    <input class="tags" type="submit" value="#{{ tag.name }}"></input>
+                </form>
+                {% endfor %}
+                <br />
+                <div class='likes post-id-{{ post.id }} d-flex justify-content-end'>
+                    {% if user.pk in liked_user %}
+                        <span><button class = 'heart' onclick="onClickLike({{ post.id }})">❤️</button></span>
+                        <span class='like_num'>좋아요 {{post.like_set.all.count}}</span>
+                    {% else %}
+                        <span><button class = 'heart' onclick="onClickLike({{ post.id }})">🤍</button></span>
+                        <span class='like_num'>좋아요 {{post.like_set.all.count}}</span>
+                    {% endif %}
+                </div>
+            </div>
+            <br />
+            <div>
+                <button class="create-comment" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    댓글 작성
+                </button>
+                <div class="collapse" id="collapseExample">
+                    <form class="card card-body" action="." method="post">
+                        {% csrf_token %}
+                        {{comment_form.media}}
+                        {{ comment_form.as_p }}
+                        <button class="comment-submit" type="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+            <p class="comment-list">댓글 목록</p>
+            <hr />
+
+            {% for comment in comments %}
+            <div class="comment">
+                <p class="info"> > {{ comment.user_id }} {{ comment.content|safe }} | {{ comment.created_at }}</p>
+
+                {% for reply in comment.replies.all %}
+                <p class="info">{{reply.user_id}} {{ reply.content }} | {{ reply.created_at }}</p>
+                {% endfor %}
+
+                <p>Reply</p>
+                <form action="." method="post">
+                    {% csrf_token %}
+                    {{comment_form.media}}
+                    {{ comment_form.as_p }}
+
+                    <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                    <input class="create-comment" type="submit" value="Reply">
+                </form>
+            </div>
+            {% empty %}
+            <p>아직 작성된 댓글이 없습니다</p>
+            {% endfor %}
+        </div>
+        <div class="post-edit d-flex flex-column align-items-center text-center">
+            <div style="width: 100px; margin-top: 10px;">
+                <span><a href="{% url 'user:profile' user.pk %}" style="margin-top: 5px;"><img src="{{ user.Image.url }}"> {{post.user_id}}</a></span>
+                <hr />
+                {%if post.user_id != request.user%}
+                    {% if is_following%}
+                    <div class='following'>
+                        <button onclick="onClickFollowing({{user.id}})">팔로잉</button>
+                    </div>
+                    {% else %}
+                    <div class="follow">
+                        <button onclick="onClickFollow({{user.id}})">팔로우</button>
+                    </div>
+                    {% endif %}
+                {% else %}
+                    <a href="{% url 'community:post_update' post.pk %}">포스트 수정</a>
+                    <hr />
+                    <a href="{% url 'community:post_delete' post.pk %}" >포스트 삭제</a>
+                {%endif%}
+            </div>
+        </div>
     </div>
-
-    {% for tag in post.tags.all %}
-        <span>#{{tag.name}}</span>
-    {% endfor %}
-    <div class='likes post-id-{{ post.id }}'>
-        {% if user.pk in liked_user %}
-            <span><button class = 'heart' onclick="onClickLike({{ post.id }})">❤️</button></span>
-            <span class='like_num'>좋아요 {{post.like_set.all.count}}</span>
-        {% else %}
-            <span><button class = 'heart' onclick="onClickLike({{ post.id }})">🤍</button></span>
-            <span class='like_num'>좋아요 {{post.like_set.all.count}}</span>
-        {% endif %}
-    </div>
-
-    <h2>Add a new comment</h2>
-    <form action="." method="post">
-        {% csrf_token %}
-        {{comment_form.media}}
-        {{ comment_form.as_p }}
-        <button type="submit">Add comment</button>
-    </form>
-
-
-    {% for comment in comments %}
-    <div class="comment" style="background-color: powderblue">
-        <p class="info">{{ comment.content|safe}} | {{ comment.created_at }}</p>
-
-        {% for replay in comment.replies.all %}
-        <p class="info">{{ replay.content }} | {{ replay.created_at }}</p>
-        {% endfor %}
-
-        <h5>Replay</h5>
-        <form action="." method="post">
-            {% csrf_token %}
-            {{comment_form.media}}
-            {{ comment_form.as_p }}
-
-            <input type="hidden" name="parent_id" value="{{ comment.id }}">
-            <input class="btn btn-primary" type="submit" value="Replay">
-        </form>
-    </div>
-    {% empty %}
-    <h4>There are no comments yet.</h4>
-    {% endfor %}
+    <div style="width: 20px;"></div>
+</div>
 {% endblock %}
 
 {% block js %}
     <script src="{% static 'javascripts/post_comment.js' %}"></script>
     <script src="{% static 'javascripts/likes.js' %}"></script>
+    <script src="{% static 'javascripts/post_follow.js' %}"></script>
 {% endblock %}
