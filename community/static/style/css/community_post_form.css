@@ -1,3 +1,7 @@
 #new-post-comment {
   writing-mode: vertical-lr;
 }
+
+.django-ckeditor-widget {
+  width: 100%;
+}

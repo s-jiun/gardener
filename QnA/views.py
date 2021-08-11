@@ -11,7 +11,7 @@ from django.contrib import messages
 class QuestionListView(ListView):
     model = CommunityQuestion
 
-    paginate_by = 5
+    paginate_by = 2
 
     # DEFAULT : <app_label>/<model_name>_list.html
     template_name = 'QnA/communityquestion.html'
@@ -44,7 +44,6 @@ class QuestionListView(ListView):
 
         page_range = paginator.page_range[start_index:end_index]
         context['page_range'] = page_range
-
         search_keyword = self.request.GET.get('q', '')
 
         if len(search_keyword) > 1:
@@ -60,6 +59,7 @@ def question_detail(request, pk):
     return render(request, 'QnA/questiondetail.html', ctx)
 
 
+@login_required
 def make_question(request, question=None):
     if request.method == "POST":
         form = QuestionForm(request.POST, request.FILES, instance=question)
@@ -71,7 +71,12 @@ def make_question(request, question=None):
             return redirect('QnA:questiondetail', pk=question.pk)
     else:
         form = QuestionForm(instance=question)
-        ctx = {'form': form}
+        if question:
+            pk = question.pk
+        else:
+            pk = 0
+
+        ctx = {'form': form, 'pk': pk}
     return render(request, 'QnA/makequestion.html', ctx)
 
 
@@ -105,7 +110,7 @@ def make_answer(request, pk, answer=None):
             return redirect('QnA:questiondetail', pk=pk)
     else:
         form = AnswerForm()
-        ctx = {'form': form}
+        ctx = {'form': form, 'pk': pk}
     return render(request, 'QnA/makeanswer.html', ctx)
 
 
@@ -125,7 +130,7 @@ def edit_answer(request, pk):
             return redirect('QnA:questiondetail', pk=pk)
     else:
         form = AnswerForm(instance=answer)
-        ctx = {'form': form}
+        ctx = {'form': form, 'pk': pk}
     return render(request, 'QnA/makeanswer.html', ctx)
 
 

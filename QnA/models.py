@@ -32,7 +32,7 @@ class CommunityQuestion(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     tags = TaggableManager(
-        verbose_name='tags', help_text='A hashtag-separated list of tags.', blank=True, through=TaggedQuestion)
+        verbose_name='tags', help_text='해시태그를 남겨주세요', blank=True, through=TaggedQuestion)
 
 
 class CommunityAnswer(models.Model):
