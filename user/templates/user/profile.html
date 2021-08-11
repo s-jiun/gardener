@@ -36,9 +36,9 @@
                                 </div><br>
                                 <div id="user-follow" class="mt-2">
                                     <img src="{% static 'images/follower.png'%}" />
-                                    <span>팔로워 {{follower}}</span>
+                                    <span>팔로워 <span class="follower-count">{{follower}}</span></span>
                                     <img src="{% static 'images/following.png'%}" />
-                                    <span>팔로잉 {{following}}</span>
+                                    <span>팔로잉 <span class="following-count">{{following}}</span></span>
                                 </div>
                             </div>
                         </div>
@@ -126,11 +126,11 @@
                 {%if user.id != request.user.id%} <!--다른 사람의 프로필을 보는 경우-->
                     {% if is_following%}
                     <div class='following'>
-                        <button onclick="onClickFollowing({{user.id}})">팔로잉</button>
+                        <button class='follow-btn' onclick="onClickFollowing({{user.id}})">팔로잉</button>
                     </div>
                     {% else %}
                     <div class="follow">
-                        <button onclick="onClickFollow({{user.id}})">팔로우</button>
+                        <button class='follow-btn' onclick="onClickFollow({{user.id}})">팔로우</button>
                     </div>
                     {% endif %}
                 {%endif%}
