@@ -1,6 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.forms.fields import EmailField
+from django.forms.widgets import TextInput
 from .models import GeneralUser, UserManager
 from django import forms
 from django.contrib.auth.forms import UserChangeForm, AuthenticationForm, UsernameField
@@ -150,17 +151,23 @@ class UserProfileChangeForm(UserChangeForm):
     Image = forms.ImageField(
         label=('image'),
         required=False,
-        widget=forms.FileInput()
+        widget=forms.FileInput(
+            attrs={'class':'profile-update-form-control-image'}
+        )
     )
     name = forms.CharField(
         label=('name'),
         required=True,
         widget=forms.TextInput(
+            attrs={'class':'profile-update-form-control-name'}
         )
     )
     profile = forms.CharField(
         label=('profile'),
-        required=False
+        required=False,
+        widget=forms.Textarea(
+            attrs={'class':'profile-update-form-control-profile'}
+        )
     )
     class Meta:
         model = get_user_model()

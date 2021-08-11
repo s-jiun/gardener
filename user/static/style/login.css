@@ -106,7 +106,7 @@
     border-radius: 10px;
     z-index:10; 
     width: 30vw; 
-    height: 60vh;
+    height: 70vh;
     padding: 30px 20px 20px 20px;
     display: flex;
     flex-direction: column;
@@ -142,4 +142,45 @@
     border-radius: 5px; 
     height: 40px;
     display: inline;
+}
+
+.profile-update-container {
+    background-color: rgb(199, 199, 199);
+    margin: auto;
+    border-radius: 10px;
+    z-index:10; 
+    width: 40vw; 
+    height: 70vh;
+    padding: 30px 20px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    border: solid 1px black;
+}
+
+.profile-update-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-update-form-control-name {
+    width: 40vh;
+    border: solid 1px rgba(0, 0, 0, 0.5);
+    background-color: #CCDFCC;
+}
+
+.profile-update-form-control-profile{
+    width: 40vh;
+    background-color: #CCDFCC;
+}
+
+.profile-update-btn {
+    background-color: #CCDFCC;
+    border: solid 1px rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    width: 10vh;
+}
+
+.profile-update-form-control-image button {
+    background-color: #CCDFCC;
 }
