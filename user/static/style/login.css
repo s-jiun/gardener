@@ -5,31 +5,26 @@
 
 .login-container {
     background-color:rgba(0, 0, 0, 0.05);
-    width: 60vw; 
-    height: 60vh;
-    margin: auto;
     border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    max-height: 80%;
+    min-height: 80%;
+    max-width: 40%;
+    min-width: 40%;
 }
 
-.left-login-container {
-    width: 100vw;
-    height: 40vh;
-}
 
 .form-control{
-    width: 60%;
-    height: 54px;
     border: solid 1px rgba(0, 0, 0, 0.8);
+    width: 20vw;
+    height: 5vh;
 }
 
 .login-btn {
-    width: 60%;
     background-color: #CCDFCC;
     margin-top: 20px;
     margin-bottom: 10px;
+    border-color: rgba(0, 0, 0, 0.5);
+    width: 40%;
 }
 
 .login-utils {
@@ -56,16 +51,9 @@
     border-left: solid 1px black;
 }
 
-.google-login {
-    background-repeat: no-repeat;
-}
-
 .login-form {
     max-width: 100%; 
     max-height: 100%;
-    display: flex; 
-    flex-direction: column;
-    align-items: center;
     height: 40vh;
     width: 30vw;
     flex-wrap: wrap;
@@ -80,11 +68,12 @@
 
 .signup-container {
     background-color:rgba(0, 0, 0, 0.05);
-    width: 40vw; 
-    height: 700px;
     margin: auto;
     border-radius: 10px;
-    padding-bottom: 20px;
+    position: relative;
+    max-width: 40%;
+    max-height: 100%;
+    min-height: 80%;
 }
 
 .signup-form {
@@ -153,12 +142,9 @@
     margin: auto;
     border-radius: 10px;
     z-index:10; 
-    width: 40vw; 
-    height: 70vh;
     padding: 30px 20px 20px 20px;
-    display: flex;
-    flex-direction: column;
     border: solid 1px black;
+    max-width: 40%;
 }
 
 .profile-update-form {
@@ -168,13 +154,11 @@
 }
 
 .profile-update-form-control-name {
-    width: 40vh;
     border: solid 1px rgba(0, 0, 0, 0.5);
     background-color: #CCDFCC;
 }
 
 .profile-update-form-control-profile{
-    width: 40vh;
     background-color: #CCDFCC;
 }
 
@@ -224,3 +208,20 @@
     background-color: #D8D8D8;
     border: solid 1px rgba(0, 0, 0, 0.5);
 }
+
+.profile-image {
+    max-width: 300px;
+}
+
+/* @media (min-width: 360px) {
+    .profile-image {
+            width: 80px;
+          }
+}
+
+@media (min-width: 701px) {
+    .profile-image {
+            width: 250px;
+          }
+} */
+    

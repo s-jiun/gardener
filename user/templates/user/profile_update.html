@@ -7,25 +7,33 @@
 
 {% block content %}
 <div class="d-flex justify-content-center align-items-center main-container" style="background-color: #D8D8D8;">
-    <img src="{%static 'images/profile_update.png'%}" alt="" style="max-width: 70%; max-height: 100%; z-index: 1; position: absolute; overflow: hidden; height: 90vh; ">
-    <div style="background-color: rgba(0, 0, 0,0.5); z-index: 5; max-width: 70%; max-height: 100%; height: 90vh; width: 100vw; position: absolute;"></div>
-    <div class="d-flex justify-content-center align-items-center profile-update-container">
-        <form action="" method="POST" enctype="multipart/form-data" class="profile-update-form">
-            {% csrf_token %}
-            <div>
-                <img src="{{request.user.Image.url}}" alt="" style="height: 200px; width: 250px; margin-bottom: 10px;">
-            </div>    
-            {{form.Image}}
-            <div>
-                이름
-                <p>{{form.name}}</p>
+    <div class="d-flex justify-content-center align-items-center" style="background-size: cover; background-color: rgba(0,0,0,0.5); background-image: url({% static 'images/profile_update.png' %}); width: 80%; height:100% " >
+        <div class="row" style="width:100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 5;">
+            <div class="profile-update-container row col-12">
+                <form action="" method="POST" enctype="multipart/form-data" class="profile-update-form row col-12">
+                    {% csrf_token %}
+                    <div class="col-12 row justify-content-center">
+                        <img src="{{request.user.Image.url}}" alt="" class="profile-image col-12">
+                        
+                    </div>
+                    <div class="col-12 row">    
+                        <input type="file" name="Image" class="profile-update-form-control-image col-12" accept="image/*" id="id_Image">
+                    </div>    
+                    <div class="col-12 row">
+                        <label for="username" style="font-size: 1vw;" class="col-12">이름</label>
+                        <input type="text" name="name" value="Kugunmo" class="col-12 profile-update-form-control-name" required="" id="id_name"> 
+                    </div>
+                    <div class="col-12 row">
+                        <label for="profile" style="font-size: 1vw;" class="col-12">소개</label>
+                        <textarea name="profile" cols="40" rows="10" class="profile-update-form-control-profile col-12 mb-5" id="id_profile"></textarea>   
+                    </div>
+                    <div class="col-12 row justify-content-center">
+                        <button class="profile-update-btn col-12" type="submit">저장하기</button>
+                    </div>
+                </form>
             </div>
-            <div>
-                소개
-                <p>{{form.profile}}</p>
-            </div>
-            <button class="profile-update-btn" type="submit">저장하기</button>
-        </form>
+        </div>
     </div>
 </div>
-{% endblock %}
+    {% endblock %}
+    
