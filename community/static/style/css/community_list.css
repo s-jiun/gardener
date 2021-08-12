@@ -1,21 +1,17 @@
 #search-header {
-  max-height: 300px;
-  border: solid 3px black;
+  width: 100%;
+  height: 300px;
   background: url("/static/images/1.jpg");
   background-repeat: no-repeat;
   background-position: center bottom;
   background-size: cover;
-  padding-left: 0;
-  padding-right: 0;
   color: white;
   text-align: center;
 }
 
-/* #search-header-p {
-  font-size: 3rem;
-} */
 #search-header-form {
   height: 30%;
+  width: 60%;
   margin-bottom: 5vh;
 }
 .search-input {
