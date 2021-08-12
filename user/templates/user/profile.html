@@ -35,10 +35,10 @@
                                     </span><br>
                                 </div><br>
                                 <div id="user-follow" class="mt-2">
-                                    <img src="{% static 'images/follower.png'%}" />
-                                    <span>팔로워 <span class="follower-count">{{follower}}</span></span>
-                                    <img src="{% static 'images/following.png'%}" />
-                                    <span>팔로잉 <span class="following-count">{{following}}</span></span>
+                                    <!-- <img src="{% static 'images/follower.png'%}" /> -->
+                                    <a href="{% url 'user:follow' user.pk %}">팔로워 <span class="follower-count">{{follower}}</span></a>
+                                    <!-- <img src="{% static 'images/following.png'%}" /> -->
+                                    <a href="{% url 'user:follow' user.pk %}">| 팔로잉 <span class="following-count">{{following}}</span></a>
                                 </div>
                             </div>
                         </div>
@@ -65,8 +65,6 @@
                                                 <img style="width: 1rem;" src="{% static 'images/label.png'%}" />
                                                 <span>{{tag.name}}</span>
                                                 {% endfor %}
-                                                {%else%}
-                                                <span>태그가 없어요!</span>
                                                 {%endif%}
                                             </div>
                                         </div>
@@ -141,8 +139,10 @@
                     <div class="btn-group-vertical" role="group" aria-label="Basic outlined example">
                         <a href="#" type="button" >My Pick</a>
                         <a href="#" type="button" >My Scrab</a>
-                        <a href="#" type="button" >게시물 작성</a>
-                        <a href="#" type="button" >프로필 수정</a>
+                        <a href="{% url 'community:post_create' %}" >게시물 작성</a>
+                        <a href="{% url 'user:profile_update' %}" >프로필 수정</a>
+                        <a href="{% url 'user:update' %}" >회원정보 수정</a>
+                        <a href="{% url 'user:signout' %}" >회원탈퇴</a>
                     </div>
                 {%endif%}
             </div>
