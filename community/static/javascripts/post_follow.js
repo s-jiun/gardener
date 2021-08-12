@@ -14,9 +14,6 @@ const followingHandleResponse = () => {
     if (requestFollowing.status < 400) {
         const {user_id} = JSON.parse(requestFollowing.response);
         const element = document.querySelector('.following')
-        const follower_count = document.querySelector('.follower-count')
-        const count = Number(follower_count.innerHTML) - 1
-        follower_count.innerHTML = `${count}`
         console.log(element)
         element.innerHTML = `
         <div class="follow">
@@ -50,9 +47,6 @@ const followHandleResponse = () => {
     if (requestFollow.status < 400) {
         const {user_id} = JSON.parse(requestFollow.response);
         const element = document.querySelector(`.follow`)
-        const follower_count = document.querySelector('.follower-count')
-        const count = Number(follower_count.innerHTML) + 1
-        follower_count.innerHTML = `${count}`
         console.log(element)
         element.innerHTML = `    
         <div class='following'>
