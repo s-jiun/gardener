@@ -85,11 +85,11 @@
             <hr />
             {%if post.user_id != request.user%}
                 {% if is_following%}
-                <div>
+                <div class="follow-wraper">
                     <button class='following' onclick="onClickFollowing({{user.id}})">팔로잉</button>
                 </div>
                 {% else %}
-                <div>
+                <div class="follow-wraper">
                     <button class="follow" onclick="onClickFollow({{user.id}})">팔로우</button>
                 </div>
                 {% endif %}

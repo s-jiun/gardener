@@ -13,12 +13,10 @@ const onClickFollowing = (user_id) => {
 const followingHandleResponse = () => {
     if (requestFollowing.status < 400) {
         const {user_id} = JSON.parse(requestFollowing.response);
-        const element = document.querySelector('.following')
+        const element = document.querySelector('.follow-wraper')
         console.log(element)
         element.innerHTML = `
-        <div class="follow">
-            <button  onclick="onClickFollow(${user_id})">팔로우</button>
-        </div>
+        <button class="follow" onclick="onClickFollow(${user_id})">팔로우</button>
         `
 
     }
@@ -46,12 +44,11 @@ const onClickFollow = (user_id) => {
 const followHandleResponse = () => {
     if (requestFollow.status < 400) {
         const {user_id} = JSON.parse(requestFollow.response);
-        const element = document.querySelector(`.follow`)
+        const element = document.querySelector(`.follow-wraper`)
         console.log(element)
         element.innerHTML = `    
-        <div class='following'>
-            <button onclick="onClickFollowing(${user_id})">팔로잉</button>
-        </div>`
+        <button class='following' onclick="onClickFollowing(${user_id})">팔로잉</button>
+        `
     }
 
 }
