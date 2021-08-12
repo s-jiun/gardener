@@ -9,11 +9,13 @@
 <div class="d-flex justify-content-center align-items-center main-container" style="background-color: #D8D8D8;">
     <img src="{%static 'images/login_background.jpg'%}" alt="" style="max-width: 70%; max-height: 100%; z-index: 1; position: absolute; overflow: hidden; height: 90vh;">
     <div class="d-flex justify-content-center align-items-center update-container">
-        
-        <form action="" method="POST" enctype="multipart/form-data" class="update-form" >
+        <div class="row row-cols-1 row-cols-md-1" style="width:100%;">
+        <div class="col">
+        <form id="updateForm" action="" method="POST" enctype="multipart/form-data" class="update-form" >
+            <div class="text-center">
             <h1 style="margin-bottom: 30px;">회원가입</h1>
             {% csrf_token %}
-            {{user_change_form.userid.errors}}
+            {{user_change_form.userid.errors}}</div>
             <p>아이디</p>
             {{user_change_form.userid}}
             {{user_change_form.email.errors}}
@@ -24,8 +26,14 @@
             <p>비밀번호 확인</p>
             {{user_change_form.password2}}
             {{user_change_form.password2.errors}}
-            <button class="signup-btn" type="submit">저장하기</button>
+            <div class="row row-cols-1 justify-content-center text-center" style="height:45px;margin:0; width:100%; margin-bottom:20px;">
+                <div class="col">
+                <button class="signup-btn" type="submit">저장하기</button>
+                </div>
+            </div>
         </form>
+        </div>
+        </div>
     </div>
 </div>
 {% endblock %}
