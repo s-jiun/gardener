@@ -1,0 +1,105 @@
+.main-follow{
+    background: url("/static/images/followerBackground.jpg");
+    background-position: 100% 35%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 300px;
+    width: 100%;
+    padding:0
+
+}
+
+#follow-header {
+    padding-left: 0;
+    padding-right: 0;
+    margin-top : 80px;
+    color: white;
+    text-align: center;
+    height:30%;
+}
+#follow-header-p{
+    margin-top :50px;
+    margin-bottom: 20px;
+    
+}
+#follow-header-p span{
+    /* text-shadow: -1px 0 #5C5427, 0 1px #5C5427, 1px 0 #5C5427, 0 -1px #5C5427; */
+    text-shadow: 0px 0px 3px #5c5427;
+
+    
+}
+#follow-header-form{
+    margin-top:20px;
+    margin-left: 50px;
+}
+#follow-header-form .follow-input{
+    width: 50%;
+    height: 40px;
+    border : solid 2px #CCDFCC;
+    border-radius: 10px;
+}
+#follow-header-form .follow-input::placeholder{
+    color:#5c5427;
+    opacity : 80%;
+}
+#follow-header-form .follow-input-1{
+    width:60px;
+    height: 37px;
+    border : solid 2px #CCDFCC;
+    border-radius: 10px;
+    vertical-align: top;
+    background: #CCDFCC;
+    color:white;
+    font-weight:bold;
+    text-shadow: -1px 0 #A0CAB5, 0 1px #A0CAB5, 1px 0 #A0CAB5, 0 -1px #A0CAB5; 
+}
+#follower-title{
+    font-size: 30px;
+}
+#follow-body{
+    border-style:double; 
+    border-color: #CCDFCC; 
+    border-width:5px 5px 5px 5px ; 
+    margin-top: 20px;
+    margin-bottom :100px;
+}
+.follow-box{
+    width:80%; 
+    margin-top:20px; 
+    margin-bottom: 20px;
+    border-radius: 10px;
+    border:solid 2px #CCDFCC;
+}
+
+#follow-box-title{
+    background:#CCDFCC; 
+    border-radius: 10px 10px 0px 0px;
+}
+#follow-user-box1{
+    margin:10px;
+    border-style:double; 
+    border-radius:10px;
+    border-color: #aca790; 
+    border-width:5px 5px 5px 5px ;
+}
+#follow-user-box2{
+    margin:10px;
+    border-style:double; 
+    border-radius:10px;border-color: #a0cab5; 
+    border-width:5px 5px 5px 5px ;
+}
+#follow-user-img{
+    width: 20%; 
+}
+#follow-user-img img{
+   width:5vw; 
+   height:5vw; 
+   padding:0; 
+   border-radius:50%;
+}
+#follow-name{
+    font-weight:bold;
+    display: inline;
+    margin-right: 0.3rem;
+    word-break:break-all;
+}
