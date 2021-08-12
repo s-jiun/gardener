@@ -179,7 +179,7 @@
 #reset-form-container {
     z-index: 10;
     background-color: #CCDFCC;
-    width: 40vw; 
+    width: 50vw; 
     height: 70vh;
     border-radius: 10px;
     display: flex;
@@ -189,7 +189,6 @@
 }
 
 .email-form-control {
-    width: 20vh;
 }
 
 #reset-confirm-form-container {
