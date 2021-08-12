@@ -29,6 +29,11 @@
             <div id = 'question-detail-main'>
                 {{question.content|safe}}
             </div>
+            {% for tag in question.tags.all %}
+            <div class = 'question-detail-tag'>
+                <a href="{% url 'QnA:tagged' tag %}">#{{ tag.name }} </a>
+            </div>
+            {% endfor %}
             <div class='mt-5 mb-2'>
                 <h4 style='display:inline;' class= 'ms-1 mt-5 mb-2' style='font-weight:bold;'>답변목록</h4>
                 <button id='makeanswer-button'><a style='color: white; text-decoration: none;' href = '{% url "QnA:makeanswer" pk=question.pk%}'>답글달기</a></button>

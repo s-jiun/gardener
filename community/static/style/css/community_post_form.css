@@ -2,6 +2,6 @@
   writing-mode: vertical-lr;
 }
 
-.django-ckeditor-widget {
-  width: 100%;
+#post-form-image {
+  overflow: auto;
 }

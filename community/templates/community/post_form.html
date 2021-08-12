@@ -47,7 +47,7 @@
                                 <input type="text"class="form-control" name="tags" id="id_tags" value="{%for tag in form.tags.value %}#{{tag}}{%endfor%}">
                                 <span>{{form.tags.help_text}}</span>
                             </div>
-                            <div class='text-center'>
+                            <div class='text-center mb-5'>
                                 {% if form.title.value %}
                                 <input type="submit" value = '수정하기' style='background-color: #CCDFCC;  border-radius: 10px; border:0;' class='me-3'/>
                                 <button type="button" style='background-color: #C4C4C4;  border-radius: 10px; border:0;'>
@@ -65,47 +65,7 @@
                         </form>
                     </div>
                 </div>
-                {% comment %}
-                <h4 class='mb-4  mt-5'>새 글 작성</h4>
-                <form action='' method='POST' enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <div class='form-group mb-3'>
-                        <label for="id_title" class="form-label">제목</label>
-                        {% if form.title.value %}
-                            <input type="text" class='form-control' name="title" maxlength="100" required="" value="{{form.title.value}}" id="id_title">
-                        {% else %}
-                            <input type="text" class='form-control' name="title" maxlength="100" required="" id="id_title">
-                        {% endif %}
-                    </div>
-                    <div class='form-group mb-3'>
-                        <label for="id_image" class="form-label">썸네일</label>
-                        {% if form.image.value %}
-                        {{form.image}}
-                        {% else %}
-                        <input type="file" class='form-control' name="image" accept="image/*" id="id_image">
-                        {% endif %}
-                    </div>
-                    <div class='form-group mb-3'>
-                        <label for="content" class="form-label">내용</label>
-                        <div>
-                            {{ form.media }}
-                            {{ form.content }}
-                        </div>
-                    </div>
-                    <div class='form-group'>
-                        <label for = 'id_tags' class = 'form-label'>태그</label>
-                        <input type="text"class="form-control" name="tags" value="{%for tag in form.tags.value %}#{{tag}}{%endfor%}" id="id_tags">
-                        <span>{{form.tags.help_text}}</span>
-                    </div>
-                    <div class='text-center'>
-                        <input type="submit" value = '업로드' style='background-color: #CCDFCC;  border-radius: 10px;' class='me-3'/>
-                        <button type="button" style='background-color: #C4C4C4;  border-radius: 10px;'>
-                            <a href="{% url 'community:post_list' %}" style='text-decoration:none; color:black;'>돌아가기</a>
-                        </button>
-                    </div>
-                    
-                </form>
-                {% endcomment %}
+                
             </div>
             <div class='col col-1' style='writing-mode: vertical-rl;'>
                 {% if form.title.value %}
