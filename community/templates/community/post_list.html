@@ -8,7 +8,7 @@
 {% block content %}
 <div id='search-header'>
     <div class='d-flex align-items-center flex-column'>
-        <div class = 'pb-3' style='padding-top:100px;'>
+        <div class = 'pb-3' style='padding-top:6%;'>
             {% if q %}
             <h1>'{{ q }}' 검색 결과입니다.</h1>
             {% else %}
@@ -26,31 +26,51 @@
                 <button class='search-input-1' type="submit" style='border:none; height:4vh;' >검색</button>
             </form>
         </div>
+        <div>
+            <button id='list-create-post'><a href="{% url 'community:post_create' %}" style='color:white;'>포스트 작성</a></button>
+            <button id='list-watch-post'><a href = '' style='color:white;'>친구 게시물 보기</a></button>
+        </div>
     </div>            
 </div>
 <div class='container-fluid mt-4 mb-3' style='width:80%;'>
-    <div class='row row-cols-2'>
-        <div class='col col-8 col-md-10 container-fluid'>
+    <div class='row' >
+        <div class='col container-fluid'>
             {% if post_list %}
             <div class='row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3'>
                 {% for post in post_list %}
                 <div class='col mb-3'>
                     <p id='thumbnail-p'><img id='post-list-thumbnail' src="{{ post.user_id.Image.url }}"> {{ post.user_id }}</p>
-                    <figure class="snip1382">
+                    {% comment %}
+                    <figure class="snip1384">
                         {% if post.image %}
                             <image src='{{ post.image.url }}' class='img-thumbnail' style='width: 90%; height:90%;'/>
                         {% endif %}
-                        <a href='{% url "community:post_detail" pk=post.pk %}'>
-                            <figcaption>
-                                <h2>{{post.title}}</h2>
-                                <div class="icons">
-                                  {% for tag in post.tags.all %}
-                                      #{{tag.name}} 
-                                  {% endfor %}
-                                </div>
-                              </figcaption>
-                          </figure>
-                        </a> 
+                        
+                        <figcaption>
+                            <h2>{{post.title}}</h2>
+                            <div class="icons">
+                                {% for tag in post.tags.all %}
+                                    #{{tag.name}} 
+                                {% endfor %}
+                            </div>
+                            </figcaption>
+                            <a href='{% url "community:post_detail" pk=post.pk %}'></a>
+                    </figure>
+                    {% endcomment %}
+                    <figure class="snip1384">
+                        {% if post.image %}
+                            <image src='{{ post.image.url }}' class='img-thumbnail' style='width: 90%; height:90%;'/>
+                        {% endif %}
+                        <figcaption>
+                          <h3>{{post.title}}</h3>
+                          <p>
+                            {% for tag in post.tags.all %}
+                                #{{tag.name}} 
+                            {% endfor %}
+                          </p>
+                        </figcaption>
+                        <a href='{% url "community:post_detail" pk=post.pk %}'></a>
+                      </figure>
                 </div>
                 {% endfor %}
             </div>
@@ -97,6 +117,7 @@
                 {% endif %}
             </div>
         </div>
+        {% comment %}
         <div class='col-1 d-flex flex-column justify-content-center' style="margin-left:30px;">
             <div>
                 <button style = 'border-radius:10px;margin-bottom:1rem;'>
@@ -120,6 +141,7 @@
                 </button>
             </div>
         </div>
+        {% endcomment %}
     </div>
 </div>
 

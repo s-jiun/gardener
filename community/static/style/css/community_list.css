@@ -47,133 +47,115 @@
 }
 
 /* 이미지호버 */
-figure.snip1382 {
+figure.snip1384 {
   position: relative;
-  height: 100%;
+  overflow: hidden;
   margin: 10px;
-  min-width: 230px;
+  min-width: 300px;
+  min-height: 220px;
   max-width: 315px;
   max-height: 220px;
+  height: 100%;
   width: 100%;
   color: #ffffff;
   text-align: center;
   font-size: 16px;
+  background-color: white;
 }
-figure.snip1382 * {
+figure.snip1384 * {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   -webkit-transition: all 0.35s ease;
   transition: all 0.35s ease;
 }
-figure.snip1382 img {
+figure.snip1384 img {
   max-width: 100%;
+  backface-visibility: hidden;
+  vertical-align: top;
 }
-figure.snip1382:after,
-figure.snip1382:before,
-figure.snip1382 figcaption:after,
-figure.snip1382 figcaption:before {
-  background: #ccdfcc;
-  height: 25%;
-  position: absolute;
-  content: "";
-  opacity: 0;
-  -webkit-transition: all 0.35s steps(4);
-  transition: all 0.35s steps(4);
-  z-index: 1;
-  left: 50%;
-  right: 50%;
-}
-figure.snip1382:before {
-  top: 0;
-  -webkit-transition-delay: 0;
-  transition-delay: 0;
-}
-figure.snip1382:after {
-  top: 25%;
-  -webkit-transition-delay: 0.1s;
-  transition-delay: 0.1s;
-}
-figure.snip1382 figcaption:before {
-  top: 50%;
-  -webkit-transition-delay: 0.2s;
-  transition-delay: 0.2s;
-  z-index: -1;
-}
-figure.snip1382 figcaption:after {
-  top: 75%;
-  -webkit-transition-delay: 0.3s;
-  transition-delay: 0.3s;
-  z-index: -1;
-}
-figure.snip1382 figcaption {
+figure.snip1384:after,
+figure.snip1384 figcaption {
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 2;
-  padding: 30px;
 }
-figure.snip1382 h2,
-figure.snip1382 p,
-figure.snip1382 .icons {
-  margin: 0;
-  width: 100%;
+figure.snip1384:after {
+  content: "";
+  background-color: #ccdfcc;
+  -webkit-transition: all 0.35s ease;
+  transition: all 0.35s ease;
   opacity: 0;
 }
-figure.snip1382 h2 {
-  font-weight: 900;
-  text-transform: uppercase;
+figure.snip1384 figcaption {
+  z-index: 1;
+  padding: 40px;
 }
-figure.snip1382 p {
-  font-weight: 300;
-}
-figure.snip1382 .icons {
-  position: absolute;
-  bottom: 30px;
-  left: 0;
+figure.snip1384 h3,
+figure.snip1384 .links {
   width: 100%;
+  margin: 5px 0;
+  padding: 0;
 }
-figure.snip1382 i {
-  padding: 0px 10px;
-  display: inline-block;
-  font-size: 24px;
-  color: #ffffff;
-  text-align: center;
-  opacity: 0.8;
-  text-decoration: none;
+figure.snip1384 h3 {
+  line-height: 1.1em;
+  font-weight: 700;
+  font-size: 1.4em;
+  text-transform: uppercase;
+  opacity: 0;
 }
-figure.snip1382 i:hover {
-  opacity: 1;
+figure.snip1384 p {
+  font-size: 0.8em;
+  font-weight: 300;
+  letter-spacing: 1px;
+  opacity: 0;
+  top: 50%;
+  -webkit-transform: translateY(40px);
+  transform: translateY(40px);
 }
-figure.snip1382:hover:after,
-figure.snip1382.hover:after,
-figure.snip1382:hover:before,
-figure.snip1382.hover:before,
-figure.snip1382:hover figcaption:after,
-figure.snip1382.hover figcaption:after,
-figure.snip1382:hover figcaption:before,
-figure.snip1382.hover figcaption:before {
+
+figure.snip1384 a {
+  position: absolute;
+  top: 0;
+  bottom: 0;
   left: 0;
   right: 0;
-  opacity: 0.8;
+  z-index: 1;
 }
-figure.snip1382:hover figcaption h2,
-figure.snip1382.hover figcaption h2,
-figure.snip1382:hover figcaption p,
-figure.snip1382.hover figcaption p,
-figure.snip1382:hover figcaption .icons,
-figure.snip1382.hover figcaption .icons {
-  -webkit-transition-delay: 0.25s;
-  transition-delay: 0.25s;
+figure.snip1384:hover img,
+figure.snip1384.hover img {
+  zoom: 1;
+  filter: alpha(opacity=50);
+  -webkit-opacity: 0.5;
+  opacity: 0.5;
 }
-figure.snip1382:hover figcaption h2,
-figure.snip1382.hover figcaption h2,
-figure.snip1382:hover figcaption .icons,
-figure.snip1382.hover figcaption .icons {
+figure.snip1384:hover:after,
+figure.snip1384.hover:after {
+  opacity: 1;
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+}
+figure.snip1384:hover h3,
+figure.snip1384.hover h3,
+figure.snip1384:hover p,
+figure.snip1384.hover p {
+  -webkit-transform: translate(0px, 0px);
+  transform: translate(0px, 0px);
   opacity: 1;
 }
-figure.snip1382:hover figcaption p,
-figure.snip1382.hover figcaption p {
-  opacity: 0.7;
+
+#list-create-post {
+  border: 0;
+  background-color: #a0cab5;
+  border-radius: 10px;
+}
+
+#list-watch-post {
+  border: 0;
+  background-color: #a0cab5;
+  border-radius: 10px;
 }
