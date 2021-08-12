@@ -96,9 +96,9 @@
         {% endif %}
     </div>
     <div class='col-md-offset-6'>
-    <button type="submit" style='border-radius: 10px;'><a href = '{% url "QnA:makequestion" %}' style='text-decoration:none; color:black;'>질문하기</a></button>
+    <button type="submit" style='border-radius: 10px;' class= 'mb-4'><a href = '{% url "QnA:makequestion" %}' style='text-decoration:none; color:black;'>질문하기</a></button>
     {% if q %}
-    <button type='submit' style='border-radius: 10px;'>
+    <button type='submit' style='border-radius: 10px;' class= 'mb-4'>
         <a href = '{% url "QnA:communityquestion_list" %}' style='text-decoration:none; color:black;'>뒤로가기</a>
     </button>
     {% endif %}
