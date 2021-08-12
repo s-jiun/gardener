@@ -11,7 +11,7 @@ from django.contrib import messages
 class QuestionListView(ListView):
     model = CommunityQuestion
 
-    paginate_by = 2
+    paginate_by = 10
 
     # DEFAULT : <app_label>/<model_name>_list.html
     template_name = 'QnA/communityquestion.html'

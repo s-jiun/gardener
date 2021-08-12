@@ -6,72 +6,64 @@
 {% endblock %}
 
 {% block content %}
-<div class='container main-body'>
-    <div class='row' style='height:100%;'>
-        <div class='col col-10' style='height:100%;'>
-            <div id='search-header' class='d-flex flex-column justify-content-center' style='height:30%;'>
-                <div id='search-header-p'>
-                    {% if q %}
-                    <h1>'{{ q }}' 검색 결과입니다.</h1>
-                    {% else %}
-                    <h1>마음에 드는 플렌테리어를 찾아보세요.</h1>
-                    {% endif %}
+<div id='search-header'>
+    <div class='d-flex align-items-center flex-column'>
+        <div class = 'pb-3' style='padding-top:100px;'>
+            {% if q %}
+            <h1>'{{ q }}' 검색 결과입니다.</h1>
+            {% else %}
+            <h1>마음에 드는 플랜테리어를 찾아보세요.</h1>
+            {% endif %}
+        </div>
+        <div id='search-header-form' style='width:50%;'>
+            <form action='' method="GET">
+                <select class='search-input-1' name="type" id="search-type" style='border:none; height:4vh;'>
+                    <option value="tag">태그</option>
+                    <option value="title">제목</option>
+                    <option value="content">내용</option>
+                </select>
+                <input class='search-input' type="text" name='q' value="{{q}}" placeholder="검색어를 입력하세요" style='border:none; height:4vh;'/>
+                <button class='search-input-1' type="submit" style='border:none; height:4vh;' >검색</button>
+            </form>
+        </div>
+    </div>            
+</div>
+<div class='container-fluid mt-4 mb-3' style='width:80%;'>
+    <div class='row row-cols-2'>
+        <div class='col col-8 col-md-10 container-fluid'>
+            {% if post_list %}
+            <div class='row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3'>
+                {% for post in post_list %}
+                <div class='col mb-3'>
+                    <p id='thumbnail-p'><img id='post-list-thumbnail' src="{{ post.user_id.Image.url }}"> {{ post.user_id }}</p>
+                    <figure class="snip1382">
+                        {% if post.image %}
+                            <image src='{{ post.image.url }}' class='img-thumbnail' style='width: 90%; height:90%;'/>
+                        {% endif %}
+                        <a href='{% url "community:post_detail" pk=post.pk %}'>
+                            <figcaption>
+                                <h2>{{post.title}}</h2>
+                                <div class="icons">
+                                  {% for tag in post.tags.all %}
+                                      #{{tag.name}} 
+                                  {% endfor %}
+                                </div>
+                              </figcaption>
+                          </figure>
+                        </a> 
                 </div>
-                <div id='search-header-form'>
-                    <form action='' method="GET">
-                        <select class='search-input-1' name="type" id="search-type">
-                            <option value="tag">태그</option>
-                            <option value="title">제목</option>
-                            <option value="content">내용</option>
-                        </select>
-                        <input class='search-input' type="text" name='q' value="{{q}}" placeholder="검색어를 입력하세요" />
-                        <button class='search-input-1' type="submit">검색</button>
-                    </form>
-                </div>
+                {% endfor %}
             </div>
-            <div class='container-fluid mb-3'>
-                {% if post_list %}
-                <div class='row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3'>
-                    {% for post in post_list %}
-                    <div class='col'>
-                        <p id='thumbnail-p'>{{ post.user_id }}</p>
-                        {% comment %}
-                        <a href="{% url 'community:post_detail' pk=post.pk %}">
-                            {% if post.image %}
-                            <image src='{{ post.image.url }}' class='img-thumbnail' style='height:80%;'/>
-                            {% endif %}
-                        </a>
-                        {% endcomment %}
-                        <figure class="snip1382">
-                            {% if post.image %}
-                                <image src='{{ post.image.url }}' class='img-thumbnail' style='width: 100%; height:100%;'/>
-                            {% endif %}
-                            <a href='{% url "community:post_detail" pk=post.pk %}'>
-                                <figcaption>
-                                    <h2>{{post.title}}</h2>
-                                    <div class="icons">
-                                      {% for tag in post.tags.all %}
-                                          #{{tag.name}} 
-                                      {% endfor %}
-                                    </div>
-                                  </figcaption>
-                              </figure>
-                            </a>
-                            
-                    </div>
-                    {% endfor %}
-                </div>
+            {% else %}
+            <div class='row row-cols-1' style='text-align:center; margin-top: 2rem;'>
+                {% if q %}
+                <h1>일치하는 검색 결과가 없습니다.</h1>
+    
                 {% else %}
-                <div class='row row-cols-1' style='text-align:center; margin-top: 2rem;'>
-                    {% if q %}
-                    <h1>일치하는 검색 결과가 없습니다.</h1>
-        
-                    {% else %}
-                    <h1>작성된 게시글이 없습니다.</h1>
-                    {% endif %}
-                </div>
+                <h1>작성된 게시글이 없습니다.</h1>
                 {% endif %}
             </div>
+            {% endif %}
             <div id='list-paginator' style = 'margin-bottom:1rem;'>
                 {% if is_paginated %}
                 <ul class="pagination">
@@ -105,8 +97,7 @@
                 {% endif %}
             </div>
         </div>
-        
-        <div class='col d-flex flex-column justify-content-center' style="margin-left:30px;">
+        <div class='col-1 d-flex flex-column justify-content-center' style="margin-left:30px;">
             <div>
                 <button style = 'border-radius:10px;margin-bottom:1rem;'>
                     <a href="{% url 'community:post_create' %}">
@@ -129,7 +120,6 @@
                 </button>
             </div>
         </div>
-
     </div>
 </div>
 

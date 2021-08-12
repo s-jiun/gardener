@@ -74,3 +74,16 @@ footer {
   padding: 2px;
   border-radius: 100%;
 }
+
+.django-ckeditor-widget {
+  width: 100%;
+}
+
+.page-link {
+  color: brown;
+}
+
+.activate a {
+  background-color: #a0cab5;
+  color: white;
+}

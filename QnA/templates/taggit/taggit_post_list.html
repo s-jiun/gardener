@@ -1,15 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
+{% load static %}
+{% block head %}
+    <link href="{% static 'style/css/tagged_question.css' %}" rel="stylesheet">
+{% endblock %}
+{% block content %}
+    <div class='container' style='width:80%;'>
+        <div class='row'>
+            <div class='col-12'>
+                <h2 class='text-center'>#{{ tag }}</h2>
+                {% for question in questions %}
+                <div class='same-tag-question'>
+                    <h3>#{{forloop.counter}}</h3>
+                    <div id = 'same-tag-question-header'>
+                        <h5>[질문]{{question.title}}</h5>
+                        <span>작성자</span> <img id='question-profile-img' src="{{ question.user_id.Image.url }}">{{question.user_id}}님
+                        <span>수정일</span> {{question.updated_at}}
+                        {% if user == question.user_id %}
+                        <div class= 'me-2'style='display:inline; float:right'>
+                            <a href = '{% url "QnA:editquestion" pk=question.pk %}' style='color:#F4F4F4;'>수정</a>
+                            &nbsp;
+                            <a href = '{% url "QnA:deletequestion" pk=question.pk %}' style='color:#F4F4F4;'>삭제</a>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div id = 'same-tag-question-main'>
+                        {{question.content|safe}}
+                    </div>
+                    {% for tag in question.tags.all %}
+                    <div class = 'same-tag-question-tag'>
+                        <a href="{% url 'QnA:tagged' tag %}">#{{ tag.name }} </a>                        
+                    </div>
+                    {% endfor %}
+                    <div>
+                        <button class ='go-to-detail mt-2 mb-2' type="submit"><a href = '{% url "QnA:questiondetail" pk=question.pk %}'>게시물 보기</a></button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tagged_post</title>
-</head>
-
+{% comment %}
 <body>
-    <h2>List of posts of the tag "{{ tag }}"</h2>
+
 
     {% if questions %}
 
@@ -42,3 +76,4 @@
 </body>
 
 </html>
+{% endcomment %}
