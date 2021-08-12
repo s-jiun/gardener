@@ -1,12 +1,10 @@
 #question-header {
   width: 100%;
   height: 300px;
-  background: url("/static/images/questionheader.jpg");
+  background: url("/static/images/q&a.jpeg");
   background-repeat: no-repeat;
-  background-position: center center;
+  background-position: 80% 65%;
   background-size: cover;
-  padding-left: 0;
-  padding-right: 0;
   color: white;
   text-align: center;
 }
