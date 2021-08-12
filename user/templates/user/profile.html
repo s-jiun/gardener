@@ -44,7 +44,9 @@
                         </div>
                         <hr style="margin-top: 30px; color: #5C5427; height:2px;">
                         <div style="text-align:center; margin-top:-20px;">
-                        <span>My post</span>
+                            <br />
+                            <span>My post</span>
+                            <br />
                         </div>
                         <hr style="margin-top: -5px; color: #5C5427;height:2px;">
 
@@ -133,11 +135,9 @@
                     {% endif %}
                 {%endif%}
                 <!--내 프로필 경우-->
-                {% comment %} <p>포스트</p>
-                <p>사이드바</p> {% endcomment %}
                 {%if user.id == request.user.id%}
                     <div class="btn-group-vertical" role="group" aria-label="Basic outlined example">
-                        <a href="#" type="button" >My Pick</a>
+                        <a href="{% url 'user:my_pick' user.pk %}" >My Pick</a>
                         <a href="#" type="button" >My Scrab</a>
                         <a href="{% url 'community:post_create' %}" >게시물 작성</a>
                         <a href="{% url 'user:profile_update' %}" >프로필 수정</a>

@@ -19,6 +19,7 @@ from django.contrib.auth.forms import (
     AuthenticationForm, PasswordChangeForm, PasswordResetForm, SetPasswordForm,
 )
 from django.core.paginator import Paginator
+from community.models import Like, Post
 
 
 def login(request):
@@ -188,7 +189,7 @@ def profile(request, pk):
 
 #     return render(request, template_name='user/following.html', context=ctx)
 
-def follow_list(request,pk):
+def follow_list(request, pk):
     user = GeneralUser.objects.get(id=pk)
     # user가 팔로잉에 해당하는 팔로우 오브젝트
     followers = user.following.all()
@@ -205,6 +206,7 @@ def follow_list(request,pk):
     }
 
     return render(request, template_name='user/follower.html', context=ctx)
+
 
 def profile_update(request):
     user = GeneralUser.objects.get(id=request.user.id)
@@ -233,8 +235,10 @@ def profile_update(request):
 def my_profile(request):
     return redirect('user:profile', pk=request.user.id)
 
+
 def start_page(request):
     return render(request, template_name='welcome.html')
+
 
 def find_id(request):
     if request.method == 'POST':
@@ -242,22 +246,23 @@ def find_id(request):
         try:
             user = GeneralUser.objects.get(email=email)
             ctx = {
-                'user':user,
-                'email':email
+                'user': user,
+                'email': email
             }
-            return render(request, template_name='user/find_id_done.html',context=ctx)
+            return render(request, template_name='user/find_id_done.html', context=ctx)
         except:
             ctx = {
-                'email':email
+                'email': email
             }
             return render(request, template_name='user/find_id_fail.html', context=ctx)
-            
-    else:  
+
+    else:
         form = UserIdfindForm()
         ctx = {
-            'form':form
+            'form': form
         }
     return render(request, template_name='user/find_id.html', context=ctx)
+
 
 @csrf_exempt
 def following_ajax(request):
@@ -277,3 +282,11 @@ def follow_ajax(request):
     follow = Follow(user=user, following_user=request.user)
     follow.save()
     return JsonResponse({'user_id': user_id})
+
+
+def liked_posts(request, pk):
+    user = GeneralUser.objects.get(id=pk)
+    liked = Like.objects.filter(user_id=user)
+    print(liked)
+    ctx = {'liked': liked, 'user': user}
+    return render(request, 'user/my_pick.html', context=ctx)
