@@ -149,3 +149,44 @@
     transform: translate(-50%, -50%);
     transition-timing-function: ease;
 }
+
+.modal-dialog{
+    margin-top:80px;
+    height:600px;
+    background-color: #fff;
+    background-clip: border-box;
+    margin-bottom: 28px;
+    box-shadow: 0px 0px 8px #A0CAB5; 
+    border-radius: 35px 0;
+    border:solid 3px #A0CAB5;
+    overflow: hidden;
+    transition: .3s;
+}
+.modal{
+    height: auto;
+}
+.modal-body img{
+  width:50%; 
+  height:150px;
+  border:solid 1px #A0CAB5;
+  border-radius: 10px;
+  margin-bottom: 5px;
+}
+
+.modal-body table img{
+    width: 1.5rem;
+    height: auto;
+    border: none;
+}
+
+.modal-body table span{
+    margin-left:3px;
+}
+.modal-header{
+    /* margin-left:50px; */
+    background: #A0CAB5;
+}
+.modal-header h5{
+    margin-left:50px;
+    font-weight: bold;
+}

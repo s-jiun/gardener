@@ -6,16 +6,18 @@
 {% endblock %}
 
 {% block content %}
-<div id='question-header'>
-    {% if q %}
-        <h1 style='padding-top:100px; margin-bottom: 20px;'>'{{ q }}' 검색 결과입니다.</h1>
-    {% else %}
-        <h1 style='padding-top:100px; margin-bottom: 20px;'>Gardener QnA</h1>
-    {% endif %}
-    <form action='' method="GET" style='height: 20%;'>
-        <input class='search-input'  type="text" name='q' value="{{q}}" placeholder="태그를 검색해보세요" style='width:50%; height:70%; border:0;'/>
-        <button class='search-input-1' type="submit"style='width:60px; height: 37px;border:0; border-radius:10px;'>검색</button>
-    </form>
+<div class='row'>
+    <div id='question-header' class='d-flex flex-column justify-content-center' style=" padding: 0;">
+        {% if q %}
+            <h1 style='padding-top:80px; margin-bottom: 25px;'>'{{ q }}' 검색 결과입니다.</h1>
+        {% else %}
+            <h1 style='padding-top:80px; margin-bottom: 25px;'>Gardener QnA</h1>
+        {% endif %}
+        <form action='' method="GET" style='height: 20%;'>
+            <input class='search-input'  type="text" name='q' value="{{q}}" placeholder="태그를 검색해보세요" style='width:50%; height:70%; border:solid 1px #A0CAB5; border-radius:10px;'/>
+            <button class='search-input-1' type="submit"style='width:60px; height: 37px;border:0; border-radius:10px;'>검색</button>
+        </form>
+    </div>
 </div>
 <div class = 'container-fluid mt-4 text-center' style='width:80%;'>
 

@@ -45,7 +45,7 @@
                 <div class="col">
                     <div class="card p-2 m-3" id="plant-card" >
                         <div class="image" >
-                            <a href="{% url 'search:plant_detail' plant.pk %}">
+                            <a data-bs-toggle="modal" data-bs-target="#plantDetailModal-{{plant.pk}}">
                             <img src={{plant.photo_url}} class="card-img-top"  id="plant-img" alt="..." >
                             <h3>🌱{{plant.name}}🌱 <br> 알아보기</h3>
                             </a>
@@ -53,6 +53,129 @@
                         <div class="card-body">
                             <h5 class="card-title"><a href="{% url 'search:plant_detail' plant.pk %}" style="text-decoration:none;color:black">{{ plant.name }}</a></h5>
                             <hr class="m-0">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="plantDetailModal-{{plant.pk}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable">
+                        <div class="modal-content" id="plantDetailModal-content">
+                           <div class="modal-header justify-content-center">
+                                <h5 class="modal-title" id="plantDetailLabel">{{plant.name}}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="margin-left:40px;"></button>
+                            </div>
+                            <div class="modal-body text-center">
+                                <img src={{plant.photo_url}}>
+                                <hr class="m-1"><hr class="m-1">
+                                <div>
+                                    <table class="table table-striped text-start mt-2">
+                                        <tbody>
+                                            <tr>
+                                                <td class="p-2"> 
+                                                <img src={%static 'images/plant.png'%}> 
+                                                <span>생육형태<span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                - {{plant.name}}의 생육형태는 {{plant.growth_form}} 입니다
+                                                </td> 
+                                            
+                                            </tr>
+                                            <tr>
+                                                <td class="p-2"> 
+                                                <img src={%static 'images/difficulty.png'%}> 
+                                                <span>관리 난이도<span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                - {{plant.name}}의 관리 난이도는 {{plant.care_difficulty}} 입니다. 
+                                                </td> 
+                                            </tr>
+                                            <tr>
+                                                <td class="p-2"> 
+                                                    <img src={%static 'images/watering.png'%}> 
+                                                    <span>관리 요구 수준<span>
+                                                    </td>
+                                                </tr>
+                                            <tr>
+                                                <td>
+                                                {%if plant.management_level == "경험자" %}
+                                                - 식물을 키워본 경험이 좀 있다면 어렵지 않아요! 도전해보세요!
+                                                {%elif plant.management_level == "초보자" %}
+                                                - {{plant.management_level}}도 쉽게 키울 수 있어요! 어렵지 않아요!
+                                                {% else %}
+                                                -{{plant.management_level}} 정도의 수준이 요구되어요! 
+                                                {%endif%}
+                                                </td> 
+                                            </tr>
+                                            <tr>
+                                                <td class="p-2"> 
+                                                <img src={%static 'images/temperature.png'%}> 
+                                                <span>생육 온도<span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                - {{plant.name}}는 {{plant.growth_temp}} 정도의 온도에서 잘 자라요!
+                                                </td> 
+                                            </tr>
+                                            <tr>
+                                                <td class="p-2"> 
+                                                <img src={%static 'images/humidity.png'%}> 
+                                                <span>생육 습도<span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                - {{plant.name}}는 {{plant.humidity}}의 습도 환경이 좋아요!
+                                                </td> 
+                                            </tr>
+                                            <tr>
+                                            <td class="p-2"> 
+                                                <img src={%static 'images/spring.png'%}> 
+                                                <span>봄철 물주기<span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                - 봄에는 [ {{plant.water_period_autumn}} ] 정도의 느낌이 들 만큼 물을 주세요!
+                                                </td> 
+                                            </tr>
+                                            <td class="p-2"> 
+                                                <img src={%static 'images/summer.png'%}> 
+                                                <span>여름철 물주기<span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                - 여름에는 [ {{plant.water_period_summer}} ] 정도의 느낌이 들 만큼 물을 주세요!
+                                                </td> 
+                                            </tr>
+                                            <td class="p-2"> 
+                                                <img src={%static 'images/fall.png'%}> 
+                                                <span>가을철 물주기<span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                - 가을에는 [ {{plant.water_period_autumn}} ] 정도의 느낌이 들 만큼 물을 주세요!
+                                                </td> 
+                                            </tr>
+                                            <td class="p-2"> 
+                                                <img src={%static 'images/winter.png'%}> 
+                                                <span>겨울철 물주기<span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                - 겨울에는 [ {{plant.water_period_winter}} ] 정도의 느낌이 들 만큼 물을 주세요!
+                                                </td> 
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
