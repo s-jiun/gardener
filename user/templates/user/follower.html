@@ -12,9 +12,14 @@
                 <div id='follow-header' class='d-flex flex-column justify-content-center'>
                     <div id='follow-header-p'>
                         {% if q %}
-                        <span>'{{ q }}' 검색 결과입니다. </span>
+                            <span>'{{ q }}' 검색 결과입니다. </span>
                         {% else %}
-                        <span><h2>🌼새로운 가드너와 함께 하세요🌼</h2></span>
+                            <span><h2>🌼친구를 찾아보세요🌼</h2></span>
+                            <br />
+                            <div id="search-friend" style="display:inline">
+                                <input class="search-input" type="text" name ='q' value="{{q}}" placeholder="검색어를 입력하세요" />
+                                <button class="search-input-1" type="submit">검색</button>
+                            </div>
                         {% endif %}
                     </div>
                     {% comment %} <div id='follow-header-form'>
@@ -80,8 +85,7 @@
                             {% endfor %}
                         {% else %} <!--팔로워가 없는 경우-->
                             <div class="text-center" style="margin-top: 50px; height: 300px;">
-                                <h4> 아직 함께하는 가드너가 없네요😥</h4><br>
-                                <h5>위의 검색창을 이용해 새로운 가드너와 함께하세요!</h5>
+                                <h4> 아직 함께하는 가드너가 없네요😥</h4>
                             </div>
                         {% endif%}
                         </div>
@@ -138,8 +142,7 @@
                             {% endfor %}
                         {% else %} <!--팔로워가 없는 경우-->
                             <div class="text-center" style="margin-top: 50px; height: 300px;">
-                                <h4> 아직 함께하는 가드너가 없네요😥</h4><br>
-                                <h5>위의 검색창을 이용해 새로운 가드너와 함께하세요!</h5>
+                                <h4> 아직 함께하는 가드너가 없네요😥</h4>
                             </div>
                         {% endif%}
                     </div>

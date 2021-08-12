@@ -25,6 +25,7 @@ body {
   position: fixed;
   z-index: -1;
   margin-right: 0;
+  object-fit: cover;
 }
 
 .rectangle {
@@ -94,4 +95,10 @@ body {
   position: relative;
   z-index: 1;
   cursor: pointer;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
