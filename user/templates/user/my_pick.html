@@ -6,28 +6,40 @@
 {% endblock %}
 
 {% block content %}
-    <h2>List of posts you liked</h2>
-    {% if liked %}
-        <ul>
-            {% for like in liked %}
-
-                <li>
-                    {{like.post_id.title}}
-                </li>
-                <li>
-                    {% if like.post_id.image %}
-                    <img src = '{{ like.post_id.image.url }}' />
-                    {% endif %}
-                </li>
-                <li>
-                    {{like.post_id.content|safe}}
-                </li>
-
-            {% endfor %}
-
-        </ul>
-
-    {% else %}
-        <p>No post you liked yet.</p>
-    {% endif %}
+    <div class="row row-cols-3 container" style="padding-left: 0;">
+        <div class="col" style="max-width: 300px;">
+            <img class="page-image" src="{% static 'images/mypick_background.jpg' %}" />
+        </div>
+        <div class="col"  style='writing-mode: vertical-rl; width: fit-content;'>
+            <h4 class='mt-3' style='margin-left:1vw; margin-right:1vw;'>
+                게시물 입니다
+            </h4>
+            <h4 class='mt-3' style='margin-left:0; margin-right:0;'>
+                회원님이 좋아요를 누른
+            </h4>
+        </div>
+        <div class="col" style="width: 855px;">
+            {% if liked %}
+                {% for like in liked %}
+                    <div class="content-box">
+                                <div class="d-flex">
+                                    {% if like.post_id.image %}
+                                        <img class="content-img" src = '{{ like.post_id.image.url }}' />
+                                    {% endif %}
+                                    <div class="d-flex flex-column" style="width: -webkit-fill-available;">
+                                        <h4><img class="title-img" src="{% static 'images/planting.png' %}"/>{{like.post_id.title}}</h4>
+                                        <hr style="width: 100%;"/>
+                                        <span class="d-flex">
+                                            <img class="profile-img" src="{{ like.post_id.user_id.Image.url }}" />
+                                            <p>{{ like.post_id.user_id }}</p>
+                                        </span>
+                                    </div>
+                                </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No post you liked yet.</p>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}

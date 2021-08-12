@@ -33,7 +33,7 @@ def login(request):
         if form.is_valid():
             # 검증 완료시 로그인!
             auth_login(request, form.get_user())
-            return redirect('/')
+            return redirect('community/')
     else:
         form = UserAuthenticationForm()
     context = {
