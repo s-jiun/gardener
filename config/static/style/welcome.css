@@ -44,6 +44,7 @@ body {
 
 .site-name {
   position: relative;
+  color: #5c5427;
   z-index: 1;
   font-size: 100px;
   font-weight: 600;

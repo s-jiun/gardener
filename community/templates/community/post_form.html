@@ -71,7 +71,11 @@
                     {% csrf_token %}
                     <div class='form-group mb-3'>
                         <label for="id_title" class="form-label">제목</label>
-                        <input type="text" class='form-control' name="title" maxlength="100" required="" id="id_title">
+                        {% if form.title.value %}
+                            <input type="text" class='form-control' name="title" maxlength="100" required="" value="{{form.title.value}}" id="id_title">
+                        {% else %}
+                            <input type="text" class='form-control' name="title" maxlength="100" required="" id="id_title">
+                        {% endif %}
                     </div>
                     <div class='form-group mb-3'>
                         <label for="id_image" class="form-label">썸네일</label>
@@ -90,7 +94,7 @@
                     </div>
                     <div class='form-group'>
                         <label for = 'id_tags' class = 'form-label'>태그</label>
-                        <input type="text"class="form-control" name="tags" id="id_tags">
+                        <input type="text"class="form-control" name="tags" value="{%for tag in form.tags.value %}#{{tag}}{%endfor%}" id="id_tags">
                         <span>{{form.tags.help_text}}</span>
                     </div>
                     <div class='text-center'>

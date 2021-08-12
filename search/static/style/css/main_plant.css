@@ -1,0 +1,151 @@
+.main-plant{
+    background: url("/static/images/top-background.jpg");
+    background-position: 70% 70%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 300px;
+    width: 100%;
+    padding:0
+}
+#plant-header {
+    padding-left: 0;
+    padding-right: 0;
+    margin-top : 80px;
+    color: white;
+    text-align: center;
+    height:30%;
+}
+#plant-header-p{
+    margin-top :50px;
+    margin-bottom: 20px;
+    
+}
+#plant-header-p h2{
+    text-shadow:
+    -1px -1px 0 #5a3e0a,
+    1px -1px 0 #5a3e0a,
+    -1px 1px 0 #5a3e0a,
+    1px 1px 0 #5a3e0a;
+    /* text-shadow: 0px 0px 10px #1a1003; */
+}
+#plant-header-form form{
+    height:30%;
+    margin-bottom: 5vh;
+}
+#plant-header-form .plant-input{
+    width: 50%;
+    height: 40px;
+    border : solid 2px #CCDFCC;
+    border-radius: 10px;
+}
+#plant-header-form .plant-input::placeholder{
+    color:#5c5427;
+    opacity : 80%;
+}
+#plant-header-form .plant-select{
+    height: 37px;
+    border : solid 2px #CCDFCC;
+    border-radius: 10px;
+    vertical-align: top;
+    background: #CCDFCC;
+    color:white;
+    font-weight:bold;
+    text-shadow: -1px 0 #A0CAB5, 0 1px #A0CAB5, 1px 0 #A0CAB5, 0 -1px #A0CAB5; 
+}
+
+#plant-header-form .plant-input-1{
+    width:60px;
+    height: 37px;
+    border : solid 2px #CCDFCC;
+    border-radius: 10px;
+    vertical-align: top;
+    background: #CCDFCC;
+    color:white;
+    font-weight:bold;
+    text-shadow: -1px 0 #A0CAB5, 0 1px #A0CAB5, 1px 0 #A0CAB5, 0 -1px #A0CAB5; 
+}
+
+#plant-paginator {
+    display: flex;
+    justify-content: center;
+    margin-top: 5;
+}
+
+#plant-card{
+    display: inline-block;
+    width: 80%;
+    padding: 10px 20px;
+    border-right: 2px solid #5C5427 ;
+    border-left: 2px solid #CCDFCC;
+    border-radius: 10px;
+    background: linear-gradient(to right, #CCDFCC calc(50% - 5px), transparent calc(50% - 5px), transparent calc(50% + 5px), #5C5427 calc(50% + 5px)), linear-gradient(to right, #CCDFCC calc(50% - 5px), transparent calc(50% - 5px), transparent calc(50% + 5px), #5C5427 calc(50% + 5px));
+    background-size: 150% 2px;
+    background-position: top left, bottom right;
+    background-repeat: no-repeat;
+    transition: .5s all;
+
+}
+#plant-card:hover {
+    background-position: top right, bottom left;
+    cursor: pointer;
+}
+.image{
+    overflow: hidden;
+    height: 200px;
+    width: auto;
+    position: relative;
+    cursor: pointer;
+    box-shadow: 0 0 25px 1px rgba(0, 0, 0, .3);
+    transition: .5s;
+    text-align: center;
+    border-radius: 10px;
+}
+.image:after{
+    content: '';
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    width: 500px;
+    height: 500px;
+    transform: translate(-140%, -50%);
+    background-color: #CCDFCC;
+    opacity: 0.8;
+    border-radius: 50%;
+    transition: .5s
+}
+
+.image:hover:after {
+    transform: translate(-50%, -50%)
+}
+
+.image:hover #plant-img {
+    transform: translate(-50%, -50%) scale(1.3) rotate(20deg);
+  
+}
+#plant-img{
+    position: absolute;
+    width: 100%;
+    height: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: .5s;
+    border-radius: 10px;
+}
+.image h3{
+    width: 100%;
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    left: 50%;
+    transform: translate(-2000px, -50%);
+    color: #fff;
+    transition: .5s;
+    transition-timing-function: ease-in;
+    word-break : keep-all;
+}
+.image:hover h3 {
+    transform: translate(-50%, -50%);
+    transition-timing-function: ease;
+}

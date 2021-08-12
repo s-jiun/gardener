@@ -1,55 +1,154 @@
 {% extends "base.html" %}
 {% load static %}
 
+{%block head%}
+<link href="{% static 'style/css/follow.css' %}" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet"> <!--CDN 링크 -->
+{%endblock%}
+
 {% block content %}
-    <p>팔로워</p>
-    <div>
-        {% for follower in followers %}
-            {{follower.id}}
-            {{follower.following_user.image}}
-            {{follower.following_user.name}}
-            {{follower.following_user.userid}}
-            {{follower.following_user.profile}}
-            {% if request.user != follower.following_user%}
-                    {% if follower.following_user_id in cur_users_followings_list %}
-                    <div class="follow-wraper-{{follower.following_user_id}}">
-                        <div class='following-{{follower.following_user_id}}'>
-                            <button onclick="onClickFollowing({{follower.following_user_id}})">팔로잉</button>
-                        </div>
+        <div class= "main-follow">
+            <div class='row'>
+                <div id='follow-header' class='d-flex flex-column justify-content-center'>
+                    <div id='follow-header-p'>
+                        {% if q %}
+                        <span>'{{ q }}' 검색 결과입니다. </span>
+                        {% else %}
+                        <span><h2>🌼새로운 가드너와 함께 하세요🌼</h2></span>
+                        {% endif %}
                     </div>
-                    {% else %}
-                    <div class="follow-wraper-{{follower.following_user_id}}">
-                        <div class="follow-{{follower.following_user_id}}">
-                            <button  onclick="onClickFollow({{follower.following_user_id}})">팔로우</button>
+                    {% comment %} <div id='follow-header-form'>
+                        <form action='' method="GET">
+                            <input class='follow-input' type="text" name='q' value="{{q}}" placeholder="찾고자 하는 가드너의 이름을 입력하세요!" />
+                            <button class='follow-input-1' type="submit"><h6>검색</h6></button>
+                        </form>
+                    </div> {% endcomment %}
+                </div>
+            </div>
+        </div><!--header 닫힘-->
+
+        <div class="container main-body" id="follow-body">
+            {% comment %} {% if %} {% endcomment %}
+            <div class="row row-cols-1 row-cols-lg-2">
+                <div class="col p-2">
+                    <div class="container p-0 follow-box" >
+                        <div class="text-center" id="follow-box-title">
+                            <span id="follower-title">팔로워</span>
                         </div>
-                    </div>
-                    {% endif %}
-            {%endif%}
-        {% endfor %}
-    </div>
-    <p>팔로잉</p>
-    {% for following in followings %}
-        {{following.id}}
-        {{following.user.image}}
-        {{following.user.name}}
-        {{following.user.userid}}
-        {{following.user.profile}}
-        {% if request.user != following.user%}
-                {% if following.user_id in cur_users_followings_list %}
-                <div class="follow-wraper-{{following.user_id}}">
-                    <div class='following-{{following.user_id}}'>
-                        <button onclick="onClickFollowing({{following.user_id}})">팔로잉</button>
+                        <div>
+                        {% if followers %}
+                            {% for follower in followers %}
+                            {% if forloop.counter0|divisibleby:2 %}
+                                <div class="row row-cols-2 row-cols-lg-2 p-3" id="follow-user-box1" >
+                            {% else %}
+                                <div class="row row-cols-2 row-cols-lg-2 p-3" id="follow-user-box2" >
+                            {% endif%}
+                                <div class="col p-0 mt-2" id="follow-user-img">
+                                    <img src={{follower.following_user.Image.url}} >
+                                </div>
+                                <div class="col" style="width:80%">
+                                    <h5 id="follow-name">🌱ID : {{follower.following_user.userid}}</h5>
+                                    {% if request.user != follower.following_user%}
+                                            {% if follower.following_user_id in cur_users_followings_list %}
+                                            <div class="follow-wraper-{{follower.following_user_id}}" style="display:inline; ">
+                                                <div class='following-{{follower.following_user_id}}' style="display:inline;">
+                                                {% if forloop.counter0|divisibleby:2 %}
+                                                    <button onclick="onClickFollowing({{follower.following_user_id}})" style="background: white; border: 1px solid #ACA790; padding:5px; border-radius:10px; font-size:16px;">팔로잉</button>
+                                                {%else%}
+                                                <button onclick="onClickFollowing({{follower.following_user_id}})" style="background: white; border: 1px solid #a0cab5 ; padding:5px; border-radius:10px; font-size:16px;">팔로잉</button>
+                                                {%endif%}
+                                                </div>
+                                            </div>
+                                            {% else %}
+                                            <div class="follow-wraper-{{follower.following_user_id}}" style="display:inline; ">
+                                                <div class="follow-{{follower.following_user_id}}" style="display:inline;">
+                                                {% if forloop.counter0|divisibleby:2 %}
+                                                    <button onclick="onClickFollow({{follower.following_user_id}})" style="background: white; border: 1px solid #ACA790; padding:5px; border-radius:10px; font-size:16px;">팔로잉</button>
+                                                {%else%}
+                                                <button onclick="onClickFollow({{follower.following_user_id}})" style="background: white; border: 1px solid #a0cab5 ; padding:5px; border-radius:10px; font-size:16px;">팔로잉</button>
+                                                {%endif%}
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                    {%endif%}
+                                    <hr class="m-1">
+                                    <span> &nbsp Name : {{follower.following_user.name}}</span><br>
+                                    <span> &nbsp Point : {{follower.following_user.point}}</span>
+                                    
+                                </div>
+                            </div>
+                            {% endfor %}
+                        {% else %} <!--팔로워가 없는 경우-->
+                            <div class="text-center" style="margin-top: 50px; height: 300px;">
+                                <h4> 아직 함께하는 가드너가 없네요😥</h4><br>
+                                <h5>위의 검색창을 이용해 새로운 가드너와 함께하세요!</h5>
+                            </div>
+                        {% endif%}
+                        </div>
                     </div>
                 </div>
-                    {% else %}
-                    <div class="follow-wraper-{{following.user_id}}">
-                        <div class="follow-{{following.user_id}}">
-                            <button  onclick="onClickFollow({{following.user_id}})">팔로우</button>
+                <div class="col p-2">
+                    <div class="container p-0 follow-box" >
+                        <div class="text-center" id="follow-box-title">
+                            <span id="follower-title">팔로잉</span>
                         </div>
+                        <div>
+                        {% if followings %}
+                            {% for following in followings %}
+                                {% if forloop.counter0|divisibleby:2 %}
+                                    <div class="row row-cols-2 row-cols-lg-2 p-3" id="follow-user-box1" >
+                                {% else %}
+                                    <div class="row row-cols-2 row-cols-lg-2 p-3" id="follow-user-box2" >
+                                {% endif%}
+                                <div class="col p-0 mt-2" id="follow-user-img">
+                                    <img src={{following.user.Image.url}} >
+                                </div>
+                                <div class="col" style="width:80%">
+                                    <h5 id="follow-name">🌱ID : {{following.user.userid}}</h5>
+                                    {% if request.user != following.user%}
+                                        {% if following.user_id in cur_users_followings_list %}
+                                            <div class="follow-wraper-{{following.user_id}}" style="display:inline; ">
+                                                <div class='following-{{following.user_id}}' style="display:inline;">
+                                                    {% if forloop.counter0|divisibleby:2 %}
+                                                    <button onclick="onClickFollowing({{following.user_id}})"  style="background: white; border: 1px solid #ACA790; padding:5px; border-radius:10px; font-size:16px;">팔로잉</button>
+                                                    {%else%}
+                                                    <button onclick="onClickFollowing({{following.user_id}})"  style="background: white; border: 1px solid #a0cab5; padding:5px; border-radius:10px; font-size:16px;">팔로잉</button>
+                                                    {%endif%}
+                                                </div>
+                                            </div>
+                                        {% else %}
+
+                                            <div class="follow-wraper-{{following.user_id}}" style="display:inline; ">
+                                                <div class="follow-{{following.user_id}}" style="display:inline;">
+                                                    {% if forloop.counter0|divisibleby:2 %}
+                                                    <button  onclick="onClickFollow({{following.user_id}})" style="background: white; border: 1px solid #ACA790; padding:5px; border-radius:10px; font-size:16px;">팔로우</button>
+                                                    {%else%}
+                                                    <button  onclick="onClickFollow({{following.user_id}})"  style="background: white; border: 1px solid #a0cab5; padding:5px; border-radius:10px; font-size:16px;">팔로우</button>
+                                                    {%endif%}
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    {%endif%}
+                                    <hr class="m-1">
+                                    <span> &nbsp Name : {{following.user.name}}</span><br>
+                                    <span> &nbsp Point : {{following.user.point}}</span>
+                                    
+                                </div>
+                            </div>
+                            {% endfor %}
+                        {% else %} <!--팔로워가 없는 경우-->
+                            <div class="text-center" style="margin-top: 50px; height: 300px;">
+                                <h4> 아직 함께하는 가드너가 없네요😥</h4><br>
+                                <h5>위의 검색창을 이용해 새로운 가드너와 함께하세요!</h5>
+                            </div>
+                        {% endif%}
                     </div>
-            {% endif %}
-        {% endif %}
-    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
 
 {% block js %}

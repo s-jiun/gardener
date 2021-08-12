@@ -1,53 +1,84 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="http://code.jquery.com/jquery-3.1.1.js"></script>
-    <title>Plant</title>
-</head>
-<body>
-    반려식물의 정보를 검색해보세요! <br>
-    <br>
-    {% if q %}
-    <h5>'{{ q }}' 검색 결과입니다.</h5>
-    {% endif %}
+{% extends "base.html" %}
+{% load static %}
 
-        {% if plant_list %}
-        {% for plant in plant_list %}
-            <a href="{% url 'search:plant_detail' plant.pk %}">{{ plant.name }}</a>
-            <p>{{ plant.content}}</p>
-        {% endfor %}
-        {% else %}
-            {%if q%}
-            <tr class="text-center">
-                <td colspan="5">
-                일치하는 검색 결과가 없습니다.
-                </td>
-            </tr>
-            {% else %}
-            <tr class="text-center">
-                <td colspan="5">
-                저장된 식물 정보가 없습니다.
-                </td>
-            </tr>
-            {%endif%}
-        {% endif %}
-        <form action = '' method="GET">
-            <select name="type" id="search-type">
-                <option value="all">전체</option>
-                <option value="name">식물 이름</option>
-                <option value="content">내용</option>  
-                <option value="managelevel">경험자</option>      
-            </select>
+{%block head%}
+<link href="{% static 'style/css/main_plant.css' %}" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+{%endblock%}
 
-            <div id="search_option">
-                <input type="text" id="search" name ='q' value="{{q}}" placeholder="검색어를 입력하세요" />
-                <button type="submit">검색</button>
+{% block content %}
+        <div class= "main-plant">
+            <div class='row'>
+                <div id='plant-header' class='d-flex flex-column justify-content-center'>
+                    <div id='plant-header-p'>
+                        {% if q %}
+                        <span>'{{ q }}' 검색 결과입니다. </span>
+                        {% else %}
+                        <h2>
+                            <img src ={% static 'images/flower_plant.png' %} style="width:2rem;">
+                            반려식물의 정보를 검색해보세요! 
+                            <img src ={% static 'images/flower_plant.png' %} style="width:2rem;">
+                        </h2>
+                        {% endif %}
+                    </div>
+                    <div id='plant-header-form'>
+                        <form action = '' method="GET" >
+                            <select class="plant-select" name="type" id="search-type" >
+                                <option value="all">전체</option>
+                                <option value="name">식물 이름</option>
+                                <option value="content">내용</option>  
+                                <option value="managelevel">경험자</option>      
+                            </select>
+                            <div id="search_option" style="display:inline">
+                            <input class="plant-input" type="text" name ='q' value="{{q}}" placeholder="검색어를 입력하세요" />
+                            <button class="plant-input-1" type="submit">검색</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-        </form>
+        </div><!--header 닫힘-->
+        <div class="container-fluid main-body mt-4 mb-4" id="plant-body">
+        {% if plant_list %}
+        <div class='row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3'>
+            {% for plant in plant_list %}
+                <div class="col">
+                    <div class="card p-2 m-3" id="plant-card" >
+                        <div class="image" >
+                            <a href="{% url 'search:plant_detail' plant.pk %}">
+                            <img src={{plant.photo_url}} class="card-img-top"  id="plant-img" alt="..." >
+                            <h3>🌱{{plant.name}}🌱 <br> 알아보기</h3>
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title"><a href="{% url 'search:plant_detail' plant.pk %}" style="text-decoration:none;color:black">{{ plant.name }}</a></h5>
+                            <hr class="m-0">
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            {% else %}
+                {%if q%}
+                <tr class="text-center">
+                    <td colspan="5">
+                    일치하는 검색 결과가 없습니다.
+                    </td>
+                </tr>
+                {% else %}
+                <tr class="text-center">
+                    <td colspan="5">
+                    저장된 식물 정보가 없습니다.
+                    </td>
+                </tr>
+                {%endif%}
+        </div>
+        {% endif %}
 
+    </div>
+
+
+        <!--pagination-->
+    <div id="plant-paginator">
         {% if is_paginated %}
         <ul class="pagination">
         {% if page_obj.has_previous %}
@@ -79,7 +110,10 @@
         {% endif %}
     </ul>
     {% endif %}
-</body>
+
+    </div>
+{%endblock%}
+
 
 <script>
     $(function(){	

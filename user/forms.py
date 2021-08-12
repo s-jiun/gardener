@@ -1,5 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.forms import fields
 from django.forms.fields import EmailField
 from django.forms.widgets import TextInput
 from .models import GeneralUser, UserManager
@@ -183,3 +184,9 @@ class MyCustomSignupForm(SignupForm):
         user.agree_marketing = self.cleaned_data['agree_marketing']
         user.save()
         return user
+
+class UserIdfindForm(forms.ModelForm):
+
+    class Meta:
+        model = get_user_model()
+        fields = ['email']
