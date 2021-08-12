@@ -85,12 +85,17 @@
 }
 
 .signup-btn {
-    width:100%; 
+    width:80%; 
     border: none; 
     background-color: #CCDFCC; 
     margin-top: 20px; 
     border-radius: 5px; 
-    height: 40px;
+    /* height: 40px; */
+    /* font-size: 1rem; */
+    word-break:break-all;
+    min-height: 100%;
+    margin:0;
+    min-width: 50px;
 }
 
 .update-container {
@@ -98,16 +103,16 @@
     margin: auto;
     border-radius: 10px;
     z-index:10; 
-    width: 30vw; 
-    height: 70vh;
+    width:40%; 
+    height: auto;
     padding: 30px 20px 20px 20px;
     display: flex;
     flex-direction: column;
+    overflow: auto;
 }
 
 .update-form {
-    width: 60%;
-    height: 70vh;
+    width: 70%;
     display: flex;
     flex-direction: column;
     align-content: center;
@@ -116,6 +121,8 @@
 
 .update-form-control{
     margin-bottom: 10px;
+    border:solid 3px #CCDFCC;
+    border-radius: 10px;
 }
 
 .update-btn {
@@ -213,15 +220,7 @@
     max-width: 300px;
 }
 
-/* @media (min-width: 360px) {
-    .profile-image {
-            width: 80px;
-          }
+#updateForm p{
+    margin-bottom: 0.7rem;
 }
 
-@media (min-width: 701px) {
-    .profile-image {
-            width: 250px;
-          }
-} */
-    
