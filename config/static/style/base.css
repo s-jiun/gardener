@@ -1,3 +1,7 @@
+html {
+  height: 100%;
+}
+
 header {
   font-family: "Gowun Batang", serif;
 }
@@ -5,6 +9,12 @@ header {
 body {
   font-family: "Gowun Batang", serif;
   overflow: scroll;
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+  color: black;
 }
 
 .main-body {
@@ -22,8 +32,6 @@ footer {
   height: 120px;
   position: relative;
   width: 100%;
-  left: 0;
-  bottom: 0;
 }
 
 .navbar {

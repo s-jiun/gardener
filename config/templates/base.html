@@ -40,16 +40,7 @@
                     <div class="d-flex justify-content-end">
                         <ul class="navbar-nav align-items-center">
                             <div class='profile-image'><img src="{{ user.Image.url }}"></div>
-                            <li class="nav-item dropdown nav-dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    {{ request.user.userid }}
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <li><a class="dropdown-item" href="{% url 'user:my_profile' %}">My Profile</a></li>
-                                    <li><a class="dropdown-item" href="{% url 'user:profile_update' %}">회원정보 수정</a></li>
-                                    <li><a class="dropdown-item" href="{% url 'user:signout' %}">회원탈퇴</a></li>
-                                </ul>
-                            </li>
+                            <a href="{% url 'user:my_profile' %}">{{ request.user.userid }}</a>
                         </ul>
                         <ul class="navbar-nav align-items-center">
                             <li class="nav-item">
@@ -80,8 +71,7 @@
     {% endblock %}
     
 </body>
-
-{% comment %} <footer class="d-flex align-items-center">
+<footer class="d-flex align-items-center">
     <div class="d-flex container-fluid justify-content-between">
         <div class="flex-column">
             <div class="contact">Contact Us</div>
@@ -93,8 +83,7 @@
             <div>All rights reserved</div>
             <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
         </div>
-    </div> {% endcomment %}
-
+    </div>
 </footer>
 {% block js %}
 {% endblock %}

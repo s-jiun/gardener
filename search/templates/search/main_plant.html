@@ -15,9 +15,9 @@
                         <span>'{{ q }}' 검색 결과입니다. </span>
                         {% else %}
                         <h2>
-                            <img src ={% static 'images/flower_plant.png' %} style="width:2rem;">
+                            <img src ="{% static 'images/flower_plant.png' %}" style="width:2rem;">
                             반려식물의 정보를 검색해보세요! 
-                            <img src ={% static 'images/flower_plant.png' %} style="width:2rem;">
+                            <img src ="{% static 'images/flower_plant.png' %}" style="width:2rem;">
                         </h2>
                         {% endif %}
                     </div>
@@ -30,8 +30,8 @@
                                 <option value="managelevel">경험자</option>      
                             </select>
                             <div id="search_option" style="display:inline">
-                            <input class="plant-input" type="text" name ='q' value="{{q}}" placeholder="검색어를 입력하세요" />
-                            <button class="plant-input-1" type="submit">검색</button>
+                                <input class="plant-input" type="text" name ='q' value="{{q}}" placeholder="검색어를 입력하세요" />
+                                <button class="plant-input-1" type="submit">검색</button>
                             </div>
                         </form>
                     </div>

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'style/my_pick.css' %}" />
+{% endblock %}
+
+{% block content %}
+    <h2>List of posts you liked</h2>
+    {% if liked %}
+        <ul>
+            {% for like in liked %}
+
+                <li>
+                    {{like.post_id.title}}
+                </li>
+                <li>
+                    {% if like.post_id.image %}
+                    <img src = '{{ like.post_id.image.url }}' />
+                    {% endif %}
+                </li>
+                <li>
+                    {{like.post_id.content|safe}}
+                </li>
+
+            {% endfor %}
+
+        </ul>
+
+    {% else %}
+        <p>No post you liked yet.</p>
+    {% endif %}
+{% endblock %}
