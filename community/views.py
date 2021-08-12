@@ -15,7 +15,7 @@ from django.db.models import Q
 
 class PostListView(ListView):
     model = Post
-    paginate_by = 6
+    paginate_by = 9
     # DEFAULT : <app_label>/<model_name>_list.html
     template_name = 'community/post_list.html'
     context_object_name = 'post_list'  # DEFAULT : <model_name>_list
@@ -154,7 +154,8 @@ def post_update(request, pk):
             return render(request, template_name='community/post_form.html', context=ctx)
     elif request.method == 'GET':
         form = PostForm(instance=post)
-        ctx = {'form': form, 'is_post': post}
+        pk = post.pk
+        ctx = {'form': form, 'is_post': post, 'pk': pk}
 
     return render(request, template_name='community/post_form.html', context=ctx)
 
@@ -208,3 +209,13 @@ def like_ajax(request, pk):
     like_count = Like.objects.filter(post_id=post).count()
     post.save()
     return JsonResponse({'id': post_id, 'like_count': like_count})
+
+
+def search_tag(request, tag):
+
+    posts = Post.objects.filter(tags__name=tag)
+    ctx = {
+        'tag': tag,
+        'posts': posts,
+    }
+    return render(request, 'community/tagged_list.html', context=ctx)

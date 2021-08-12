@@ -103,6 +103,7 @@ INSTALLED_APPS = [
 
     # image-resize
     'imagekit',
+
 ]
 
 
@@ -240,7 +241,8 @@ CKEDITOR_CONFIGS = {
             ['Link', 'Unlink'],
 
             ['Undo', 'Redo']
-        ]
+        ],
+        'width': '100%'
     }
 }
 

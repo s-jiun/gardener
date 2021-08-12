@@ -1,0 +1,130 @@
+div {
+  font-family: "Gowun Batang", serif;
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+  color: black;
+}
+
+.post {
+  position: relative;
+  width: 50%;
+}
+
+.content {
+  padding: 25px;
+  border: 1px solid gray;
+  border-radius: 1rem;
+  overflow: scroll;
+}
+
+.page-image {
+  position: relative;
+  width: 80%;
+  height: 100%;
+  overflow: hidden;
+  object-fit: cover;
+}
+
+.django-ckeditor-widget {
+  width: 100%;
+}
+
+.post-title {
+  font-size: x-large;
+  font-weight: bold;
+}
+
+.tags {
+  position: relative;
+  background: #a0cab5;
+  z-index: 0;
+  width: auto;
+  height: 25px;
+  border: 1px solid #b8b8b8;
+  box-sizing: border-box;
+  border-radius: 100px;
+  font-family: "Gowun Batang", serif;
+  font-size: small;
+}
+
+.title-image {
+  width: 25px;
+  height: 25px;
+}
+
+.heart {
+  background-color: transparent;
+  border: 0;
+}
+
+.post-edit {
+  width: auto;
+  height: 170px;
+  margin-top: 110px;
+  background: #ccdfcc;
+  border: solid 3px #ccdfcc;
+  border-radius: 10px;
+  position: sticky;
+  top: 0;
+  box-shadow: 3px 3px 3px 0px #a0cab5;
+}
+
+.create-comment {
+  position: relative;
+  background: #ccdfcc;
+  z-index: 0;
+  width: 100px;
+  height: 30px;
+  border: 1px solid #b8b8b8;
+  box-sizing: border-box;
+  border-radius: 10px;
+  font-family: "Gowun Batang", serif;
+  margin-bottom: 5px;
+}
+
+.comment-list {
+  font-weight: bold;
+  font-size: large;
+  margin-top: 15px;
+}
+
+.comment-submit {
+  position: relative;
+  background: #ccdfcc;
+  z-index: 0;
+  width: 100px;
+  height: 30px;
+  border: 1px solid #b8b8b8;
+  box-sizing: border-box;
+  border-radius: 10px;
+  font-family: "Gowun Batang", serif;
+}
+
+.following {
+  position: relative;
+  background: #a0cab5;
+  width: auto;
+  height: 25px;
+  border: 1px solid #b8b8b8;
+  box-sizing: border-box;
+  border-radius: 100px;
+  font-family: "Gowun Batang", serif;
+}
+
+.follow {
+  position: relative;
+  background: #a0cab5;
+  width: auto;
+  height: 25px;
+  border: 1px solid #b8b8b8;
+  box-sizing: border-box;
+  border-radius: 100px;
+  font-family: "Gowun Batang", serif;
+}
+
+.reply {
+  overflow: scroll;
+}

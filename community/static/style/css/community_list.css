@@ -1,0 +1,176 @@
+#search-header {
+  max-height: 300px;
+  border: solid 3px black;
+  background: url("/static/images/1.jpg");
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-size: cover;
+  padding-left: 0;
+  padding-right: 0;
+  color: white;
+  text-align: center;
+}
+
+/* #search-header-p {
+  font-size: 3rem;
+} */
+#search-header-form {
+  height: 30%;
+  margin-bottom: 5vh;
+}
+.search-input {
+  width: 80%;
+  border-radius: 10px;
+}
+
+.search-input-1 {
+  border-radius: 10px;
+  background-color: #ccdfcc;
+}
+
+#thumbnail-p {
+  margin-bottom: 0;
+}
+
+#list-paginator {
+  display: flex;
+  justify-content: center;
+  margin-top: 5;
+}
+
+.post-button {
+  width: 3vw;
+  height: 3vh;
+}
+
+/* 이미지호버 */
+figure.snip1382 {
+  position: relative;
+  height: 100%;
+  margin: 10px;
+  min-width: 230px;
+  max-width: 315px;
+  max-height: 220px;
+  width: 100%;
+  color: #ffffff;
+  text-align: center;
+  font-size: 16px;
+}
+figure.snip1382 * {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-transition: all 0.35s ease;
+  transition: all 0.35s ease;
+}
+figure.snip1382 img {
+  max-width: 100%;
+}
+figure.snip1382:after,
+figure.snip1382:before,
+figure.snip1382 figcaption:after,
+figure.snip1382 figcaption:before {
+  background: #ccdfcc;
+  height: 25%;
+  position: absolute;
+  content: "";
+  opacity: 0;
+  -webkit-transition: all 0.35s steps(4);
+  transition: all 0.35s steps(4);
+  z-index: 1;
+  left: 50%;
+  right: 50%;
+}
+figure.snip1382:before {
+  top: 0;
+  -webkit-transition-delay: 0;
+  transition-delay: 0;
+}
+figure.snip1382:after {
+  top: 25%;
+  -webkit-transition-delay: 0.1s;
+  transition-delay: 0.1s;
+}
+figure.snip1382 figcaption:before {
+  top: 50%;
+  -webkit-transition-delay: 0.2s;
+  transition-delay: 0.2s;
+  z-index: -1;
+}
+figure.snip1382 figcaption:after {
+  top: 75%;
+  -webkit-transition-delay: 0.3s;
+  transition-delay: 0.3s;
+  z-index: -1;
+}
+figure.snip1382 figcaption {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  padding: 30px;
+}
+figure.snip1382 h2,
+figure.snip1382 p,
+figure.snip1382 .icons {
+  margin: 0;
+  width: 100%;
+  opacity: 0;
+}
+figure.snip1382 h2 {
+  font-weight: 900;
+  text-transform: uppercase;
+}
+figure.snip1382 p {
+  font-weight: 300;
+}
+figure.snip1382 .icons {
+  position: absolute;
+  bottom: 30px;
+  left: 0;
+  width: 100%;
+}
+figure.snip1382 i {
+  padding: 0px 10px;
+  display: inline-block;
+  font-size: 24px;
+  color: #ffffff;
+  text-align: center;
+  opacity: 0.8;
+  text-decoration: none;
+}
+figure.snip1382 i:hover {
+  opacity: 1;
+}
+figure.snip1382:hover:after,
+figure.snip1382.hover:after,
+figure.snip1382:hover:before,
+figure.snip1382.hover:before,
+figure.snip1382:hover figcaption:after,
+figure.snip1382.hover figcaption:after,
+figure.snip1382:hover figcaption:before,
+figure.snip1382.hover figcaption:before {
+  left: 0;
+  right: 0;
+  opacity: 0.8;
+}
+figure.snip1382:hover figcaption h2,
+figure.snip1382.hover figcaption h2,
+figure.snip1382:hover figcaption p,
+figure.snip1382.hover figcaption p,
+figure.snip1382:hover figcaption .icons,
+figure.snip1382.hover figcaption .icons {
+  -webkit-transition-delay: 0.25s;
+  transition-delay: 0.25s;
+}
+figure.snip1382:hover figcaption h2,
+figure.snip1382.hover figcaption h2,
+figure.snip1382:hover figcaption .icons,
+figure.snip1382.hover figcaption .icons {
+  opacity: 1;
+}
+figure.snip1382:hover figcaption p,
+figure.snip1382.hover figcaption p {
+  opacity: 0.7;
+}

@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block head %}
-    
+    <link href="{% static 'style/css/community_list.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
@@ -12,9 +12,9 @@
             <div id='search-header' class='d-flex flex-column justify-content-center' style='height:30%;'>
                 <div id='search-header-p'>
                     {% if q %}
-                    '{{ q }}' 검색 결과입니다.
+                    <h1>'{{ q }}' 검색 결과입니다.</h1>
                     {% else %}
-                    마음에 드는 플렌테리어를 찾아보세요.
+                    <h1>마음에 드는 플렌테리어를 찾아보세요.</h1>
                     {% endif %}
                 </div>
                 <div id='search-header-form'>
@@ -35,11 +35,29 @@
                     {% for post in post_list %}
                     <div class='col'>
                         <p id='thumbnail-p'>{{ post.user_id }}</p>
+                        {% comment %}
                         <a href="{% url 'community:post_detail' pk=post.pk %}">
                             {% if post.image %}
                             <image src='{{ post.image.url }}' class='img-thumbnail' style='height:80%;'/>
                             {% endif %}
                         </a>
+                        {% endcomment %}
+                        <figure class="snip1382">
+                            {% if post.image %}
+                                <image src='{{ post.image.url }}' class='img-thumbnail' style='width: 100%; height:100%;'/>
+                            {% endif %}
+                            <a href='{% url "community:post_detail" pk=post.pk %}'>
+                                <figcaption>
+                                    <h2>{{post.title}}</h2>
+                                    <div class="icons">
+                                      {% for tag in post.tags.all %}
+                                          #{{tag.name}} 
+                                      {% endfor %}
+                                    </div>
+                                  </figcaption>
+                              </figure>
+                            </a>
+                            
                     </div>
                     {% endfor %}
                 </div>
@@ -117,3 +135,4 @@
 
 
 {% endblock %}
+

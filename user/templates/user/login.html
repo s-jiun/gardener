@@ -6,9 +6,9 @@
 {% endblock %}
 
 {% block content %}
-<div class="d-flex justify-content-center align-items-center main-container" style="position: relative; background-color: #D8D8D8;">
-    <img src="{%static 'images/login_background.jpg'%}" alt="" style="max-width: 70%; max-height: 100%; z-index: 1; position: absolute; overflow: hidden;">
-    <div class="d-flex justify-content-center align-items-center login-container" style="z-index: 10; position: absolute;">
+<div class="d-flex justify-content-center align-items-center main-container" style="position: relative; background-color: #D8D8D8; object-fit: cover; overflow: hidden; background-size: 100% 100%; background-image: url({% static 'images/login_background.jpg' %});">
+    <!-- <img src="{%static 'images/login_background.jpg'%}" alt="" style="max-width: 70%; max-height: 100%; z-index: 1; position: absolute; overflow: hidden;"> -->
+    <div class="login-container" style="z-index: 10;">
         <div class="left-login-container">
             <form action="" method="POST" class="login-form">
                 <div>
@@ -20,7 +20,7 @@
                 {{form.password}}
                 <button class="btn btn-lg btn-block login-btn" type="submit">로그인</button>
                 <div class="d-flex justify-content-evenly login-utils">
-                    <a href="">아이디 찾기</a>
+                    <a href="{% url 'user:find_id' %}">아이디 찾기</a>
                     <a href="{% url 'password_reset'%}">비밀번호 찾기</a>
                     <a href="{% url 'user:signup'%}">회원가입</a>
                 </div>

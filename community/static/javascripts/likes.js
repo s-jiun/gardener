@@ -16,8 +16,6 @@ const likeHandleResponse = () => {
         const element1 = document.querySelector(`.post-id-${id} .heart`);
         const element2 = document.querySelector(`.post-id-${id} .like_num`);
         const heart = element1.innerHTML;
-        console.log(heart)
-        console.log(element2.innerHTML)
         if (heart=='❤️'){
             element1.innerHTML='🤍'
             element2.innerHTML = `좋아요 ${like_count}`
