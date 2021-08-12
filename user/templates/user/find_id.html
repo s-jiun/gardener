@@ -14,11 +14,17 @@
                     <form method="POST">
                         {% csrf_token %}
                         <div class="row">
-                            <p class="col-12 m-auto mt-3 mb-3" style="text-align: center;">가입 시 입력한 이메일을 입력해주세요</p>
-                            <div class="row">
-                                <label class="col-12" for="email" style="text-align: end; font-size: 2vh;">이메일</label>
-                                <input style="max-width: 40%; font-size: 2vh;" class="col-12" type="email" name="email" maxlength="255" required="" id="id_email" placeholder="example@example.com">
-                                <button style="max-width: 20%; font-size: 2vh;" class="col-12" id="email_submit_btn" >아이디 찾기</button>
+                            <p class="col-12 m-auto mt-5 mb-5" style="text-align: center;">가입 시 입력한 이메일을 입력해주세요</p>
+                            <div class="row row-cols-1 row-cols-md-1 row-cols-lg-3">
+                                <div  class="col d-flex justify-content-center">
+                                    <label class="col" for="email" style="text-align: end; font-size: 2vh;">이메일</label>
+                                </div>
+                                <div  class="col">
+                                    <input style="font-size: 2vh;" type="email" name="email" maxlength="255" required="" id="id_email" placeholder="example@example.com">
+                                </div>
+                                <div class="col">
+                                    <button style="font-size: 2vh; margin-left: 20px;" id="email_submit_btn" >아이디 찾기</button>
+                                </div>
                             </div>
                         </div>
                     </form>
