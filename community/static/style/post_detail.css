@@ -103,17 +103,6 @@ a {
   font-family: "Gowun Batang", serif;
 }
 
-.following {
-  position: relative;
-  background: #a0cab5;
-  width: auto;
-  height: 25px;
-  border: 1px solid #b8b8b8;
-  box-sizing: border-box;
-  border-radius: 100px;
-  font-family: "Gowun Batang", serif;
-}
-
 .follow {
   position: relative;
   background: #a0cab5;
@@ -127,4 +116,26 @@ a {
 
 .reply {
   overflow: scroll;
+}
+
+.comment-content {
+  margin-right: 35px;
+  border-radius: 10px;
+  background-color: #ccdfcc;
+  padding: 5px;
+}
+
+.reply-content {
+  border-radius: 10px;
+  background: rgba(92, 84, 39, 0.3);
+  padding: 5px;
+  margin-left: 35px;
+}
+
+.profile-img {
+  overflow: hidden;
+  width: 35px;
+  height: 30px;
+  padding: 2px;
+  border-radius: 100%;
 }
