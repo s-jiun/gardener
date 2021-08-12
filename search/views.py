@@ -7,7 +7,7 @@ from django.db.models import Q
 
 class PlantListView(ListView):
     model = Plant
-    paginate_by = 10
+    paginate_by =6
     template_name = 'search/main_plant.html'  #DEFAULT : <app_label>/<model_name>_list.html
     context_object_name = 'plant_list'        #DEFAULT : <model_name>_list
 
