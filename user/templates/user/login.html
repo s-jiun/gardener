@@ -8,37 +8,6 @@
 {% block content %}
 <div style="width: 100%; height: 90%;">
     <div class="d-flex justify-content-center align-items-center main-container" style="position: relative; background-color: #D8D8D8; background-size: cover; background-image: url({% static 'images/login_background.jpg' %});">
-        <!-- <div class="d-flex justify-content-center align-items-center" style="background-size: cover; background-image: url({% static 'images/login_background.jpg' %}); width: 80%; height:100%">
-            <div class="login-container row col-12" style="z-index: 10;">
-                <form action="" method="POST" class="login-form row m-auto">
-                    <div class="col-12 d-flex justify-content-center align-items-center">
-                        <h1 class="login-logo" style="font-size: 4vw;">Gardener</h1>
-                    </div>
-                    {% csrf_token %}
-                    <div class="col-12">
-                        {{form.password.errors}}
-                    </div>
-                    <div class="col-12">
-                        <input type="text" name="username" autofocus="" class="form-control m-auto " placeholder="아이디" autocapitalize="none" autocomplete="username" maxlength="30" required="" id="id_username">
-                    </div>
-                    <div class="col-12">
-                        <input type="password" name="password" autocomplete="current-password" class="form-control m-auto" placeholder="비밀번호" required="" id="id_password">
-                    </div>
-                    <div class="col-12 m-auto d-flex justify-content-center align-items-center">
-                        <button class="btn btn-block login-btn" type="submit">로그인</button>
-                    </div>
-                    <div class=" col-12 login-utils m-auto row mt-3 mb-3" >
-                        <a class="col-4" href="{% url 'user:find_id' %}" style="font-size: 0.9vw; padding: 0; text-align: center;">아이디 찾기</a>
-                        <a class="col-4" href="{% url 'password_reset'%}" style="font-size: 0.9vw; padding: 0; text-align: center;">비밀번호 찾기</a>
-                        <a class="col-4" href="{% url 'user:signup'%}" style="font-size: 0.9vw; padding: 0; text-align: center;">회원가입</a>    
-                    </div>
-                    <a href="/accounts/google/login/" class="col-12 m-auto d-flex justify-content-center align-items-center" >
-                        <div style="background-image: url({% static 'images/google_logo.png' %}); background-size: contain; height: 5vh; width: 16vw; background-repeat: no-repeat;">
-                        </div>
-                    </a>
-                </form>
-            </div>
-        </div> -->
         <div class="container p-0">
             <form action="" method="POST">
                 {% csrf_token %}
@@ -58,15 +27,15 @@
                         </div>
                         <div class="col-12 row mb-3" style="margin-left: 3px;">
                             <div class="col-4 px-0">
-                                <a href=""><p class="text text-center">아이디 찾기</p></a>
+                                <a href="{% url 'user:find_id' %}"><p class="text text-center">아이디 찾기</p></a>
                             </div>
                             <div class="col-4 px-0">
-                                <a href="">
+                                <a href="/password_reset">
                                     <p class="text text-center">비밀번호 찾기</p>
                                 </a>
                             </div>
                             <div class="col-4 px-0">
-                                <a href="">
+                                <a href="{% url 'user:signup' %}">
                                     <p class="text text-center">회원가입</p>
                                 </a>
                             </div>

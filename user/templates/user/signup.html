@@ -6,51 +6,100 @@
 {% endblock %}
 
 {% block content %}
-<div class="d-flex justify-content-center align-items-center main-container" style="background-color: #D8D8D8;">
-    <div class="d-flex justify-content-center align-items-center" style="background-size: cover; background-image: url({% static 'images/login_background.jpg' %}); width: 80%; height:100%">
-        <div class="d-flex justify-content-center align-items-center signup-container" style="z-index:10; ">
-            <form action="" method="POST" enctype="multipart/form-data" class="signup-form" >
-                {% csrf_token %}
-                <div class="row px-md-4 px-1 m-0">
+<div class="d-flex justify-content-center align-items-center main-container" style="position: relative; background-color: #D8D8D8; background-size: cover; background-image: url({% static 'images/login_background.jpg' %});">
+    <div class="container p-0">
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div class="card px-5">
+                <p class="h8 px-5">Gardener</p>
+                <p class="h8 px-5">회원가입</p>
+                <div class="row gx-3">
                     
-                    <div class="col-12" style="font-size: 4vw;">Gardener</div>
-                    <div class="col-12" style="font-size: 4vw;">회원가입</div>
                     <div class="col-12">
-                        <label for="username" style="font-size: 1vw;">이름</label>
-                        <input type="text" name="name" class="signup-form-control mb-6" required="" id="id_name">
+                        <div class="d-flex flex-column">
+                            <p class="text mb-1">이름</p> <input type="text" name="name" class="form-control mb-3" required="" id="id_name">
+                        </div>
                     </div>
                     <div class="col-12">
-                        {% for error in form.userid.errors %}
-                        <div>{{error}}</div>
-                        {% endfor %}
-                        
-                        <label for="username"style="font-size: 1vw;">아이디</label>
-                        <input type="text" name="userid" class="signup-form-control mb-6" required="" id="id_userid">
+                        <p>
+                            {{form.userid.errors}}
+                        </p>
                     </div>
                     <div class="col-12">
-                        {% for error in form.email.errors %}
-                        <div>{{error}}</div>
-                        {% endfor %}
-                        <label for="username"style="font-size: 1vw;">이메일</label>
-                        <input type="email" name="email" class="signup-form-control mb-6" required="" id="id_email">
-                        
+                        <div class="d-flex flex-column">
+                            <p class="text mb-1">아이디</p><input type="text" name="userid" class="form-control mb-3" required="" id="id_userid">
+                        </div>
                     </div>
                     <div class="col-12">
-                        {{form.password1.errors}}
-                        <label for="username"style="font-size: 1vw;">비밀번호</label>
-                        <input type="password" name="password1" class="signup-form-control mb-6" required="" id="id_password1">
+                        <p>
+                            {{form.email.errors}}
+                        </p>
                     </div>
                     <div class="col-12">
-                        {{form.password2.errors}}
-                        <label for="username"style="font-size: 1vw;">비밀번호 확인</label>
-                        <input type="password" name="password2" class="signup-form-control mb-6" required="" id="id_password2">
+                        <div class="d-flex flex-column">
+                            <p class="text mb-1">이메일</p>
+                            <input type="email" name="email" class="form-control mb-6" required="" id="id_email">
+                        </div>
                     </div>
-                    <button class="signup-btn" type="submit" style="font-size: 1vw;">저장하기</button>
+                    <div class="col-12">
+                        <div class="d-flex flex-column">
+                            <p class="text mb-1">비밀번호</p>
+                            <input type="password" name="password1" class="form-control mb-3" required="" id="id_password1">
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="d-flex flex-column">
+                            <p class="text mb-1">비밀번호 확인</p>
+                            <input type="password" name="password2" class="form-control mb-6" required="" id="id_password2">
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <button class="btn btn-primary mb-3 mt-3" type="submit"><span>회원가입</span></button>
+                    </div>
                 </div>
-            </form>
-            
-        </div>
+            </div>
+        </form>
     </div>
+
 </div>
 
 {% endblock %}
+<form action="" method="POST" enctype="multipart/form-data" class="signup-form" >
+    {% csrf_token %}
+    <div class="row px-md-4 px-1 m-0">
+        
+        <div class="col-12" style="font-size: 4vw;">Gardener</div>
+        <div class="col-12" style="font-size: 4vw;">회원가입</div>
+        <div class="col-12">
+            <label for="username" style="font-size: 1vw;">이름</label>
+            <input type="text" name="name" class="signup-form-control mb-6" required="" id="id_name">
+        </div>
+        <div class="col-12">
+            {% for error in form.userid.errors %}
+            <div>{{error}}</div>
+            {% endfor %}
+            
+            <label for="username"style="font-size: 1vw;">아이디</label>
+            <input type="text" name="userid" class="signup-form-control mb-6" required="" id="id_userid">
+        </div>
+        <div class="col-12">
+            {% for error in form.email.errors %}
+            <div>{{error}}</div>
+            {% endfor %}
+            <label for="username"style="font-size: 1vw;">이메일</label>
+            <input type="email" name="email" class="signup-form-control mb-6" required="" id="id_email">
+            
+        </div>
+        <div class="col-12">
+            {{form.password1.errors}}
+            <label for="username"style="font-size: 1vw;">비밀번호</label>
+            <input type="password" name="password1" class="signup-form-control mb-6" required="" id="id_password1">
+        </div>
+        <div class="col-12">
+            {{form.password2.errors}}
+            <label for="username"style="font-size: 1vw;">비밀번호 확인</label>
+            <input type="password" name="password2" class="signup-form-control mb-6" required="" id="id_password2">
+        </div>
+        <button class="signup-btn" type="submit" style="font-size: 1vw;">저장하기</button>
+    </div>
+</form>
