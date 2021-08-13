@@ -1,4 +1,4 @@
-from user.models import GeneralUser
+from user.models import Follow, GeneralUser
 import json
 from django.http.response import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
@@ -74,6 +74,14 @@ def post_detail(request, pk):
     comments = post.reply_set.filter(parent_reply__isnull=True)
     liked_user = Like.objects.filter(
         post_id=pk).values_list('user_id', flat=True)
+    is_following = False
+    user_id = post.user_id.id
+    followers = Follow.objects.filter(user_id=user_id)
+    for follower in followers:
+        if request.user.id == follower.following_user_id:
+            is_following = True
+            break
+    
     if request.method == 'POST':
         # comment has been added
         comment_form = ReplyForm(request.POST, request.FILES)
@@ -112,7 +120,8 @@ def post_detail(request, pk):
                   {'post': post,
                    'comments': comments,
                    'comment_form': comment_form,
-                   'liked_user': liked_user})
+                   'liked_user': liked_user,
+                   'is_following':is_following})
 
 
 @login_required

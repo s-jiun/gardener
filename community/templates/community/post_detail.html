@@ -85,16 +85,16 @@
     </div>
     <div class="col post-edit text-center">
         <div style="width: 100px; margin-top: 10px;">
-            <span><a href="{% url 'user:profile' post.user_id.pk %}" style="margin-top: 5px;"><img class="profile-img" src="{{ user.Image.url }}"> {{post.user_id}}</a></span>
+            <span><a href="{% url 'user:profile' post.user_id.pk %}" style="margin-top: 5px;"><img class="profile-img" src="{{ post.user_id.Image.url }}"> {{post.user_id}}</a></span>
             <hr />
             {%if post.user_id != request.user%}
                 {% if is_following%}
                 <div class="follow-wraper">
-                    <button class='follow' onclick="onClickFollowing({{user.id}})">팔로잉</button>
+                    <button class='follow' onclick="onClickFollowing({{post.user_id.id}})">팔로잉</button>
                 </div>
                 {% else %}
                 <div class="follow-wraper">
-                    <button class="follow" onclick="onClickFollow({{user.id}})">팔로우</button>
+                    <button class="follow" onclick="onClickFollow({{post.user_id.id}})">팔로우</button>
                 </div>
                 {% endif %}
             {% else %}
