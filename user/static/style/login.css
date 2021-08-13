@@ -259,6 +259,8 @@ p {
     height: 50px;
     background-color: #CCDFCC;
     color: black;
+    font-weight: 800;
+    border:rgba(0, 0, 0, 0.05);
 }
 
 .btn.btn.btn-primary:hover {
