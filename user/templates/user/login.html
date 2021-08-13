@@ -7,8 +7,8 @@
 
 {% block content %}
 <div style="width: 100%; height: 90%;">
-    <div class="d-flex justify-content-center align-items-center main-container" style="position: relative; background-color: #D8D8D8;">
-        <div class="d-flex justify-content-center align-items-center" style="background-size: cover; background-image: url({% static 'images/login_background.jpg' %}); width: 80%; height:100%">
+    <div class="d-flex justify-content-center align-items-center main-container" style="position: relative; background-color: #D8D8D8; background-size: cover; background-image: url({% static 'images/login_background.jpg' %});">
+        <!-- <div class="d-flex justify-content-center align-items-center" style="background-size: cover; background-image: url({% static 'images/login_background.jpg' %}); width: 80%; height:100%">
             <div class="login-container row col-12" style="z-index: 10;">
                 <form action="" method="POST" class="login-form row m-auto">
                     <div class="col-12 d-flex justify-content-center align-items-center">
@@ -38,6 +38,50 @@
                     </a>
                 </form>
             </div>
+        </div> -->
+        <div class="container p-0">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="card px-5">
+                    <p class="h8 py-5 px-5">로그인</p>
+                    <div class="row gx-3">
+                        <div class="col-12">
+                            <div class="d-flex flex-column">
+                                <p class="text mb-1"></p> <input type="text" name="username" autofocus="" class="form-control mb-3" placeholder="아이디" autocapitalize="none" autocomplete="username" maxlength="30" required="" id="id_username">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="d-flex flex-column">
+                                <p class="text mb-1"></p>
+                                <input type="password" name="password" autocomplete="current-password" class="form-control mb-3" placeholder="비밀번호" required="" id="id_password">
+                            </div>
+                        </div>
+                        <div class="col-12 row mb-3" style="margin-left: 3px;">
+                            <div class="col-4 px-0">
+                                <a href=""><p class="text text-center">아이디 찾기</p></a>
+                            </div>
+                            <div class="col-4 px-0">
+                                <a href="">
+                                    <p class="text text-center">비밀번호 찾기</p>
+                                </a>
+                            </div>
+                            <div class="col-4 px-0">
+                                <a href="">
+                                    <p class="text text-center">회원가입</p>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-primary mb-3" type="submit"><span>로그인</span></button>
+                        </div>
+                        <div class="col-12">
+                            <a href="/accounts/google/login/" class="row">
+                                <img src="{% static 'images/google_logo.png' %}" alt="" class="col-12">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
