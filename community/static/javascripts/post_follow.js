@@ -47,7 +47,7 @@ const followHandleResponse = () => {
         const element = document.querySelector(`.follow-wraper`)
         console.log(element)
         element.innerHTML = `    
-        <button class='following' onclick="onClickFollowing(${user_id})">팔로잉</button>
+        <button class='follow' onclick="onClickFollowing(${user_id})">팔로잉</button>
         `
     }
 
