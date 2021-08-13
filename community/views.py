@@ -196,11 +196,18 @@ def add_comment(request, pk):
 def delete_comment(request, pk):
     req = json.loads(request.body)
     post_id = req['post_id']
-    comment_id = req['comment_id']
+    parent_id = req['parent_id']
+    reply_id = req['reply_id']
+    if parent_id != None:
+        parent_obj = Reply.objects.get(post_id=post_id, id=parent_id)
+        Reply.objects.get(
+            post_id=post_id, parent_reply=parent_obj, id=reply_id).delete()
+    else:
+        comment = Reply.objects.get(post_id=post_id, id=reply_id)
+        Reply.objects.filter(post_id=post_id, parent_reply=comment).delete()
+        comment.delete()
 
-    Comments.objects.get(post_id=post_id, id=comment_id).delete()
-
-    return JsonResponse({'comment_id': comment_id, 'post_id': post_id})
+    return JsonResponse({'parent_id': parent_id, 'post_id': post_id, 'reply_id': reply_id})
 
 
 @login_required

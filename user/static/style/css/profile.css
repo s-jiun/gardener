@@ -1,3 +1,9 @@
+a {
+  text-decoration: none;
+  cursor: pointer;
+  color: black;
+}
+
 .profile {
   width: 100%;
   display: left;
@@ -128,7 +134,6 @@
 #card-post {
   border: solid 3px #ccdfcc;
   border-radius: 5px;
-  box-shadow: 2px 2px 2px 0px #a0cab5;
 }
 
 .follow-btn {

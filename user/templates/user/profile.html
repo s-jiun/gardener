@@ -35,9 +35,7 @@
                                     </span><br>
                                 </div><br>
                                 <div id="user-follow" class="mt-2">
-                                    <!-- <img src="{% static 'images/follower.png'%}" /> -->
                                     <a href="{% url 'user:follow' user.pk %}">팔로워 <span class="follower-count">{{follower}}</span></a>
-                                    <!-- <img src="{% static 'images/following.png'%}" /> -->
                                     <a href="{% url 'user:follow' user.pk %}">| 팔로잉 <span class="following-count">{{following}}</span></a>
                                 </div>
                             </div>
@@ -57,9 +55,9 @@
                                 {%for post in posts%}
                                     <div class="col col-lg-4">
                                         <div id="card-post" class="card text-center m-3" >
-                                            <img src={{post.image.url}} class="card-img-top" alt="..." style="height:150px; max-height: 160px;">
+                                            <a href="{% url 'community:post_detail' post.pk %}"><img src={{post.image.url}} class="card-img-top" alt="..." style="height:150px; max-height: 160px;"></a>
                                             <div class="card-body ">
-                                                <p class="card-title" id="post-title"> {{post.title}}</p>
+                                                <a href="{% url 'community:post_detail' post.pk %}"><p class="card-title" id="post-title"> {{post.title}}</p></a>
                                                 <hr style="margin:0px 0px 5px 0px;">
                                                 {{post.created_at}}<br>
                                                 {% if post.tags.all %}
