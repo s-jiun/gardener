@@ -123,13 +123,17 @@
             <div class="container sidebar text-center p-1">
                 {%if user.id != request.user.id%} <!--다른 사람의 프로필을 보는 경우-->
                     {% if is_following%}
-                    <div class='following'>
-                        <button class='follow-btn' onclick="onClickFollowing({{user.id}})">팔로잉</button>
+                    <div class="follow-wrapper">
+                        <div class='following'>
+                            <button class='follow-btn' onclick="onClickFollowing({{user.id}})">팔로잉</button>
+                        </div>
                     </div>
-                    {% else %}
-                    <div class="follow">
-                        <button class='follow-btn' onclick="onClickFollow({{user.id}})">팔로우</button>
-                    </div>
+                        {% else %}
+                        <div class="follow-wrapper">
+                            <div class="follow">
+                                <button class='follow-btn' onclick="onClickFollow({{user.id}})">팔로우</button>
+                            </div>
+                        </div>
                     {% endif %}
                 {%endif%}
                 <!--내 프로필 경우-->
