@@ -61,11 +61,13 @@
                         <div class="modal-content" id="plantDetailModal-content">
                            <div class="modal-header justify-content-center">
                                 <h5 class="modal-title" id="plantDetailLabel">{{plant.name}}</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="margin-left:40px;"></button>
+                                <button type="button" class="btn-close me-2" data-bs-dismiss="modal" aria-label="Close" style="margin-left:40px;"></button>
                                 {%if plant in scrap_plant_list %}
-                                    <button type='button'> 스크랩 취소</button>
+                                    <div class="btn btn-success btn-sm post__del_scrap" onclick="onClickScrap({{plant.pk}})">스크랩 취소</div>
                                 {% else %}
-                                    <button type='button'>스크랩</button>
+                                    {% if request.user.is_authenticated %}
+                                    <div class="btn btn-success btn-sm post__scrap" onclick="onClickScrap({{plant.pk}})">스크랩</div>
+                                    {% endif %}
                                 {% endif %}
                             </div>
                             <div class="modal-body text-center">
@@ -240,29 +242,62 @@
     {% endif %}
 
     </div>
+    <script>
+        const requestScrap = new XMLHttpRequest();
+    
+        const onClickScrap = (Id) => {
+            const url = 'scrap_ajax/';
+            requestScrap.open('POST', url, true);
+            requestScrap.setRequestHeader(
+                'Content-Type',
+                'application/x-www-form-urlencoded'
+            );
+            requestScrap.send(JSON.stringify({Id: Id}));
+        };
+    
+        const ScrapHandleResponse = () => {
+            if (requestScrap.status < 400) {
+                const {id, type} = JSON.parse(requestScrap.response);    // {'id': 1, 'type': 'like'}
+                const element = document.querySelector(`#plantDetailModal-${id} .post__${type}`);
+                if (element.innerHTML === '스크랩 취소') {
+                    element.classList.replace(`post__${type}`, 'post__scrap')
+                    element.innerHTML = '스크랩';
+                }
+                else {
+                    element.classList.replace(`post__${type}`, 'post__del_scrap')
+                    element.innerHTML ='스크랩 취소'
+                }
+            }
+        };
+    
+        requestScrap.onreadystatechange = () => {
+            if (requestScrap.readyState === XMLHttpRequest.DONE) {
+                ScrapHandleResponse();
+            }
+        };
+    
+    </script>
 {%endblock%}
-
 
 <script>
     $(function(){	
-	$(document).on("change", "select[name=type]", function(){
-        var search_box =document.getElementById("search_option")
-		var value = $(this).find("option:selected").val();
-        var search = document.getElementById("search");
-        var search2 = document.getElementById("search2");
-		var inputText = $(this).closest('input');
-		if (value == 'managelevel') {
-            search_box.innerHTML = ""
-            search_box.innerHTML +="<a href='?type=managelevel&q=초보자'>초보자 </a>"
-            search_box.innerHTML +="<a href='?type=managelevel&q=경험자'>경험자 </a>"
-            search_box.innerHTML +="<a href='?type=managelevel&q=전문가'>전문가 </a>"
-		}
-		
-		$(inputText).attr("disabled", flag);
-	});
-
-})
-
+        $(document).on("change", "select[name=type]", function(){
+            var search_box =document.getElementById("search_option")
+            var value = $(this).find("option:selected").val();
+            var search = document.getElementById("search");
+            var search2 = document.getElementById("search2");
+            var inputText = $(this).closest('input');
+            if (value == 'managelevel') {
+                search_box.innerHTML = ""
+                search_box.innerHTML +="<a href='?type=managelevel&q=초보자'>초보자 </a>"
+                search_box.innerHTML +="<a href='?type=managelevel&q=경험자'>경험자 </a>"
+                search_box.innerHTML +="<a href='?type=managelevel&q=전문가'>전문가 </a>"
+            }
+            
+            $(inputText).attr("disabled", flag);
+        });
+    
+    })
 </script>
 
-</html>
+

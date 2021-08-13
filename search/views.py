@@ -1,10 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib import messages
 from .models import Plant, PlantScrap
 
 from django.views.generic import ListView
 from django.db.models import Q
-from django.contrib.auth.decorators import login_required
+# ajax
+from django.views.decorators.csrf import csrf_exempt
+from django.http.response import JsonResponse
+import json
 
 
 class PlantListView(ListView):
@@ -93,16 +96,34 @@ def plant_detail(request, pk):
     return render(request, "search/plant_detail.html", ctx)
 
 
-# @login_required
-# @csrf_exempt
-# def like_ajax(request, pk):
-#     req = json.loads(request.body)
-#     post_id = req['id']
-#     post = Post.objects.get(id=post_id)
-#     if(Like.objects.filter(user_id=request.user, post_id=post).count() != 0):
-#         Like.objects.get(user_id=request.user, post_id=post).delete()
-#     else:
-#         Like.objects.create(user_id=request.user, post_id=post)
-#     like_count = Like.objects.filter(post_id=post).count()
-#     post.save()
-#     return JsonResponse({'id': post_id, 'like_count': like_count})
+@csrf_exempt
+def scrap_ajax(request):
+    req = json.loads(request.body)
+    plant_id = req['Id']
+    plant = Plant.objects.get(pk=plant_id)
+    user = request.user
+
+    if PlantScrap.objects.filter(user=user).filter(plant=plant):
+        scrap = PlantScrap.objects.filter(user=user).get(plant=plant)
+        scrap.delete()
+        button_type = 'del_scrap'
+    else:
+        scrap = PlantScrap(user=user, plant=plant)
+        scrap.save()
+        button_type = 'scrap'
+    print(button_type)
+    return JsonResponse({'id': plant.pk, 'type': button_type})
+
+    # def like_ajax(request):
+    # req = json.loads(request.body)  # {'id' :1, 'type' : 'like'}
+    # post_id = req['id']
+    # button_type = req['type']
+    # post = Post.objects.get(id=post_id)
+
+    # if button_type == 'like':
+    #     post.like += 1
+    # else:
+    #     post.dislike += 1
+
+    # post.save()
+    # return JsonResponse({'id': post_id, 'type': button_type})
