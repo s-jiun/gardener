@@ -1,12 +1,15 @@
 html {
-  height: 100%;
+  position: relative;
+  min-height: 100%;
 }
 
 header {
   font-family: "Gowun Batang", serif;
+  width: auto;
 }
 
 body {
+  min-height: 100%;
   font-family: "Gowun Batang", serif;
   overflow: scroll;
 }
@@ -26,12 +29,13 @@ a {
 }
 
 footer {
+  padding: 2%;
   font-family: "Gowun Batang", serif;
   font-size: small;
   background-color: #ccdfcc;
-  height: 120px;
+  height: auto;
   position: relative;
-  width: 100%;
+  width: auto;
 }
 
 .navbar {
