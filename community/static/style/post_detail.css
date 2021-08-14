@@ -164,16 +164,15 @@ a {
 }
 
 #post-edit-container {
-  width: 100px;
+  width: auto;
 }
 
-
-#image-container{
+#image-container {
   height: 100vh;
 }
 
-@media screen and (max-width:800px) {
-  #image-container{
+@media screen and (max-width: 800px) {
+  #image-container {
     display: none;
   }
   .main-container {
