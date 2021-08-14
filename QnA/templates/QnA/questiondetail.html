@@ -6,10 +6,10 @@
 {% endblock %}
 
 {% block content %}
-<div class='container' style='width:80%; background-color: #F4F4F4;'>
+<div class='container' id = 'question-detail-body'>
     <div class= 'pt-5 mb-3'>
         <h1 style = 'display:inline-block;' class='mb-3'>Gardener Q&A</h1>
-        <button id= 'return-botton' class='mb-3 mt-2' type="submit" style='float:right;'><a style='text-decoration:none; color:white;' href = '{% url "QnA:communityquestion_list" %}'>목록으로</a></button>
+        <button id= 'return-botton' class='mb-3 mt-2' type="submit" style='float:right;'><a href = '{% url "QnA:communityquestion_list" %}'>목록으로</a></button>
     </div>
     
     <div class ='row row-cols-1'>
@@ -19,7 +19,7 @@
                 <span>작성자</span> <img id='question-profile-img' src="{{ question.user_id.Image.url }}">{{question.user_id}}님
                 <span>수정일</span> {{question.updated_at}}
                 {% if user == question.user_id %}
-                <div class= 'me-2'style='display:inline; float:right'>
+                <div class= 'me-2'>
                     <a href = '{% url "QnA:editquestion" pk=question.pk %}' style='color:#F4F4F4;'>수정</a>
                     &nbsp;
                     <a href = '{% url "QnA:deletequestion" pk=question.pk %}' style='color:#F4F4F4;'>삭제</a>
@@ -36,7 +36,7 @@
             {% endfor %}
             <div class='mt-5 mb-2'>
                 <h4 style='display:inline;' class= 'ms-1 mt-5 mb-2' style='font-weight:bold;'>답변목록</h4>
-                <button id='makeanswer-button'><a style='color: white; text-decoration: none;' href = '{% url "QnA:makeanswer" pk=question.pk%}'>답글달기</a></button>
+                <button id='makeanswer-button'><a style='color: white;' href = '{% url "QnA:makeanswer" pk=question.pk%}'>답글달기</a></button>
             </div>
 
             <div id= 'question-detail-comment'>
@@ -63,50 +63,10 @@
                     {% endfor %}
                   </div>
             </div>
-            <div id = 'question-detail-footer' class='text-center mt-5' style='margin-bottom:100px;'>
+            <div id = 'question-detail-footer' class='text-center mt-5'>
                 <h6>답변을 남기고 포인트를 받아가세요!</h6>
             </div>
         </div>
     </div>
 </div>
 {% endblock %}
-{% comment %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Question Detail Page</title>
-</head>
-<body>
-    <div>
-        <div>
-            <h1>{{question.title}}</h1>
-            <div>
-                {{question.content|safe}}
-            </div>
-            {% for tag in question.tags.all %}
-                <a href="{% url 'QnA:tagged' tag %}">#{{ tag.name }}</a>
-            {% endfor %}
-
-
-            <div>
-                {% for ans in answer %}
-                    <div>{{ans.user_id}}</div>
-                    <div>{{ans.title}}</div>
-                    <div>{{ans.content|safe}}</div>
-                    <a href = '{% url "QnA:deleteanswer" ans.pk %}'>답글 삭제하기</a>
-                    <a href = '{% url "QnA:editanswer" ans.pk %}'>답글 편집하기</a>
-
-                {% endfor %}
-            </div>
-        </div>        
-    </div>
-    <a href = '{% url "QnA:makeanswer" pk=question.pk%}'>답글달기</a>
-    <a href = '{% url "QnA:deletequestion" pk=question.pk %}'>게시글 삭제하기</a>
-    <a href = '{% url "QnA:editquestion" pk=question.pk %}'>게시글 수정하기</a>
-    <a href = '{% url "QnA:communityquestion_list" %}'>질문 목록으로</a>
-</body>
-</html>
-{% endcomment %}

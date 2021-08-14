@@ -1,11 +1,21 @@
 a {
   text-decoration: none;
 }
+
+#question-detail-body {
+  width: 80%;
+  background-color: #f4f4f4;
+}
+
 #return-botton {
   border-radius: 10px;
   border: 0;
   outline: 0;
   background-color: #a0cab5;
+}
+
+#return-botton a {
+  color: white;
 }
 
 #question-detail-header {
@@ -14,9 +24,16 @@ a {
   padding: 5px 3px;
   background-color: #a0cab5;
 }
+
 #question-detail-header span {
   font-weight: bold;
 }
+
+#question-detail-header div {
+  display: inline;
+  float: right;
+}
+
 #question-detail-main {
   border: 2px solid;
   border-color: #a0cab5;
@@ -36,6 +53,13 @@ a {
   padding-right: 5px;
 }
 
+#makeanswer-button {
+  float: right;
+  background-color: #a0cab5;
+  border: 0;
+  border-radius: 10px;
+}
+
 #question-profile-img {
   overflow: hidden;
   width: 20px;
@@ -46,12 +70,5 @@ a {
 
 #question-detail-footer {
   vertical-align: center;
-}
-
-#makeanswer-button {
-  float: right;
-  background-color: #a0cab5;
-  border: 0;
-  border-radius: 10px;
-  float: right;
+  margin-bottom: 100px;
 }
