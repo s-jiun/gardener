@@ -28,11 +28,12 @@
         </div>
         <div>
             <button id='list-create-post'><a href="{% url 'community:post_create' %}" style='color:white;'>포스트 작성</a></button>
-            <button id='list-watch-post'><a href = '{% url "community:follow_post_list" %}' style='color:white;'>친구 게시물 보기</a></button>
+            <button id='list-watch-post'><a href = '' style='color:white;'>친구 게시물 보기</a></button>
         </div>
     </div>            
 </div>
 <div class='container-fluid mt-4 mb-3' style='width:80%;'>
+    <div class="text-center h4">{{request.user}}님이 팔로우한 유저의 게시물</div>
     <div class='row' >
         <div class='col container-fluid'>
             {% if post_list %}

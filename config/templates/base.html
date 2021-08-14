@@ -13,10 +13,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
     <link href="{% static 'style/base.css' %}" rel="stylesheet">
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
     {% block head %}
     {% endblock %}
     <title>Gardener</title>
 </head>
+<main>
+
 <header>
     <nav class="navbar navbar-expand-lg navbar-light">
         <img class="logo-image" src ="{% static 'images/flowers.svg' %}" />
@@ -66,12 +69,14 @@
         </div>
     </nav>
 </header>
-<body>
+
+<div id='mainbody'>
     
     {% block content %}
     {% endblock %}
     
-</body>
+</div>
+</main>
 <footer class="d-flex align-items-center">
     <div class="d-flex flex-wrap container-fluid justify-content-between">
         <div class="flex-column">
@@ -86,6 +91,7 @@
         </div>
     </div>
 </footer>
+
 {% block js %}
 {% endblock %}
 </html>
