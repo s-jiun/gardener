@@ -81,7 +81,7 @@ def post_detail(request, pk):
         if request.user.id == follower.following_user_id:
             is_following = True
             break
-    
+
     if request.method == 'POST':
         # comment has been added
         comment_form = ReplyForm(request.POST, request.FILES)
@@ -121,7 +121,7 @@ def post_detail(request, pk):
                    'comments': comments,
                    'comment_form': comment_form,
                    'liked_user': liked_user,
-                   'is_following':is_following})
+                   'is_following': is_following})
 
 
 @login_required
@@ -193,7 +193,7 @@ def add_comment(request, pk):
 
 @login_required
 @csrf_exempt
-def delete_comment(request, pk):
+def delete_reply(request, pk):
     req = json.loads(request.body)
     post_id = req['post_id']
     parent_id = req['parent_id']
@@ -208,6 +208,20 @@ def delete_comment(request, pk):
         comment.delete()
 
     return JsonResponse({'parent_id': parent_id, 'post_id': post_id, 'reply_id': reply_id})
+
+
+@login_required
+@csrf_exempt
+def delete_comment(request, pk):
+    req = json.loads(request.body)
+    post_id = req['post_id']
+    comment_id = req['comment_id']
+
+    comment = Reply.objects.get(post_id=post_id, id=comment_id)
+    Reply.objects.filter(post_id=post_id, parent_reply=comment).delete()
+    comment.delete()
+
+    return JsonResponse({'post_id': post_id, 'comment_id': comment_id})
 
 
 @login_required

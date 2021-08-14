@@ -6,8 +6,8 @@
 {% endblock %}
 
 {% block content %}
-<div class="row row-cols-3">
-    <div  class="col">
+<div class="row row-cols-3 main-container">
+    <div  class="col" id="image-container">
         <img class="page-image" src="{% static 'images/post_detail.jpg' %}" />
     </div>
     <div class="col post">
@@ -42,10 +42,14 @@
         </div>
         <br />
         <div>
-            <button class="create-comment" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                댓글 작성
-            </button>
-            <div class="collapse" id="collapseExample">
+            {% if user.is_authenticated %}
+                <button class="create-comment" type="button" data-bs-toggle="collapse" data-bs-target="#collapseComment" aria-expanded="false" aria-controls="collapseComment">
+                    댓글 작성
+                </button>
+            {% else %}
+                <p>댓글 작성을 위해서는 로그인이 필요합니다</p>
+            {% endif %}
+            <div class="collapse" id="collapseComment">
                 <form class="card card-body" action="." method="post">
                     {% csrf_token %}
                     {{comment_form.media}}
@@ -61,12 +65,16 @@
 
         {% for comment in comments %}
         <div class="comment comment-{{comment.id}}">
-            <div class="comment-content">
-                <p> > {{ comment.user_id }} {{ comment.content|safe }} | {{ comment.created_at }}<span class="trash" onclick="onClickDeleteComment({{None}}, {{post.id}}, {{reply.id}}"><i class="far fa-trash-alt"></i></span></p>
-                <button class="create-reply" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample2">
+            <div class="comment-content mb-2">
+                <p> > {{ comment.user_id }} {{ comment.content|safe }} | {{ comment.created_at }}
+                    {% if user == post.user_id or user == comment.user_id %}
+                        <span class="trash" onclick="onClickDeleteComment({{post.id}}, {{comment.id}})"><i class="far fa-trash-alt"></i></span>
+                    {% endif %}
+                </p>
+                <button class="create-reply" type="button" data-bs-toggle="collapse" data-bs-target="#collapseReply-{{comment.id}}" aria-expanded="false" aria-controls="collapseReply-{{comment.id}}">
                     Reply
                 </button>
-                <div class="collapse" id="collapseExample2">
+                <div class="collapse" id="collapseReply-{{comment.id}}">
                     <form class="reply card card-body" action="." method="post">
                         {% csrf_token %}
                         {{comment_form.media}}
@@ -81,8 +89,14 @@
             </div>
 
             {% for reply in comment.replies.all %}
-            <div class="reply-content mt-2 mb-2 reply-{{reply.id}}">
-                <p> > {{reply.user_id}} {{ reply.content }} | {{ reply.created_at }}<span class="trash" onclick="onClickDeleteComment({{reply.parent_reply.id}}, {{post.id}}, {{reply.id}})"><i class="far fa-trash-alt"></i></span></p>
+            <div class="reply-{{reply.parent_reply.id}} reply-{{reply.parent_reply.id}}-{{reply.id}}">
+                <div class="reply-content mt-2 mb-2">
+                    <p> > {{reply.user_id}} {{ reply.content }} | {{ reply.created_at }}
+                        {% if user == post.user_id or user == reply.user_id %}
+                            <span class="trash" onclick="onClickDeleteReply({{reply.parent_reply.id}}, {{post.id}}, {{reply.id}})"><i class="far fa-trash-alt"></i></span>
+                        {% endif %}
+                    </p>
+                </div>
             </div>
             {% endfor %}
         </div>
@@ -91,7 +105,7 @@
         {% endfor %}
     </div>
     <div class="col post-edit text-center">
-        <div style="width: 100px; margin-top: 10px;">
+        <div style="margin-top: 10px;" id="post-edit-container">
             <span><a href="{% url 'user:profile' post.user_id.pk %}" style="margin-top: 5px;"><img class="profile-img" src="{{ post.user_id.Image.url }}"> {{post.user_id}}</a></span>
             <hr />
             {%if post.user_id != request.user%}
