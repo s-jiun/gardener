@@ -52,32 +52,28 @@
                         </div>
                         <hr style="margin-top: -5px; color: #5C5427;height:2px;">
                         <div class ="row row-cols-1 row-cols-sm-2 row-cols-lg-3" style="margin-left:20px;">
-                            {% if scrab_plants%}
-                            {%for scrab in scrab_plants%}
+                            {% if scrab_list%}
+                            {%for scrab in scrab_list%}
                             <div class="col col-lg-4">
                                 <div id="card-post" class="card text-center m-3" >
                                     <img src={{scrab.plant.photo_url}} class="card-img-top" alt="..." style="height:150px; max-height: 160px;">
                                     <div class="card-body ">
                                         <hr style="margin:0px 0px 5px 0px;">
-                                        <a data-bs-toggle="modal" data-bs-target="#plantDetailModal-{{plant.pk}}">
+                                        <a data-bs-toggle="modal" data-bs-target="#plantDetailModal-{{scrab.plant.pk}}">
                                         {{scrab.plant.name}}</a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="modal fade" id="plantDetailModal-{{plant.pk}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal fade" id="plantDetailModal-{{scrab.plant.pk}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-scrollable">
                                     <div class="modal-content" id="plantDetailModal-content">
                                     <div class="modal-header justify-content-center">
-                                            <h5 class="modal-title" id="plantDetailLabel">{{plant.name}}</h5>
+                                            <h5 class="modal-title" id="plantDetailLabel">{{scrab.plant.name}}</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="margin-left:40px;"></button>
-                                            {%if plant in scrap_plant_list %}
-                                                <button type='button'> 스크랩 취소</button>
-                                            {% else %}
-                                                <button type='button'>스크랩</button>
-                                            {% endif %}
+                                            <a href="{% url 'user:delete_scrab' scrab.plant.pk %}">스크랩 취소</a>
                                         </div>
                                         <div class="modal-body text-center">
-                                            <img src={{plant.photo_url}}>
+                                            <img src={{scrab.plant.photo_url}}>
                                             <hr class="m-1"><hr class="m-1">
                                             <table class="table table-striped text-start mt-2">
                                                 <tbody>
@@ -89,7 +85,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td>
-                                                        - {{plant.name}}의 생육형태는 {{plant.growth_form}} 입니다
+                                                        - {{scrab.plant.name}}의 생육형태는 {{scrab.plant.growth_form}} 입니다
                                                         </td> 
                                                     
                                                     </tr>
@@ -101,7 +97,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td>
-                                                        - {{plant.name}}의 관리 난이도는 {{plant.care_difficulty}} 입니다. 
+                                                        - {{scrab.plant.name}}의 관리 난이도는 {{scrab.plant.care_difficulty}} 입니다. 
                                                         </td> 
                                                     </tr>
                                                     <tr>
@@ -112,12 +108,12 @@
                                                         </tr>
                                                     <tr>
                                                         <td>
-                                                        {%if plant.management_level == "경험자" %}
+                                                        {%if scrab.plant.management_level == "경험자" %}
                                                         - 식물을 키워본 경험이 좀 있다면 어렵지 않아요! 도전해보세요!
-                                                        {%elif plant.management_level == "초보자" %}
-                                                        - {{plant.management_level}}도 쉽게 키울 수 있어요! 어렵지 않아요!
+                                                        {%elif scrab.plant.management_level == "초보자" %}
+                                                        - {{scrab.plant.management_level}}도 쉽게 키울 수 있어요! 어렵지 않아요!
                                                         {% else %}
-                                                        -{{plant.management_level}} 정도의 수준이 요구되어요! 
+                                                        -{{scrab.plant.management_level}} 정도의 수준이 요구되어요! 
                                                         {%endif%}
                                                         </td> 
                                                     </tr>
@@ -129,7 +125,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td>
-                                                        - {{plant.name}}는 {{plant.growth_temp}} 정도의 온도에서 잘 자라요!
+                                                        - {{scrab.plant.name}}는 {{scrab.plant.growth_temp}} 정도의 온도에서 잘 자라요!
                                                         </td> 
                                                     </tr>
                                                     <tr>
@@ -140,7 +136,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td>
-                                                        - {{plant.name}}는 {{plant.humidity}}의 습도 환경이 좋아요!
+                                                        - {{scrab.plant.name}}는 {{scrab.plant.humidity}}의 습도 환경이 좋아요!
                                                         </td> 
                                                     </tr>
                                                     <tr>
@@ -151,7 +147,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td>
-                                                        - 봄에는 [ {{plant.water_period_autumn}} ] 정도의 느낌이 들 만큼 물을 주세요!
+                                                        - 봄에는 [ {{scrab.plant.water_period_autumn}} ] 정도의 느낌이 들 만큼 물을 주세요!
                                                         </td> 
                                                     </tr>
                                                     <td class="p-2"> 
@@ -161,7 +157,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td>
-                                                        - 여름에는 [ {{plant.water_period_summer}} ] 정도의 느낌이 들 만큼 물을 주세요!
+                                                        - 여름에는 [ {{scrab.plant.water_period_summer}} ] 정도의 느낌이 들 만큼 물을 주세요!
                                                         </td> 
                                                     </tr>
                                                     <td class="p-2"> 
@@ -171,7 +167,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td>
-                                                        - 가을에는 [ {{plant.water_period_autumn}} ] 정도의 느낌이 들 만큼 물을 주세요!
+                                                        - 가을에는 [ {{scrab.plant.water_period_autumn}} ] 정도의 느낌이 들 만큼 물을 주세요!
                                                         </td> 
                                                     </tr>
                                                     <td class="p-2"> 
@@ -181,7 +177,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td>
-                                                        - 겨울에는 [ {{plant.water_period_winter}} ] 정도의 느낌이 들 만큼 물을 주세요!
+                                                        - 겨울에는 [ {{scrab.plant.water_period_winter}} ] 정도의 느낌이 들 만큼 물을 주세요!
                                                         </td> 
                                                     </tr>
                                                 </tbody>
