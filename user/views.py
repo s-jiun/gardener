@@ -294,6 +294,39 @@ def liked_posts(request, pk):
     return render(request, 'user/my_pick.html', context=ctx)
 
 
+class liked_post_ListView(ListView):
+    model = Like
+    paginate_by = 5
+    template_name = 'user/my_pick.html'
+    context_object_name = 'liked'
+
+    def get_queryset(self):
+        user = GeneralUser.objects.get(id=self.kwargs['pk'])
+        liked = Like.objects.filter(user_id=user).order_by('id')
+        return liked
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        paginator = context['paginator']
+        page_numbers_range = 10
+        max_index = len(paginator.page_range)
+
+        page = self.request.GET.get('page')
+        current_page = int(page) if page else 1
+
+        start_index = int((current_page - 1) /
+                          page_numbers_range) * page_numbers_range
+        end_index = start_index + page_numbers_range
+        if end_index >= max_index:
+            end_index = max_index
+
+        page_range = paginator.page_range[start_index:end_index]
+
+        context['user'] = GeneralUser.objects.get(id=self.kwargs['pk'])
+        context['page_range'] = page_range
+        return context
+
+
 class ScrabListView(ListView):
     model = PlantScrap
     paginate_by = 9
@@ -326,12 +359,12 @@ class ScrabListView(ListView):
         return context
 
     def get_queryset(self):
-        scrab_list =PlantScrap.objects.filter(user=self.request.user)
+        scrab_list = PlantScrap.objects.filter(user=self.request.user)
         return scrab_list
 
-def delete_scrab(request,pk):
+
+def delete_scrab(request, pk):
     plant = Plant.objects.get(pk=pk)
-    scrab=PlantScrap.objects.get(user=request.user, plant=plant)
+    scrab = PlantScrap.objects.get(user=request.user, plant=plant)
     scrab.delete()
-    return redirect('user:my_scrab_plant' , request.user.pk)
-    
+    return redirect('user:my_scrab_plant', request.user.pk)
