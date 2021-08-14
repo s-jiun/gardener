@@ -1,39 +1,6 @@
-// const requestAddComment = new XMLHttpRequest();
-
-// const onClickAddComment = (id) => {
-//     const ct = document.getElementById(`comment-${id}`).value;
-//     const url = 'add_comment/';
-//     requestAddComment.open('POST', url, true);
-//     requestAddComment.setRequestHeader(
-//         'Content-Type',
-//         'application/x-www-form-urlencoded'
-//     );
-//     requestAddComment.send(JSON.stringify({id: id, ct:ct}));
-
-// };
-
-// const addCommentHandleResponse = () => {
-//     if (requestAddComment.status <400) {
-//         const {id,ct,comment_id} = JSON.parse(requestAddComment.response);
-//         const comments = document.querySelector(`.comments-${id}`)
-//         const makecomment = document.querySelector(`#comment-${id}`)
-//         const newcomment = ct
-//         comments.innerHTML += `<div class = 'comment-${comment_id} spanlength'>${newcomment}
-//                 <button class = 'deletecomment-${comment_id}' type = 'submit'  onclick='onClickDeleteComment(${comment_id},${id})'>삭제</button>
-//             </div>`
-//         makecomment.value= ''
-//     };
-// };
-// requestAddComment.onreadystatechange = () => {
-//     if (requestAddComment.readyState === XMLHttpRequest.DONE) {
-//         addCommentHandleResponse();
-//     }
-// };
-
 const requestDeleteComment = new XMLHttpRequest();
 
-
-const onClickDeleteComment = (parent_id, post_id, reply_id) => {
+const onClickDeleteComment = (post_id, comment_id) => {
 
     const url = 'delete_comment/';
     requestDeleteComment.open('POST', url, true);
@@ -41,23 +8,19 @@ const onClickDeleteComment = (parent_id, post_id, reply_id) => {
         'Content-Type',
         'application/x-www-form-urlencoded'
     );
-    requestDeleteComment.send(JSON.stringify({parent_id: parent_id, post_id: post_id, reply_id: reply_id}));
+    requestDeleteComment.send(JSON.stringify({post_id: post_id, comment_id: comment_id}));
 };
 
 const deleteCommentHandleResponse = () => {
     if(requestDeleteComment.status < 400) {
 
-        const {parent_id, post_id, reply_id} = JSON.parse(requestDeleteComment.response);
-        if(parent_id != None){
-            const element = document.querySelector(`.reply-${reply_id}`)
-            element.innerHTML = ``
-        }
-        else{
-            const element1 = document.querySelector(`.comment-${parent_id}`)
-            const element2 = document.querySelector(`.reply-${reply_id}`)
-            element2.innerHTML = ``
-            element1.innerHTML = ``
-        }
+        const {post_id, comment_id} = JSON.parse(requestDeleteComment.response);
+        const element1 = document.querySelector(`.comment-${comment_id}`);
+            const element2 = document.querySelector(`.reply-${comment_id}`);
+            if(element2){
+                element2.innerHTML = '';
+            }
+            element1.innerHTML = '';
     }
 };
 
@@ -68,3 +31,32 @@ requestDeleteComment.onreadystatechange = () => {
 
 };
 
+const requestDeleteReply = new XMLHttpRequest();
+
+
+const onClickDeleteReply = (parent_id, post_id, reply_id) => {
+
+    const url = 'delete_reply/';
+    requestDeleteReply.open('POST', url, true);
+    requestDeleteReply.setRequestHeader(
+        'Content-Type',
+        'application/x-www-form-urlencoded'
+    );
+    requestDeleteReply.send(JSON.stringify({parent_id: parent_id, post_id: post_id, reply_id: reply_id}));
+};
+
+const deleteReplyHandleResponse = () => {
+    if(requestDeleteReply.status < 400) {
+
+        const {parent_id, post_id, reply_id} = JSON.parse(requestDeleteReply.response);
+        const element = document.querySelector(`.reply-${parent_id}-${reply_id}`);
+        element.innerHTML = '';
+    }
+};
+
+requestDeleteReply.onreadystatechange = () => {
+    if (requestDeleteReply.readyState === XMLHttpRequest.DONE) {
+        deleteReplyHandleResponse();
+    }
+
+};
