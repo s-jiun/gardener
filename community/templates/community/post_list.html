@@ -28,7 +28,7 @@
         </div>
         <div>
             <button id='list-create-post'><a href="{% url 'community:post_create' %}" style='color:white;'>포스트 작성</a></button>
-            <button id='list-watch-post'><a href = '' style='color:white;'>친구 게시물 보기</a></button>
+            <button id='list-watch-post'><a href = '{% url "community:follow_post_list" %}' style='color:white;'>친구 게시물 보기</a></button>
         </div>
     </div>            
 </div>
