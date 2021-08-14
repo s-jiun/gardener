@@ -197,3 +197,13 @@
   margin-left: 50px;
   font-weight: bold;
 }
+
+.post__del_scrap {
+  border-radius: 20px;
+  border: none;
+}
+
+.post__scrap {
+  border-radius: 20px;
+  border: none;
+}
