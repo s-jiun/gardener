@@ -226,12 +226,12 @@
 /* 샘플 */
 .card {
     max-width: 400px;
-    max-height: 600px;
+    min-height: 600px;
     margin: auto;
     color: black;
     border-radius: 20 px;
     justify-content: center;
-    height: 800px;
+    max-height: 800px;
     background-color: rgba(0, 0, 0, 0.2);
 }
 
