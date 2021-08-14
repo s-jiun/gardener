@@ -39,7 +39,7 @@
                                 <input type="text"class="form-control" name="tags" value="{%for tag in form.tags.value %}#{{tag}}{%endfor%}" id="id_tags">
                                 <span>{{form.tags.help_text}}</span>
                             </div>
-                            <div class='text-center mb-3'>
+                            <div class='text-center mb-5'>
                                 {% if form.title.value%}
                                 <input type="submit" value = '수정하기' id='makequestion-input' class='me-3'/>
                                 <button id='makequestion-button' type="button">
