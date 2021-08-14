@@ -19,4 +19,5 @@ urlpatterns = [
          views.delete_reply, name='delete_reply'),
     path('post/<int:pk>/like_ajax/', views.like_ajax, name='like_ajax'),
     path('tag/<tag>/', views.search_tag, name='search_tag'),
+    path('follow_post/', views.FollowPostView.as_view(), name='follow_post_list'),
 ]
