@@ -16,11 +16,11 @@ const likeHandleResponse = () => {
         const element1 = document.querySelector(`.post-id-${id} .heart`);
         const element2 = document.querySelector(`.post-id-${id} .like_num`);
         const heart = element1.innerHTML;
-        if (heart=='❤️'){
-            element1.innerHTML='🤍'
+        if (heart=='<i class="fas fa-heart"></i>'){
+            element1.innerHTML=`<i class="far fa-heart"></i>`
             element2.innerHTML = `좋아요 ${like_count}`
-        }else if(heart=='🤍'){
-            element1.innerHTML='❤️'
+        }else if(heart=='<i class="far fa-heart"></i>'){
+            element1.innerHTML=`<i class="fas fa-heart"></i>`
             element2.innerHTML = `좋아요 ${like_count}`
         }
     }

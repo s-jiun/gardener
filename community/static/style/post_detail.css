@@ -57,6 +57,7 @@ a {
 }
 
 .heart {
+  color: #cc3d3d;
   background-color: transparent;
   border: 0;
 }
@@ -124,6 +125,7 @@ a {
   box-sizing: border-box;
   border-radius: 100px;
   font-family: "Gowun Batang", serif;
+  padding: 5px;
 }
 
 .reply {
@@ -161,10 +163,10 @@ a {
   color: #cc3d3d;
 }
 
-#post-edit-container{
-  width: 100px; 
-
+#post-edit-container {
+  width: 100px;
 }
+
 
 #image-container{
   height: 100vh;
@@ -187,7 +189,7 @@ a {
     margin-bottom: 20px;
   }
 
-  #post-edit-container{
+  #post-edit-container {
     width: 100%;
     margin: auto;
   }
@@ -196,4 +198,17 @@ a {
     width: 100%;
     margin-top: 10px;
   }
+}
+
+.go-to-list {
+  position: relative;
+  background: #ccdfcc;
+  z-index: 0;
+  width: 100px;
+  height: 30px;
+  border: 1px solid #b8b8b8;
+  box-sizing: border-box;
+  border-radius: 10px;
+  font-family: "Gowun Batang", serif;
+  margin-bottom: 5px;
 }
