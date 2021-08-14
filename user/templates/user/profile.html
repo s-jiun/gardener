@@ -140,7 +140,7 @@
                 {%if user.id == request.user.id%}
                     <div class="btn-group-vertical" role="group" aria-label="Basic outlined example">
                         <a href="{% url 'user:my_pick' user.pk %}" >My Pick</a>
-                        <a href="#" type="button" >My Scrab</a>
+                        <a href="{% url 'user:my_scrab_plant' user.pk%}" >My Scrab</a>
                         <a href="{% url 'community:post_create' %}" >게시물 작성</a>
                         <a href="{% url 'user:profile_update' %}" >프로필 수정</a>
                         <a href="{% url 'user:update' %}" >회원정보 수정</a>

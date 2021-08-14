@@ -1,6 +1,6 @@
 .main-plant {
-  background: url("/static/images/top-background.jpg");
-  background-position: 70% 70%;
+  background: url("/static/images/background-top.jpg");
+  background-position: 70% 30%;
   background-repeat: no-repeat;
   background-size: cover;
   height: 300px;
