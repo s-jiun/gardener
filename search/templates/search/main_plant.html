@@ -4,6 +4,7 @@
 {%block head%}
 <link href="{% static 'style/css/main_plant.css' %}" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 {%endblock%}
 
 {% block content %}
@@ -21,7 +22,7 @@
                     </div>
                     <div id='plant-header-form'>
                         <form action = '' method="GET" >
-                            <select class="plant-select" name="type" id="search-type" >
+                            <select class="plant-select" name="type" id="search-type" onchange="SelectHandleOnchange(this)">
                                 <option value="all">전체</option>
                                 <option value="name">식물 이름</option>
                                 <option value="content">내용</option>  
@@ -238,9 +239,10 @@
         {% endif %}
     </ul>
     {% endif %}
-
+    <a href=""><button class="btn">초보자</button></a>
     </div>
     <script>
+    
         const requestScrap = new XMLHttpRequest();
     
         const onClickScrap = (Id) => {
@@ -273,29 +275,27 @@
                 ScrapHandleResponse();
             }
         };
-    
+        
+
+        function SelectHandleOnchange(e) {
+            const text = e.options[e.selectedIndex].text;
+            const search_box = document.getElementById("search_option")
+            if (text == '경험자') {
+                search_box.innerHTML = ""
+                search_box.innerHTML +=`<a href='?type=managelevel&q=초보자' class='btn mx-1'>초보자</a>`
+                search_box.innerHTML +=`<a href='?type=managelevel&q=경험자' class='btn mx-1'>경험자</a>`
+                search_box.innerHTML +=`<a href='?type=managelevel&q=전문가' class='btn mx-1'>전문가</a>`
+            }
+            else {
+                search_box.innerHTML = ""
+                search_box.innerHTML += `
+                <input class="plant-input" type="text" name ='q' value="{{q}}" placeholder="검색어를 입력하세요" />
+                <button class="plant-input-1" type="submit">검색</button>
+                `
+            }
+        }
+
     </script>
 {%endblock%}
-
-<script>
-    $(function(){	
-        $(document).on("change", "select[name=type]", function(){
-            var search_box =document.getElementById("search_option")
-            var value = $(this).find("option:selected").val();
-            var search = document.getElementById("search");
-            var search2 = document.getElementById("search2");
-            var inputText = $(this).closest('input');
-            if (value == 'managelevel') {
-                search_box.innerHTML = ""
-                search_box.innerHTML +="<a href='?type=managelevel&q=초보자'>초보자 </a>"
-                search_box.innerHTML +="<a href='?type=managelevel&q=경험자'>경험자 </a>"
-                search_box.innerHTML +="<a href='?type=managelevel&q=전문가'>전문가 </a>"
-            }
-            
-            $(inputText).attr("disabled", flag);
-        });
-    
-    })
-</script>
 
 
