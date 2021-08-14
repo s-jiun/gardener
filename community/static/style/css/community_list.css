@@ -128,7 +128,7 @@ figure.snip1384.hover img {
 }
 figure.snip1384:hover:after,
 figure.snip1384.hover:after {
-  opacity: 1;
+  opacity: 0.5;
   position: absolute;
   top: 0;
   bottom: 10px;
