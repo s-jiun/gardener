@@ -1,4 +1,4 @@
-from user.models import GeneralUser
+from user.models import Follow, GeneralUser
 import json
 from django.http.response import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
@@ -74,6 +74,14 @@ def post_detail(request, pk):
     comments = post.reply_set.filter(parent_reply__isnull=True)
     liked_user = Like.objects.filter(
         post_id=pk).values_list('user_id', flat=True)
+    is_following = False
+    user_id = post.user_id.id
+    followers = Follow.objects.filter(user_id=user_id)
+    for follower in followers:
+        if request.user.id == follower.following_user_id:
+            is_following = True
+            break
+    
     if request.method == 'POST':
         # comment has been added
         comment_form = ReplyForm(request.POST, request.FILES)
@@ -112,7 +120,8 @@ def post_detail(request, pk):
                   {'post': post,
                    'comments': comments,
                    'comment_form': comment_form,
-                   'liked_user': liked_user})
+                   'liked_user': liked_user,
+                   'is_following':is_following})
 
 
 @login_required
@@ -187,11 +196,18 @@ def add_comment(request, pk):
 def delete_comment(request, pk):
     req = json.loads(request.body)
     post_id = req['post_id']
-    comment_id = req['comment_id']
+    parent_id = req['parent_id']
+    reply_id = req['reply_id']
+    if parent_id != None:
+        parent_obj = Reply.objects.get(post_id=post_id, id=parent_id)
+        Reply.objects.get(
+            post_id=post_id, parent_reply=parent_obj, id=reply_id).delete()
+    else:
+        comment = Reply.objects.get(post_id=post_id, id=reply_id)
+        Reply.objects.filter(post_id=post_id, parent_reply=comment).delete()
+        comment.delete()
 
-    Comments.objects.get(post_id=post_id, id=comment_id).delete()
-
-    return JsonResponse({'comment_id': comment_id, 'post_id': post_id})
+    return JsonResponse({'parent_id': parent_id, 'post_id': post_id, 'reply_id': reply_id})
 
 
 @login_required

@@ -35,9 +35,7 @@
                                     </span><br>
                                 </div><br>
                                 <div id="user-follow" class="mt-2">
-                                    <!-- <img src="{% static 'images/follower.png'%}" /> -->
                                     <a href="{% url 'user:follow' user.pk %}">팔로워 <span class="follower-count">{{follower}}</span></a>
-                                    <!-- <img src="{% static 'images/following.png'%}" /> -->
                                     <a href="{% url 'user:follow' user.pk %}">| 팔로잉 <span class="following-count">{{following}}</span></a>
                                 </div>
                             </div>
@@ -57,9 +55,9 @@
                                 {%for post in posts%}
                                     <div class="col col-lg-4">
                                         <div id="card-post" class="card text-center m-3" >
-                                            <img src={{post.image.url}} class="card-img-top" alt="..." style="height:150px; max-height: 160px;">
+                                            <a href="{% url 'community:post_detail' post.pk %}"><img src={{post.image.url}} class="card-img-top" alt="..." style="height:150px; max-height: 160px;"></a>
                                             <div class="card-body ">
-                                                <p class="card-title" id="post-title"> {{post.title}}</p>
+                                                <a href="{% url 'community:post_detail' post.pk %}"><p class="card-title" id="post-title"> {{post.title}}</p></a>
                                                 <hr style="margin:0px 0px 5px 0px;">
                                                 {{post.created_at}}<br>
                                                 {% if post.tags.all %}
@@ -125,20 +123,24 @@
             <div class="container sidebar text-center p-1">
                 {%if user.id != request.user.id%} <!--다른 사람의 프로필을 보는 경우-->
                     {% if is_following%}
-                    <div class='following'>
-                        <button class='follow-btn' onclick="onClickFollowing({{user.id}})">팔로잉</button>
+                    <div class="follow-wrapper">
+                        <div class='following'>
+                            <button class='follow-btn' onclick="onClickFollowing({{user.id}})">팔로잉</button>
+                        </div>
                     </div>
-                    {% else %}
-                    <div class="follow">
-                        <button class='follow-btn' onclick="onClickFollow({{user.id}})">팔로우</button>
-                    </div>
+                        {% else %}
+                        <div class="follow-wrapper">
+                            <div class="follow">
+                                <button class='follow-btn' onclick="onClickFollow({{user.id}})">팔로우</button>
+                            </div>
+                        </div>
                     {% endif %}
                 {%endif%}
                 <!--내 프로필 경우-->
                 {%if user.id == request.user.id%}
                     <div class="btn-group-vertical" role="group" aria-label="Basic outlined example">
                         <a href="{% url 'user:my_pick' user.pk %}" >My Pick</a>
-                        <a href="#" type="button" >My Scrab</a>
+                        <a href="{% url 'user:my_scrab_plant' user.pk%}" >My Scrab</a>
                         <a href="{% url 'community:post_create' %}" >게시물 작성</a>
                         <a href="{% url 'user:profile_update' %}" >프로필 수정</a>
                         <a href="{% url 'user:update' %}" >회원정보 수정</a>
