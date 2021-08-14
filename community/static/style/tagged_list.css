@@ -1,0 +1,56 @@
+a {
+  text-decoration: none;
+  cursor: pointer;
+  color: black;
+}
+
+.page-image {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  object-fit: cover;
+}
+
+@media screen and (max-width: 1400px) {
+  .page-image {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  .page-phrase {
+    display: none;
+  }
+}
+
+.content-box {
+  padding: 10px;
+  margin: 10px;
+  border: solid lightslategray 1px;
+  border-radius: 10px;
+}
+
+.content-img {
+  margin-right: 10px;
+  width: 10rem;
+  height: 10rem;
+}
+
+.title-img {
+  width: 1.5rem;
+  margin-right: 10px;
+}
+
+.profile-img {
+  overflow: hidden;
+  width: 35px;
+  height: 30px;
+  padding: 2px;
+  border-radius: 100%;
+}
+
+.tag {
+  background-color: blanchedalmond;
+  border-radius: 10px;
+}

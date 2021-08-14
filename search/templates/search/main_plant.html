@@ -5,6 +5,7 @@
 <link href="{% static 'style/css/main_plant.css' %}" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
 <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+
 {%endblock%}
 
 {% block content %}
@@ -13,11 +14,17 @@
                 <div id='plant-header' class='d-flex flex-column justify-content-center'>
                     <div id='plant-header-p'>
                         {% if q %}
-                        <span>'{{ q }}' 검색 결과입니다. </span>
+                        <span style="font-size: 28px;">'{{ q }}' 검색 결과입니다. </span>
                         {% else %}
                         <h2>
                             반려식물의 정보를 검색해보세요! 
                         </h2>
+                        {% endif %}
+                        <!-- 에러메시지 -->
+                        {% if messages %}
+                            {% for message in messages %}
+                                {{message}}
+                            {% endfor %}
                         {% endif %}
                     </div>
                     <div id='plant-header-form'>
@@ -190,11 +197,13 @@
                 {%if q%}
                 <tr class="text-center">
                     <td colspan="5">
-                    일치하는 검색 결과가 없습니다.
+                        <div class="text-center" style="font-size: 28px;">
+                            일치하는 검색 결과가 없습니다.
+                        </div>
                     </td>
                 </tr>
                 {% else %}
-                <tr class="text-center">
+                <tr class="text-center" style="font-size: 28px;">
                     <td colspan="5">
                     저장된 식물 정보가 없습니다.
                     </td>
@@ -239,7 +248,6 @@
         {% endif %}
     </ul>
     {% endif %}
-    <a href=""><button class="btn">초보자</button></a>
     </div>
     <script>
     
