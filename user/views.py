@@ -1,7 +1,9 @@
+from search.models import Plant, PlantScrap
 from django.core.mail.message import EmailMessage
 import django
 from django.db.models.query import InstanceCheckMeta
 from django.http import request
+from django.views.generic.list import ListView
 from user.models import GeneralUser, Follow
 from django.shortcuts import render, redirect
 from .forms import UserCreationForm, CustomUserChangeForm, UserProfileChangeForm, UserAuthenticationForm, UserIdfindForm
@@ -290,3 +292,46 @@ def liked_posts(request, pk):
     print(liked)
     ctx = {'liked': liked, 'user': user}
     return render(request, 'user/my_pick.html', context=ctx)
+
+
+class ScrabListView(ListView):
+    model = PlantScrap
+    paginate_by = 9
+    template_name = 'user/my_scrab.html'
+    context_object_name = 'scrab_list'  # DEFAULT : <model_name>_list
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        paginator = context['paginator']
+        page_numbers_range = 10
+        max_index = len(paginator.page_range)
+
+        page = self.request.GET.get('page')
+        current_page = int(page) if page else 1
+
+        start_index = int((current_page - 1) /
+                          page_numbers_range) * page_numbers_range
+        end_index = start_index + page_numbers_range
+        if end_index >= max_index:
+            end_index = max_index
+
+        page_range = paginator.page_range[start_index:end_index]
+        context['page_range'] = page_range
+
+        # search_keyword = self.request.GET.get('q', '')
+
+        # if len(search_keyword) > 1:
+        #     context['q'] = search_keyword
+
+        return context
+
+    def get_queryset(self):
+        scrab_list =PlantScrap.objects.filter(user=self.request.user)
+        return scrab_list
+
+def delete_scrab(request,pk):
+    plant = Plant.objects.get(pk=pk)
+    scrab=PlantScrap.objects.get(user=request.user, plant=plant)
+    scrab.delete()
+    return redirect('user:my_scrab_plant' , request.user.pk)
+    
