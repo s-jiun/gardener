@@ -1,13 +1,13 @@
+from django.db.models.expressions import OrderBy
 from user.models import Follow, GeneralUser
 import json
 from django.http.response import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Post, Comments, Like, Reply
+from .models import Post, Comments, Like, Reply, Tag
 
 from .forms import PostForm, ReplyForm
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
-from django.db import transaction
 from django.views.generic import ListView
 from django.contrib import messages
 from django.db.models import Q
@@ -65,6 +65,7 @@ class PostListView(ListView):
             else:
                 messages.error(self.request, '검색어는 2글자 이상 입력해주세요.')
         return post_list
+
 
 class FollowPostView(ListView):
     model = Post
@@ -298,11 +299,34 @@ def like_ajax(request, pk):
     return JsonResponse({'id': post_id, 'like_count': like_count})
 
 
-def search_tag(request, tag):
+class tagListView(ListView):
+    model = Post
+    paginate_by = 4
+    template_name = 'community/tagged_list.html'
+    context_object_name = 'posts'
 
-    posts = Post.objects.filter(tags__name=tag)
-    ctx = {
-        'tag': tag,
-        'posts': posts,
-    }
-    return render(request, 'community/tagged_list.html', context=ctx)
+    def get_queryset(self):
+        posts = Post.objects.filter(
+            tags__name=self.kwargs['tag']).order_by('id')
+        return posts
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        paginator = context['paginator']
+        page_numbers_range = 10
+        max_index = len(paginator.page_range)
+
+        page = self.request.GET.get('page')
+        current_page = int(page) if page else 1
+
+        start_index = int((current_page - 1) /
+                          page_numbers_range) * page_numbers_range
+        end_index = start_index + page_numbers_range
+        if end_index >= max_index:
+            end_index = max_index
+
+        page_range = paginator.page_range[start_index:end_index]
+
+        context['tag'] = self.kwargs['tag']
+        context['page_range'] = page_range
+        return context
