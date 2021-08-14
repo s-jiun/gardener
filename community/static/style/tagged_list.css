@@ -12,13 +12,13 @@ a {
   object-fit: cover;
 }
 
-@media screen and (max-width: 1400px) {
+@media screen and (max-width: 1000px) {
   .page-image {
     display: none;
   }
 }
 
-@media screen and (max-width: 1400px) {
+@media screen and (max-width: 1000px) {
   .page-phrase {
     display: none;
   }

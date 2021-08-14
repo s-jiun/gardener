@@ -15,6 +15,11 @@
                     <p class="h8 py-5 px-5">로그인</p>
                     <div class="row gx-3">
                         <div class="col-12">
+                            <p class="text mb-1">
+                                {{form.password.errors}}
+                            </p>
+                        </div>
+                        <div class="col-12">
                             <div class="d-flex flex-column">
                                 <p class="text mb-1"></p> <input type="text" name="username" autofocus="" class="form-control mb-3" placeholder="아이디" autocapitalize="none" autocomplete="username" maxlength="30" required="" id="id_username">
                             </div>

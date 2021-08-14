@@ -179,7 +179,7 @@
 #reset-form-container {
     z-index: 10;
     background-color: #CCDFCC;
-    width: 50vw; 
+    width: 400px; 
     height: 70vh;
     border-radius: 10px;
     display: flex;
@@ -226,12 +226,12 @@
 /* 샘플 */
 .card {
     max-width: 400px;
-    max-height: 600px;
+    min-height: 600px;
     margin: auto;
     color: black;
     border-radius: 20 px;
     justify-content: center;
-    height: 800px;
+    max-height: 800px;
     background-color: rgba(0, 0, 0, 0.2);
 }
 
@@ -302,4 +302,19 @@ p {
 .btn.btn-primary{
     height: 50px;
     background-color: #CCDFCC;
+}
+
+.password-form-control {
+    color: black;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    height: 40px;
+    padding-left: 20px;
+    vertical-align: middle
+}
+
+.password-form-control:focus {
+    color: black;
+    border-color: black;
+    background-color: #a0cab5;
+    box-shadow: none
 }
