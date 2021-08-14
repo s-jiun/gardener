@@ -20,5 +20,6 @@ urlpatterns = [
     path('follow_ajax/', views.follow_ajax, name='follow_ajax'),
     path('find_id/', views.find_id, name='find_id'),
     path('profile/<int:pk>/my_pick', views.liked_posts, name='my_pick'),
-    path('profile/<int:pk>/my_scrab_plant', views.my_scrab_plant, name='my_scrab_plant'),
+    path('accounts/login/', views.login, name='account_login'),
+    # path('profile/<int:pk>/my_scrab_plant', views.my_scrab_plant, name='my_scrab_plant'),
 ]
