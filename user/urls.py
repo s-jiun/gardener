@@ -20,6 +20,6 @@ urlpatterns = [
     path('find_id/', views.find_id, name='find_id'),
     path('profile/<int:pk>/my_pick', views.liked_posts, name='my_pick'),
     path('profile/<int:pk>/my_scrab_plant', view=views.ScrabListView.as_view(), name='my_scrab_plant'),
-    path('profile/delete_scrab/<int:pk>', view=views.delete_scrab, name ='delete_scrab')
+    path('profile/delete_scrab/<int:pk>', view=views.delete_scrab, name ='delete_scrab'),
     path('accounts/login/', views.login, name='account_login'),
 ]
