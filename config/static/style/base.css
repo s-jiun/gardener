@@ -43,10 +43,9 @@ footer {
   font-family: "Gowun Batang", serif;
   font-size: small;
   background-color: #ccdfcc;
-  /* height: auto; */
-  height: 100px;
+  height: auto;
   position: relative;
-  transform: translateY(-100%);
+  margin-top: -100px;
   width: auto;
 }
 
