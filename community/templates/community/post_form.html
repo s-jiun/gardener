@@ -2,6 +2,8 @@
 {% load static %}
 {% block head %}
     <link href="{% static 'style/css/community_post_form.css' %}" rel="stylesheet">
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+
 {% endblock %}
 {% block content %}
     <div class='container main-body' style='background-color:#F5F5F5;'>
@@ -29,10 +31,20 @@
                             </div>
                             <div class='form-group mb-3'>
                                 <label for="id_image" class="form-label">썸네일</label>
-                                {% if form.image.value %}
-                                {{form.image}}
+                                {% if form.title.value %}
+                                현재                           
+                                {% if form.image.value != '../static/images/baseimg.png' %}
+                                    <a href="{{ form.image.value.url }}">{{ form.image.value }}</a><br/>
                                 {% else %}
-                                <input type="file" class='form-control' name="image" accept="image/*" id="id_image">
+                                    기본 이미지 입니다.
+                                {% endif %}
+                                (썸네일 이미지를 변경해보세요!)                                
+                                <input type="file" class='form-control' onchange="readURL(this);" name="image" accept="image/*" id="id_image">
+                                <img id="blah" src="" style='width:30%; height:auto;' class='mt-2'/>
+                                {% else %}
+                                (썸네일을 지정하지 않으면 기본이미지가 썸네일로 적용됩니다.)
+                                <input type="file" class='form-control' onchange="readURL(this);" name="image" accept="image/*" id="id_image">
+                                <img id="blah" src="" style='width:30%; height:auto;' class='mt-2'/>
                                 {% endif %}
                             </div>
                             <div class='form-group mb-3'>
@@ -85,7 +97,19 @@
         </div>
         
     </div>
-    
+    <script>
+        function readURL(input) {
+            console.log(input);
+            if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+            $('#blah').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+
     
 {% endblock %}
 
