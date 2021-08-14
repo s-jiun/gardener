@@ -1,17 +1,27 @@
-html {
-  position: relative;
-  min-height: 100%;
+html,
+body {
+  /* position: relative;
+  min-height: 100%; */
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
 }
 
+main {
+  height: auto;
+  min-height: 100%;
+  padding-bottom: 100px;
+}
 header {
   font-family: "Gowun Batang", serif;
   width: auto;
 }
 
-body {
-  min-height: 100%;
+#mainbody {
+  /* min-height: 100%; */
   font-family: "Gowun Batang", serif;
-  overflow: scroll;
+  /* overflow: scroll; */
 }
 
 a {
@@ -33,8 +43,10 @@ footer {
   font-family: "Gowun Batang", serif;
   font-size: small;
   background-color: #ccdfcc;
-  height: auto;
+  /* height: auto; */
+  height: 100px;
   position: relative;
+  transform: translateY(-100%);
   width: auto;
 }
 
