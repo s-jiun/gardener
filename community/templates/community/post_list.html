@@ -8,7 +8,7 @@
 {% block content %}
 <div id='search-header'>
     <div class='d-flex align-items-center flex-column'>
-        <div class = 'pb-3' style='padding-top:6%;'>
+        <div class = 'pb-3' style='padding-top:4%;'>
             {% if q %}
             <h1>'{{ q }}' 검색 결과입니다.</h1>
             {% else %}
@@ -80,7 +80,7 @@
                 <h1>일치하는 검색 결과가 없습니다.</h1>
     
                 {% else %}
-                <h1>작성된 게시글이 없습니다.</h1>
+                <h3>작성된 게시글이 없습니다.</h3>
                 {% endif %}
             </div>
             {% endif %}
