@@ -11,7 +11,12 @@
         {% if q %}
             <h1 style='padding-top:80px; margin-bottom: 25px;'>'{{ q }}' 검색 결과입니다.</h1>
         {% else %}
-            <h1 style='padding-top:80px; margin-bottom: 25px;'>Gardener QnA</h1>
+            <h1 style='padding-top:80px; margin-bottom: 25px;'>공지사항</h1>
+        {% endif %}
+        {% if messages %}
+            {% for message in messages %}
+                {{message}}
+            {% endfor %}
         {% endif %}
         <form action='' method="GET" style='height: 20%;'>
             <select class='search-input-1' name="type" id="search-type" style='border:none; height:4vh;'>
@@ -35,8 +40,8 @@
             </tr>
         </thead>
         <tbody>
-            {% if notice_list %}
-            {% for notice in notice_list %}
+            {% if notice %}
+            {% for notice in notice %}
             <tr class="text-center">
                 <th scope='row'>{{ paginator.count|sub:page_obj.start_index|sub:forloop.counter0|add:1 }}</th>
                 <td><a href='{% url "community:notice_detail" notice.pk %}' style='text-decoration: none; color:black;'>{{ notice.title|truncatechars:30 }}</a></td>
