@@ -15,10 +15,6 @@ class TaggedPostAdmin(admin.ModelAdmin):
     pass
 
 
-# @admin.register(models.Tag)
-# class TagAdmin(admin.ModelAdmin):
-#     list_display = ['name','slug']
-
 @admin.register(models.Reply)
 class TaggedPostAdmin(admin.ModelAdmin):
     pass

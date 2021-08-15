@@ -55,19 +55,6 @@ class Postviews(models.Model):
         protocol='both', unpack_ipv4=False, null=True, verbose_name='사용자 Ip주소')
 
 
-# class Image(models.Model):
-#     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-#     files = models.ImageField(null=True, blank=True, upload_to='Post/%y/%m/%d')
-
-
-# class Comments(models.Model):  # 댓글
-#     user_id = models.ForeignKey(GeneralUser, on_delete=CASCADE)
-#     post_id = models.ForeignKey(Post, on_delete=CASCADE)
-#     content = models.TextField()
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
-
-
 class Reply(models.Model):  # 대댓글 까지 가능한 댓글?
     user_id = models.ForeignKey(GeneralUser, on_delete=CASCADE)
     post_id = models.ForeignKey(Post, on_delete=CASCADE)  # 게시글 번호

@@ -15,9 +15,8 @@ from django.db.models import Q
 class PostListView(ListView):
     model = Post
     paginate_by = 9
-    # DEFAULT : <app_label>/<model_name>_list.html
     template_name = 'community/post_list.html'
-    context_object_name = 'post_list'  # DEFAULT : <model_name>_list
+    context_object_name = 'post_list'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -69,9 +68,8 @@ class PostListView(ListView):
 class FollowPostView(ListView):
     model = Post
     paginate_by = 9
-    # DEFAULT : <app_label>/<model_name>_list.html
     template_name = 'community/follow_post_list.html'
-    context_object_name = 'post_list'  # DEFAULT : <model_name>_list
+    context_object_name = 'post_list'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -136,12 +134,10 @@ def get_client_ip(request):
 
 
 def post_detail(request, pk):
-    # get post object
     post = get_object_or_404(Post, pk=pk)
     if not Postviews.objects.filter(client_ip=get_client_ip(request)):
         Postviews.objects.create(post=post, client_ip=get_client_ip(request))
 
-    # list of active parent comments
     comments = post.reply_set.filter(parent_reply__isnull=True)
     liked_user = Like.objects.filter(
         post_id=pk).values_list('user_id', flat=True)
@@ -154,34 +150,23 @@ def post_detail(request, pk):
             break
 
     if request.method == 'POST':
-        # comment has been added
         comment_form = ReplyForm(request.POST, request.FILES)
         if comment_form.is_valid():
             parent_obj = None
-            # get parent comment id from hidden input
             try:
-                # id integer e.g. 15
                 parent_id = int(request.POST.get('parent_id'))
             except:
                 parent_id = None
-            # if parent_id has been submitted get parent_obj id
             if parent_id:
                 parent_obj = Reply.objects.get(id=parent_id)
-                # if parent object exist
                 if parent_obj:
-                    # create replay comment object
                     replay_comment = comment_form.save(commit=False)
-                    # assign parent_obj to replay comment
                     replay_comment.parent_reply = parent_obj
-            # normal comment
-            # create comment object but do not save to database
             new_comment = comment_form.save(commit=False)
-            # assign ship to the comment
             new_comment.post_id = post
 
             new_comment.user_id = GeneralUser.objects.get(
                 userid=request.user.get_username())
-            # save
             new_comment.save()
             return redirect('community:post_detail', pk=post.pk)
     else:
@@ -246,21 +231,6 @@ def post_delete(request, pk):
     post = Post.objects.get(id=pk)
     post.delete()
     return redirect('community:post_list')
-
-
-# @login_required
-# @csrf_exempt
-# def add_comment(request, pk):
-#     req = json.loads(request.body)
-#     post_id = req['id']
-#     comment_content = req['ct']
-#     comment = Comments()
-#     comment.user_id = get_object_or_404(
-#         GeneralUser, userid=request.user.get_username())
-#     comment.post_id = get_object_or_404(Post, pk=pk)
-#     comment.content = comment_content
-#     comment.save()
-#     return JsonResponse({'id': post_id, 'ct': comment_content, 'comment_id': comment.pk})
 
 
 @login_required
@@ -348,32 +318,19 @@ class tagListView(ListView):
 
 class NoticeListView(ListView):
     model = Notice
-
-    paginate_by = 10
-
-    # DEFAULT : <app_label>/<model_name>_list.html
+    paginate_by = 9
     template_name = 'community/notice.html'
-    context_object_name = 'notice_list'  # DEFAULT : <model_name>_list
-
-    def get_queryset(self):
-        search_keyword = self.request.GET.get('q', '')
-        notice_list = Notice.objects.order_by('-id')
-        if search_keyword:
-            if len(search_keyword) > 1:
-                search_notice_list = notice_list.filter(
-                    tags__name=search_keyword)
-                return search_notice_list
-            else:
-                messages.error(self.request, '검색어는 2글자 이상 입력해주세요.')
-        return notice_list
+    context_object_name = 'notice'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         paginator = context['paginator']
-        page_numbers_range = 8
+        page_numbers_range = 10
         max_index = len(paginator.page_range)
+
         page = self.request.GET.get('page')
         current_page = int(page) if page else 1
+
         start_index = int((current_page - 1) /
                           page_numbers_range) * page_numbers_range
         end_index = start_index + page_numbers_range
@@ -382,6 +339,7 @@ class NoticeListView(ListView):
 
         page_range = paginator.page_range[start_index:end_index]
         context['page_range'] = page_range
+
         search_keyword = self.request.GET.get('q', '')
 
         if len(search_keyword) > 1:
@@ -389,14 +347,35 @@ class NoticeListView(ListView):
 
         return context
 
+    def get_queryset(self):
+
+        search_keyword = self.request.GET.get('q', '')
+        search_type = self.request.GET.get('type', '')
+        notice_list = Notice.objects.order_by('-id')
+        if search_keyword:
+            if len(search_keyword) > 1:
+                if search_type == 'tag':
+                    search_notice_list = notice_list.filter(
+                        Q(tags__name=search_keyword))
+                elif search_type == 'title':
+                    search_notice_list = notice_list.filter(
+                        Q(title__icontains=search_keyword))
+                elif search_type == 'content':
+                    search_notice_list = notice_list.filter(
+                        Q(content__icontains=search_keyword))
+                return search_notice_list
+            else:
+                messages.error(self.request, '검색어는 2글자 이상 입력해주세요.')
+        return notice_list
+
 
 def notice_detail(request, pk):
-    # get post object
     notice = get_object_or_404(Notice, pk=pk)
     if not Noticetviews.objects.filter(client_ip=get_client_ip(request)):
         Noticetviews.objects.create(
             notice=notice, client_ip=get_client_ip(request))
 
-    ctx = {'notice': notice, 'views': len(Noticetviews.objects.filter(notice=notice))}
+    ctx = {'notice': notice, 'views': len(
+        Noticetviews.objects.filter(notice=notice))}
 
     return render(request, template_name='community/notice_detail.html', context=ctx)
