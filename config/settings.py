@@ -216,8 +216,9 @@ TAGGIT_STRING_FROM_TAGS = 'community.utils.hashtag_joiner'
 CKEDITOR_UPLOAD_PATH = 'uploads/'
 CKEDITOR_IMAGE_BACKEND = 'pillow'
 CKEDITOR_CONFIGS = {
+    'config.language' :"ko",
     'answer_ckeditor': {
-        'skin': 'moono',
+        # 'skin': 'moono',
         # 'skin': 'office2013',
         'toolbar': 'Custom',
         'toolbar_Custom': [
@@ -242,7 +243,7 @@ CKEDITOR_CONFIGS = {
 
             ['Undo', 'Redo']
         ],
-        'width': '100%'
+        'width': '100%',
     }
 }
 
