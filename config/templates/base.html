@@ -40,7 +40,7 @@
                         <a class="nav-link" href="{% url 'QnA:communityquestion_list' %}">질문게시판</a>
                     </li>
                 </ul>
-                {% if user.is_authenticated %}
+                {% if request.user.is_authenticated %}
                     <div class="d-flex justify-content-end">
                         <ul class="navbar-nav align-items-center">
                             <div class='profile-image'><img src="{{ user.Image.url }}"></div>

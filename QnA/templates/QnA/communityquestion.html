@@ -13,7 +13,12 @@
         {% else %}
             <h1 style='padding-top:80px; margin-bottom: 25px;'>Gardener QnA</h1>
         {% endif %}
-        <form action='' method="GET" style='height: 20%;'>
+        {% if messages %}
+            {% for message in messages %}
+                {{message}}
+            {% endfor %}
+        {% endif %}
+        <form action='' method="GET" style='height: 20%;' class='mt-3'>
             <input class='search-input'  type="text" name='q' value="{{q}}" placeholder="태그를 검색해보세요" style='width:50%; height:70%; border:solid 1px #A0CAB5; border-radius:10px;'/>
             <button class='search-input-1' type="submit"style='width:60px; height: 37px;border:0; border-radius:10px;'>검색</button>
         </form>

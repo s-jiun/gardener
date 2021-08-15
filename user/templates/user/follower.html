@@ -64,16 +64,17 @@
                     </div>
                 </div>
                 <div class="col p-2">
-                    <div class="container p-0 follow-box" >
+                    <div class="container p-0 follow-box following-box" >
                         <div class="text-center" id="follow-box-title">
                             <span id="follower-title">팔로잉</span>
                         </div>
-                        <div>
+                        <div class="list-container">
                         {% if followings %}
                             {% for following in followings %}
-                                    <div class="row row-cols-2 row-cols-lg-2 p-3" id="follow-user-box1" >
+                             <div class="row row-cols-2 row-cols-lg-2 p-3" id="follow-user-box1" >
                                 <div class="col p-0 mt-2" id="follow-user-img">
                                     <img src={{following.user.Image.url}} >
+
                                 </div>
                                 <div class="col" style="width:80%">
                                     <h5 id="follow-name">🌱ID : {{following.user.userid}}</h5>

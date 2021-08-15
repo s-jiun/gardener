@@ -1,13 +1,8 @@
 from django.core.exceptions import ValidationError
-from django.db import models
-from django.forms import fields
-from django.forms.fields import EmailField
-from django.forms.widgets import TextInput
 from .models import GeneralUser, UserManager
 from django import forms
-from django.contrib.auth.forms import UserChangeForm, AuthenticationForm, UsernameField
+from django.contrib.auth.forms import UserChangeForm, AuthenticationForm, UsernameField, UserCreationForm
 from django.contrib.auth import get_user_model, authenticate
-from django.contrib.auth.hashers import check_password
 from allauth.account.forms import SignupForm
 
 class UserAuthenticationForm(AuthenticationForm):
@@ -29,7 +24,7 @@ class UserAuthenticationForm(AuthenticationForm):
 
 
 
-class UserCreationForm(forms.ModelForm):
+class CustomUserCreationForm(UserCreationForm):
     # 사용자 생성 폼
     name = forms.CharField(
         label=('name'),
@@ -49,20 +44,6 @@ class UserCreationForm(forms.ModelForm):
         label=('userid'),
         widget=forms.TextInput(
             attrs={'class':'signup-form-control'})
-    )
-    password1 = forms.CharField(
-        label=('Password'),
-        widget=forms.PasswordInput(
-            attrs={'class':'signup-form-control'}
-            
-        )
-    )
-    password2 = forms.CharField(
-        label=('Password confirmation'),
-        widget=forms.PasswordInput(
-            attrs={'class':'signup-form-control'}
-            
-        )
     )
 
     class Meta:
@@ -186,7 +167,13 @@ class MyCustomSignupForm(SignupForm):
         return user
 
 class UserIdfindForm(forms.ModelForm):
-
+    email = forms.EmailField(
+        label=('Email'),
+        widget=forms.EmailInput(
+            attrs={'class':'update-form-control'}
+            
+        )
+    )
     class Meta:
-        model = get_user_model()
+        model = GeneralUser
         fields = ['email']

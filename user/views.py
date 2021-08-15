@@ -1,18 +1,11 @@
 from django.contrib import messages
 from search.models import Plant, PlantScrap
-from django.core.mail.message import EmailMessage
-import django
-from django.db.models.query import InstanceCheckMeta
-from django.http import request
 from django.views.generic.list import ListView
 from user.models import GeneralUser, Follow
 from django.shortcuts import render, redirect
-from .forms import UserCreationForm, CustomUserChangeForm, UserProfileChangeForm, UserAuthenticationForm, UserIdfindForm
-from django.contrib.auth.forms import AuthenticationForm
+from .forms import CustomUserCreationForm, CustomUserChangeForm, UserProfileChangeForm, UserAuthenticationForm, UserIdfindForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.views import PasswordResetConfirmView, PasswordResetDoneView, PasswordResetView
 from django.urls import reverse_lazy
 import json
 from django.http.response import JsonResponse
@@ -23,7 +16,7 @@ from django.contrib.auth.forms import (
 )
 from django.db.models import Q
 from django.core.paginator import Paginator
-from community.models import Like, Post
+from community.models import Like
 
 
 def login(request):
@@ -59,14 +52,14 @@ def signup(request):
         return redirect('user:update')
     if request.method == 'POST':
         res = {}
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
             user.set_password(form.cleaned_data['password1'])
             user.save()
             return redirect('user:login')
     elif request.method == 'GET':
-        form = UserCreationForm()
+        form = CustomUserCreationForm()
 
     return render(request, 'user/signup.html', {'form': form})
 
@@ -272,10 +265,11 @@ def find_id(request):
 def following_ajax(request):
     req = json.loads(request.body)
     user_id = req['user_id']
+    user = GeneralUser.objects.get(id=user_id)
     following = Follow.objects.filter(user_id=user_id).filter(
         following_user=request.user.id)
     following.delete()
-    return JsonResponse({'user_id': user_id})
+    return JsonResponse({'user_id': user_id, 'user_userid':user.userid,'user_name':user.name, 'user_point':user.point, 'user_image_url':user.Image.url})
 
 
 @csrf_exempt
@@ -285,8 +279,14 @@ def follow_ajax(request):
     user = GeneralUser.objects.get(id=user_id)
     follow = Follow(user=user, following_user=request.user)
     follow.save()
-    return JsonResponse({'user_id': user_id})
+    return JsonResponse({'user_id': user_id, 'user_userid':user.userid,'user_name':user.name, 'user_point':user.point, 'user_image_url':user.Image.url})
 
+# @csrf_exempt
+# def follow_list_ajax(request):
+#     req = json.load(request.body)
+#     user_id = req['user_id']
+#     user = GeneralUser.objects.get(id=user_id)
+    
 
 def liked_posts(request, pk):
     user = GeneralUser.objects.get(id=pk)
