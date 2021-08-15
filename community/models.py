@@ -48,6 +48,13 @@ class Post(models.Model):
         return self.title
 
 
+class Postviews(models.Model):
+    post = models.ForeignKey(Post, on_delete=CASCADE, verbose_name='조회한 게시물')
+    date = models.DateField(auto_now_add=True, verbose_name='조회날짜')
+    client_ip = models.GenericIPAddressField(
+        protocol='both', unpack_ipv4=False, null=True, verbose_name='사용자 Ip주소')
+
+
 # class Image(models.Model):
 #     post = models.ForeignKey(Post, on_delete=models.CASCADE)
 #     files = models.ImageField(null=True, blank=True, upload_to='Post/%y/%m/%d')
