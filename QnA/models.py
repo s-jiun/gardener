@@ -34,6 +34,13 @@ class CommunityQuestion(models.Model):
     tags = TaggableManager(
         verbose_name='tags', help_text='해시태그를 남겨주세요', blank=True, through=TaggedQuestion)
 
+ # 조회수 모델
+
+
+class Questionviews(models.Model):
+    question = models.ForeignKey(CommunityQuestion, on_delete=CASCADE)
+    user = models.ForeignKey(GeneralUser, on_delete=CASCADE)
+
 
 class CommunityAnswer(models.Model):
     user_id = models.ForeignKey(GeneralUser, on_delete=CASCADE)

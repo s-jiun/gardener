@@ -113,17 +113,3 @@ def scrap_ajax(request):
         button_type = 'scrap'
     print(button_type)
     return JsonResponse({'id': plant.pk, 'type': button_type})
-
-    # def like_ajax(request):
-    # req = json.loads(request.body)  # {'id' :1, 'type' : 'like'}
-    # post_id = req['id']
-    # button_type = req['type']
-    # post = Post.objects.get(id=post_id)
-
-    # if button_type == 'like':
-    #     post.like += 1
-    # else:
-    #     post.dislike += 1
-
-    # post.save()
-    # return JsonResponse({'id': post_id, 'type': button_type})

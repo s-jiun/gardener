@@ -18,6 +18,7 @@
                 <h5>[질문]{{question.title}}</h5>
                 <span>작성자</span> <img id='question-profile-img' src="{{ question.user_id.Image.url }}">{{question.user_id}}님
                 <span>수정일</span> {{question.updated_at}}
+                <span>조회수</span> {{views}}
                 {% if user == question.user_id %}
                 <div class= 'me-2'>
                     <a href = '{% url "QnA:editquestion" pk=question.pk %}' style='color:#F4F4F4;'>수정</a>
