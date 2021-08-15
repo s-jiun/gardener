@@ -4,7 +4,6 @@ import json
 from django.http.response import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Post, Like, Reply, Postviews, Notice, Noticetviews
-
 from .forms import PostForm, ReplyForm
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
