@@ -3,7 +3,7 @@ from user.models import Follow, GeneralUser
 import json
 from django.http.response import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Post, Comments, Like, Reply, Tag, Postviews
+from .models import Post, Comments, Like, Reply, Postviews
 
 from .forms import PostForm, ReplyForm
 from django.views.decorators.csrf import csrf_exempt
