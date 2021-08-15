@@ -11,8 +11,9 @@
             <div class='row'>
                 <div id='follow-header' class='d-flex flex-column justify-content-center'>
                     <div id='follow-header-p'>
-                            <span><h2>🌼여러분과 함께하는 가드너입니다🌼</h2></span>
+                            <span><h2>🌼{{user.userid}}님과 함께하는 가드너들 입니다!🌼</h2></span>
                     </div>
+                    <a type="button" href="{% url 'user:profile' user.pk %}">My Profile로</a>
                 </div>
             </div>
         </div><!--header 닫힘-->
@@ -43,7 +44,7 @@
                                             {% else %}
                                             <div class="follow-wraper-{{follower.following_user_id}}" style="display:inline; ">
                                                 <div class="follow-{{follower.following_user_id}}" style="display:inline;">
-                                                    <button onclick="onClickFollow({{follower.following_user_id}})" style="background: white; border: 1px solid #ACA790; padding:5px; border-radius:10px; font-size:16px;">팔로잉</button>
+                                                    <button onclick="onClickFollow({{follower.following_user_id}})" style="background: white; border: 1px solid #ACA790; padding:5px; border-radius:10px; font-size:16px;">팔로우</button>
                                                 </div>
                                             </div>
                                             {% endif %}
@@ -71,10 +72,9 @@
                         <div class="list-container">
                         {% if followings %}
                             {% for following in followings %}
-                             <div class="row row-cols-2 row-cols-lg-2 p-3" id="follow-user-box1" >
-                                <div class="col p-0 mt-2" id="follow-user-img">
-                                    <img src={{following.user.Image.url}} >
-
+                                    <div class="row row-cols-2 row-cols-lg-2 p-3 follow-object-{{following.user_id}}" id="follow-user-box1" >
+                                    <div class="col p-0 mt-2" id="follow-user-img">
+                                        <img src={{following.user.Image.url}} >
                                 </div>
                                 <div class="col" style="width:80%">
                                     <h5 id="follow-name">🌱ID : {{following.user.userid}}</h5>
