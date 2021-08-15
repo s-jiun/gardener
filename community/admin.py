@@ -27,3 +27,8 @@ class TaggedPostAdmin(admin.ModelAdmin):
 @admin.register(models.Like)
 class LikeAdmin(admin.ModelAdmin):
     pass
+
+
+@admin.register(models.Notice)
+class NoticeAdmin(admin.ModelAdmin):
+    pass

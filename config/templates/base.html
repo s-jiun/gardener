@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
-    <link href="{% static 'style/base.css' %}" rel="stylesheet">
+    <link href="{% static 'style/css/base.css' %}" rel="stylesheet">
     <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
     {% block head %}
     {% endblock %}
@@ -39,8 +39,14 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'QnA:communityquestion_list' %}">질문게시판</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'community:notice' %}">공지사항</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">친구찾기</a>
+                    </li>
                 </ul>
-                {% if user.is_authenticated %}
+                {% if request.user.is_authenticated %}
                     <div class="d-flex justify-content-end">
                         <ul class="navbar-nav align-items-center">
                             <div class='profile-image'><img src="{{ user.Image.url }}"></div>

@@ -167,7 +167,13 @@ class MyCustomSignupForm(SignupForm):
         return user
 
 class UserIdfindForm(forms.ModelForm):
-
+    email = forms.EmailField(
+        label=('Email'),
+        widget=forms.EmailInput(
+            attrs={'class':'update-form-control'}
+            
+        )
+    )
     class Meta:
-        model = get_user_model()
+        model = GeneralUser
         fields = ['email']

@@ -5,37 +5,34 @@
 {% endblock %}
 
 {% block content %}  
-<div class="main-container d-flex justify-content-center align-items-center" style="background-color: #D8D8D8;">
-	<div class="row d-flex justify-content-center align-items-center" style="background-size: cover; background-color: rgba(0,0,0,0.5); background-image: url({% static 'images/find_id.jpg' %}); width: 80%; height:100% " >
-        <div class="d-flex justify-content-center align-items-center" style="width:100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 5;">
-	        <form id="reset-form-container" method="POST" class="form-signin">{% csrf_token %}
-                <div style="font-size: 4vh; font-weight: 800;">아이디 찾기</div>
-                <div style="height: 20vh;" class="d-flex justify-content-center align-items-center">
-                  <div style="font-size: 2vh; margin-left: 10px; margin-right: 10px;">
-                    가입할 때 입력하신 이메일을 입력해주세요!
-                  </div>
-                </div>
-                <div class="row justify-content-center align-items-center" style="margin-left: 10px; margin-right: 10px;">
-                    <div  class="col-lg-6 col-sm-12 mx-1">
-                        <input style="width: 160px;" type="email" name="email" maxlength="255" required="" id="id_email" placeholder="example@example.com">
+<div style="width: 100%; height: 90%;">
+    <div class="d-flex justify-content-center align-items-center main-container" style="position: relative; background-color: #D8D8D8; background-size: cover; background-image: url({% static 'images/find_id.jpg' %});">
+        <div class="d-flex justify-content-center align-items-center main-container" style="background-color: rgba(0, 0, 0, 0.5);">
+            <div class="container p-0">
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <div class="card px-5" style="background-color: rgb(204, 223, 204);">
+                        <p class="h8 py-5 px-5">아이디 찾기</p>
+                        <div class="row gx-3">
+                            <div class="col-12 mb-5">
+                                <div class="d-flex flex-column">
+                                    <p class="text mb-1 text-center">가입할 때 입력하신 이메일을 입력해주세요!</p>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="d-flex flex-column">
+                                    <p class="text mb-1"></p>
+                                    <input name="email" class="password-form-control mb-3" placeholder="example@example.com" type="email" id="id_email" required="true" >
+                                </div>
+                            </div>
+                            <div class="col-12 mb-5">
+                                <button class="btn btn-primary mb-3" type="submit" style="background-color: #a0cab5;"><span>아이디 찾기</span></button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-lg-4 col-sm-12">
-                        <button style="font-size: 16px; width: 100px;" id="email_submit_btn" >아이디 찾기</button>
-                    </div>
-                </div>
-            </form>
+                </form>  
+            </div>
         </div>
     </div>
 </div>
 {% endblock %}
-<div class="row">
-    <div  class="col-lg-2 col-sm-12">
-        <label class="col" for="email" style="text-align: end; font-size: 2vh;">이메일</label>
-    </div>
-    <div  class="col-lg-6 col-sm-12">
-        <input style="font-size: 2vh;" type="email" name="email" maxlength="255" required="" id="id_email" placeholder="example@example.com">
-    </div>
-    <div class="col-lg-4 col-sm-12">
-        <button style="font-size: 2vh; margin-left: 20px;" id="email_submit_btn" >아이디 찾기</button>
-    </div>
-</div>

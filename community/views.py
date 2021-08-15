@@ -3,8 +3,7 @@ from user.models import Follow, GeneralUser
 import json
 from django.http.response import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Post, Comments, Like, Reply, Postviews
-
+from .models import Post, Like, Reply, Postviews, Notice, Noticetviews
 from .forms import PostForm, ReplyForm
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
@@ -249,19 +248,19 @@ def post_delete(request, pk):
     return redirect('community:post_list')
 
 
-@login_required
-@csrf_exempt
-def add_comment(request, pk):
-    req = json.loads(request.body)
-    post_id = req['id']
-    comment_content = req['ct']
-    comment = Comments()
-    comment.user_id = get_object_or_404(
-        GeneralUser, userid=request.user.get_username())
-    comment.post_id = get_object_or_404(Post, pk=pk)
-    comment.content = comment_content
-    comment.save()
-    return JsonResponse({'id': post_id, 'ct': comment_content, 'comment_id': comment.pk})
+# @login_required
+# @csrf_exempt
+# def add_comment(request, pk):
+#     req = json.loads(request.body)
+#     post_id = req['id']
+#     comment_content = req['ct']
+#     comment = Comments()
+#     comment.user_id = get_object_or_404(
+#         GeneralUser, userid=request.user.get_username())
+#     comment.post_id = get_object_or_404(Post, pk=pk)
+#     comment.content = comment_content
+#     comment.save()
+#     return JsonResponse({'id': post_id, 'ct': comment_content, 'comment_id': comment.pk})
 
 
 @login_required
@@ -345,3 +344,59 @@ class tagListView(ListView):
         context['tag'] = self.kwargs['tag']
         context['page_range'] = page_range
         return context
+
+
+class NoticeListView(ListView):
+    model = Notice
+
+    paginate_by = 10
+
+    # DEFAULT : <app_label>/<model_name>_list.html
+    template_name = 'community/notice.html'
+    context_object_name = 'notice_list'  # DEFAULT : <model_name>_list
+
+    def get_queryset(self):
+        search_keyword = self.request.GET.get('q', '')
+        notice_list = Notice.objects.order_by('-id')
+        if search_keyword:
+            if len(search_keyword) > 1:
+                search_notice_list = notice_list.filter(
+                    tags__name=search_keyword)
+                return search_notice_list
+            else:
+                messages.error(self.request, '검색어는 2글자 이상 입력해주세요.')
+        return notice_list
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        paginator = context['paginator']
+        page_numbers_range = 8
+        max_index = len(paginator.page_range)
+        page = self.request.GET.get('page')
+        current_page = int(page) if page else 1
+        start_index = int((current_page - 1) /
+                          page_numbers_range) * page_numbers_range
+        end_index = start_index + page_numbers_range
+        if end_index >= max_index:
+            end_index = max_index
+
+        page_range = paginator.page_range[start_index:end_index]
+        context['page_range'] = page_range
+        search_keyword = self.request.GET.get('q', '')
+
+        if len(search_keyword) > 1:
+            context['q'] = search_keyword
+
+        return context
+
+
+def notice_detail(request, pk):
+    # get post object
+    notice = get_object_or_404(Notice, pk=pk)
+    if not Noticetviews.objects.filter(client_ip=get_client_ip(request)):
+        Noticetviews.objects.create(
+            notice=notice, client_ip=get_client_ip(request))
+
+    ctx = {'notice': notice, 'views': len(Noticetviews.objects.filter(notice=notice))}
+
+    return render(request, template_name='community/notice_detail.html', context=ctx)

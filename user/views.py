@@ -1,3 +1,4 @@
+from django.contrib import messages
 from search.models import Plant, PlantScrap
 from django.views.generic.list import ListView
 from user.models import GeneralUser, Follow
@@ -9,6 +10,11 @@ from django.urls import reverse_lazy
 import json
 from django.http.response import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.views import LoginView, LogoutView, PasswordResetView, PasswordResetDoneView
+from django.contrib.auth.forms import (
+    AuthenticationForm, PasswordChangeForm, PasswordResetForm, SetPasswordForm,
+)
+from django.db.models import Q
 from django.core.paginator import Paginator
 from community.models import Like
 
@@ -182,9 +188,9 @@ def profile(request, pk):
 
 def follow_list(request, pk):
     user = GeneralUser.objects.get(id=pk)
-    # user가 팔로잉에 해당하는 팔로우 오브젝트
     followers = user.following.all()
     followings = user.followers.all()
+    # user가 팔로잉에 해당하는 팔로우 오브젝트
     cur_users_followings = request.user.followers.all()
     cur_users_followings_list = []
     for cur_users_following in cur_users_followings:
