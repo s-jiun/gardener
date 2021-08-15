@@ -77,9 +77,9 @@ const followHandleResponse = () => {
       </div>
       <div class="col" style="width:80%">
       <h5 id="follow-name">🌱ID : ${user_userid}</h5>
-      <div class="follow-wraper-8" style="display:inline; ">
-      <div class="following-8" style="display:inline;"> 
-      <button onclick="onClickFollowing(8)" style="background: white; border: 1px solid #ACA790; padding:5px; border-radius:10px; font-size:16px;">팔로잉</button>
+      <div class="follow-wraper-${user_id}" style="display:inline; ">
+      <div class="following-${user_id}" style="display:inline;"> 
+      <button onclick="onClickFollowing(${user_id})" style="background: white; border: 1px solid #ACA790; padding:5px; border-radius:10px; font-size:16px;">팔로잉</button>
       </div>
       </div>
       <hr class="m-1">
@@ -97,9 +97,9 @@ const followHandleResponse = () => {
       </div>
       <div class="col" style="width:80%">
       <h5 id="follow-name">🌱ID : ${user_userid}</h5>
-      <div class="follow-wraper-8" style="display:inline; ">
-      <div class="following-8" style="display:inline;"> 
-      <button onclick="onClickFollowing(8)" style="background: white; border: 1px solid #ACA790; padding:5px; border-radius:10px; font-size:16px;">팔로잉</button>
+      <div class="follow-wraper-${user_id}" style="display:inline; ">
+      <div class="following-${user_id}" style="display:inline;"> 
+      <button onclick="onClickFollowing(${user_id})" style="background: white; border: 1px solid #ACA790; padding:5px; border-radius:10px; font-size:16px;">팔로잉</button>
       </div>
       </div>
       <hr class="m-1">
