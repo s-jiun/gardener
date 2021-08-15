@@ -68,9 +68,9 @@
                                             <div class="follow-wraper-{{follower.following_user_id}}" style="display:inline; ">
                                                 <div class="follow-{{follower.following_user_id}}" style="display:inline;">
                                                 {% if forloop.counter0|divisibleby:2 %}
-                                                    <button onclick="onClickFollow({{follower.following_user_id}})" style="background: white; border: 1px solid #ACA790; padding:5px; border-radius:10px; font-size:16px;">팔로잉</button>
+                                                    <button onclick="onClickFollow({{follower.following_user_id}})" style="background: white; border: 1px solid #ACA790; padding:5px; border-radius:10px; font-size:16px;">팔로우</button>
                                                 {%else%}
-                                                <button onclick="onClickFollow({{follower.following_user_id}})" style="background: white; border: 1px solid #a0cab5 ; padding:5px; border-radius:10px; font-size:16px;">팔로잉</button>
+                                                <button onclick="onClickFollow({{follower.following_user_id}})" style="background: white; border: 1px solid #a0cab5 ; padding:5px; border-radius:10px; font-size:16px;">팔로우</button>
                                                 {%endif%}
                                                 </div>
                                             </div>
@@ -92,20 +92,20 @@
                     </div>
                 </div>
                 <div class="col p-2">
-                    <div class="container p-0 follow-box" >
+                    <div class="container p-0 follow-box following-box" >
                         <div class="text-center" id="follow-box-title">
                             <span id="follower-title">팔로잉</span>
                         </div>
-                        <div>
+                        <div class="list-container">
                         {% if followings %}
                             {% for following in followings %}
                                 {% if forloop.counter0|divisibleby:2 %}
-                                    <div class="row row-cols-2 row-cols-lg-2 p-3" id="follow-user-box1" >
+                                    <div class="row row-cols-2 row-cols-lg-2 p-3 follow-object-{{following.user_id}}" id="follow-user-box1" >
                                 {% else %}
-                                    <div class="row row-cols-2 row-cols-lg-2 p-3" id="follow-user-box2" >
+                                    <div class="row row-cols-2 row-cols-lg-2 p-3 follow-object-{{following.user_id}}" id="follow-user-box2" >
                                 {% endif%}
-                                <div class="col p-0 mt-2" id="follow-user-img">
-                                    <img src={{following.user.Image.url}} >
+                                    <div class="col p-0 mt-2" id="follow-user-img">
+                                        <img src={{following.user.Image.url}} >
                                 </div>
                                 <div class="col" style="width:80%">
                                     <h5 id="follow-name">🌱ID : {{following.user.userid}}</h5>
