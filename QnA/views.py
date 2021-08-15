@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import CommunityAnswer, CommunityQuestion
+from .models import CommunityAnswer, CommunityQuestion, Questionviews
+from user.models import GeneralUser
 from .forms import QuestionForm, AnswerForm
 from user.models import GeneralUser
 from django.views.generic import ListView
@@ -52,10 +53,18 @@ class QuestionListView(ListView):
         return context
 
 
+@login_required
 def question_detail(request, pk):
     question = get_object_or_404(CommunityQuestion, pk=pk)
     answer = question.communityanswer_set.all()
-    ctx = {'question': question, 'answer': answer}
+    new_views = Questionviews(question=question, user=request.user)
+
+    if not Questionviews.objects.filter(question=question).filter(user=request.user):
+        new_views.save()
+
+    question_views = Questionviews.objects.filter(question=question)
+    ctx = {'question': question, 'answer': answer,
+           'views': len(question_views)}
     return render(request, 'QnA/questiondetail.html', ctx)
 
 
