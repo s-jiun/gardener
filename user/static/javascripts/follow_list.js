@@ -69,46 +69,46 @@ const followHandleResponse = () => {
     console.log(listConatiner)
     if (is_list_Conatiner == null)
       listConatiner.innerHTML=''
-    if (box1.length <= box2.length) {
-      listConatiner.innerHTML += `
-      <div class="row row-cols-2 row-cols-lg-2 p-3 follow-object-${user_id}" id="follow-user-box1">  
-      <div class="col p-0 mt-2" id="follow-user-img">
-      <img src="${user_image_url}">
-      </div>
-      <div class="col" style="width:80%">
-      <h5 id="follow-name">🌱ID : ${user_userid}</h5>
-      <div class="follow-wraper-${user_id}" style="display:inline; ">
-      <div class="following-${user_id}" style="display:inline;"> 
-      <button onclick="onClickFollowing(${user_id})" style="background: white; border: 1px solid #ACA790; padding:5px; border-radius:10px; font-size:16px;">팔로잉</button>
-      </div>
-      </div>
-      <hr class="m-1">
-      <span> &nbsp; Name : ${user_name}</span><br>
-      <span> &nbsp; Point : ${user_point}</span>
-      </div>
-      </div>
-      `
-    }
-    else {
-      listConatiner.innerHTML += `
-      <div class="row row-cols-2 row-cols-lg-2 p-3 follow-object-${user_id}" id="follow-user-box2">  
-      <div class="col p-0 mt-2" id="follow-user-img">
-      <img src="${user_image_url}">
-      </div>
-      <div class="col" style="width:80%">
-      <h5 id="follow-name">🌱ID : ${user_userid}</h5>
-      <div class="follow-wraper-${user_id}" style="display:inline; ">
-      <div class="following-${user_id}" style="display:inline;"> 
-      <button onclick="onClickFollowing(${user_id})" style="background: white; border: 1px solid #ACA790; padding:5px; border-radius:10px; font-size:16px;">팔로잉</button>
-      </div>
-      </div>
-      <hr class="m-1">
-      <span> &nbsp; Name : ${user_name}</span><br>
-      <span> &nbsp; Point : ${user_point}</span>
-      </div>
-      </div>
-      `
-    }
+    
+    listConatiner.innerHTML += `
+    <div class="row row-cols-2 row-cols-lg-2 p-3 follow-object-${user_id}" id="follow-user-box1">  
+    <div class="col p-0 mt-2" id="follow-user-img">
+    <img src="${user_image_url}">
+    </div>
+    <div class="col" style="width:80%">
+    <h5 id="follow-name">🌱ID : ${user_userid}</h5>
+    <div class="follow-wraper-${user_id}" style="display:inline; ">
+    <div class="following-${user_id}" style="display:inline;"> 
+    <button onclick="onClickFollowing(${user_id})" style="background: white; border: 1px solid #ACA790; padding:5px; border-radius:10px; font-size:16px;">팔로잉</button>
+    </div>
+    </div>
+    <hr class="m-1">
+    <span> &nbsp; Name : ${user_name}</span><br>
+    <span> &nbsp; Point : ${user_point}</span>
+    </div>
+    </div>
+    `
+    
+    // else {
+    //   listConatiner.innerHTML += `
+    //   <div class="row row-cols-2 row-cols-lg-2 p-3 follow-object-${user_id}" id="follow-user-box2">  
+    //   <div class="col p-0 mt-2" id="follow-user-img">
+    //   <img src="${user_image_url}">
+    //   </div>
+    //   <div class="col" style="width:80%">
+    //   <h5 id="follow-name">🌱ID : ${user_userid}</h5>
+    //   <div class="follow-wraper-${user_id}" style="display:inline; ">
+    //   <div class="following-${user_id}" style="display:inline;"> 
+    //   <button onclick="onClickFollowing(${user_id})" style="background: white; border: 1px solid #ACA790; padding:5px; border-radius:10px; font-size:16px;">팔로잉</button>
+    //   </div>
+    //   </div>
+    //   <hr class="m-1">
+    //   <span> &nbsp; Name : ${user_name}</span><br>
+    //   <span> &nbsp; Point : ${user_point}</span>
+    //   </div>
+    //   </div>
+    //   `
+    // }
   }
 };
 requestFollow.onreadystatechange = () => {
