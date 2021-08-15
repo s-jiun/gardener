@@ -41,17 +41,16 @@ a {
 #follow-header {
   padding-left: 0;
   padding-right: 0;
-  margin-top: 80px;
+  margin-top: 60px;
   color: white;
   text-align: center;
   height: 30%;
 }
 #follow-header-p {
-  margin-top: 50px;
+  margin-top: 80px;
   margin-bottom: 20px;
 }
 #follow-header-p span {
-  /* text-shadow: -1px 0 #5C5427, 0 1px #5C5427, 1px 0 #5C5427, 0 -1px #5C5427; */
   text-shadow: 0px 0px 3px #5c5427;
 }
 #follow-header-form {
