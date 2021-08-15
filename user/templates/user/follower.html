@@ -11,29 +11,13 @@
             <div class='row'>
                 <div id='follow-header' class='d-flex flex-column justify-content-center'>
                     <div id='follow-header-p'>
-                        {% if q %}
-                            <span>'{{ q }}' 검색 결과입니다. </span>
-                        {% else %}
-                            <span><h2>🌼친구를 찾아보세요🌼</h2></span>
-                            <br />
-                            <div id="search-friend" style="display:inline">
-                                <input class="search-input" type="text" name ='q' value="{{q}}" placeholder="검색어를 입력하세요" />
-                                <button class="search-input-1" type="submit">검색</button>
-                            </div>
-                        {% endif %}
+                            <span><h2>🌼여러분과 함께하는 가드너입니다🌼</h2></span>
                     </div>
-                    {% comment %} <div id='follow-header-form'>
-                        <form action='' method="GET">
-                            <input class='follow-input' type="text" name='q' value="{{q}}" placeholder="찾고자 하는 가드너의 이름을 입력하세요!" />
-                            <button class='follow-input-1' type="submit"><h6>검색</h6></button>
-                        </form>
-                    </div> {% endcomment %}
                 </div>
             </div>
         </div><!--header 닫힘-->
 
         <div class="container main-body" id="follow-body">
-            {% comment %} {% if %} {% endcomment %}
             <div class="row row-cols-1 row-cols-lg-2">
                 <div class="col p-2">
                     <div class="container p-0 follow-box" >
@@ -43,11 +27,7 @@
                         <div>
                         {% if followers %}
                             {% for follower in followers %}
-                            {% if forloop.counter0|divisibleby:2 %}
                                 <div class="row row-cols-2 row-cols-lg-2 p-3" id="follow-user-box1" >
-                            {% else %}
-                                <div class="row row-cols-2 row-cols-lg-2 p-3" id="follow-user-box2" >
-                            {% endif%}
                                 <div class="col p-0 mt-2" id="follow-user-img">
                                     <img src={{follower.following_user.Image.url}} >
                                 </div>
@@ -57,21 +37,13 @@
                                             {% if follower.following_user_id in cur_users_followings_list %}
                                             <div class="follow-wraper-{{follower.following_user_id}}" style="display:inline; ">
                                                 <div class='following-{{follower.following_user_id}}' style="display:inline;">
-                                                {% if forloop.counter0|divisibleby:2 %}
                                                     <button onclick="onClickFollowing({{follower.following_user_id}})" style="background: white; border: 1px solid #ACA790; padding:5px; border-radius:10px; font-size:16px;">팔로잉</button>
-                                                {%else%}
-                                                <button onclick="onClickFollowing({{follower.following_user_id}})" style="background: white; border: 1px solid #a0cab5 ; padding:5px; border-radius:10px; font-size:16px;">팔로잉</button>
-                                                {%endif%}
                                                 </div>
                                             </div>
                                             {% else %}
                                             <div class="follow-wraper-{{follower.following_user_id}}" style="display:inline; ">
                                                 <div class="follow-{{follower.following_user_id}}" style="display:inline;">
-                                                {% if forloop.counter0|divisibleby:2 %}
                                                     <button onclick="onClickFollow({{follower.following_user_id}})" style="background: white; border: 1px solid #ACA790; padding:5px; border-radius:10px; font-size:16px;">팔로잉</button>
-                                                {%else%}
-                                                <button onclick="onClickFollow({{follower.following_user_id}})" style="background: white; border: 1px solid #a0cab5 ; padding:5px; border-radius:10px; font-size:16px;">팔로잉</button>
-                                                {%endif%}
                                                 </div>
                                             </div>
                                             {% endif %}
@@ -99,11 +71,7 @@
                         <div>
                         {% if followings %}
                             {% for following in followings %}
-                                {% if forloop.counter0|divisibleby:2 %}
                                     <div class="row row-cols-2 row-cols-lg-2 p-3" id="follow-user-box1" >
-                                {% else %}
-                                    <div class="row row-cols-2 row-cols-lg-2 p-3" id="follow-user-box2" >
-                                {% endif%}
                                 <div class="col p-0 mt-2" id="follow-user-img">
                                     <img src={{following.user.Image.url}} >
                                 </div>
@@ -113,22 +81,14 @@
                                         {% if following.user_id in cur_users_followings_list %}
                                             <div class="follow-wraper-{{following.user_id}}" style="display:inline; ">
                                                 <div class='following-{{following.user_id}}' style="display:inline;">
-                                                    {% if forloop.counter0|divisibleby:2 %}
                                                     <button onclick="onClickFollowing({{following.user_id}})"  style="background: white; border: 1px solid #ACA790; padding:5px; border-radius:10px; font-size:16px;">팔로잉</button>
-                                                    {%else%}
-                                                    <button onclick="onClickFollowing({{following.user_id}})"  style="background: white; border: 1px solid #a0cab5; padding:5px; border-radius:10px; font-size:16px;">팔로잉</button>
-                                                    {%endif%}
                                                 </div>
                                             </div>
                                         {% else %}
 
                                             <div class="follow-wraper-{{following.user_id}}" style="display:inline; ">
                                                 <div class="follow-{{following.user_id}}" style="display:inline;">
-                                                    {% if forloop.counter0|divisibleby:2 %}
                                                     <button  onclick="onClickFollow({{following.user_id}})" style="background: white; border: 1px solid #ACA790; padding:5px; border-radius:10px; font-size:16px;">팔로우</button>
-                                                    {%else%}
-                                                    <button  onclick="onClickFollow({{following.user_id}})"  style="background: white; border: 1px solid #a0cab5; padding:5px; border-radius:10px; font-size:16px;">팔로우</button>
-                                                    {%endif%}
                                                 </div>
                                             </div>
                                         {% endif %}
