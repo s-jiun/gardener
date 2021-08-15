@@ -24,7 +24,17 @@
                             <div id="user-info">
                                 <span id="user-id">{{user.userid}}</span><br>
                                 <img id="plant-icon" src="{% static 'images/planting.png'%}" />
-                                <span id="user-level">{{user.name}} 님은 현재 새싹 등급입니다.<br></span>
+                                {% if user.point < 100 %}
+                                <span id="user-level">{{user.name}} 님은 현재 입문 정원사  <img style='width:20px; height:20px; vertical-align:top;' src = "{% static 'images/sf.png'%}">입니다.<br></span>
+                                {% elif user.point < 300 %}
+                                <span id="user-level">{{user.name}} 님은 현재 초보 정원사  <img style='width:20px; height:20px; vertical-align:top;' src = "{% static 'images/dy.png'%}">입니다.<br></span>
+                                {% elif user.point < 600 %}
+                                <span id="user-level">{{user.name}} 님은 현재 아마추어 정원사  <img style='width:20px; height:20px; vertical-align:top;' src = "{% static 'images/cm.png'%}">입니다.<br></span>
+                                {% elif user.point < 1000 %}
+                                <span id="user-level">{{user.name}} 님은 현재 프로 정원사  <img style='width:20px; height:20px; vertical-align:top;' src = "{% static 'images/cs.png'%}">입니다.<br></span>
+                                {% else %}
+                                <span id="user-level">{{user.name}} 님은 현재 국가대표 정원사  <img style='width:20px; height:20px; vertical-align:top;' src = "{% static 'images/hs.png'%}">입니다.<br></span>
+                                {% endif %}
                                 <div id="profile-content">
                                     <span>
                                     {%if user.profile%}
