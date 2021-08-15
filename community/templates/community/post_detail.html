@@ -15,6 +15,7 @@
         <div class="content">
             <span><img class="title-image" src="{% static 'images/title_img.svg' %}" /></span>
             <span class="post-title"> {{ post.title }}</span>
+            <span>조회수 {{views}}</span>
             <hr />
             <div class="d-flex flex-column" style="overflow: auto;">
                 {{ post.content|safe }}
