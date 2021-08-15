@@ -3,7 +3,7 @@ from user.models import Follow, GeneralUser
 import json
 from django.http.response import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Post, Comments, Like, Reply, Tag
+from .models import Post, Comments, Like, Reply, Tag, Postviews
 
 from .forms import PostForm, ReplyForm
 from django.views.decorators.csrf import csrf_exempt
@@ -124,10 +124,24 @@ class FollowPostView(ListView):
                 messages.error(self.request, '검색어는 2글자 이상 입력해주세요.')
         return post_list
 
+# 사용자 ip 주소 받아오는 함수
+
+
+def get_client_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
+
 
 def post_detail(request, pk):
     # get post object
     post = get_object_or_404(Post, pk=pk)
+    if not Postviews.objects.filter(client_ip=get_client_ip(request)):
+        Postviews.objects.create(post=post, client_ip=get_client_ip(request))
+
     # list of active parent comments
     comments = post.reply_set.filter(parent_reply__isnull=True)
     liked_user = Like.objects.filter(
@@ -179,7 +193,8 @@ def post_detail(request, pk):
                    'comments': comments,
                    'comment_form': comment_form,
                    'liked_user': liked_user,
-                   'is_following': is_following})
+                   'is_following': is_following,
+                   'views': len(Postviews.objects.filter(post=post))})
 
 
 @login_required
