@@ -30,13 +30,15 @@ a {
 
 #profile-line,
 #user-img {
-  width: 160px;
-  height: 160px;
+  /* width: 160px;
+  height: 160px; */
+  margin-top: 8%;
+  width:80%;
+  height:80%;
   border-radius: 50%;
   z-index: 1;
   position: relative;
   overflow: auto;
-  object-fit: cover;
 }
 #profile-line {
   height: 230px;
@@ -45,7 +47,7 @@ a {
   object-fit: cover;
 }
 #profile-content {
-  width: 500px;
+  width: 90%;
   height: auto;
   padding: 10px;
   display: inline-block;
@@ -66,7 +68,7 @@ a {
 }
 
 #user-info {
-  margin-left: 360px;
+  /* margin-left: 360px; */
   margin-top: 15px;
   width: auto;
 }
