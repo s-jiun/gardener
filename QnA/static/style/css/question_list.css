@@ -21,16 +21,21 @@
 
 .search-input {
   width: 50%;
-  height: 70%;
-  border: solid 1px #a0cab5;
+  height: 40px;
+  border: solid 2px #ccdfcc;
   border-radius: 10px;
 }
 
 .search-input-1 {
   width: 60px;
   height: 37px;
-  border: 0;
+  border: solid 2px #ccdfcc;
   border-radius: 10px;
+  vertical-align: top;
+  background: #ccdfcc;
+  color: white;
+  font-weight: bold;
+  text-shadow: -1px 0 #a0cab5, 0 1px #a0cab5, 1px 0 #a0cab5, 0 -1px #a0cab5;
 }
 
 .button-a {
