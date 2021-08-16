@@ -191,3 +191,17 @@ figure.snip1384.hover p {
   margin-top: 5;
   margin-bottom: 1rem;
 }
+
+.go-to-list {
+  position: relative;
+  background: #ccdfcc;
+  z-index: 0;
+  width: 100px;
+  height: 30px;
+  border: 1px solid #b8b8b8;
+  box-sizing: border-box;
+  border-radius: 10px;
+  font-family: "Gowun Batang", serif;
+  margin-bottom: 5px;
+  margin-top: 2vh;
+}

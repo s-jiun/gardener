@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% include "django/forms/widgets/select.html" %}
 {% load static %}
 
 {%block head%}
@@ -9,43 +10,43 @@
 {%endblock%}
 
 {% block content %}
-        <div class= "main-plant">
-            <div class='row'>
-                <div id='plant-header' class='d-flex flex-column justify-content-center'>
-                    <div id='plant-header-p'>
-                        {% if q %}
-                        <span style="font-size: 28px;">'{{ q }}' 검색 결과입니다. </span>
-                        {% else %}
-                        <h2>
-                            반려식물의 정보를 검색해보세요! 
-                        </h2>
-                        {% endif %}
-                        <!-- 에러메시지 -->
-                        {% if messages %}
-                            {% for message in messages %}
-                                {{message}}
-                            {% endfor %}
-                        {% endif %}
-                    </div>
-                    <div id='plant-header-form'>
-                        <form action = '' method="GET" >
-                            <select class="plant-select" name="type" id="search-type" onchange="SelectHandleOnchange(this)">
-                                <option value="all">전체</option>
-                                <option value="name">식물 이름</option>
-                                <option value="content">내용</option>  
-                                <option value="managelevel">경험자</option>      
-                            </select>
-                            <div id="search_option" style="display:inline">
-                                <input class="plant-input" type="text" name ='q' value="{{q}}" placeholder="검색어를 입력하세요" />
-                                <button class="plant-input-1" type="submit">검색</button>
-                            </div>
-                        </form>
-                    </div>
+    <div class= "main-plant">
+        <div class='row'>
+            <div id='plant-header' class='d-flex flex-column justify-content-center'>
+                <div id='plant-header-p'>
+                    {% if q %}
+                    <span style="font-size: 28px;">'{{ q }}' 검색 결과입니다. </span>
+                    {% else %}
+                    <h2>
+                        반려식물의 정보를 검색해보세요! 
+                    </h2>
+                    {% endif %}
+                    <!-- 에러메시지 -->
+                    {% if messages %}
+                        {% for message in messages %}
+                            {{message}}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div id='plant-header-form'>
+                    <form action = '' method="GET" >
+                        <select class="plant-select" name="type" id="search-type" onchange="SelectHandleOnchange(this)">
+                            <option value="all">전체</option>
+                            <option value="name">식물 이름</option>
+                            <option value="content">내용</option>  
+                            <option value="managelevel">경험자</option>      
+                        </select>
+                        <div id="search_option" style="display:inline">
+                            <input class="plant-input" type="text" name ='q' value="{{q}}" placeholder="검색어를 입력하세요" />
+                            <button class="plant-input-1" type="submit">검색</button>
+                        </div>
+                    </form>
                 </div>
             </div>
-        </div><!--header 닫힘-->
-        <div class="container-fluid main-body mt-4 mb-4" id="plant-body">
-        {% if plant_list %}
+        </div>
+    </div><!--header 닫힘-->
+    <div class="container-fluid main-body mt-4 mb-4" id="plant-body">
+    {% if plant_list %}
         <div class='row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3'>
             {% for plant in plant_list %}
                 <div class="col">
@@ -210,7 +211,7 @@
                 </tr>
                 {%endif%}
         </div>
-        {% endif %}
+    {% endif %}
     </div>
     <div id="plant-paginator">
         {% if is_paginated %}
@@ -243,61 +244,8 @@
     </ul>
     {% endif %}
     </div>
-    <script>
-    
-        const requestScrap = new XMLHttpRequest();
-    
-        const onClickScrap = (Id) => {
-            const url = 'scrap_ajax/';
-            requestScrap.open('POST', url, true);
-            requestScrap.setRequestHeader(
-                'Content-Type',
-                'application/x-www-form-urlencoded'
-            );
-            requestScrap.send(JSON.stringify({Id: Id}));
-        };
-    
-        const ScrapHandleResponse = () => {
-            if (requestScrap.status < 400) {
-                const {id, type} = JSON.parse(requestScrap.response);    // {'id': 1, 'type': 'like'}
-                const element = document.querySelector(`#plantDetailModal-${id} .post__${type}`);
-                if (element.innerHTML === '스크랩 취소') {
-                    element.classList.replace(`post__${type}`, 'post__scrap')
-                    element.innerHTML = '스크랩';
-                }
-                else {
-                    element.classList.replace(`post__${type}`, 'post__del_scrap')
-                    element.innerHTML ='스크랩 취소'
-                }
-            }
-        };
-    
-        requestScrap.onreadystatechange = () => {
-            if (requestScrap.readyState === XMLHttpRequest.DONE) {
-                ScrapHandleResponse();
-            }
-        };
-        
-
-        function SelectHandleOnchange(e) {
-            const text = e.options[e.selectedIndex].text;
-            const search_box = document.getElementById("search_option")
-            if (text == '경험자') {
-                search_box.innerHTML = ""
-                search_box.innerHTML +=`<a href='?type=managelevel&q=초보자' class='btn mx-1'>초보자</a>`
-                search_box.innerHTML +=`<a href='?type=managelevel&q=경험자' class='btn mx-1'>경험자</a>`
-                search_box.innerHTML +=`<a href='?type=managelevel&q=전문가' class='btn mx-1'>전문가</a>`
-            }
-            else {
-                search_box.innerHTML = ""
-                search_box.innerHTML += `
-                <input class="plant-input" type="text" name ='q' value="{{q}}" placeholder="검색어를 입력하세요" />
-                <button class="plant-input-1" type="submit">검색</button>
-                `
-            }
-        }
-
-    </script>
 {%endblock%}
 
-
+{% block js %}
+    <script src="{% static 'javascripts/scrap.js' %}"></script>
+{% endblock %}
