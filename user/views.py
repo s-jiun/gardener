@@ -88,6 +88,17 @@ def member_modification(request):
 
 def profile(request, pk):
     user = GeneralUser.objects.get(id=pk)
+    popular_list = {}
+    for i in GeneralUser.objects.all():
+        popular_list[i] = int(len(Follow.objects.filter(user=i)))
+    sorted_popular_list = sorted(
+        popular_list.items(), key=lambda x: x[1], reverse=True)
+    if len(sorted_popular_list) >= 5:
+        sorted_popular_list = sorted_popular_list[:5]
+    popular_user = []
+    for popular in sorted_popular_list:
+        popular_user.append(popular[0])
+
     follower = Follow.objects.filter(user=user).count()
     following = Follow.objects.filter(following_user=user).count()
     posts = user.post_set.all()
@@ -110,8 +121,10 @@ def profile(request, pk):
         'posts': page_obj,
         'is_following': is_following,
         'page_obj': page_obj,
+        'popular_user': popular_user,
     }
     return render(request, template_name='user/profile.html', context=ctx)
+
 
 def follow_list(request, pk):
     user = GeneralUser.objects.get(id=pk)
@@ -196,7 +209,7 @@ def following_ajax(request):
     following = Follow.objects.filter(user_id=user_id).filter(
         following_user=request.user.id)
     following.delete()
-    return JsonResponse({'user_id': user_id, 'user_userid':user.userid,'user_name':user.name, 'user_point':user.point, 'user_image_url':user.Image.url})
+    return JsonResponse({'user_id': user_id, 'user_userid': user.userid, 'user_name': user.name, 'user_point': user.point, 'user_image_url': user.Image.url})
 
 
 @csrf_exempt
@@ -206,7 +219,8 @@ def follow_ajax(request):
     user = GeneralUser.objects.get(id=user_id)
     follow = Follow(user=user, following_user=request.user)
     follow.save()
-    return JsonResponse({'user_id': user_id, 'user_userid':user.userid,'user_name':user.name, 'user_point':user.point, 'user_image_url':user.Image.url})
+    return JsonResponse({'user_id': user_id, 'user_userid': user.userid, 'user_name': user.name, 'user_point': user.point, 'user_image_url': user.Image.url})
+
 
 def liked_posts(request, pk):
     user = GeneralUser.objects.get(id=pk)
@@ -287,12 +301,14 @@ def delete_scrab(request, pk):
     return redirect('user:my_scrab_plant', request.user.pk)
 
 # @login_required
+
+
 class GardenerListView(ListView):
     model = GeneralUser
     paginate_by = 9
     template_name = 'user/search_gardener.html'
     context_object_name = 'gardener_list'
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # context['user'] = GeneralUser.objects.get(id=self.kwargs['pk'])
@@ -318,15 +334,17 @@ class GardenerListView(ListView):
         #     context['q'] = search_keyword
 
         return context
-        
+
     def get_queryset(self):
         search_keyword = self.request.GET.get('q', '')
         # search_type = self.request.GET.get('type', '')
-        gardener_list = GeneralUser.objects.order_by('name').exclude(pk=self.request.user.pk)
+        gardener_list = GeneralUser.objects.order_by(
+            'name').exclude(pk=self.request.user.pk)
 
         if search_keyword:
             if len(search_keyword) > 1:
-                search_gardener_list = gardener_list.filter(Q(userid__icontains=search_keyword)).exclude(pk=self.request.user.pk)
+                search_gardener_list = gardener_list.filter(
+                    Q(userid__icontains=search_keyword)).exclude(pk=self.request.user.pk)
                 return search_gardener_list
             else:
                 messages.error(self.request, '검색어는 2글자 이상 입력해주세요.')
