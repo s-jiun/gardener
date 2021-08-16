@@ -18,7 +18,7 @@
                             </div>
                             <div class="col">
                             <div id="user-info">
-                                <span id="user-id">{{user.userid}}</span><br>
+                                <span id="user-id"> {{user.userid}}</span><br>
                                 {% comment %}
                                 <img id="plant-icon" src="{% static 'images/planting.png'%}" />
                                 {% endcomment %}
@@ -49,16 +49,12 @@
                             </div>
                             </div>
                         </div>
-                        <hr style="margin-top: 20px; color: #5C5427; height:2px;">
-                        <div style="text-align:center; margin-top:-20px;">
-                            <br />
-                            <span>My post</span>
-                            <br />
+                        <div style="text-align:center; border:solid 2px #ccdfcc; border-width: 3px 0px 3px 0px;padding:0; margin:0">
+                            <span style="font-weight:bold">My Gardening</span>
                         </div>
-                        <hr style="margin-top: -5px; color: #5C5427;height:2px;">
 
                         {% comment %} <div style="display:flex;flex-wrap:wrap; justify-content:space-between;">  {% endcomment %}
-                        <div class ="row row-cols-1 row-cols-sm-2 row-cols-lg-3" style="margin-left:20px;">
+                        <div class ="row row-cols-1 row-cols-sm-2 row-cols-lg-3" style="margin-left:20px; margin-top:20px;">
                         <!--포스트 리스트-->
                             {% if posts%}
                                 {%for post in posts%}
@@ -129,7 +125,7 @@
             </div>
         </div>
         <div class="col">
-            <div class="container sidebar text-center p-1">
+            <div class="container sidebar text-center p-1" style="margin-bottom:50px;">
                 {%if user.id != request.user.id%} <!--다른 사람의 프로필을 보는 경우-->
                     {% if is_following%}
                     <div class="follow-wrapper">
