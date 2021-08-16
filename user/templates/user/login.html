@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block head %}
-    <link href="{% static 'style/login.css' %}" rel="stylesheet">
+    <link href="{% static 'style/css/login.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
@@ -57,4 +57,10 @@
         </form>
     </div>
 </div>
+<a tabindex="0" class="btn btn-lg btn-danger" role="button" data-bs-toggle="popover" data-bs-trigger="focus" title="Dismissible popover" data-bs-content="And here's some amazing content. It's very engaging. Right?">Dismissible popover</a>
+<script>
+    var popover = new bootstrap.Popover(document.querySelector('.popover-dismiss'), {
+  trigger: 'focus'
+})
+</script>
 {% endblock %}
