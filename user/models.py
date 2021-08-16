@@ -75,18 +75,9 @@ class GeneralUser(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'userid'
     REQUIRED_FIELDS = ['email', 'name']
 
-    # class Meta:
-    #     verbose_name = 'user'
-    #     verbose_name_plural = 'users'
-
     def __str__(self):
         return self.userid
 
-    # def get_full_name(self):
-    #     return self.userid
-
-    # def get_short_name(self):
-    #     return self.userid
     def has_perm(self, perm, obj=None):
         return True
 

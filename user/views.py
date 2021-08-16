@@ -1,4 +1,3 @@
-from django.contrib import messages
 from search.models import Plant, PlantScrap
 from django.views.generic.list import ListView
 from user.models import GeneralUser, Follow
@@ -6,15 +5,9 @@ from django.shortcuts import render, redirect
 from .forms import CustomUserCreationForm, CustomUserChangeForm, UserProfileChangeForm, UserAuthenticationForm, UserIdfindForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
-from django.urls import reverse_lazy
 import json
 from django.http.response import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth.views import LoginView, LogoutView, PasswordResetView, PasswordResetDoneView
-from django.contrib.auth.forms import (
-    AuthenticationForm, PasswordChangeForm, PasswordResetForm, SetPasswordForm,
-)
-from django.db.models import Q
 from django.core.paginator import Paginator
 from community.models import Like
 
@@ -119,73 +112,6 @@ def profile(request, pk):
     }
     return render(request, template_name='user/profile.html', context=ctx)
 
-# class ProfileListView(ListView):
-#     model = Post
-#     paginate_by = 6
-#     # DEFAULT : <app_label>/<model_name>_list.html
-#     template_name = 'user/profile.html'
-#     context_object_name = 'profile_list'  # DEFAULT : <model_name>_list
-
-#     def get_queryset(self):
-#         if request.user.is_authenticated:
-#             post_list = request.user.post_set.order_by('-id')
-#             return post_list
-
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         paginator = context['paginator']
-#         page_numbers_range = 10
-#         max_index = len(paginator.page_range)
-
-#         page = self.request.GET.get('page')
-#         current_page = int(page) if page else 1
-
-#         start_index = int((current_page - 1) /
-#                           page_numbers_range) * page_numbers_range
-#         end_index = start_index + page_numbers_range
-#         if end_index >= max_index:
-#             end_index = max_index
-
-#         page_range = paginator.page_range[start_index:end_index]
-#         context['page_range'] = page_range
-
-#         return context
-
-
-# def follower_list(request, pk):
-
-#     user = GeneralUser.objects.get(id=pk)
-#     # user가 팔로잉에 해당하는 팔로우 오브젝트
-#     followers = user.following.all()
-#     cur_users_followings = request.user.followers.all()
-#     cur_users_followings_list = []
-#     for cur_users_following in cur_users_followings:
-#         cur_users_followings_list.append(cur_users_following.user_id)
-
-#     ctx = {
-#         'followers': followers,
-#         'cur_users_followings_list': cur_users_followings_list
-#     }
-
-#     return render(request, template_name='user/follower.html', context=ctx)
-
-
-# def following_list(request, pk):
-#     user = GeneralUser.objects.get(id=pk)
-#     # user가 팔로워에 해당하는 팔로우 오브젝트
-#     followings = user.followers.all()
-#     cur_users_followings = request.user.followers.all()
-#     cur_users_followings_list = []
-#     for cur_users_following in cur_users_followings:
-#         cur_users_followings_list.append(cur_users_following.user_id)
-
-#     ctx = {
-#         'followings': followings,
-#         'cur_users_followings_list': cur_users_followings_list
-#     }
-
-#     return render(request, template_name='user/following.html', context=ctx)
-
 def follow_list(request, pk):
     user = GeneralUser.objects.get(id=pk)
     followers = user.following.all()
@@ -281,13 +207,6 @@ def follow_ajax(request):
     follow.save()
     return JsonResponse({'user_id': user_id, 'user_userid':user.userid,'user_name':user.name, 'user_point':user.point, 'user_image_url':user.Image.url})
 
-# @csrf_exempt
-# def follow_list_ajax(request):
-#     req = json.load(request.body)
-#     user_id = req['user_id']
-#     user = GeneralUser.objects.get(id=user_id)
-    
-
 def liked_posts(request, pk):
     user = GeneralUser.objects.get(id=pk)
     liked = Like.objects.filter(user_id=user)
@@ -352,11 +271,6 @@ class ScrabListView(ListView):
 
         page_range = paginator.page_range[start_index:end_index]
         context['page_range'] = page_range
-
-        # search_keyword = self.request.GET.get('q', '')
-
-        # if len(search_keyword) > 1:
-        #     context['q'] = search_keyword
 
         return context
 
