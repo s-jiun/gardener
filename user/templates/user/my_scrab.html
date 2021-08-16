@@ -1,67 +1,89 @@
 {% extends "base.html" %}
 {% load static %}
-
 {%block head%}
 <link href="{% static 'style/css/profile.css' %}" rel="stylesheet">
-
 <link href="{% static 'style/css/main_plant.css' %}" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet"> <!--CDN 링크 -->
-{%endblock%}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+<!--CDN 링크 -->
 
+{%endblock%}
 {% block content %}
+
 <div class="container main-body">
     <div class="row">
-        <div class="col col-10">
+        <div class="col col-10 mt-3 mb-5">
             <div class="container profile">
                 <div class="container profile_in">
-                        <div class="row">
-                            <div style="position: relative;">
-                                <div style=" position: absolute; left: 80px;">
-                                    <img id="profile-line" src="{% static 'images/profile_img_line.png'%}" />
-                                </div>
-                                <div style="position:  absolute; left: 138px; top: 33px;">
-                                    <img id="user-img" src={{user.Image.url}} />
-                                </div>
-                            </div>
+                    <div class="row justify-content-center row-cols-1 row-cols-md-2">
+                        <div class="col text-center" style="margin-right:-5%; padding:0;">
+                            <img id="user-img" src={{user.Image.url}} />
+                        </div>
+                        <div class="col">
                             <div id="user-info">
-                                <span id="user-id">{{user.userid}}</span><br>
-                                <img id="plant-icon" src="{% static 'images/planting.png'%}" />
-                                <span id="user-level">{{user.name}} 님은 현재 새싹 등급입니다.<br></span>
+                                <span id="user-id"> {{user.userid}}</span><br>
+                                {% if user.point < 100 %}
+                                <span id="user-level">{{user.name}} 님은 현재 <a tabindex="0" type="button" data-bs-toggle="popover" data-bs-trigger="focus" title="입문 정원사" data-bs-content="0~99점(게시물 0개 ~ 3개)"><img class='rank-image' src = "{% static 'images/sf.png'%}">  입문 정원사  <img class='rank-image' src = "{% static 'images/sf.png'%}"></a>입니다.<br></span>
+                                {% elif user.point < 300 %}
+                                <span id="user-level">{{user.name}} 님은 현재 <a tabindex="0" type="button" data-bs-toggle="popover" data-bs-trigger="focus" title="초보 정원사" data-bs-content="100~299점(게시물 4개 ~ 9개)"><img class='rank-image' src = "{% static 'images/dy.png'%}">  초보 정원사  <img class='rank-image' src = "{% static 'images/dy.png'%}"></a>입니다.<br></span>
+                                {% elif user.point < 600 %}
+                                <span id="user-level">{{user.name}} 님은 현재 <a tabindex="0" type="button" data-bs-toggle="popover" data-bs-trigger="focus" title="아마추어 정원사" data-bs-content="300~599점(게시물 10개 ~ 19개)"><img class='rank-image' src = "{% static 'images/cm.png'%}">  아마추어 정원사  <img class='rank-image' src = "{% static 'images/cm.png'%}"></a>입니다.<br></span>
+                                {% elif user.point < 1000 %}
+                                <span id="user-level">{{user.name}} 님은 현재 <a tabindex="0" type="button" data-bs-toggle="popover" data-bs-trigger="focus" title="프로 정원사" data-bs-content="600~999점(게시물 20개 ~ 33개)"><img class='rank-image' src = "{% static 'images/cs.png'%}">  프로 정원사  <img class='rank-image' src = "{% static 'images/cs.png'%}"></a>
+                                    입니다.<br></span>
+                                {% else %}
+                                <span id="user-level">{{user.name}} 님은 현재 <a tabindex="0" type="button" data-bs-toggle="popover" data-bs-trigger="focus" title="국가대표 정원사" data-bs-content="1000점 이상(게시물 34개 이상)"><img class='rank-image' src = "{% static 'images/hs.png'%}">  국가대표 정원사  <img class='rank-image' src = "{% static 'images/hs.png'%}"></a>입니다.<br></span>
+                                {% endif %}
                                 <div id="profile-content">
                                     <span>
-                                    {%if user.profile%}
-                                    {{user.profile}}
-                                    {% else %}
-                                        프로필 정보가 없습니다. 
-                                    {%endif%}
+                                        {%if user.profile%}
+                                        {{user.profile}}
+                                        {% else %}
+                                        프로필 정보가 없습니다.
+                                        {%endif%}
                                     </span><br>
                                 </div><br>
-                                <div id="user-follow" class="mt-2">
-                                    <!-- <img src="{% static 'images/follower.png'%}" /> -->
-                                    <a href="{% url 'user:follow' user.pk %}">팔로워 <span class="follower-count">{{follower}}</span></a>
-                                    <!-- <img src="{% static 'images/following.png'%}" /> -->
-                                    <a href="{% url 'user:follow' user.pk %}">| 팔로잉 <span class="following-count">{{following}}</span></a>
+                                <div id="user-follow" class="mt-2 mb-3">
+                                    <a href="{% url 'user:follow' user.pk %}">팔로워 <span
+                                            class="follower-count">{{follower}}</span></a>
+                                    <a href="{% url 'user:follow' user.pk %}">| 팔로잉 <span
+                                            class="following-count">{{following}}</span></a>
+                                    {%if user.id != request.user.id%}
+                                    <!--다른 사람의 프로필을 보는 경우-->
+                                    {% if is_following%}
+                                    <div class="follow-wrapper ms-2">
+                                        <div class='following' >
+                                            <button class='follow-btn'
+                                                onclick="onClickFollowing({{user.id}})">팔로잉</button>
+                                        </div>
+                                    </div>
+                                    {% else %}
+                                    <div class="follow-wrapper" >
+                                        <div class="follow" >
+                                            <button class='follow-btn'
+                                                onclick="onClickFollow({{user.id}})">팔로우</button>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                {%endif%}
                                 </div>
                             </div>
                         </div>
-                        <hr style="margin-top: 30px; color: #5C5427; height:2px;">
-                        <div style="text-align:center; margin-top:-20px;">
-                            <br />
-                            <span>My Plant</span>
-                            <br />
-                        </div>
-                        <hr style="margin-top: -5px; color: #5C5427;height:2px;">
-                        <div class ="row row-cols-1 row-cols-sm-2 row-cols-lg-3" style="margin-left:20px;">
+                    </div>
+                    <div id="profile-post-line">
+                        <span style="font-weight:bold">My Lovely Plant</span>
+                    </div>
+                        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3"
+                            style="margin-left:20px; margin-top:20px;">
                             {% if scrab_list%}
                             {%for scrab in scrab_list%}
                             <div class="col col-lg-4">
                                 <div id="card-post" class="card text-center m-3" >
+                                    <a data-bs-toggle="modal" data-bs-target="#plantDetailModal-{{scrab.plant.pk}}">
                                     <img src={{scrab.plant.photo_url}} class="card-img-top" alt="..." style="height:150px; max-height: 160px;">
                                     <div class="card-body ">
                                         <hr style="margin:0px 0px 5px 0px;">
-                                        <a data-bs-toggle="modal" data-bs-target="#plantDetailModal-{{scrab.plant.pk}}">
-                                        {{scrab.plant.name}}</a>
-                                    </div>
+                                        {{scrab.plant.name}}
+                                    </div></a>
                                 </div>
                             </div>
                             <div class="modal fade" id="plantDetailModal-{{scrab.plant.pk}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -186,18 +208,16 @@
                                     </div>
                                 </div>
                             </div>
-                                {% endfor %}
+                            {% endfor %}
                             {%else%}
-                            <div id="no-post" class="text-center" >
-                            <img style="width: 2rem;" src="{% static 'images/flower.png'%}" />
-                            <span> 현재 스크랩한 식물이 없습니다. </span>
-                            <img style="width: 2rem;" src="{% static 'images/flower.png'%}" />
-
+                            <div id="no-post" class="text-center">
+                                <img style="width: 2rem;" src="{% static 'images/flower.png'%}" />
+                                <span> 현재 게시글이 없습니다. </span>
+                                <img style="width: 2rem;" src="{% static 'images/flower.png'%}" />
                             </div>
                             {% endif %}
                         </div>
-
-                        <div id="paging"><!--pagenation-->
+                        <div id="paging">
                             <ul class="pagination justify-content-center" style="margin-top: 2rem;">
                                 <!-- 이전페이지 -->
                                 {% if page_obj.has_previous %}
@@ -234,43 +254,36 @@
                                 {% endif %}
                             </ul>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col mt-3 mb-5">
+                <div class="container sidebar text-center p-1">
+                    <!--내 프로필 경우-->
+                    <div class="btn-group-vertical" role="group" aria-label="Basic outlined example">
+                        <a href="{% url 'user:my_pick' user.pk %}">My Pick</a>
+                        <a href="{% url 'user:my_scrab_plant' user.pk%}">My Scrab</a>
+                        <a href="{% url 'community:post_create' %}">게시물 작성</a>
+                        <a href="{% url 'user:profile_update' %}">프로필 수정</a>
+                        <a href="{% url 'user:update' %}">회원정보 수정</a>
+                        <a href="{% url 'user:signout' %}">회원탈퇴</a>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col">
-            <div class="container sidebar text-center p-1">
-                {% comment %} {%if user.id != request.user.id%} <!--다른 사람의 프로필을 보는 경우-->
-                    {% if is_following%}
-                    <div class="follow-wrapper">
-                        <div class='following'>
-                            <button class='follow-btn' onclick="onClickFollowing({{user.id}})">팔로잉</button>
-                        </div>
-                    </div>
-                        {% else %}
-                        <div class="follow-wrapper">
-                            <div class="follow">
-                                <button class='follow-btn' onclick="onClickFollow({{user.id}})">팔로우</button>
-                            </div>
-                        </div>
-                    {% endif %}
-                {%endif%} {% endcomment %}
-                <!--내 프로필 경우-->
-                {%if user.id == request.user.id%}
-                    <div class="btn-group-vertical" role="group" aria-label="Basic outlined example">
-                        <a href="{% url 'user:my_pick' user.pk %}" >My Pick</a>
-                        <a href="#" type="button" >My Scrab</a>
-                        <a href="{% url 'community:post_create' %}" >게시물 작성</a>
-                        <a href="{% url 'user:profile_update' %}" >프로필 수정</a>
-                        <a href="{% url 'user:update' %}" >회원정보 수정</a>
-                        <a href="{% url 'user:signout' %}" >회원탈퇴</a>
-                    </div>
-                {%endif%}
-            </div>
-        </div>
     </div>
-</div>
 
+</div>
+<script>
+    $(function () {
+        $('[data-bs-toggle="popover"]').popover()
+    })
+    var popover = new bootstrap.Popover(document.querySelector('.popover-dismiss'), {
+        trigger: 'focus'
+        })
+</script>
 {% endblock %}
 
 {% block js %}
+    <script src="{% static 'javascripts/profile_follow.js' %}"></script>
 {% endblock %}
