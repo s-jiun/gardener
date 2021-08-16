@@ -9,35 +9,62 @@
   text-align: center;
 }
 
+#search-header-title {
+  padding-top: 4%;
+}
+
 #search-header-form {
   height: 30%;
   width: 60%;
   margin-bottom: 3vh;
 }
+
+#search-header-form select {
+  border: none;
+  height: 4vh;
+}
+
 .search-input {
   width: 80%;
   border-radius: 10px;
+  border: none;
+  height: 4vh;
 }
 
 .search-input-1 {
   border-radius: 10px;
   background-color: #ccdfcc;
+  border: none;
+  height: 4vh;
+}
+#list-create-post {
+  border: 0;
+  background-color: #a0cab5;
+  border-radius: 10px;
+}
+
+#list-create-post a {
+  color: white;
+}
+
+#list-watch-post {
+  border: 0;
+  background-color: #a0cab5;
+  border-radius: 10px;
+}
+
+#list-watch-post a {
+  color: white;
 }
 
 #thumbnail-p {
   margin-bottom: 0;
 }
 
-#list-paginator {
-  display: flex;
-  justify-content: center;
-  margin-top: 5;
-}
-
-.post-button {
+/* .post-button {
   width: 3vw;
   height: 3vh;
-}
+} */
 #post-list-thumbnail {
   overflow: hidden;
   width: 20px;
@@ -70,6 +97,8 @@ figure.snip1384 img {
   max-width: 100%;
   backface-visibility: hidden;
   vertical-align: top;
+  width: 90%;
+  height: 90%;
 }
 figure.snip1384:after,
 figure.snip1384 figcaption {
@@ -145,14 +174,20 @@ figure.snip1384.hover p {
   opacity: 1;
 }
 
-#list-create-post {
-  border: 0;
-  background-color: #a0cab5;
-  border-radius: 10px;
+#no-search-input {
+  text-align: center;
+  margin-top: 2rem;
 }
 
-#list-watch-post {
-  border: 0;
-  background-color: #a0cab5;
-  border-radius: 10px;
+#no-follow-image {
+  width: 3vh;
+  height: 3vh;
+  margin: 5px;
+}
+
+#list-paginator {
+  display: flex;
+  justify-content: center;
+  margin-top: 5;
+  margin-bottom: 1rem;
 }

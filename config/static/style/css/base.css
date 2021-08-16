@@ -1,7 +1,5 @@
 html,
 body {
-  /* position: relative;
-  min-height: 100%; */
   margin: 0;
   padding: 0;
   width: 100%;
@@ -19,9 +17,7 @@ header {
 }
 
 #mainbody {
-  /* min-height: 100%; */
   font-family: "Gowun Batang", serif;
-  /* overflow: scroll; */
 }
 
 a {
@@ -32,8 +28,6 @@ a {
 
 .main-body {
   width: 80%;
-  /* height: 1000px; */
-  /* border: solid 3px black; */
   padding-left: 0;
   padding-right: 0;
 }

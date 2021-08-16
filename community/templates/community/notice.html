@@ -7,11 +7,11 @@
 
 {% block content %}
 <div class='row'>
-    <div id='notice-header' class='d-flex flex-column justify-content-center' style=" padding: 0;">
+    <div id='notice-header' class='d-flex flex-column justify-content-center'>
         {% if q %}
-            <h1 style='padding-top:80px; margin-bottom: 25px;'>'{{ q }}' 검색 결과입니다.</h1>
+            <h1>'{{ q }}' 검색 결과입니다.</h1>
         {% else %}
-            <h1 style='padding-top:80px; margin-bottom: 25px;'>공지사항</h1>
+            <h1>공지사항</h1>
         {% endif %}
         {% if messages %}
             {% for message in messages %}
@@ -19,12 +19,12 @@
             {% endfor %}
         {% endif %}
         <form action='' method="GET" style='height: 20%;'>
-            <select class='search-input-1' name="type" id="search-type" style='border:none; height:4vh;'>
+            <select class='search-input-1' name="type" id="search-type">
                 <option value="title">제목</option>
                 <option value="content">내용</option>
             </select>
-            <input class='search-input'  type="text" name='q' value="{{q}}" placeholder="공지사항을 검색해보세요" style='width:50%; height:70%; border:solid 1px #A0CAB5; border-radius:10px;'/>
-            <button class='search-input-1' type="submit"style='width:60px; height: 37px;border:0; border-radius:10px;'>검색</button>
+            <input class='search-input'  type="text" name='q' value="{{q}}" placeholder="공지사항을 검색해보세요"/>
+            <button class='search-input-1' id='search-input-button' type="submit">검색</button>
         </form>
     </div>
 </div>
@@ -44,7 +44,7 @@
             {% for notice in notice %}
             <tr class="text-center">
                 <th scope='row'>{{ paginator.count|sub:page_obj.start_index|sub:forloop.counter0|add:1 }}</th>
-                <td><a href='{% url "community:notice_detail" notice.pk %}' style='text-decoration: none; color:black;'>{{ notice.title|truncatechars:30 }}</a></td>
+                <td><a href='{% url "community:notice_detail" notice.pk %}' class='moveto-other-page'>{{ notice.title|truncatechars:30 }}</a></td>
                 <td>관리자</td>
                 <td>{{ notice.created_at|date:'Y. m. d' }}</td>
             </tr>
@@ -106,7 +106,7 @@
     <div class='col-md-offset-6'>
     {% if q %}
     <button type='submit' style='border-radius: 10px;' class= 'mb-4'>
-        <a href = '{% url "community:notice" %}' style='text-decoration:none; color:black;'>뒤로가기</a>
+        <a href = '{% url "community:notice" %}' class='moveto-other-page'>뒤로가기</a>
     </button>
     {% endif %}
     </div>
