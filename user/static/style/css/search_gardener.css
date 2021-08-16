@@ -1,5 +1,5 @@
 .main-gardener {
-    background: url("/static/images/search_user4.jpg");
+    background: url("/static/images/search_user.jpg");
     background-position: 100% 22%;
     background-repeat: no-repeat;
     background-size: cover;
@@ -22,7 +22,6 @@
   #gardener-header-p h2 {
     text-shadow: -1px -1px 0 #5a3e0a, 1px -1px 0 #5a3e0a, -1px 1px 0 #5a3e0a,
       1px 1px 0 #5a3e0a;
-    /* text-shadow: 0px 0px 10px #1a1003; */
   }
   #gardener-header-form form {
     height: 30%;

@@ -1,10 +1,9 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from django.contrib import messages
 from .models import Plant, PlantScrap
 
 from django.views.generic import ListView
 from django.db.models import Q
-# ajax
 from django.views.decorators.csrf import csrf_exempt
 from django.http.response import JsonResponse
 import json
@@ -13,10 +12,8 @@ import json
 class PlantListView(ListView):
     model = Plant
     paginate_by = 6
-    # DEFAULT : <app_label>/<model_name>_list.html
     template_name = 'search/main_plant.html'
-    context_object_name = 'plant_list'  # DEFAULT : <model_name>_list
-
+    context_object_name = 'plant_list' 
     def get_queryset(self):
         plant_list = Plant.objects.order_by('name')
         return plant_list

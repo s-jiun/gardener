@@ -107,13 +107,7 @@ a {
   border-color: #aca790;
   border-width: 5px 5px 5px 5px;
 }
-#follow-user-box2 {
-  margin: 10px;
-  border-style: double;
-  border-radius: 10px;
-  border-color: #a0cab5;
-  border-width: 5px 5px 5px 5px;
-}
+
 #follow-user-img {
   width: 20%;
 }

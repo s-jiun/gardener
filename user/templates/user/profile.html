@@ -20,9 +20,6 @@
                         <div class="col">
                             <div id="user-info">
                                 <span id="user-id"> {{user.userid}}</span><br>
-                                {% comment %}
-                                <img id="plant-icon" src="{% static 'images/planting.png'%}" />
-                                {% endcomment %}
                                 {% if user.point < 100 %}
                                 <span id="user-level">{{user.name}} 님은 현재 <a tabindex="0" type="button" data-bs-toggle="popover" data-bs-trigger="focus" title="입문 정원사" data-bs-content="0~99점(게시물 0개 ~ 3개)"><img class='rank-image' src = "{% static 'images/sf.png'%}">  입문 정원사  <img class='rank-image' src = "{% static 'images/sf.png'%}"></a>입니다.<br></span>
                                 {% elif user.point < 300 %}
@@ -30,8 +27,7 @@
                                 {% elif user.point < 600 %}
                                 <span id="user-level">{{user.name}} 님은 현재 <a tabindex="0" type="button" data-bs-toggle="popover" data-bs-trigger="focus" title="아마추어 정원사" data-bs-content="300~599점(게시물 10개 ~ 19개)"><img class='rank-image' src = "{% static 'images/cm.png'%}">  아마추어 정원사  <img class='rank-image' src = "{% static 'images/cm.png'%}"></a>입니다.<br></span>
                                 {% elif user.point < 1000 %}
-                                <span id="user-level">{{user.name}} 님은 현재 <a tabindex="0" type="button" data-bs-toggle="popover" data-bs-trigger="focus" title="프로 정원사" data-bs-content="600~999점(게시물 20개 ~ 33개)"><img class='rank-image' src = "{% static 'images/cs.png'%}">  프로 정원사  <img class='rank-image' src = "{% static 'images/cs.png'%}"></a>
-                                    입니다.<br></span>
+                                <span id="user-level">{{user.name}} 님은 현재 <a tabindex="0" type="button" data-bs-toggle="popover" data-bs-trigger="focus" title="프로 정원사" data-bs-content="600~999점(게시물 20개 ~ 33개)"><img class='rank-image' src = "{% static 'images/cs.png'%}">  프로 정원사  <img class='rank-image' src = "{% static 'images/cs.png'%}"></a>입니다.<br></span>
                                 {% else %}
                                 <span id="user-level">{{user.name}} 님은 현재 <a tabindex="0" type="button" data-bs-toggle="popover" data-bs-trigger="focus" title="국가대표 정원사" data-bs-content="1000점 이상(게시물 34개 이상)"><img class='rank-image' src = "{% static 'images/hs.png'%}">  국가대표 정원사  <img class='rank-image' src = "{% static 'images/hs.png'%}"></a>입니다.<br></span>
                                 {% endif %}
@@ -50,7 +46,6 @@
                                     <a href="{% url 'user:follow' user.pk %}">| 팔로잉 <span
                                             class="following-count">{{following}}</span></a>
                                     {%if user.id != request.user.id%}
-                                    <!--다른 사람의 프로필을 보는 경우-->
                                     {% if is_following%}
                                     <div class="follow-wrapper ms-2">
                                         <div class='following' >
@@ -71,14 +66,10 @@
                             </div>
                         </div>
                     </div>
-                    <div
-                        style="text-align:center; border:solid 2px #ccdfcc; border-width: 3px 0px 3px 0px;padding:0; margin:0">
+                    <div id="profile-post-line">
                         <span style="font-weight:bold">My Gardening</span>
                     </div>
-                    {% comment %} <div style="display:flex;flex-wrap:wrap; justify-content:space-between;"> {%endcomment %}
-                        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3"
-                            style="margin-left:20px; margin-top:20px;">
-                            <!--포스트 리스트-->
+                        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3" style="margin-left:20px; margin-top:20px;">
                             {% if posts%}
                             {%for post in posts%}
                             <div class="col col-lg-4">
@@ -103,27 +94,23 @@
                             {% endfor %}
                             {%else%}
                             <div id="no-post" class="text-center">
-                                <img style="width: 2rem;" src="{% static 'images/flower.png'%}" />
+                                <img src="{% static 'images/flower.png'%}" />
                                 <span> 현재 게시글이 없습니다. </span>
-                                <img style="width: 2rem;" src="{% static 'images/flower.png'%}" />
-
+                                <img src="{% static 'images/flower.png'%}" />
                             </div>
                             {% endif %}
                         </div>
                         <div id="paging">
                             <ul class="pagination justify-content-center" style="margin-top: 2rem;">
-                                <!-- 이전페이지 -->
                                 {% if page_obj.has_previous %}
                                 <li class="page-item">
                                     <a class="page-link" href="?&page={{ page_obj.previous_page_number }}">이전</a>
-                                    <!-- href로 뎁스 설정 -->
                                 </li>
                                 {% else %}
                                 <li class="page-item disabled">
                                     <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
                                 </li>
                                 {% endif %}
-                                <!-- 페이지리스트 -->
                                 {% for page_number in page_obj.paginator.page_range %}
                                 {% if page_number == page_obj.number %}
                                 <li class="page-item active" aria-current="page">
@@ -135,7 +122,6 @@
                                 </li>
                                 {% endif %}
                                 {% endfor %}
-                                <!-- 다음페이지 -->
                                 {% if page_obj.has_next %}
                                 <li class="page-item">
                                     <a class="page-link" href="?&page={{ page_obj.next_page_number }}">다음</a>
@@ -153,7 +139,6 @@
             {%if user.id == request.user.id%}
             <div class="col mt-3">
                 <div class="container sidebar text-center p-1">
-                    <!--내 프로필 경우-->
                     <div class="btn-group-vertical" role="group" aria-label="Basic outlined example">
                         <a href="{% url 'user:my_pick' user.pk %}">My Pick</a>
                         <a href="{% url 'user:my_scrab_plant' user.pk%}">My Scrab</a>
@@ -167,7 +152,6 @@
             {%endif%}
         </div>
     </div>
-
 </div>
 <script>
     $(function () {

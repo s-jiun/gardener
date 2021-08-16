@@ -42,7 +42,6 @@ a {
   max-width:230px;
   min-height: 130px;
   min-width:130px;
-  /* margin-right: -8%; */
   margin-top:5%;
 
 }
@@ -150,6 +149,7 @@ a {
 }
 #no-post img {
   vertical-align: text-bottom;
+  width:2rem;
 }
 
 #card-post {
@@ -171,4 +171,11 @@ a {
 }
 .follow-wrapper .follow, .follow-wrapper .following{
   display:inline;
+}
+#profile-post-line{
+  text-align:center; 
+  border:solid 2px #ccdfcc; 
+  border-width: 3px 0px 3px 0px;
+  padding:0; 
+  margin:0;
 }
