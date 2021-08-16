@@ -10,8 +10,7 @@ from django.http.response import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator
 from community.models import Like
-from django.contrib.auth.decorators import login_required
-
+from django.db.models import Count
 
 def login(request):
     if request.user.is_authenticated:
@@ -103,8 +102,11 @@ def profile(request, pk):
             is_following = True
             break
 
+    rank_user = GeneralUser.objects.annotate(num_resp=Count('following')).exclude(pk=request.user.pk).order_by('-num_resp')
+
     ctx = {
         'user': user,
+        'rank_user' : rank_user[0:5],
         'follower': follower,
         'following': following,
         'posts': page_obj,

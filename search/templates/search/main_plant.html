@@ -10,37 +10,38 @@
 {%endblock%}
 
 {% block content %}
-    <div class= "main-plant">
-        <div class='row'>
-            <div id='plant-header' class='d-flex flex-column justify-content-center'>
-                <div id='plant-header-p'>
-                    {% if q %}
-                    <span style="font-size: 28px;">'{{ q }}' 검색 결과입니다. </span>
-                    {% else %}
-                    <h2>
-                        반려식물의 정보를 검색해보세요! 
-                    </h2>
-                    {% endif %}
-                    <!-- 에러메시지 -->
-                    {% if messages %}
-                        {% for message in messages %}
-                            {{message}}
-                        {% endfor %}
-                    {% endif %}
-                </div>
-                <div id='plant-header-form'>
-                    <form action = '' method="GET" >
-                        <select class="plant-select" name="type" id="search-type" onchange="SelectHandleOnchange(this)">
-                            <option value="all">전체</option>
-                            <option value="name">식물 이름</option>
-                            <option value="content">내용</option>  
-                            <option value="managelevel">경험자</option>      
-                        </select>
-                        <div id="search_option" style="display:inline">
-                            <input class="plant-input" type="text" name ='q' value="{{q}}" placeholder="검색어를 입력하세요" />
-                            <button class="plant-input-1" type="submit">검색</button>
-                        </div>
-                    </form>
+        <div class= "main-plant">
+            <div class='row'>
+                <div id='plant-header' class='d-flex flex-column justify-content-center'>
+                    <div id='plant-header-p'>
+                        {% if q %}
+                        <span style="font-size: 28px;">'{{ q }}' 검색 결과입니다. </span>
+                        {% else %}
+                        <h2>
+                            🌱 반려식물의 정보를 검색해보세요 🌱
+                        </h2>
+                        {% endif %}
+                        <!-- 에러메시지 -->
+                        {% if messages %}
+                            {% for message in messages %}
+                                {{message}}
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div id='plant-header-form'>
+                        <form action = '' method="GET" >
+                            <select class="plant-select" name="type" id="search-type" onchange="SelectHandleOnchange(this)">
+                                <option value="all">전체</option>
+                                <option value="name">식물 이름</option>
+                                <option value="content">내용</option>  
+                                <option value="managelevel">경험자</option>      
+                            </select>
+                            <div id="search_option" style="display:inline">
+                                <input class="plant-input" type="text" name ='q' value="{{q}}" placeholder="검색어를 입력하세요" />
+                                <button class="plant-input-1" type="submit">검색</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
