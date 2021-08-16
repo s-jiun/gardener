@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="d-flex justify-content-center align-items-center main-container" style="position: relative; background-color: #D8D8D8; background-size: cover; background-image: url({% static 'images/login_background.jpg' %});">
+<div class="d-flex justify-content-center align-items-center main-container" style="background-image: url({% static 'images/login_background.jpg' %});">
     <div class="container p-0">
         <form action="" method="POST">
             {% csrf_token %}
@@ -21,7 +21,7 @@
                     <div class="col-12">
                         <div class="d-flex flex-column mb-3">
                             <p class="text mb-1">아이디</p>
-                            <input type="text" name="userid" value="{{user_change_form.userid.value}}" class="signup-form-control" required="" id="id_userid">
+                            <input type="text" name="userid" value="{{user_change_form.userid.value}}" class="form-control" required="" id="id_userid">
                         </div>
                     </div>
                     <div class="col-12">
@@ -32,13 +32,13 @@
                     <div class="col-12">
                         <div class="d-flex flex-column mb-3">
                             <p class="text mb-1">이메일</p>
-                            <input type="email" name="email" value="{{user_change_form.email.value}}" class="signup-form-control" required="" id="id_email">
+                            <input type="email" name="email" value="{{user_change_form.email.value}}" class="form-control" required="" id="id_email">
                         </div>
                     </div>
                     <div class="col-12">
                         <div class="d-flex flex-column mb-3">
                             <p class="text mb-1">비밀번호</p>
-                            <input type="password" name="password1" class="signup-form-control mb-3" required="" id="id_password1">
+                            <input type="password" name="password1" class="form-control" required="" id="id_password1">
                         </div>
                     </div>
                     <div class="col-12">
@@ -47,7 +47,7 @@
                     <div class="col-12">
                         <div class="d-flex flex-column mb-3">
                             <p class="text mb-1">비밀번호 확인</p>
-                            <input type="password" name="password2" class="signup-form-control mb-6" required="" id="id_password2">
+                            <input type="password" name="password2" class="form-control" required="" id="id_password2">
                         </div>
                     </div>
                     <div class="col-12">
@@ -59,31 +59,3 @@
     </div>
 </div>
 {% endblock %}
-<!-- 
-<div class="d-flex justify-content-center align-items-center update-container">
-    <div class="row row-cols-1 row-cols-md-1" style="width:100%;">
-    <div class="col">
-    <form id="updateForm" action="" method="POST" enctype="multipart/form-data" class="update-form" >
-        <div class="text-center">
-        <h1 style="margin-bottom: 30px;">회원 정보 수정</h1>
-        {% csrf_token %}
-        {{user_change_form.userid.errors}}</div>
-        <p>아이디</p>
-        {{user_change_form.userid}}
-        {{user_change_form.email.errors}}
-        <p>이메일</p>
-        {{user_change_form.email}}
-        <p>비밀번호</p>
-        {{user_change_form.password1}}
-        <p>비밀번호 확인</p>
-        {{user_change_form.password2}}
-        {{user_change_form.password2.errors}}
-        <div class="row row-cols-1 justify-content-center text-center" style="height:45px;margin:0; width:100%; margin-bottom:20px;">
-            <div class="col">
-            <button class="signup-btn" type="submit">저장하기</button>
-            </div>
-        </div>
-    </form>
-    </div>
-    </div>
-</div> -->
