@@ -23,18 +23,19 @@ a {
   background: white;
   border: solid 2px #ccdfcc;
   border-radius: 10px;
-  /* height: 500px; */
   padding: 15px;
   overflow-x: scroll;
 }
 
 #profile-line,
 #user-img {
-  /* width: 160px;
-  height: 160px; */
+  border-style:double;
+  padding:1px 3px;
+  border-width: 5px;
+  border-color:#5c5427;
   margin-top: 8%;
-  width:80%;
-  height:80%;
+  width:75%;
+  height:75%;
   border-radius: 50%;
   z-index: 1;
   position: relative;
@@ -68,7 +69,6 @@ a {
 }
 
 #user-info {
-  /* margin-left: 360px; */
   margin-top: 15px;
   width: auto;
 }
@@ -87,6 +87,9 @@ a {
 #user-follow img {
   width: 2vw;
   height: auto;
+}
+#user-follow a:hover{
+  color:#ccdfcc;
 }
 
 #post-title {
