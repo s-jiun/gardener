@@ -1,3 +1,6 @@
+from django.contrib import auth
+from django.contrib.auth.decorators import login_required
+
 from django.urls import path
 from . import views
 app_name = 'user'
@@ -23,4 +26,5 @@ urlpatterns = [
     path('profile/delete_scrab/<int:pk>',
          view=views.delete_scrab, name='delete_scrab'),
     path('accounts/login/', views.login, name='account_login'),
+    path('search_gardener/', login_required(views.GardenerListView.as_view()), name='search_gardener'),
 ]

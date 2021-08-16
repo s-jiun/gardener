@@ -2,21 +2,22 @@
 {% load static %}
 {%block head%}
 <link href="{% static 'style/css/profile.css' %}" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet"> <!--CDN 링크 -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+<!--CDN 링크 -->
 
 {%endblock%}
 {% block content %}
 
 <div class="container main-body">
     <div class="row">
-        <div class="col col-10">
+        <div class="col col-10 mt-3 mb-5">
             <div class="container profile">
                 <div class="container profile_in">
-                        <div class="row justify-content-center row-cols-1 row-cols-md-2">
-                            <div class="col text-center" style="margin:0; padding:0;width:30%">
-                                    <img id="user-img" src={{user.Image.url}} />
-                            </div>
-                            <div class="col">
+                    <div class="row justify-content-center row-cols-1 row-cols-md-2">
+                        <div class="col text-center" style="margin-right:-5%; padding:0;">
+                            <img id="user-img" src={{user.Image.url}} />
+                        </div>
+                        <div class="col">
                             <div id="user-info">
                                 <span id="user-id"> {{user.userid}}</span><br>
                                 {% comment %}
@@ -36,51 +37,75 @@
                                 {% endif %}
                                 <div id="profile-content">
                                     <span>
-                                    {%if user.profile%}
-                                    {{user.profile}}
-                                    {% else %}
-                                        프로필 정보가 없습니다. 
-                                    {%endif%}
+                                        {%if user.profile%}
+                                        {{user.profile}}
+                                        {% else %}
+                                        프로필 정보가 없습니다.
+                                        {%endif%}
                                     </span><br>
                                 </div><br>
-                                <div id="user-follow" class="mt-2">
-                                    <a href="{% url 'user:follow' user.pk %}">팔로워 <span class="follower-count">{{follower}}</span></a>
-                                    <a href="{% url 'user:follow' user.pk %}">| 팔로잉 <span class="following-count">{{following}}</span></a>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-                        <div style="text-align:center; border:solid 2px #ccdfcc; border-width: 3px 0px 3px 0px;padding:0; margin:0">
-                            <span style="font-weight:bold">My Gardening</span>
-                        </div>
-
-                        {% comment %} <div style="display:flex;flex-wrap:wrap; justify-content:space-between;">  {% endcomment %}
-                        <div class ="row row-cols-1 row-cols-sm-2 row-cols-lg-3" style="margin-left:20px; margin-top:20px;">
-                        <!--포스트 리스트-->
-                            {% if posts%}
-                                {%for post in posts%}
-                                    <div class="col col-lg-4">
-                                        <div id="card-post" class="card text-center m-3" >
-                                            <a href="{% url 'community:post_detail' post.pk %}"><img src={{post.image.url}} class="card-img-top" alt="..." style="height:150px; max-height: 160px;"></a>
-                                            <div class="card-body ">
-                                                <a href="{% url 'community:post_detail' post.pk %}"><p class="card-title" id="post-title"> {{post.title}}</p></a>
-                                                <hr style="margin:0px 0px 5px 0px;">
-                                                {{post.created_at}}<br>
-                                                {% if post.tags.all %}
-                                                {% for tag in post.tags.all %}
-                                                <img style="width: 1rem;" src="{% static 'images/label.png'%}" />
-                                                <span>{{tag.name}}</span>
-                                                {% endfor %}
-                                                {%endif%}
-                                            </div>
+                                <div id="user-follow" class="mt-2 mb-3">
+                                    <a href="{% url 'user:follow' user.pk %}">팔로워 <span
+                                            class="follower-count">{{follower}}</span></a>
+                                    <a href="{% url 'user:follow' user.pk %}">| 팔로잉 <span
+                                            class="following-count">{{following}}</span></a>
+                                    {%if user.id != request.user.id%}
+                                    <!--다른 사람의 프로필을 보는 경우-->
+                                    {% if is_following%}
+                                    <div class="follow-wrapper ms-2" style="display:inline;">
+                                        <div class='following' style="display:inline;">
+                                            <button class='follow-btn'
+                                                onclick="onClickFollowing({{user.id}})">팔로잉</button>
                                         </div>
                                     </div>
-                                {% endfor %}
+                                    {% else %}
+                                    <div class="follow-wrapper" style="display:inline;">
+                                        <div class="follow" style="display:inline;">
+                                            <button class='follow-btn'
+                                                onclick="onClickFollow({{user.id}})">팔로우</button>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                {%endif%}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        style="text-align:center; border:solid 2px #ccdfcc; border-width: 3px 0px 3px 0px;padding:0; margin:0">
+                        <span style="font-weight:bold">My Gardening</span>
+                    </div>
+                    {% comment %} <div style="display:flex;flex-wrap:wrap; justify-content:space-between;"> {%endcomment %}
+                        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3"
+                            style="margin-left:20px; margin-top:20px;">
+                            <!--포스트 리스트-->
+                            {% if posts%}
+                            {%for post in posts%}
+                            <div class="col col-lg-4">
+                                <div id="card-post" class="card text-center m-3">
+                                    <a href="{% url 'community:post_detail' post.pk %}"><img src={{post.image.url}}
+                                            class="card-img-top" alt="..." style="height:150px; max-height: 160px;"></a>
+                                    <div class="card-body ">
+                                        <a href="{% url 'community:post_detail' post.pk %}">
+                                            <p class="card-title" id="post-title"> {{post.title}}</p>
+                                        </a>
+                                        <hr style="margin:0px 0px 5px 0px;">
+                                        {{post.created_at}}<br>
+                                        {% if post.tags.all %}
+                                        {% for tag in post.tags.all %}
+                                        <img style="width: 1rem;" src="{% static 'images/label.png'%}" />
+                                        <span>{{tag.name}}</span>
+                                        {% endfor %}
+                                        {%endif%}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
                             {%else%}
-                            <div id="no-post" class="text-center" >
-                            <img style="width: 2rem;" src="{% static 'images/flower.png'%}" />
-                            <span> 현재 게시글이 없습니다. </span>
-                            <img style="width: 2rem;" src="{% static 'images/flower.png'%}" />
+                            <div id="no-post" class="text-center">
+                                <img style="width: 2rem;" src="{% static 'images/flower.png'%}" />
+                                <span> 현재 게시글이 없습니다. </span>
+                                <img style="width: 2rem;" src="{% static 'images/flower.png'%}" />
 
                             </div>
                             {% endif %}
@@ -122,40 +147,27 @@
                                 {% endif %}
                             </ul>
                         </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col">
-            <div class="container sidebar text-center p-1" style="margin-bottom:50px;">
-                {%if user.id != request.user.id%} <!--다른 사람의 프로필을 보는 경우-->
-                    {% if is_following%}
-                    <div class="follow-wrapper">
-                        <div class='following'>
-                            <button class='follow-btn' onclick="onClickFollowing({{user.id}})">팔로잉</button>
-                        </div>
-                    </div>
-                        {% else %}
-                        <div class="follow-wrapper">
-                            <div class="follow">
-                                <button class='follow-btn' onclick="onClickFollow({{user.id}})">팔로우</button>
-                            </div>
-                        </div>
-                    {% endif %}
-                {%endif%}
-                <!--내 프로필 경우-->
-                {%if user.id == request.user.id%}
+            {%if user.id == request.user.id%}
+            <div class="col mt-3">
+                <div class="container sidebar text-center p-1">
+                    <!--내 프로필 경우-->
                     <div class="btn-group-vertical" role="group" aria-label="Basic outlined example">
-                        <a href="{% url 'user:my_pick' user.pk %}" >My Pick</a>
-                        <a href="{% url 'user:my_scrab_plant' user.pk%}" >My Scrab</a>
-                        <a href="{% url 'community:post_create' %}" >게시물 작성</a>
-                        <a href="{% url 'user:profile_update' %}" >프로필 수정</a>
-                        <a href="{% url 'user:update' %}" >회원정보 수정</a>
-                        <a href="{% url 'user:signout' %}" >회원탈퇴</a>
+                        <a href="{% url 'user:my_pick' user.pk %}">My Pick</a>
+                        <a href="{% url 'user:my_scrab_plant' user.pk%}">My Scrab</a>
+                        <a href="{% url 'community:post_create' %}">게시물 작성</a>
+                        <a href="{% url 'user:profile_update' %}">프로필 수정</a>
+                        <a href="{% url 'user:update' %}">회원정보 수정</a>
+                        <a href="{% url 'user:signout' %}">회원탈퇴</a>
                     </div>
-                {%endif%}
+                </div>
             </div>
+            {%endif%}
         </div>
     </div>
+
 </div>
 <script>
     $(function () {
@@ -167,6 +179,6 @@
 </script>
 {% endblock %}
 
-{% block js %}
-<script src="{% static 'javascripts/profile_follow.js' %}"></script>
-{% endblock %}
+    {% block js %}
+    <script src="{% static 'javascripts/profile_follow.js' %}"></script>
+    {% endblock %}
