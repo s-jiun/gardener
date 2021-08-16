@@ -1,0 +1,167 @@
+.main-gardener {
+    background: url("/static/images/search_user4.jpg");
+    background-position: 100% 22%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 300px;
+    width: 100%;
+    padding: 0;
+  }
+  #gardener-header {
+    padding-left: 0;
+    padding-right: 0;
+    margin-top: 80px;
+    color: white;
+    text-align: center;
+    height: 30%;
+  }
+  #gardener-header-p {
+    margin-top: 50px;
+    margin-bottom: 20px;
+  }
+  #gardener-header-p h2 {
+    text-shadow: -1px -1px 0 #5a3e0a, 1px -1px 0 #5a3e0a, -1px 1px 0 #5a3e0a,
+      1px 1px 0 #5a3e0a;
+    /* text-shadow: 0px 0px 10px #1a1003; */
+  }
+  #gardener-header-form form {
+    height: 30%;
+    margin-bottom: 5vh;
+  }
+  #gardener-header-form .gardener-input {
+    width: 50%;
+    height: 40px;
+    border: solid 2px #ccdfcc;
+    border-radius: 10px;
+  }
+  #gardener-header-form .gardener-input::placeholder {
+    color: #5c5427;
+    opacity: 80%;
+  }
+  #gardener-header-form .gardener-select {
+    height: 37px;
+    border: solid 2px #ccdfcc;
+    border-radius: 10px;
+    vertical-align: top;
+    background: #ccdfcc;
+    color: white;
+    font-weight: bold;
+    text-shadow: -1px 0 #a0cab5, 0 1px #a0cab5, 1px 0 #a0cab5, 0 -1px #a0cab5;
+  }
+  
+  #gardener-header-form .gardener-input-1 {
+    width: 60px;
+    height: 37px;
+    border: solid 2px #ccdfcc;
+    border-radius: 10px;
+    vertical-align: top;
+    background: #ccdfcc;
+    color: white;
+    font-weight: bold;
+    text-shadow: -1px 0 #a0cab5, 0 1px #a0cab5, 1px 0 #a0cab5, 0 -1px #a0cab5;
+  }
+  
+  #gardener-paginator {
+    display: flex;
+    justify-content: center;
+    margin-top: 5;
+  }
+  
+  #gardener-card {
+    display: inline-block;
+    width: 80%;
+    padding: 10px 20px;
+    border-right: 2px solid #5c5427;
+    border-left: 2px solid #ccdfcc;
+    border-radius: 10px;
+    background: linear-gradient(
+        to right,
+        #ccdfcc calc(50% - 5px),
+        transparent calc(50% - 5px),
+        transparent calc(50% + 5px),
+        #5c5427 calc(50% + 5px)
+      ),
+      linear-gradient(
+        to right,
+        #ccdfcc calc(50% - 5px),
+        transparent calc(50% - 5px),
+        transparent calc(50% + 5px),
+        #5c5427 calc(50% + 5px)
+      );
+    background-size: 150% 2px;
+    background-position: top left, bottom right;
+    background-repeat: no-repeat;
+    transition: 0.5s all;
+  }
+  #gardener-card:hover {
+    background-position: top right, bottom left;
+    cursor: pointer;
+  }
+  .image {
+    overflow: hidden;
+    height: 200px;
+    width: auto;
+    position: relative;
+    cursor: pointer;
+    box-shadow: 0 0 25px 1px rgba(0, 0, 0, 0.3);
+    transition: 0.5s;
+    text-align: center;
+    border-radius: 10px;
+  }
+  .image:after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    width: 500px;
+    height: 500px;
+    transform: translate(-140%, -50%);
+    background-color: #ccdfcc;
+    opacity: 0.8;
+    border-radius: 50%;
+    transition: 0.5s;
+  }
+  
+  .image:hover:after {
+    transform: translate(-50%, -50%);
+  }
+  
+  #gardener-img {
+    position: absolute;
+    width: 100%;
+    height: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: 0.5s;
+    border-radius: 10px;
+  }
+  .image span {
+    width: 100%;
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    left: 50%;
+    transform: translate(-2000px, -50%);
+    color: #5c5427;
+    font-weight: bold;
+    transition: 0.5s;
+    transition-timing-function: ease-in;
+    word-break: keep-all;
+  }
+  .image:hover span {
+    transform: translate(-50%, -50%);
+    transition-timing-function: ease;
+  }
+
+  
+  .btn {
+    height: 34px;
+    background-color: #a0cab5;
+    color: white;
+  }
+  .card-body img{
+    width:1rem; 
+    height:auto;
+  }
