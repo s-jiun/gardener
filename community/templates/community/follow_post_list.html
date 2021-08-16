@@ -17,18 +17,18 @@
         </div>
         <div id='search-header-form' style='width:50%;'>
             <form action='' method="GET">
-                <select class='search-input-1' name="type" id="search-type" style='border:none; height:4vh;'>
+                <select class='search-input-1' name="type" id="search-type">
                     <option value="tag">태그</option>
                     <option value="title">제목</option>
                     <option value="content">내용</option>
                 </select>
                 <input class='search-input' type="text" name='q' value="{{q}}" placeholder="검색어를 입력하세요" style='border:none; height:4vh;'/>
-                <button class='search-input-1' type="submit" style='border:none; height:4vh;' >검색</button>
+                <button class='search-input-1' type="submit">검색</button>
             </form>
         </div>
         <div>
-            <button id='list-create-post'><a href="{% url 'community:post_create' %}" style='color:white;'>포스트 작성</a></button>
-            <button id='list-watch-post'><a href = '' style='color:white;'>친구 게시물 보기</a></button>
+            <button id='list-create-post'><a href="{% url 'community:post_create' %}">포스트 작성</a></button>
+            <button id='list-watch-post'><a href = ''>친구 게시물 보기</a></button>
         </div>
     </div>            
 </div>
@@ -41,26 +41,9 @@
                 {% for post in post_list %}
                 <div class='col mb-3'>
                     <p id='thumbnail-p'><img id='post-list-thumbnail' src="{{ post.user_id.Image.url }}"> {{ post.user_id }}</p>
-                    {% comment %}
                     <figure class="snip1384">
                         {% if post.image %}
-                            <image src='{{ post.image.url }}' class='img-thumbnail' style='width: 90%; height:90%;'/>
-                        {% endif %}
-                        
-                        <figcaption>
-                            <h2>{{post.title}}</h2>
-                            <div class="icons">
-                                {% for tag in post.tags.all %}
-                                    #{{tag.name}} 
-                                {% endfor %}
-                            </div>
-                            </figcaption>
-                            <a href='{% url "community:post_detail" pk=post.pk %}'></a>
-                    </figure>
-                    {% endcomment %}
-                    <figure class="snip1384">
-                        {% if post.image %}
-                            <image src='{{ post.image.url }}' class='img-thumbnail' style='width: 90%; height:90%;'/>
+                            <image src='{{ post.image.url }}' class='img-thumbnail'/>
                         {% endif %}
                         <figcaption>
                           <h3>{{post.title}}</h3>
@@ -76,16 +59,16 @@
                 {% endfor %}
             </div>
             {% else %}
-            <div class='row row-cols-1' style='text-align:center; margin-top: 2rem;'>
+            <div class='row row-cols-1' id='no-search-input'>
                 {% if q %}
                 <h1>일치하는 검색 결과가 없습니다.</h1>
     
                 {% else %}
-                <h3>팔로우한 유저가 없습니다<img src="{% static 'images/sad.svg' %}" style="width: 3vh; height: 3vh; margin: 5px;"></h3>
+                <h3>팔로우한 유저가 없습니다<img src="{% static 'images/sad.svg' %}" id='no-follow-image'></h3>
                 {% endif %}
             </div>
             {% endif %}
-            <div id='list-paginator' style = 'margin-bottom:1rem;'>
+            <div id='list-paginator'>
                 {% if is_paginated %}
                 <ul class="pagination">
                     {% if page_obj.has_previous %}
@@ -118,31 +101,6 @@
                 {% endif %}
             </div>
         </div>
-        {% comment %}
-        <div class='col-1 d-flex flex-column justify-content-center' style="margin-left:30px;">
-            <div>
-                <button style = 'border-radius:10px;margin-bottom:1rem;'>
-                    <a href="{% url 'community:post_create' %}">
-                        <img class='post-button' src="{% static 'images/writing.png' %}">
-                    </a>
-                </button>
-            </div>
-            <div>
-                <button style = 'border-radius:10px; margin-bottom:1rem;'>
-                    <a href="">
-                        <img class='post-button' src="{% static 'images/rating.png' %}">
-                    </a>
-                </button>
-            </div>
-            <div>
-                <button style = 'border-radius:10px';>
-                    <a href="">
-                        <img class='post-button' src="{% static 'images/rate.png' %}">
-                    </a>
-                </button>
-            </div>
-        </div>
-        {% endcomment %}
     </div>
 </div>
 

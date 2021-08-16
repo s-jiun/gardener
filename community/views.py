@@ -1,4 +1,3 @@
-from django.db.models.expressions import OrderBy
 from user.models import Follow, GeneralUser
 import json
 from django.http.response import JsonResponse
