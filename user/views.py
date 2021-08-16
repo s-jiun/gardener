@@ -15,7 +15,7 @@ from django.db.models import Count
 def login(request):
     if request.user.is_authenticated:
         # 수정 요
-        return redirect('user:update')
+        return redirect('user:start_page')
     if request.method == 'POST':
         # 사용자가 보낸 값 -> form
         form = UserAuthenticationForm(request, request.POST)
@@ -42,7 +42,7 @@ def logout(request):
 def signup(request):
     if request.user.is_authenticated:
         # 수정 필요
-        return redirect('user:update')
+        return redirect('user:start_page')
     if request.method == 'POST':
         res = {}
         form = CustomUserCreationForm(request.POST)
@@ -77,7 +77,7 @@ def member_modification(request):
             user = user_change_form.save(commit=False)
             user.set_password(user_change_form.cleaned_data['password1'])
             user.save()
-            return redirect('/', request.user.userid)
+            return redirect('user:start_page')
 
     else:
         user_change_form = CustomUserChangeForm(instance=request.user)
