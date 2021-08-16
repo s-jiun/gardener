@@ -48,7 +48,7 @@
                 </ul>
                 {% if request.user.is_authenticated %}
                     <div class="d-flex justify-content-end">
-                        <ul class="navbar-nav align-items-center">
+                        <ul class="navbar-nav align-items-center flex-row">
                             <div class='profile-image'><img src="{{ user.Image.url }}"></div>
                             <a href="{% url 'user:my_profile' %}">{{ request.user.userid }}</a>
                         </ul>

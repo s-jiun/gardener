@@ -12,7 +12,7 @@
             {% if q %}
             <h1>'{{ q }}' 검색 결과입니다.</h1>
             {% else %}
-            <h1>마음에 드는 플랜테리어를 찾아보세요.</h1>
+            <h2 style=''>🌵 마음에 드는 플랜테리어를 찾아보세요 🌵</h2>
             {% endif %}
             {% if messages %}
                 {% for message in messages %}
@@ -20,7 +20,7 @@
                 {% endfor %}
             {% endif %}
         </div>
-        <div id='search-header-form' style='width:50%;'>
+        <div id='search-header-form'>
             <form action='' method="GET">
                 <select class='search-input-1' name="type" id="search-type">
                     <option value="tag">태그</option>

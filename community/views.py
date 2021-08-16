@@ -73,6 +73,8 @@ class FollowPostView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         paginator = context['paginator']
+        context['followings'] = Follow.objects.filter(
+            following_user=self.request.user.id)
         page_numbers_range = 10
         max_index = len(paginator.page_range)
 

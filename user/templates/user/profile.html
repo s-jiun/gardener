@@ -20,9 +20,6 @@
                         <div class="col">
                             <div id="user-info">
                                 <span id="user-id"> {{user.userid}}</span><br>
-                                {% comment %}
-                                <img id="plant-icon" src="{% static 'images/planting.png'%}" />
-                                {% endcomment %}
                                 {% if user.point < 100 %}
                                 <span id="user-level">{{user.name}} 님은 현재 <a tabindex="0" type="button" data-bs-toggle="popover" data-bs-trigger="focus" title="입문 정원사" data-bs-content="0~99점(게시물 0개 ~ 3개)"><img class='rank-image' src = "{% static 'images/sf.png'%}">  입문 정원사  <img class='rank-image' src = "{% static 'images/sf.png'%}"></a>입니다.<br></span>
                                 {% elif user.point < 300 %}
@@ -71,11 +68,9 @@
                             </div>
                         </div>
                     </div>
-                    <div
-                        style="text-align:center; border:solid 2px #ccdfcc; border-width: 3px 0px 3px 0px;padding:0; margin:0">
+                    <div id="profile-post-line">
                         <span style="font-weight:bold">My Gardening</span>
                     </div>
-                    {% comment %} <div style="display:flex;flex-wrap:wrap; justify-content:space-between;"> {%endcomment %}
                         <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3"
                             style="margin-left:20px; margin-top:20px;">
                             <!--포스트 리스트-->
@@ -106,7 +101,6 @@
                                 <img style="width: 2rem;" src="{% static 'images/flower.png'%}" />
                                 <span> 현재 게시글이 없습니다. </span>
                                 <img style="width: 2rem;" src="{% static 'images/flower.png'%}" />
-
                             </div>
                             {% endif %}
                         </div>
@@ -151,7 +145,7 @@
                 </div>
             </div>
             {%if user.id == request.user.id%}
-            <div class="col mt-3">
+            <div class="col mt-3 mb-5">
                 <div class="container sidebar text-center p-1">
                     <!--내 프로필 경우-->
                     <div class="btn-group-vertical" role="group" aria-label="Basic outlined example">
@@ -164,6 +158,23 @@
                     </div>
                 </div>
             </div>
+            {% else %}
+            <div class="col mt-3 mb-5">
+                <div class="container sidebar text-center p-1">
+                    <!--내 프로필 경우-->
+                    <div class="btn-group-vertical" role="group" aria-label="Basic outlined example">
+                        <span>** Top Gardener **</span> 
+                        {%if rank_user%}
+                        {% for user in rank_user%}
+                        <a href="{% url 'user:profile' user.pk %}">{{user.userid}}</a>
+                        
+                        {% endfor %}
+                        {%else%}
+                        <span> 랭킹 정보가 아직 제공되지 않습니다.</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
             {%endif%}
         </div>
     </div>
@@ -171,7 +182,7 @@
 </div>
 <script>
     $(function () {
-      $('[data-bs-toggle="popover"]').popover()
+        $('[data-bs-toggle="popover"]').popover()
     })
     var popover = new bootstrap.Popover(document.querySelector('.popover-dismiss'), {
         trigger: 'focus'
@@ -179,6 +190,6 @@
 </script>
 {% endblock %}
 
-    {% block js %}
+{% block js %}
     <script src="{% static 'javascripts/profile_follow.js' %}"></script>
-    {% endblock %}
+{% endblock %}

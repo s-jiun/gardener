@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% include "django/forms/widgets/select.html" %}
 {% load static %}
 
 {%block head%}
@@ -17,7 +18,7 @@
                         <span style="font-size: 28px;">'{{ q }}' 검색 결과입니다. </span>
                         {% else %}
                         <h2>
-                            반려식물의 정보를 검색해보세요! 
+                            🌱 반려식물의 정보를 검색해보세요 🌱
                         </h2>
                         {% endif %}
                         <!-- 에러메시지 -->
@@ -43,9 +44,10 @@
                     </div>
                 </div>
             </div>
-        </div><!--header 닫힘-->
-        <div class="container-fluid main-body mt-4 mb-4" id="plant-body">
-        {% if plant_list %}
+        </div>
+    </div><!--header 닫힘-->
+    <div class="container-fluid main-body mt-4 mb-4" id="plant-body">
+    {% if plant_list %}
         <div class='row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3'>
             {% for plant in plant_list %}
                 <div class="col">
@@ -65,7 +67,7 @@
                 <div class="modal fade" id="plantDetailModal-{{plant.pk}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable">
                         <div class="modal-content" id="plantDetailModal-content">
-                           <div class="modal-header justify-content-center">
+                            <div class="modal-header justify-content-center">
                                 <h5 class="modal-title" id="plantDetailLabel">{{plant.name}}</h5>
                                 <button type="button" class="btn-close me-2" data-bs-dismiss="modal" aria-label="Close" style="margin-left:40px;"></button>
                                 {%if plant in scrap_plant_list %}
@@ -210,12 +212,8 @@
                 </tr>
                 {%endif%}
         </div>
-        {% endif %}
-
+    {% endif %}
     </div>
-
-
-        <!--pagination-->
     <div id="plant-paginator">
         {% if is_paginated %}
         <ul class="pagination">
@@ -223,19 +221,17 @@
         <li class="page-item">
             <a class="page-link" href="?type={{type}}&q={{q}}&page={{ page_obj.previous_page_number }}"
             tabindex="-1">이전</a>
-         </li>
+        </li>
         {% else %}
         <li class="page-item disabled">
             <a class="page-link" href="#" tabindex="-1">이전</a>
-         </li>
+        </li>
         {% endif %}
-
         {% for page in page_range %}
         <li class="page-item {% if page == page_obj.number %} activate {% endif %}">
             <a class="page-link" href="?type={{type}}&q={{q}}&page={{ page }}">{{ page }}</a>
         </li>
         {% endfor %}
-
         {% if page_obj.has_next %}
         <li class="page-item">
         <a class="page-link"
@@ -249,61 +245,8 @@
     </ul>
     {% endif %}
     </div>
-    <script>
-    
-        const requestScrap = new XMLHttpRequest();
-    
-        const onClickScrap = (Id) => {
-            const url = 'scrap_ajax/';
-            requestScrap.open('POST', url, true);
-            requestScrap.setRequestHeader(
-                'Content-Type',
-                'application/x-www-form-urlencoded'
-            );
-            requestScrap.send(JSON.stringify({Id: Id}));
-        };
-    
-        const ScrapHandleResponse = () => {
-            if (requestScrap.status < 400) {
-                const {id, type} = JSON.parse(requestScrap.response);    // {'id': 1, 'type': 'like'}
-                const element = document.querySelector(`#plantDetailModal-${id} .post__${type}`);
-                if (element.innerHTML === '스크랩 취소') {
-                    element.classList.replace(`post__${type}`, 'post__scrap')
-                    element.innerHTML = '스크랩';
-                }
-                else {
-                    element.classList.replace(`post__${type}`, 'post__del_scrap')
-                    element.innerHTML ='스크랩 취소'
-                }
-            }
-        };
-    
-        requestScrap.onreadystatechange = () => {
-            if (requestScrap.readyState === XMLHttpRequest.DONE) {
-                ScrapHandleResponse();
-            }
-        };
-        
-
-        function SelectHandleOnchange(e) {
-            const text = e.options[e.selectedIndex].text;
-            const search_box = document.getElementById("search_option")
-            if (text == '경험자') {
-                search_box.innerHTML = ""
-                search_box.innerHTML +=`<a href='?type=managelevel&q=초보자' class='btn mx-1'>초보자</a>`
-                search_box.innerHTML +=`<a href='?type=managelevel&q=경험자' class='btn mx-1'>경험자</a>`
-                search_box.innerHTML +=`<a href='?type=managelevel&q=전문가' class='btn mx-1'>전문가</a>`
-            }
-            else {
-                search_box.innerHTML = ""
-                search_box.innerHTML += `
-                <input class="plant-input" type="text" name ='q' value="{{q}}" placeholder="검색어를 입력하세요" />
-                <button class="plant-input-1" type="submit">검색</button>
-                `
-            }
-        }
-
-    </script>
 {%endblock%}
 
-
+{% block js %}
+    <script src="{% static 'javascripts/scrap.js' %}"></script>
+{% endblock %}
