@@ -130,27 +130,6 @@ class CustomUserChangeForm(UserChangeForm):
 
 
 class UserProfileChangeForm(UserChangeForm):
-    Image = forms.ImageField(
-        label=('image'),
-        required=False,
-        widget=forms.FileInput(
-            attrs={'class':'profile-update-form-control-image'}
-        )
-    )
-    name = forms.CharField(
-        label=('name'),
-        required=True,
-        widget=forms.TextInput(
-            attrs={'class':'profile-update-form-control-name'}
-        )
-    )
-    profile = forms.CharField(
-        label=('profile'),
-        required=False,
-        widget=forms.Textarea(
-            attrs={'class':'profile-update-form-control-profile'}
-        )
-    )
     class Meta:
         model = get_user_model()
         fields = ['Image', 'name', 'profile']
