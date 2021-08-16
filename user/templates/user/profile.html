@@ -9,7 +9,7 @@
 
 <div class="container main-body">
     <div class="row">
-        <div class="col col-10">
+        <div class="col col-10 mt-3 mb-5" >
             <div class="container profile">
                 <div class="container profile_in">
                         <div class="row justify-content-center row-cols-1 row-cols-md-2">
@@ -124,8 +124,8 @@
                 </div>
             </div>
         </div>
-        <div class="col">
-            <div class="container sidebar text-center p-1" style="margin-bottom:50px;">
+        <div class="col mt-3">
+            <div class="container sidebar text-center p-1">
                 {%if user.id != request.user.id%} <!--다른 사람의 프로필을 보는 경우-->
                     {% if is_following%}
                     <div class="follow-wrapper">
