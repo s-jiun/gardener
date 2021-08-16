@@ -137,6 +137,15 @@ a {
   border-radius: 5px;
   border: solid 2px white;
 }
+.sidebar span{
+  font-weight: bold;
+  color:#5c5427;
+  font-size: 15px;
+  text-decoration:none; 
+  border-bottom:1px solid #5c5427;
+  padding-bottom:3px;
+
+}
 
 #no-post {
   width: 100%;
