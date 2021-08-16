@@ -47,7 +47,7 @@
                     <p id='thumbnail-p'><img id='post-list-thumbnail' src="{{ post.user_id.Image.url }}"> {{ post.user_id }}</p>
                     <figure class="snip1384">
                         {% if post.image %}
-                            <image src='{{ post.image.url }}' class='img-thumbnail' style='width: 90%; height:90%;'/>
+                            <image src='{{ post.image.url }}' class='img-thumbnail'/>
                         {% endif %}
                         <figcaption>
                           <h3>{{post.title|truncatechars:10 }}</h3>

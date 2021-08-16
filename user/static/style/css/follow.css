@@ -50,6 +50,19 @@ a {
   margin-top: 80px;
   margin-bottom: 20px;
 }
+
+#follow-header-button {
+  border: solid 4px #aca790;
+  border-radius: 10px;
+  margin-top: 20px;
+  background: none;
+}
+
+#follow-header-button a {
+  color: #aca790;
+  font-weight: bold;
+}
+
 #follow-header-p span {
   text-shadow: 0px 0px 3px #5c5427;
 }

@@ -99,6 +99,7 @@ figure.snip1384 img {
   vertical-align: top;
   width: 90%;
   height: 90%;
+  border-radius: 10px;
 }
 figure.snip1384:after,
 figure.snip1384 figcaption {
@@ -111,6 +112,7 @@ figure.snip1384 figcaption {
 figure.snip1384:after {
   content: "";
   background-color: #a0cab5;
+  border-radius: 10px;
   transition: all 0.35s ease;
   width: 90%;
   height: 90%;

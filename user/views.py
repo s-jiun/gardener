@@ -88,17 +88,6 @@ def member_modification(request):
 
 def profile(request, pk):
     user = GeneralUser.objects.get(id=pk)
-    popular_list = {}
-    for i in GeneralUser.objects.all():
-        popular_list[i] = int(len(Follow.objects.filter(user=i)))
-    sorted_popular_list = sorted(
-        popular_list.items(), key=lambda x: x[1], reverse=True)
-    if len(sorted_popular_list) >= 5:
-        sorted_popular_list = sorted_popular_list[:5]
-    popular_user = []
-    for popular in sorted_popular_list:
-        popular_user.append(popular[0])
-
     follower = Follow.objects.filter(user=user).count()
     following = Follow.objects.filter(following_user=user).count()
     posts = user.post_set.all()
@@ -121,7 +110,6 @@ def profile(request, pk):
         'posts': page_obj,
         'is_following': is_following,
         'page_obj': page_obj,
-        'popular_user': popular_user,
     }
     return render(request, template_name='user/profile.html', context=ctx)
 

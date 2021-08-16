@@ -12,8 +12,9 @@
                 <div id='follow-header' class='d-flex flex-column justify-content-center'>
                     <div id='follow-header-p'>
                             <span><h2>🌼{{user.userid}}님과 함께하는 가드너들 입니다!🌼</h2></span>
-                    </div>
-                    <a type="button" href="{% url 'user:profile' user.pk %}">My Profile로</a>
+                            <button id = 'follow-header-button' type="submit"><a href="{% url 'user:profile' user.pk %}">내 프로필로 돌아가기</a></button>
+                        </div>
+                    
                 </div>
             </div>
         </div><!--header 닫힘-->
