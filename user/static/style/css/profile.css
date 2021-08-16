@@ -33,13 +33,18 @@ a {
   padding:1px 3px;
   border-width: 5px;
   border-color:#5c5427;
-  margin-top: 8%;
   width:75%;
   height:75%;
   border-radius: 50%;
-  z-index: 1;
   position: relative;
   overflow: auto;
+  max-height: 230px;
+  max-width:230px;
+  min-height: 130px;
+  min-width:130px;
+  /* margin-right: -8%; */
+  margin-top:5%;
+
 }
 #profile-line {
   height: 230px;
@@ -145,7 +150,6 @@ a {
   position: relative;
   background: #a0cab5;
   width: auto;
-  height: 25px;
   border: 1px solid #b8b8b8;
   box-sizing: border-box;
   border-radius: 100px;
