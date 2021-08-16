@@ -247,7 +247,7 @@ CKEDITOR_CONFIGS = {
     }
 }
 
-LOGIN_REDIRECT_URL = '/update'  # 로그인 후 리디렉션
+LOGIN_REDIRECT_URL = '/'  # 로그인 후 리디렉션
 ACCOUNT_LOGOUT_REDIRECT_URL = "/"  # 로그아웃 후 리디렉션
 
 SOCIALACCOUNT_PROVIDERS = {
