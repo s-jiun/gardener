@@ -12,6 +12,21 @@ a {
   object-fit: cover;
 }
 
+.page-phrase {
+  writing-mode: vertical-rl;
+  width: fit-content;
+}
+
+.page-phrase h4:first-child {
+  margin-left: 1vw;
+  margin-right: 1vw;
+}
+
+.page-phrase h4:nth-child(2) {
+  margin-left: 0;
+  margin-right: 0;
+}
+
 @media screen and (max-width: 1000px) {
   .page-image {
     display: none;
@@ -53,4 +68,8 @@ a {
 .tag {
   background-color: blanchedalmond;
   border-radius: 10px;
+}
+
+#list-paginator {
+  margin-bottom: 1rem;
 }

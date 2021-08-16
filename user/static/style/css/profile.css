@@ -23,20 +23,27 @@ a {
   background: white;
   border: solid 2px #ccdfcc;
   border-radius: 10px;
-  /* height: 500px; */
   padding: 15px;
   overflow-x: scroll;
 }
 
 #profile-line,
 #user-img {
-  width: 160px;
-  height: 160px;
+  border-style:double;
+  padding:1px 3px;
+  border-width: 5px;
+  border-color:#5c5427;
+  width:75%;
+  height:75%;
   border-radius: 50%;
-  z-index: 1;
   position: relative;
   overflow: auto;
-  object-fit: cover;
+  max-height: 230px;
+  max-width:230px;
+  min-height: 130px;
+  min-width:130px;
+  margin-top:5%;
+
 }
 #profile-line {
   height: 230px;
@@ -45,7 +52,7 @@ a {
   object-fit: cover;
 }
 #profile-content {
-  width: 500px;
+  width: 90%;
   height: auto;
   padding: 10px;
   display: inline-block;
@@ -66,7 +73,6 @@ a {
 }
 
 #user-info {
-  margin-left: 360px;
   margin-top: 15px;
   width: auto;
 }
@@ -82,9 +88,23 @@ a {
   width: 2vw;
   height: auto;
 }
+
+.rank-image {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+}
+
+.popover-header {
+  background-color: #a0cab5;
+}
+
 #user-follow img {
   width: 2vw;
   height: auto;
+}
+#user-follow a:hover{
+  color:#ccdfcc;
 }
 
 #post-title {
@@ -129,6 +149,7 @@ a {
 }
 #no-post img {
   vertical-align: text-bottom;
+  width:2rem;
 }
 
 #card-post {
@@ -140,9 +161,21 @@ a {
   position: relative;
   background: #a0cab5;
   width: auto;
-  height: 25px;
   border: 1px solid #b8b8b8;
   box-sizing: border-box;
   border-radius: 100px;
   font-family: "Gowun Batang", serif;
+}
+.follow-wrapper{
+  display: inline;
+}
+.follow-wrapper .follow, .follow-wrapper .following{
+  display:inline;
+}
+#profile-post-line{
+  text-align:center; 
+  border:solid 2px #ccdfcc; 
+  border-width: 3px 0px 3px 0px;
+  padding:0; 
+  margin:0;
 }
