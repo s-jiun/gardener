@@ -12,15 +12,11 @@
         <div class="col col-10">
             <div class="container profile">
                 <div class="container profile_in">
-                        <div class="row">
-                            <div style="position: relative;">
-                                <div style=" position: absolute; left: 80px;">
-                                    <img id="profile-line" src="{% static 'images/profile_img_line.png'%}" />
-                                </div>
-                                <div style="position:  absolute; left: 138px; top: 33px;">
+                        <div class="row justify-content-center row-cols-1 row-cols-md-2">
+                            <div class="col text-center" style="margin:0; padding:0;width:30%">
                                     <img id="user-img" src={{user.Image.url}} />
-                                </div>
                             </div>
+                            <div class="col">
                             <div id="user-info">
                                 <span id="user-id">{{user.userid}}</span><br>
                                 <img id="plant-icon" src="{% static 'images/planting.png'%}" />
@@ -49,8 +45,9 @@
                                     <a href="{% url 'user:follow' user.pk %}">| 팔로잉 <span class="following-count">{{following}}</span></a>
                                 </div>
                             </div>
+                            </div>
                         </div>
-                        <hr style="margin-top: 30px; color: #5C5427; height:2px;">
+                        <hr style="margin-top: 20px; color: #5C5427; height:2px;">
                         <div style="text-align:center; margin-top:-20px;">
                             <br />
                             <span>My post</span>
