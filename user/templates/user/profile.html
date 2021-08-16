@@ -145,7 +145,7 @@
                 </div>
             </div>
             {%if user.id == request.user.id%}
-            <div class="col mt-3">
+            <div class="col mt-3 mb-5">
                 <div class="container sidebar text-center p-1">
                     <!--내 프로필 경우-->
                     <div class="btn-group-vertical" role="group" aria-label="Basic outlined example">
@@ -155,6 +155,23 @@
                         <a href="{% url 'user:profile_update' %}">프로필 수정</a>
                         <a href="{% url 'user:update' %}">회원정보 수정</a>
                         <a href="{% url 'user:signout' %}">회원탈퇴</a>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="col mt-3 mb-5">
+                <div class="container sidebar text-center p-1">
+                    <!--내 프로필 경우-->
+                    <div class="btn-group-vertical" role="group" aria-label="Basic outlined example">
+                        <span>** Top Gardener **</span> 
+                        {%if rank_user%}
+                        {% for user in rank_user%}
+                        <a href="{% url 'user:profile' user.pk %}">{{user.userid}}</a>
+                        
+                        {% endfor %}
+                        {%else%}
+                        <span> 랭킹 정보가 아직 제공되지 않습니다.</span>
+                        {% endif %}
                     </div>
                 </div>
             </div>
