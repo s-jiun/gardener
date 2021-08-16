@@ -118,39 +118,18 @@ class CustomUserChangeForm(UserChangeForm):
             raise forms.ValidationError("비밀번호가 일치하지 않습니다.")
         return password2
     
-    def clean_email(self):
-        if GeneralUser.objects.filter(email=self.cleaned_data['email']).exists():
-            raise forms.ValidationError('이미 존재하는 이메일입니다.')
-        return self.cleaned_data['email']
+    # def clean_email(self):
+    #     if GeneralUser.objects.filter(email=self.cleaned_data['email']).exists():
+    #         raise forms.ValidationError('이미 존재하는 이메일입니다.')
+    #     return self.cleaned_data['email']
 
-    def clean_userid(self):
-        if GeneralUser.objects.filter(userid=self.cleaned_data['userid']).exists():
-            raise forms.ValidationError('이미 존재하는 아이디입니다.')
-        return self.cleaned_data['userid']
+    # def clean_userid(self):
+    #     if GeneralUser.objects.filter(userid=self.cleaned_data['userid']).exists():
+    #         raise forms.ValidationError('이미 존재하는 아이디입니다.')
+    #     return self.cleaned_data['userid']
 
 
 class UserProfileChangeForm(UserChangeForm):
-    Image = forms.ImageField(
-        label=('image'),
-        required=False,
-        widget=forms.FileInput(
-            attrs={'class':'profile-update-form-control-image'}
-        )
-    )
-    name = forms.CharField(
-        label=('name'),
-        required=True,
-        widget=forms.TextInput(
-            attrs={'class':'profile-update-form-control-name'}
-        )
-    )
-    profile = forms.CharField(
-        label=('profile'),
-        required=False,
-        widget=forms.Textarea(
-            attrs={'class':'profile-update-form-control-profile'}
-        )
-    )
     class Meta:
         model = get_user_model()
         fields = ['Image', 'name', 'profile']

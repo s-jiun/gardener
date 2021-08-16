@@ -89,6 +89,17 @@ a {
   width: 2vw;
   height: auto;
 }
+
+.rank-image {
+  width: 20px;
+  height: 20px;
+  vertical-align: top;
+}
+
+.popover-header {
+  background-color: #a0cab5;
+}
+
 #user-follow img {
   width: 2vw;
   height: auto;

@@ -7,14 +7,39 @@
   background-size: cover;
   color: black;
   text-align: center;
+  padding: 0;
 }
 
-.search-input {
-  width: 80%;
-  border-radius: 10px;
+#notice-header h1 {
+  padding-top: 80px;
+  margin-bottom: 25px;
 }
 
 .search-input-1 {
   border-radius: 10px;
   background-color: #ccdfcc;
+}
+
+#search-type {
+  border: none;
+  height: 4vh;
+}
+
+.search-input {
+  width: 50%;
+  height: 70%;
+  border: solid 1px #a0cab5;
+  border-radius: 10px;
+}
+
+#search-input-button {
+  width: 60px;
+  height: 37px;
+  border: 0;
+  border-radius: 10px;
+}
+
+.moveto-other-page {
+  text-decoration: none;
+  color: black;
 }
