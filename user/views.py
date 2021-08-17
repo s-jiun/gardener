@@ -212,6 +212,15 @@ def follow_ajax(request):
     follow.save()
     return JsonResponse({'user_id': user_id, 'user_userid': user.userid, 'user_name': user.name, 'user_point': user.point, 'user_image_url': user.Image.url})
 
+@csrf_exempt
+def base_image_ajax(request):
+    req = json.loads(request.body)
+    user_id = req['user_id']
+    user = GeneralUser.objects.get(id=user_id)
+    user.Image = '../static/images/default_profile.svg'
+    user.save()
+    return JsonResponse({'user_image':user.Image.url})
+
 
 def liked_posts(request, pk):
     user = GeneralUser.objects.get(id=pk)

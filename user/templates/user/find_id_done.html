@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block head %}
-    <link href="{% static 'style/css/login.css' %}" rel="stylesheet">
+    <link href="{% static 'style/css/find_id.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
@@ -10,7 +10,7 @@
         <div class="container p-0">
             <form action="" method="POST">
                 {% csrf_token %}
-                <div class="card px-5" style="background-color: rgb(204, 223, 204);">
+                <div class="card px-5">
                     <p class="h8 py-5 px-5">아이디 찾기</p>
                     <div class="row gx-3">
                         <div class="col-12 mb-5">
