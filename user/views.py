@@ -91,7 +91,7 @@ def profile(request, pk):
     user = GeneralUser.objects.get(id=pk)
     follower = Follow.objects.filter(user=user).count()
     following = Follow.objects.filter(following_user=user).count()
-    posts = user.post_set.all().order_by(-id)
+    posts = user.post_set.all().order_by('-id')
     page = request.GET.get('page', '1')  # GET 방식으로 정보를 받아오는 데이터
     paginator = Paginator(posts, '9')  # Paginator(분할될 객체, 페이지 당 담길 객체수)
     page_obj = paginator.page(page)  # 페이지 번호를 받아 해당 페이지를 리턴 get_page 권장
