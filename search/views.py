@@ -13,13 +13,15 @@ class PlantListView(ListView):
     model = Plant
     paginate_by = 6
     template_name = 'search/main_plant.html'
-    context_object_name = 'plant_list' 
+    context_object_name = 'plant_list'
+
     def get_queryset(self):
         plant_list = Plant.objects.order_by('name')
         return plant_list
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['plants'] = Plant.objects.all()
         paginator = context['paginator']
         page_numbers_range = 5
         max_index = len(paginator.page_range)
