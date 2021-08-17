@@ -11,6 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator
 from community.models import Like
 from django.db.models import Count
+from django.contrib import messages
 
 def login(request):
     if request.user.is_authenticated:
@@ -257,7 +258,7 @@ class ScrabListView(ListView):
     model = PlantScrap
     paginate_by = 9
     template_name = 'user/my_scrab.html'
-    context_object_name = 'scrab_list'  # DEFAULT : <model_name>_list
+    context_object_name = 'scrab_list'  
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -290,7 +291,6 @@ def delete_scrab(request, pk):
     scrab.delete()
     return redirect('user:my_scrab_plant', request.user.pk)
 
-# @login_required
 
 
 class GardenerListView(ListView):
@@ -301,7 +301,6 @@ class GardenerListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # context['user'] = GeneralUser.objects.get(id=self.kwargs['pk'])
         paginator = context['paginator']
         page_numbers_range = 10
         max_index = len(paginator.page_range)
@@ -317,17 +316,10 @@ class GardenerListView(ListView):
 
         page_range = paginator.page_range[start_index:end_index]
         context['page_range'] = page_range
-
-        # search_keyword = self.request.GET.get('q', '')
-
-        # if len(search_keyword) > 1:
-        #     context['q'] = search_keyword
-
         return context
 
     def get_queryset(self):
         search_keyword = self.request.GET.get('q', '')
-        # search_type = self.request.GET.get('type', '')
         gardener_list = GeneralUser.objects.order_by(
             'name').exclude(pk=self.request.user.pk)
 
