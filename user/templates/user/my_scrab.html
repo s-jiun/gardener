@@ -20,18 +20,18 @@
                         </div>
                         <div class="col">
                             <div id="user-info">
-                                <span id="user-id"> {{user.userid}}</span><br>
+                                <span id="user-id">{{user.userid}}</span><br>
                                 {% if user.point < 100 %}
-                                <span id="user-level">{{user.name}} 님은 현재 <a tabindex="0" type="button" data-bs-toggle="popover" data-bs-trigger="focus" title="입문 정원사" data-bs-content="0~99점(게시물 0개 ~ 3개)"><img class='rank-image' src = "{% static 'images/sf.png'%}">  입문 정원사  <img class='rank-image' src = "{% static 'images/sf.png'%}"></a>입니다.<br></span>
+                                <span id="user-level">{{user.name}} 님은 현재 <a tabindex="0" type="button" data-bs-toggle="popover" data-bs-trigger="focus" title="입문 정원사 ({{user.point}}점)" data-bs-content="0~99점(게시물 0개 ~ 3개)"><img class='rank-image' src = "{% static 'images/sf.png'%}">  입문 정원사  <img class='rank-image' src = "{% static 'images/sf.png'%}"></a>입니다.<br></span>
                                 {% elif user.point < 300 %}
-                                <span id="user-level">{{user.name}} 님은 현재 <a tabindex="0" type="button" data-bs-toggle="popover" data-bs-trigger="focus" title="초보 정원사" data-bs-content="100~299점(게시물 4개 ~ 9개)"><img class='rank-image' src = "{% static 'images/dy.png'%}">  초보 정원사  <img class='rank-image' src = "{% static 'images/dy.png'%}"></a>입니다.<br></span>
+                                <span id="user-level">{{user.name}} 님은 현재 <a tabindex="0" type="button" data-bs-toggle="popover" data-bs-trigger="focus" title="초보 정원사 ({{user.point}}점)" data-bs-content="100~299점(게시물 4개 ~ 9개)"><img class='rank-image' src = "{% static 'images/dy.png'%}">  초보 정원사  <img class='rank-image' src = "{% static 'images/dy.png'%}"></a>입니다.<br></span>
                                 {% elif user.point < 600 %}
-                                <span id="user-level">{{user.name}} 님은 현재 <a tabindex="0" type="button" data-bs-toggle="popover" data-bs-trigger="focus" title="아마추어 정원사" data-bs-content="300~599점(게시물 10개 ~ 19개)"><img class='rank-image' src = "{% static 'images/cm.png'%}">  아마추어 정원사  <img class='rank-image' src = "{% static 'images/cm.png'%}"></a>입니다.<br></span>
+                                <span id="user-level">{{user.name}} 님은 현재 <a tabindex="0" type="button" data-bs-toggle="popover" data-bs-trigger="focus" title="아마추어 정원사 ({{user.point}}점)" data-bs-content="300~599점(게시물 10개 ~ 19개)"><img class='rank-image' src = "{% static 'images/cm.png'%}">  아마추어 정원사  <img class='rank-image' src = "{% static 'images/cm.png'%}"></a>입니다.<br></span>
                                 {% elif user.point < 1000 %}
-                                <span id="user-level">{{user.name}} 님은 현재 <a tabindex="0" type="button" data-bs-toggle="popover" data-bs-trigger="focus" title="프로 정원사" data-bs-content="600~999점(게시물 20개 ~ 33개)"><img class='rank-image' src = "{% static 'images/cs.png'%}">  프로 정원사  <img class='rank-image' src = "{% static 'images/cs.png'%}"></a>
+                                <span id="user-level">{{user.name}} 님은 현재 <a tabindex="0" type="button" data-bs-toggle="popover" data-bs-trigger="focus" title="프로 정원사 ({{user.point}}점)" data-bs-content="600~999점(게시물 20개 ~ 33개)"><img class='rank-image' src = "{% static 'images/cs.png'%}">  프로 정원사  <img class='rank-image' src = "{% static 'images/cs.png'%}"></a>
                                     입니다.<br></span>
                                 {% else %}
-                                <span id="user-level">{{user.name}} 님은 현재 <a tabindex="0" type="button" data-bs-toggle="popover" data-bs-trigger="focus" title="국가대표 정원사" data-bs-content="1000점 이상(게시물 34개 이상)"><img class='rank-image' src = "{% static 'images/hs.png'%}">  국가대표 정원사  <img class='rank-image' src = "{% static 'images/hs.png'%}"></a>입니다.<br></span>
+                                <span id="user-level">{{user.name}} 님은 현재 <a tabindex="0" type="button" data-bs-toggle="popover" data-bs-trigger="focus" title="국가대표 정원사 ({{user.point}}점)" data-bs-content="1000점 이상(게시물 34개 이상)"><img class='rank-image' src = "{% static 'images/hs.png'%}">  국가대표 정원사  <img class='rank-image' src = "{% static 'images/hs.png'%}"></a>입니다.<br></span>
                                 {% endif %}
                                 <div id="profile-content">
                                     <span>
