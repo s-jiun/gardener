@@ -92,7 +92,7 @@
             {% for reply in comment.replies.all %}
             <div class="reply-{{reply.parent_reply.id}} reply-{{reply.parent_reply.id}}-{{reply.id}}">
                 <div class="reply-content mt-2 mb-2">
-                    <p> > {{reply.user_id}} {{ reply.content }} | {{ reply.created_at }}
+                    <p> > {{reply.user_id}} {{ reply.content |safe }} | {{ reply.created_at }}
                         {% if user == post.user_id or user == reply.user_id %}
                             <span class="trash" onclick="onClickDeleteReply({{reply.parent_reply.id}}, {{post.id}}, {{reply.id}})"><i class="far fa-trash-alt"></i></span>
                         {% endif %}
