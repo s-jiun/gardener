@@ -15,7 +15,7 @@ from django.db.models import Count
 def login(request):
     if request.user.is_authenticated:
         # 수정 요
-        return redirect('user:update')
+        return redirect('user:start_page')
     if request.method == 'POST':
         # 사용자가 보낸 값 -> form
         form = UserAuthenticationForm(request, request.POST)
@@ -42,7 +42,7 @@ def logout(request):
 def signup(request):
     if request.user.is_authenticated:
         # 수정 필요
-        return redirect('user:update')
+        return redirect('user:start_page')
     if request.method == 'POST':
         res = {}
         form = CustomUserCreationForm(request.POST)
@@ -77,7 +77,7 @@ def member_modification(request):
             user = user_change_form.save(commit=False)
             user.set_password(user_change_form.cleaned_data['password1'])
             user.save()
-            return redirect('/', request.user.userid)
+            return redirect('user:start_page')
 
     else:
         user_change_form = CustomUserChangeForm(instance=request.user)
@@ -114,6 +114,7 @@ def profile(request, pk):
         'page_obj': page_obj,
     }
     return render(request, template_name='user/profile.html', context=ctx)
+
 
 def follow_list(request, pk):
     user = GeneralUser.objects.get(id=pk)
@@ -198,7 +199,7 @@ def following_ajax(request):
     following = Follow.objects.filter(user_id=user_id).filter(
         following_user=request.user.id)
     following.delete()
-    return JsonResponse({'user_id': user_id, 'user_userid':user.userid,'user_name':user.name, 'user_point':user.point, 'user_image_url':user.Image.url})
+    return JsonResponse({'user_id': user_id, 'user_userid': user.userid, 'user_name': user.name, 'user_point': user.point, 'user_image_url': user.Image.url})
 
 
 @csrf_exempt
@@ -208,7 +209,8 @@ def follow_ajax(request):
     user = GeneralUser.objects.get(id=user_id)
     follow = Follow(user=user, following_user=request.user)
     follow.save()
-    return JsonResponse({'user_id': user_id, 'user_userid':user.userid,'user_name':user.name, 'user_point':user.point, 'user_image_url':user.Image.url})
+    return JsonResponse({'user_id': user_id, 'user_userid': user.userid, 'user_name': user.name, 'user_point': user.point, 'user_image_url': user.Image.url})
+
 
 def liked_posts(request, pk):
     user = GeneralUser.objects.get(id=pk)
@@ -289,12 +291,14 @@ def delete_scrab(request, pk):
     return redirect('user:my_scrab_plant', request.user.pk)
 
 # @login_required
+
+
 class GardenerListView(ListView):
     model = GeneralUser
     paginate_by = 9
     template_name = 'user/search_gardener.html'
     context_object_name = 'gardener_list'
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # context['user'] = GeneralUser.objects.get(id=self.kwargs['pk'])
@@ -320,15 +324,17 @@ class GardenerListView(ListView):
         #     context['q'] = search_keyword
 
         return context
-        
+
     def get_queryset(self):
         search_keyword = self.request.GET.get('q', '')
         # search_type = self.request.GET.get('type', '')
-        gardener_list = GeneralUser.objects.order_by('name').exclude(pk=self.request.user.pk)
+        gardener_list = GeneralUser.objects.order_by(
+            'name').exclude(pk=self.request.user.pk)
 
         if search_keyword:
             if len(search_keyword) > 1:
-                search_gardener_list = gardener_list.filter(Q(userid__icontains=search_keyword)).exclude(pk=self.request.user.pk)
+                search_gardener_list = gardener_list.filter(
+                    Q(userid__icontains=search_keyword)).exclude(pk=self.request.user.pk)
                 return search_gardener_list
             else:
                 messages.error(self.request, '검색어는 2글자 이상 입력해주세요.')

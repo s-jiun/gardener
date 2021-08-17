@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block head %}
-    <link href="{% static 'style/css/login.css' %}" rel="stylesheet">
+    <link href="{% static 'style/css/profile_update.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
@@ -11,12 +11,12 @@
         <div class="container p-0">
             <form action="" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
-                <div class="card px-5" style="background-color: rgb(204, 223, 204); max-width: 600px;">
-                    <p class="h8 py-5 px-5">아이디 찾기</p>
+                <div id="update-card" class="card px-5">
+                    <p class="h8 py-3 px-5"><img id="update-icon1" src="{%static 'images/leaf.png' %}">프로필 수정<img src="{%static 'images/leaf.png' %}" id="update-icon2" > </p> 
                     <div class="row gx-3">
-                        <div class="col-12 mb-5 d-flex justify-content-center align-items-center">
+                        <div class="col-12 d-flex justify-content-center align-items-center">
                             <div class="d-flex flex-column">
-                                <img id="blah" src="{{request.user.Image.url}}" alt="" style="border-radius: 100%; width: 100px; height: 100px;">
+                                <img id="blah" src="{{request.user.Image.url}}" alt="" >
                             </div>
                         </div>
                         <div class="col-12 mb-2">
@@ -34,10 +34,11 @@
                         <div class="col-12 mb-2">
                             <div class="d-flex flex-column">
                                 <p class="text">소개</p>
-                                <textarea name="profile" cols="40" rows="10" id="id_profile"></textarea>
+                                <textarea id="profile-content" name="profile" cols="40" rows="10" id="id_profile"></textarea>
                             </div>
                         </div>
-                        <div class="col-12 mt-2">
+                        <div class="col flex-column text-center mt-2">
+                            <button class="btn btn-primary mb-3 text-center" href ="{% url 'user:my_profile' %}" style="background-color: #a0cab5;"><span style="margin-top:5px;">취소하기</span></button>
                             <button class="btn btn-primary mb-3" type="submit" style="background-color: #a0cab5;"><span>저장하기</span></button>
                         </div>
                     </div>

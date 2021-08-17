@@ -14,11 +14,14 @@
             {% else %}
             <h2 style=''>🌵 마음에 드는 플랜테리어를 찾아보세요 🌵</h2>
             {% endif %}
-            {% if messages %}
+            {% if messages%}
                 {% for message in messages %}
-                    {{message}}
+                    {% if message.tags == 'error'%}
+                        {{message}}
+                    {% endif %}
                 {% endfor %}
             {% endif %}
+            
         </div>
         <div id='search-header-form'>
             <form action='' method="GET">
@@ -47,7 +50,7 @@
                     <p id='thumbnail-p'><img id='post-list-thumbnail' src="{{ post.user_id.Image.url }}"> {{ post.user_id }}</p>
                     <figure class="snip1384">
                         {% if post.image %}
-                            <image src='{{ post.image.url }}' class='img-thumbnail' style='width: 90%; height:90%;'/>
+                            <image src='{{ post.image.url }}' class='img-thumbnail'/>
                         {% endif %}
                         <figcaption>
                           <h3>{{post.title|truncatechars:10 }}</h3>

@@ -50,8 +50,13 @@
                             <input type="password" name="password2" class="form-control" required="" id="id_password2">
                         </div>
                     </div>
-                    <div class="col-12">
+                    <div class="col-6">
                         <button class="btn btn-primary mb-3 mt-3" type="submit"><span>저장하기</span></button>
+                    </div>
+                    <div class="col-6">
+                        <a href="{% url 'user:my_profile' %}">
+                            <button class="btn btn-primary mb-3 mt-3" type="button"><span>취소하기</span></button>
+                        </a>
                     </div>
                 </div>
             </div>

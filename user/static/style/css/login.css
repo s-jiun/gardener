@@ -7,7 +7,7 @@
 }
 
 .card {
-  max-width: 400px;
+  max-width: 450px;
   min-height: 600px;
   margin: auto;
   color: black;
@@ -15,6 +15,9 @@
   justify-content: center;
   max-height: 800px;
   background-color: rgba(0, 0, 0, 0.2);
+  border-style: double; 
+  border-width: 5px; 
+  border-color:#3b260f;
 }
 
 p {
@@ -57,7 +60,7 @@ p {
 }
 
 .form-control {
-  color: black;
+  color: #3b260f;
   border: 1px solid rgba(0, 0, 0, 0.5);
   height: 40px;
   padding-left: 20px;
@@ -99,4 +102,12 @@ p {
   border-color: black;
   background-color: #a0cab5;
   box-shadow: none;
+}
+#login-icon1{
+  width: 2.5rem;
+  transform:scaleX(-1);
+}
+#login-icon2{
+  width: 2.5rem;
+  
 }
