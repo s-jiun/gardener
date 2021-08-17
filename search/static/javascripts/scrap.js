@@ -14,13 +14,13 @@ const ScrapHandleResponse = () => {
     if (requestScrap.status < 400) {
         const {id, type} = JSON.parse(requestScrap.response);    // {'id': 1, 'type': 'like'}
         const element = document.querySelector(`#plantDetailModal-${id} .post__${type}`);
-        if (element.innerHTML === '스크랩 취소') {
+        if (element.innerHTML === '<i class="fas fa-bookmark"></i>') {
             element.classList.replace(`post__${type}`, 'post__scrap')
-            element.innerHTML = '스크랩';
+            element.innerHTML = '<i class="far fa-bookmark"></i>';
         }
         else {
             element.classList.replace(`post__${type}`, 'post__del_scrap')
-            element.innerHTML ='스크랩 취소'
+            element.innerHTML ='<i class="fas fa-bookmark"></i>'
         }
     }
 };
