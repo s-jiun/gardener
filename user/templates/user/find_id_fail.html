@@ -5,17 +5,16 @@
 {% endblock %}
 
 {% block content %}
-<div class="d-flex justify-content-center align-items-center main-container" style="background-image: url({% static 'images/find_id.jpg' %});">
-    <div class="d-flex justify-content-center align-items-center main-container" style="background-color: rgba(0, 0, 0, 0.5);">
+<div class="d-flex justify-content-center align-items-center main-container" style="background-image: url({% static 'images/id_find.jpg' %});">
+    <div class="d-flex justify-content-center align-items-center main-container">
         <div class="container p-0">
             <form action="" method="POST">
                 {% csrf_token %}
                 <div class="card px-5">
-                    <p class="h8 py-5 px-5">아이디 찾기</p>
-                    <div class="row gx-3">
+  <p class="h8 py-5 px-3"><img id="login-icon2" src="{% static 'images/plant.png' %}"> &nbsp 아이디 찾기 &nbsp <img id="login-icon2" src="{% static 'images/plant.png' %}"></p>                    <div class="row gx-3">
                         <div class="col-12 mb-5">
                             <div class="d-flex flex-column">
-                                <p class="text mb-1 text-center">{{email}}로 등록된 아이디가 존재하지 않습니다!</p>
+                                <p class="text mb-1 text-center">{{email}}로<br> 등록된 아이디가 존재하지 않습니다!</p>
                             </div>
                         </div>
                     </div>

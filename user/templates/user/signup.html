@@ -11,12 +11,11 @@
         <form action="" method="POST">
             {% csrf_token %}
             <div class="card px-5">
-                <p class="h8 px-5">Gardener</p>
-                <p class="h8 px-5">회원가입</p>
+				<p class="h8 py-4"><img id="login-icon2" src="{% static 'images/botanic.png' %}">&nbsp 회원가입 &nbsp<img id="login-icon1" src="{% static 'images/botanic.png' %}"></p>
                 <div class="row gx-3">           
                     <div class="col-12">
                         <div class="d-flex flex-column">
-                            <p class="text mb-1">이름</p> <input type="text" name="name" class="form-control mb-3" required="" id="id_name">
+                            <p class="text mb-1 mt-1">이름</p> <input type="text" name="name" class="form-control mb-3" required="" id="id_name">
                         </div>
                     </div>
                     <div class="col-12">
@@ -63,7 +62,7 @@
                         </div>
                     </div>
                     <div class="col-12">
-                        <button class="btn btn-primary mb-3 mt-3" type="submit"><span>회원가입</span></button>
+                        <button class="btn btn-primary mb-5 mt-3" type="submit"><span>회원가입</span></button>
                     </div>
                 </div>
             </div>
