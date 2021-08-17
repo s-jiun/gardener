@@ -217,8 +217,8 @@
 .suggestions {
   position: relative;
   left: 27vw;
-  background-color: white;
-  border-radius: 10px;
+  background-color: #eceef1;
+  border-radius: 3px;
   width: 30vw;
   z-index: 1;
 }
@@ -226,4 +226,9 @@
 .suggested {
   color: black;
   cursor: pointer;
+  margin: 2px;
+}
+
+.fa-bookmark {
+  color: black;
 }
