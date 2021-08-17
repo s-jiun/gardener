@@ -13,6 +13,7 @@ from community.models import Like
 from django.db.models import Count
 from django.contrib import messages
 
+
 def login(request):
     if request.user.is_authenticated:
         # 수정 요
@@ -90,7 +91,7 @@ def profile(request, pk):
     user = GeneralUser.objects.get(id=pk)
     follower = Follow.objects.filter(user=user).count()
     following = Follow.objects.filter(following_user=user).count()
-    posts = user.post_set.all()
+    posts = user.post_set.all().order_by(-id)
     page = request.GET.get('page', '1')  # GET 방식으로 정보를 받아오는 데이터
     paginator = Paginator(posts, '9')  # Paginator(분할될 객체, 페이지 당 담길 객체수)
     page_obj = paginator.page(page)  # 페이지 번호를 받아 해당 페이지를 리턴 get_page 권장
@@ -103,11 +104,12 @@ def profile(request, pk):
             is_following = True
             break
 
-    rank_user = GeneralUser.objects.annotate(num_resp=Count('following')).exclude(pk=request.user.pk).order_by('-num_resp')
+    rank_user = GeneralUser.objects.annotate(num_resp=Count(
+        'following')).exclude(pk=request.user.pk).order_by('-num_resp')
 
     ctx = {
         'user': user,
-        'rank_user' : rank_user[0:5],
+        'rank_user': rank_user[0:5],
         'follower': follower,
         'following': following,
         'posts': page_obj,
@@ -212,6 +214,7 @@ def follow_ajax(request):
     follow.save()
     return JsonResponse({'user_id': user_id, 'user_userid': user.userid, 'user_name': user.name, 'user_point': user.point, 'user_image_url': user.Image.url})
 
+
 @csrf_exempt
 def base_image_ajax(request):
     req = json.loads(request.body)
@@ -219,7 +222,7 @@ def base_image_ajax(request):
     user = GeneralUser.objects.get(id=user_id)
     user.Image = '../static/images/default_profile.svg'
     user.save()
-    return JsonResponse({'user_image':user.Image.url})
+    return JsonResponse({'user_image': user.Image.url})
 
 
 def liked_posts(request, pk):
@@ -267,7 +270,7 @@ class ScrabListView(ListView):
     model = PlantScrap
     paginate_by = 9
     template_name = 'user/my_scrab.html'
-    context_object_name = 'scrab_list'  
+    context_object_name = 'scrab_list'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -299,7 +302,6 @@ def delete_scrab(request, pk):
     scrab = PlantScrap.objects.get(user=request.user, plant=plant)
     scrab.delete()
     return redirect('user:my_scrab_plant', request.user.pk)
-
 
 
 class GardenerListView(ListView):
@@ -335,7 +337,7 @@ class GardenerListView(ListView):
         if search_keyword:
             if len(search_keyword) > 1:
                 search_gardener_list = gardener_list.filter(
-                    Q(userid__icontains=search_keyword)).exclude(pk=self.request.user.pk)
+                    userid__icontains=search_keyword).exclude(pk=self.request.user.pk)
                 return search_gardener_list
             else:
                 messages.error(self.request, '검색어는 2글자 이상 입력해주세요.')
