@@ -136,9 +136,9 @@ def get_client_ip(request):
 
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    if not Postviews.objects.filter(client_ip=get_client_ip(request)):
-        Postviews.objects.create(post=post, client_ip=get_client_ip(request))
-
+    Postviews.objects.get_or_create(
+        post=post, client_ip=get_client_ip(request))
+    print(len(Postviews.objects.filter(post=post)))
     comments = post.reply_set.filter(parent_reply__isnull=True)
     liked_user = Like.objects.filter(
         post_id=pk).values_list('user_id', flat=True)
