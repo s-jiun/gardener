@@ -17,6 +17,7 @@
                         <div class="col-12 d-flex justify-content-center align-items-center">
                             <div class="d-flex flex-column">
                                 <img id="blah" src="{{request.user.Image.url}}" alt="" >
+                                <button class="btn btn-primary mt-3" style="background-color: #a0cab5;" type="button" onclick="onClickBaseImage({{user.id}})">기본이미지 지정</button>
                             </div>
                         </div>
                         <div class="col-12 mb-2">
@@ -58,5 +59,31 @@
         reader.readAsDataURL(input.files[0]);
         }
     }
+
+    const requestBaseImage = new XMLHttpRequest();
+
+    const onClickBaseImage = (user_id) => {
+      const url = "/base_image_ajax/";
+      requestBaseImage.open("POST", url, true);
+      requestBaseImage.setRequestHeader(
+        "Content-Type",
+        "application/x-www-form-urlencoded"
+      );
+      requestBaseImage.send(JSON.stringify({ user_id: user_id }));
+    };
+
+    const baseImageHandleResponse = () => {
+        if (requestBaseImage.status < 400) {
+            const { user_image } = JSON.parse(requestBaseImage.response);
+            const profileImage = document.querySelector('#blah')
+            profileImage.setAttribute('src', user_image)
+        };
+    }
+
+    requestBaseImage.onreadystatechange = () => {
+      if (requestBaseImage.readyState === XMLHttpRequest.DONE) {
+        baseImageHandleResponse();
+      }
+    };
 </script>
 {% endblock %}

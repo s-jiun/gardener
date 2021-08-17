@@ -1,0 +1,108 @@
+.main-container {
+    width: 100vw;
+    height: 100vh;
+    background-position: 100% 100%;
+    position: relative; 
+    background-size: cover;
+  }
+  
+  .card {
+    max-width: 450px;
+    min-height: 600px;
+    margin: auto;
+    color: black;
+    border-radius: 20 px;
+    justify-content: center;
+    max-height: 800px;
+    background-color: rgb(204, 223, 204);
+    border-style: double; 
+    border-width: 5px; 
+    border-color:#3b260f;
+  }
+  
+  p {
+    margin: 0px;
+  }
+  
+  .container .h8 {
+    font-size: 36px;
+    font-weight: 800;
+    text-align: center;
+  }
+  
+  .btn.btn-primary {
+    width: 100%;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 15px;
+    border: none;
+    transition: 0.5s;
+    background-size: 200% auto;
+    justify-content: center;
+    height: 50px;
+    color: black;
+    font-weight: 800;
+    border: rgba(0, 0, 0, 0.05);
+    background-color: #a0cab5;
+  }
+  
+  .btn.btn.btn-primary:hover {
+    background-position: right center;
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  .btn.btn-primary:hover .fas.fa-arrow-right {
+    transform: translate(15px);
+    transition: transform 0.2s ease-in;
+  }
+  
+  .form-control {
+    color: #3b260f;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    height: 40px;
+    padding-left: 20px;
+    vertical-align: middle;
+  }
+  
+  .form-control:focus {
+    color: black;
+    border-color: black;
+    background-color: #ccdfcc;
+    box-shadow: none;
+  }
+  
+  .text {
+    font-size: 14px;
+    font-weight: 600;
+  }
+  
+  ::placeholder {
+    font-size: 14px;
+    font-weight: 600;
+  }
+  
+  .password-reset-form-control {
+    color: black;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    height: 40px;
+    padding-left: 20px;
+    vertical-align: middle;
+  }
+  
+  .password-reset-form-control:focus {
+    color: black;
+    border-color: black;
+    background-color: #a0cab5;
+    box-shadow: none;
+  }
+  #login-icon1{
+    width: 2.5rem;
+    transform:scaleX(-1);
+  }
+  #login-icon2{
+    width: 2.5rem;
+    
+  }
