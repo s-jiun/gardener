@@ -39,6 +39,8 @@
                             <div id="search_option" style="display:inline">
                                 <input class="plant-input" type="text" name ='q' value="{{q}}" placeholder="검색어를 입력하세요" />
                                 <button class="plant-input-1" type="submit">검색</button>
+                                <div class="suggestions">
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -245,6 +247,40 @@
     </ul>
     {% endif %}
     </div>
+    <script>
+        
+        let plants = [
+            {% for plant in plants %}
+                {name: "{{ plant.name }}"},
+            {% endfor %}
+        ]
+
+        var isComplete = false;  //autoMaker 자식이 선택 되었는지 여부
+        $('.plant-input').keyup(function(){
+            var txt = $(this).val();
+            if(txt != ''){  //빈줄이 들어오면
+                $('.suggestions').children().remove();
+
+                plants.forEach(function(arg){
+                    if(arg.name.indexOf(txt) > -1 ){
+                        $('.suggestions').append(
+                            $('<div class="suggested">').text(arg.name)
+                        );		
+                    }
+                });
+                $('.suggestions').children().each(function(){
+                    $(this).click(function(){
+                        $('.plant-input').val($(this).text());
+                        $('.suggestions').children().remove();	
+                        isComplete = true;
+                    });
+                });			
+            } else {
+                $('.suggestions').children().remove();
+            }  
+        });
+
+    </script>
 {%endblock%}
 
 {% block js %}
