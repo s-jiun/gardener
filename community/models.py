@@ -34,7 +34,7 @@ class TaggedPost(TaggedItemBase):
 class Post(models.Model):
     user_id = models.ForeignKey(GeneralUser, on_delete=CASCADE)
     title = models.CharField(max_length=200)
-    image = ImageField(default='../static/images/baseimg.png',
+    image = ImageField(default='../static/images/baseimg.jpg',
                        upload_to='Community/%y/%m/%d/')
     content = RichTextUploadingField(
         blank=True, null=True, config_name='answer_ckeditor')
