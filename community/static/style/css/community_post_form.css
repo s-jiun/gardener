@@ -1,0 +1,29 @@
+#blah {
+  width: 30%;
+  height: auto;
+}
+
+#submit-input {
+  background-color: #ccdfcc;
+  border-radius: 10px;
+  border: 0;
+}
+
+#submit-button {
+  background-color: #c4c4c4;
+  border-radius: 10px;
+  border: 0;
+}
+
+#submit-button a {
+  text-decoration: none;
+  color: black;
+}
+
+#new-post-comment {
+  writing-mode: vertical-rl;
+}
+
+/* #post-form-image {
+  overflow: auto;
+} */

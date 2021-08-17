@@ -1,0 +1,57 @@
+#notice-header {
+  width: 100%;
+  height: 300px;
+  background: url("/static/images/notice-background.jpg");
+  background-repeat: no-repeat;
+  background-position: 80% 65%;
+  background-size: cover;
+  color: black;
+  text-align: center;
+  padding: 0;
+}
+
+#notice-header h1 {
+  padding-top: 80px;
+  margin-bottom: 25px;
+}
+
+.search-input-1 {
+  border-radius: 10px;
+  background-color: #ccdfcc;
+}
+
+#search-type {
+  width: 60px;
+  height: 37px;
+  border: solid 2px #ccdfcc;
+  border-radius: 10px;
+  vertical-align: top;
+  background: #ccdfcc;
+  color: white;
+  font-weight: bold;
+  text-shadow: -1px 0 #a0cab5, 0 1px #a0cab5, 1px 0 #a0cab5, 0 -1px #a0cab5;
+}
+
+.search-input {
+  width: 50%;
+  height: 40px;
+  border: solid 2px #ccdfcc;
+  border-radius: 10px;
+}
+
+#search-input-button {
+  width: 60px;
+  height: 37px;
+  border: solid 2px #ccdfcc;
+  border-radius: 10px;
+  vertical-align: top;
+  background: #ccdfcc;
+  color: white;
+  font-weight: bold;
+  text-shadow: -1px 0 #a0cab5, 0 1px #a0cab5, 1px 0 #a0cab5, 0 -1px #a0cab5;
+}
+
+.moveto-other-page {
+  text-decoration: none;
+  color: black;
+}

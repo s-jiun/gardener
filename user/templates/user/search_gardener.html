@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% load static %}
+
+{%block head%}
+<link href="{% static 'style/css/search_gardener.css' %}" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+
+{%endblock%}
+
+{% block content %}
+        <div class= "main-gardener">
+            <div class='row'>
+                <div id='gardener-header' class='d-flex flex-column justify-content-center'>
+                    <div id='gardener-header-p'>
+                        {% if q %}
+                        <span style="font-size: 28px;">'{{ q }}' 검색 결과입니다. </span>
+                        {% else %}
+                        <h2>
+                            🍀 새로운 가드너들과 함께하세요  🍀
+                        </h2>
+                        {% endif %}
+                        <!-- 에러메시지 -->
+                        {% if messages %}
+                            {% for message in messages %}
+                                {{message}}
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div id='gardener-header-form'>
+                        <form action = '' method="GET" >
+                            <div id="search_option" style="display:inline">
+                                <input class="gardener-input" type="text" name ='q' value="{{q}}" placeholder="검색어를 입력하세요" />
+                                <button class="gardener-input-1" type="submit">검색</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div><!--header 닫힘-->
+        <div class="container-fluid main-body mt-4 mb-4" id="gardener-body">
+        {% if gardener_list %}
+        <div class='row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3'>
+            {% for gardener in gardener_list %}
+                <div class="col">
+                    <div class="card p-2 m-3" id="gardener-card" >
+                        <div class="image" >
+                            <a href="{% url 'user:profile' gardener.pk%} ">
+                            <img src={{gardener.Image.url}} class="card-img-top"  id="gardener-img" alt="..." >
+                            <span><h3 style="font-weight:bold">😉 {{gardener.name}} 님 😉 </h3><br> {{gardener.profile | truncatechars:20}}</span>
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title" style="width:50%; display:inline">{{ gardener.name }}
+                            {% if gardener.point < 100 %}
+                            <h6 style="display: inline;  float: right;">  <img class='rank-image' src = "{% static 'images/sf.png'%}" style="width:1rem; heigth:auto"> 입문 정원사 <img class='rank-image' src = "{% static 'images/sf.png'%}"></h6>
+                            {% elif gardener.point < 300 %}
+                            <h6 style="display: inline;  float: right;"> <img class='rank-image' src = "{% static 'images/dy.png'%}"> 초보 정원사 <img class='rank-image' src = "{% static 'images/dy.png'%}"></h6>
+                            {% elif gardener.point < 600 %}
+                            <h6 style="display: inline;  float: right;"> <img class='rank-image' src = "{% static 'images/cm.png'%}"> 아마추어 정원사 <img class='rank-image' src = "{% static 'images/cm.png'%}"></h6>
+                            {% elif gardener.point < 1000 %}
+                            <h6 style="display: inline;  float: right;"> <img class='rank-image' src = "{% static 'images/cs.png'%}"> 프로 정원사 <img class='rank-image' src = "{% static 'images/cs.png'%}"></h6>
+                            {% else %}
+                            <h6 style="display: inline;  float: right;"> <img class='rank-image' src = "{% static 'images/hs.png'%}"> 국가대표 정원사 <img class='rank-image' src = "{% static 'images/hs.png'%}"></h6>
+                            {% endif %}
+                            </h5>
+                            <hr class="m-0">
+                        </div>
+                    </div>
+                </div>
+                
+            {% endfor %}
+            {% else %}
+                {%if q%}
+                <tr class="text-center">
+                    <td colspan="5">
+                        <div class="text-center" style="font-size: 28px;">
+                            일치하는 검색 결과가 없습니다.
+                        </div>
+                    </td>
+                </tr>
+                {% else %}
+                <tr class="text-center" style="font-size: 28px;">
+                    <td colspan="5">
+                    아직 가드너들의 정보가 없습니다. 
+                    </td>
+                </tr>
+                {%endif%}
+        </div>
+        {% endif %}
+
+    </div>
+
+
+        <!--pagination-->
+    <div id="gardener-paginator">
+        {% if is_paginated %}
+        <ul class="pagination">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?q={{q}}&page={{ page_obj.previous_page_number }}"
+            tabindex="-1">이전</a>
+         </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1">이전</a>
+         </li>
+        {% endif %}
+
+        {% for page in page_range %}
+        <li class="page-item {% if page == page_obj.number %} activate {% endif %}">
+            <a class="page-link" href="?q={{q}}&page={{ page }}">{{ page }}</a>
+        </li>
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+        <li class="page-item">
+        <a class="page-link"
+            href="?q={{q}}&page={{ page_obj.next_page_number }}">다음</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" href="#">다음</a>
+        </li>
+        {% endif %}
+    </ul>
+    {% endif %}
+    </div>
+{%endblock%}
+
+

@@ -1,4 +1,6 @@
 from django.db import models
+from user.models import GeneralUser
+from django.db.models.deletion import CASCADE
 
 # Create your models here.
 
@@ -21,3 +23,8 @@ class Plant(models.Model):
     flower = models.CharField(blank=True, max_length=200)
     content = models.TextField(blank=True)
     # season = models.CharField(max_length=20, blank=True) >> 계절정보를 찾지 못함.
+
+
+class PlantScrap(models.Model):
+    user = models.ForeignKey(GeneralUser, on_delete=CASCADE)
+    plant = models.ForeignKey(Plant, on_delete=CASCADE)

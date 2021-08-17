@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load pybo_filter %}
+{% block head %}
+    <link href="{% static 'style/css/notice.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class='row'>
+    <div id='notice-header' class='d-flex flex-column justify-content-center'>
+        {% if q %}
+            <h1>'{{ q }}' 검색 결과입니다.</h1>
+        {% else %}
+            <h1>공지사항</h1>
+        {% endif %}
+        {% if messages %}
+            {% for message in messages %}
+                {{message}}
+            {% endfor %}
+        {% endif %}
+        <form action='' method="GET" style='height: 20%;'>
+            <select class='search-input-1' name="type" id="search-type">
+                <option value="title">제목</option>
+                <option value="content">내용</option>
+            </select>
+            <input class='search-input'  type="text" name='q' value="{{q}}" placeholder="공지사항을 검색해보세요"/>
+            <button class='search-input-1' id='search-input-button' type="submit">검색</button>
+        </form>
+    </div>
+</div>
+<div class = 'container-fluid mt-4 text-center' style='width:80%;'>
+
+    <table class='table table-striped table-hover'>
+        <thead>
+            <tr class="text-center table-success">
+                <th scope='col col-1'>번호</th>
+                <th scope='col col-7'>제목</th>
+                <th scope='col-2'>작성자</th>
+                <th scope='col-2'>등록일</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if notice %}
+            {% for notice in notice %}
+            <tr class="text-center">
+                <th scope='row'>{{ paginator.count|sub:page_obj.start_index|sub:forloop.counter0|add:1 }}</th>
+                <td><a href='{% url "community:notice_detail" notice.pk %}' class='moveto-other-page'>{{ notice.title|truncatechars:30 }}</a></td>
+                <td>관리자</td>
+                <td>{{ notice.created_at|date:'Y. m. d' }}</td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            {% if q %}
+                <tr class='text-center'>
+                    <th scope='row'>0</th>
+                    <td>일치하는 게시글이 없습니다.</td>
+                    <td>관리자</td>
+                    <td></td>
+                </tr>
+            {% else %}
+                <tr class='text-center'>
+                    <th scope='row'>0</th>
+                    <td>작성된 게시글이 없습니다.</td>
+                    <td>관리자</td>
+                    <td></td>
+                </tr>
+            {% endif %}
+
+            {% endif %}
+        </tbody>
+    </table>
+
+    <div class="col-md-offset-6">
+        {% if is_paginated %}
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?type={{ type }}&q={{ q }}&page={{ page_obj.previous_page_number }}"
+                    tabindex="-1" style="font-size: 15px;">이전</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1" style="font-size: 15px;">이전</a>
+            </li>
+            {% endif %}
+
+            {% for page in page_range %}
+            <li class="page-item {% if page == page_obj.number %} activate {% endif %}">
+                <a class="page-link" href="?type={{ type }}&q={{ q }}&page={{ page }}" style="font-size: 15px;">{{ page }}</a>
+            </li>
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link"
+                    href="?type={{ type }}&q={{ q }}&page={{ page_obj.next_page_number }}" style="font-size: 15px;">다음</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" href="#" style="font-size: 15px;">다음</a>
+            </li>
+            {% endif %}
+        </ul>
+        {% endif %}
+    </div>
+    <div class='col-md-offset-6'>
+    {% if q %}
+    <button type='submit' style='border-radius: 10px;' class= 'mb-4'>
+        <a href = '{% url "community:notice" %}' class='moveto-other-page'>뒤로가기</a>
+    </button>
+    {% endif %}
+    </div>
+    
+</div>
+{% endblock %}

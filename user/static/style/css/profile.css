@@ -1,0 +1,189 @@
+a {
+  text-decoration: none;
+  cursor: pointer;
+  color: black;
+}
+
+.profile {
+  width: 100%;
+  display: left;
+  margin: 50px 20px 20px 20px;
+  padding: 15px;
+  border: solid 3px #ccdfcc;
+  border-radius: 10px;
+  background-image: url("../../images/background.png");
+  background-size: 900px;
+  z-index: -1;
+  box-shadow: 3px 3px 3px 0px #a0cab5;
+  color: #5c5427;
+}
+
+.profile_in {
+  z-index: 1;
+  background: white;
+  border: solid 2px #ccdfcc;
+  border-radius: 10px;
+  padding: 15px;
+  overflow-x: scroll;
+}
+
+#profile-line,
+#user-img {
+  border-style:double;
+  padding:1px 3px;
+  border-width: 5px;
+  border-color:#5c5427;
+  width:12rem;
+  height:12rem;
+  border-radius: 50%;
+  position: relative;
+  overflow: auto;
+  max-height: 230px;
+  max-width:230px;
+  min-height: 130px;
+  min-width:130px;
+  margin-top:3%;
+}
+#profile-line {
+  height: 230px;
+  width: 250px;
+  overflow: auto;
+  object-fit: cover;
+}
+#profile-content {
+  width: 90%;
+  height: auto;
+  padding: 10px;
+  display: inline-block;
+  margin-top: 10px;
+  border: solid 3px#CCDFCC;
+  border-radius: 5px;
+  overflow: auto;
+}
+.sidebar {
+  width: 80%;
+  margin-top: 50px;
+  background: #ccdfcc;
+  border: solid 3px #ccdfcc;
+  border-radius: 10px;
+  position: sticky;
+  top: 0;
+  box-shadow: 3px 3px 3px 0px #a0cab5;
+}
+
+#user-info {
+  margin-top: 15px;
+  width: auto;
+}
+#user-info #user-id {
+  font-size: 40px;
+}
+#user-level {
+  font-size: 20px;
+  margin-left: 10px;
+  vertical-align: text-top;
+}
+#plant-icon {
+  width: 2vw;
+  height: auto;
+}
+
+.rank-image {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+}
+
+.popover-header {
+  background-color: #a0cab5;
+}
+
+#user-follow img {
+  width: 2vw;
+  height: auto;
+}
+#user-follow a:hover{
+  color:#ccdfcc;
+}
+
+#post-title {
+  display: inline-block;
+  width: 90%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: bold;
+  color: #5c5427;
+  margin: 0;
+}
+
+.sidebar a {
+  width: 100%;
+  padding: 10px;
+  margin: 0;
+  font-weight: bold;
+  color: #5c5427;
+
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: #5c5427;
+}
+.sidebar a:link {
+  color: #5c5427;
+  text-decoration: none;
+}
+.sidebar a:hover {
+  border-radius: 5px;
+  border: solid 2px white;
+}
+.sidebar span{
+  font-weight: bold;
+  color:#5c5427;
+  font-size: 15px;
+  text-decoration:none; 
+  border-bottom:1px solid #5c5427;
+  padding-bottom:3px;
+
+}
+
+#no-post {
+  width: 100%;
+  height: 500px;
+  margin-top: 30px;
+  vertical-align: text-top;
+}
+#no-post span {
+  font-size: 30px;
+}
+#no-post img {
+  vertical-align: text-bottom;
+  width:2rem;
+}
+
+#card-post {
+  border: solid 3px #ccdfcc;
+  border-radius: 5px;
+}
+
+.follow-btn {
+  position: relative;
+  background: #a0cab5;
+  width: auto;
+  border: 1px solid #b8b8b8;
+  box-sizing: border-box;
+  border-radius: 100px;
+  font-family: "Gowun Batang", serif;
+}
+.follow-wrapper{
+  display: inline;
+}
+.follow-wrapper .follow, .follow-wrapper .following{
+  display:inline;
+}
+#profile-post-line{
+  text-align:center; 
+  border:solid 2px #ccdfcc; 
+  border-width: 3px 0px 3px 0px;
+  padding:0; 
+  margin:0;
+}

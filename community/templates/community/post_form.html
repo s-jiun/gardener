@@ -1,12 +1,115 @@
 {% extends "base.html" %}
 {% load static %}
+{% block head %}
+    <link href="{% static 'style/css/community_post_form.css' %}" rel="stylesheet">
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 
+{% endblock %}
 {% block content %}
+    <div class='container main-body' style='background-color:#F5F5F5;'>
+        <div class='row'>
+            <div class='col col-1'>
 
-    <form action='' method='POST' enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.media }}
-        {{ form.as_p }}
-        <input type="submit" value = '제출' /> 
-    </form>
+            </div>
+            <div class='col col-10 container-fluid d-flex flex-column' style='align-items: center;'>
+                <div style='width:80%;'>
+                    <div >
+                        {% if form.title.value %}
+                        <h4 class='mb-4  mt-5'>게시물 수정</h4>
+                        {% else %}
+                        <h4 class='mb-4  mt-5'>새 글 작성</h4>
+                        {% endif %}
+                        <form action='' method='POST' enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class='form-group mb-3'>
+                                <label for="id_title" class="form-label">제목</label>
+                                {% if form.title.value %}
+                                <input type="text" class='form-control' name="title" maxlength="100" required="" id="id_title" value='{{form.title.value}}'>
+                                {% else %}
+                                <input type="text" class='form-control' name="title" maxlength="100" required="" id="id_title">
+                                {% endif %}
+                            </div>
+                            <div class='form-group mb-3'>
+                                <label for="id_image" class="form-label">썸네일</label>
+                                {% if form.title.value %}
+                                현재                           
+                                {% if form.image.value != '../static/images/baseimg.png' %}
+                                    <a href="{{ form.image.value.url }}">{{ form.image.value }}</a><br/>
+                                {% else %}
+                                    기본 이미지 입니다.
+                                {% endif %}
+                                (썸네일 이미지를 변경해보세요!)                                
+                                <input type="file" class='form-control' onchange="readURL(this);" name="image" accept="image/*" id="id_image">
+                                <img id="blah" src="" class='mt-2'/>
+                                {% else %}
+                                (썸네일을 지정하지 않으면 기본이미지가 썸네일로 적용됩니다.)
+                                <input type="file" class='form-control' onchange="readURL(this);" name="image" accept="image/*" id="id_image">
+                                <img id="blah" src="" class='mt-2'/>
+                                {% endif %}
+                            </div>
+                            <div class='form-group mb-3'>
+                                <label for="content" class="form-label">내용</label>
+                                <div style='width: 100%;'>
+                                    {{ form.media }}
+                                    {{ form.content }}
+                                </div>
+                            </div>
+                            <div class='form-group'>
+                                <label for = 'id_tags' class = 'form-label'>태그</label>
+                                <input type="text"class="form-control" name="tags" id="id_tags" value="{%for tag in form.tags.value %}#{{tag}}{%endfor%}">
+                                <span>{{form.tags.help_text}}</span>
+                            </div>
+                            <div class='text-center mb-5'>
+                                {% if form.title.value %}
+                                <input type="submit" id='submit-input' value = '수정하기' class='me-3'/>
+                                <button type="button" id='submit-button'>
+                                    <a href="{% url 'community:post_detail' pk %}">취소</a>
+                                </button>
+                                {% else %}
+                                <input type="submit" id='submit-input' value = '업로드' class='me-3'/>
+                                <button type="button" id='submit-button'>
+                                    <a href="{% url 'community:post_list' %}">돌아가기</a>
+                                </button>
+                    
+                                {% endif %}
+                            </div>
+                            
+                        </form>
+                    </div>
+                </div>
+                
+            </div>
+            <div class='col col-1' id='new-post-comment'>
+                {% if form.title.value %}
+                    <h4 class='mt-3' style='margin-left:0; margin-right:1vw;'>
+                        포스트 수정중입니다
+                    </h4>
+                    
+                {% else %}
+                    <h4 class='mt-3' style='margin-left:1vw; margin-right:1vw;'>
+                        여러분의 플랜테리어를
+                    </h4>
+                    <h4 class='mt-3' style='margin-left:0; margin-right:0;'>
+                        공유해보세요
+                    </h4>
+                {% endif %}
+            </div>
+        </div>
+        
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+        function readURL(input) {
+            console.log(input);
+            if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+            $('#blah').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
 {% endblock %}

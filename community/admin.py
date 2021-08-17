@@ -15,10 +15,6 @@ class TaggedPostAdmin(admin.ModelAdmin):
     pass
 
 
-# @admin.register(models.Tag)
-# class TagAdmin(admin.ModelAdmin):
-#     list_display = ['name','slug']
-
 @admin.register(models.Reply)
 class TaggedPostAdmin(admin.ModelAdmin):
     pass
@@ -26,4 +22,9 @@ class TaggedPostAdmin(admin.ModelAdmin):
 
 @admin.register(models.Like)
 class LikeAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(models.Notice)
+class NoticeAdmin(admin.ModelAdmin):
     pass

@@ -1,11 +1,10 @@
-from django.db.models.fields.files import ImageField
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import CommunityAnswer, CommunityQuestion, Tag
+from .models import CommunityAnswer, CommunityQuestion, Questionviews
+from user.models import GeneralUser
 from .forms import QuestionForm, AnswerForm
-from account.models import GeneralUser
+from user.models import GeneralUser
 from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
-from taggit.managers import TaggableManager
 from django.contrib import messages
 # Create your views here.
 
@@ -13,7 +12,7 @@ from django.contrib import messages
 class QuestionListView(ListView):
     model = CommunityQuestion
 
-    paginate_by = 5
+    paginate_by = 10
 
     # DEFAULT : <app_label>/<model_name>_list.html
     template_name = 'QnA/communityquestion.html'
@@ -46,7 +45,6 @@ class QuestionListView(ListView):
 
         page_range = paginator.page_range[start_index:end_index]
         context['page_range'] = page_range
-
         search_keyword = self.request.GET.get('q', '')
 
         if len(search_keyword) > 1:
@@ -54,41 +52,27 @@ class QuestionListView(ListView):
 
         return context
 
-# 3차 tag를 가진 게시물 리스트 출력
 
-# class TaggedObjectLV(ListView):
-#     template_name = 'taggit/taggit_post_list.html'
-#     model = CommunityQuestion
-
-#     def get_queryset(self):
-#         tag_list = CommunityQuestion.objects.filter(
-#             tags__name=self.kwargs.get('tag'))
-#         return tag_list
-
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['tagname'] = self.kwargs['tag']
-#         return context
-
-
+@login_required
 def question_detail(request, pk):
     question = get_object_or_404(CommunityQuestion, pk=pk)
     answer = question.communityanswer_set.all()
-    ctx = {'question': question, 'answer': answer}
+    new_views = Questionviews(question=question, user=request.user)
+
+    if not Questionviews.objects.filter(question=question).filter(user=request.user):
+        new_views.save()
+
+    question_views = Questionviews.objects.filter(question=question)
+    ctx = {'question': question, 'answer': answer,
+           'views': len(question_views)}
     return render(request, 'QnA/questiondetail.html', ctx)
 
 
+@login_required
 def make_question(request, question=None):
     if request.method == "POST":
         form = QuestionForm(request.POST, request.FILES, instance=question)
         if form.is_valid():
-            # question = CommunityQuestion()
-            # question.user_id = GeneralUser.objects.get(pk=1)
-            # question.title = form.cleaned_data['title']
-            # question.content = form.cleaned_data['content']
-            # question.photo = form.cleaned_data['photo']
-            # question.tags=form.cleaned_data['tags']
-            # # request.POST['i']
             question = form.save(commit=False)
             question.user_id = GeneralUser.objects.get(
                 userid=request.user.get_username())
@@ -96,7 +80,12 @@ def make_question(request, question=None):
             return redirect('QnA:questiondetail', pk=question.pk)
     else:
         form = QuestionForm(instance=question)
-        ctx = {'form': form}
+        if question:
+            pk = question.pk
+        else:
+            pk = 0
+
+        ctx = {'form': form, 'pk': pk}
     return render(request, 'QnA/makequestion.html', ctx)
 
 
@@ -116,6 +105,29 @@ def delete_question(request, pk):
 @login_required
 def make_answer(request, pk, answer=None):
     if request.method == "POST":
+        form = AnswerForm(request.POST, request.FILES)
+        if form.is_valid():
+            answer = form.save(commit=False)
+            answer.user_id = GeneralUser.objects.get(
+                userid=request.user.get_username())
+            answer.question = CommunityQuestion.objects.get(pk=pk)
+            pk = answer.question.pk
+            answer = form.save()
+            request.user.point += 10
+            print(request.user.point)
+            request.user.save()
+            return redirect('QnA:questiondetail', pk=pk)
+    else:
+        form = AnswerForm()
+        ctx = {'form': form, 'pk': pk}
+    return render(request, 'QnA/makeanswer.html', ctx)
+
+
+@login_required
+def edit_answer(request, pk):
+    answer = get_object_or_404(CommunityAnswer, pk=pk)
+    pk = answer.question.pk
+    if request.method == "POST":
         form = AnswerForm(request.POST, request.FILES, instance=answer)
         if form.is_valid():
             answer = form.save(commit=False)
@@ -126,19 +138,9 @@ def make_answer(request, pk, answer=None):
             answer = form.save()
             return redirect('QnA:questiondetail', pk=pk)
     else:
-        # user_id = GeneralUser.objects.get(
-        #     userid=request.user.get_username())
-        # question = CommunityQuestion.objects.get(pk=pk)
         form = AnswerForm(instance=answer)
-        ctx = {'form': form}
+        ctx = {'form': form, 'pk': pk}
     return render(request, 'QnA/makeanswer.html', ctx)
-
-
-@login_required
-def edit_answer(request, pk):
-    answer = get_object_or_404(CommunityAnswer, pk=pk)
-    pk = answer.question.pk
-    return make_answer(request, pk, answer=answer)
 
 
 @login_required

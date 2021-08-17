@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+    <link href="{% static 'style/css/find_id.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}  
+<div class="d-flex justify-content-center align-items-center main-container" style="background-image: url({% static 'images/id_find.jpg' %});">
+    <div class="d-flex justify-content-center align-items-center main-container">
+        <div class="container p-0">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="card px-5">
+                    <p class="h8 py-5 px-3"><img id="login-icon2" src="{% static 'images/plant.png' %}"> &nbsp 아이디 찾기 &nbsp <img id="login-icon2" src="{% static 'images/plant.png' %}"></p>
+                    <div class="row gx-3">
+                        <div class="col-12 mb-5">
+                            <div class="d-flex flex-column">
+                                <p class="text mb-1 text-center">가입할 때 입력하신 이메일을 입력해주세요!</p>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="d-flex flex-column">
+                                <p class="text mb-1"></p>
+                                <input name="email" class="password-form-control mb-3" placeholder="example@example.com" type="email" id="id_email" required="true" >
+                            </div>
+                        </div>
+                        <div class="col-12 mb-3 text-center mt-3">
+                            <button class="btn btn-primary mb-3" type="submit"><span>아이디 찾기</span></button>
+                        </div>
+                    </div>
+                </div>
+            </form>  
+        </div>
+    </div>
+</div>
+
+{% endblock %}

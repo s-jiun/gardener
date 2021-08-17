@@ -1,6 +1,6 @@
 from django.db import models
 from django.db.models.deletion import CASCADE
-from account.models import GeneralUser
+from user.models import GeneralUser
 from taggit.managers import TaggableManager
 from taggit.models import (TagBase, TaggedItemBase)
 # editor
@@ -27,22 +27,26 @@ class TaggedQuestion(TaggedItemBase):
 class CommunityQuestion(models.Model):
     user_id = models.ForeignKey(GeneralUser, on_delete=CASCADE)
     title = models.CharField(max_length=100)
-    # photo = models.ImageField(null=True, blank=True,
-    #                           upload_to='Question/%y/%m/%d')
-    content = RichTextUploadingField(blank=True, null=True)
+    content = RichTextUploadingField(
+        blank=True, null=True, config_name='answer_ckeditor')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     tags = TaggableManager(
-        verbose_name='tags', help_text='A comma-separated list of tags.', blank=True, through=TaggedQuestion)
+        verbose_name='tags', help_text='해시태그를 남겨주세요', blank=True, through=TaggedQuestion)
+
+ # 조회수 모델
+
+
+class Questionviews(models.Model):
+    question = models.ForeignKey(CommunityQuestion, on_delete=CASCADE)
+    user = models.ForeignKey(GeneralUser, on_delete=CASCADE)
 
 
 class CommunityAnswer(models.Model):
     user_id = models.ForeignKey(GeneralUser, on_delete=CASCADE)
     question = models.ForeignKey(CommunityQuestion, on_delete=CASCADE)
-    # ERD에 빠진 것 같은데 일단 필요할 것 같아서 추가해놨습니다.
     title = models.CharField(max_length=100)
-    # image = models.ImageField(null=True, blank=True,
-    #                           upload_to='Answer/%y/%m/%d')
-    content = RichTextUploadingField(blank=True, null=True)
+    content = RichTextUploadingField(
+        blank=True, null=True, config_name='answer_ckeditor')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
