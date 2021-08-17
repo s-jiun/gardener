@@ -6,7 +6,10 @@
 <link href="{% static 'style/css/main_plant.css' %}" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
 <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
-
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 {%endblock%}
 
 {% block content %}
@@ -73,10 +76,10 @@
                                 <h5 class="modal-title" id="plantDetailLabel">{{plant.name}}</h5>
                                 <button type="button" class="btn-close me-2" data-bs-dismiss="modal" aria-label="Close" style="margin-left:40px;"></button>
                                 {%if plant in scrap_plant_list %}
-                                    <div class="btn btn-success btn-sm post__del_scrap" onclick="onClickScrap({{plant.pk}})">스크랩 취소</div>
+                                    <div class="btn btn-success btn-sm post__del_scrap" onclick="onClickScrap({{plant.pk}})"><i class="fas fa-bookmark"></i></div>
                                 {% else %}
                                     {% if request.user.is_authenticated %}
-                                    <div class="btn btn-success btn-sm post__scrap" onclick="onClickScrap({{plant.pk}})">스크랩</div>
+                                    <div class="btn btn-success btn-sm post__scrap" onclick="onClickScrap({{plant.pk}})"><i class="far fa-bookmark"></i></div>
                                     {% endif %}
                                 {% endif %}
                             </div>
@@ -248,38 +251,21 @@
     {% endif %}
     </div>
     <script>
-        
-        let plants = [
-            {% for plant in plants %}
-                {name: "{{ plant.name|safe }}"},
-            {% endfor %}
-        ]
-
-        var isComplete = false;  //autoMaker 자식이 선택 되었는지 여부
-        $('.plant-input').keyup(function(){
-            var txt = $(this).val();
-            if(txt != ''){  //빈줄이 들어오면
-                $('.suggestions').children().remove();
-
-                plants.forEach(function(arg){
-                    if(arg.name.indexOf(txt) > -1 ){
-                        $('.suggestions').append(
-                            $('<div class="suggested">').text(arg.name)
-                        );		
-                    }
-                });
-                $('.suggestions').children().each(function(){
-                    $(this).click(function(){
-                        $('.plant-input').val($(this).text());
-                        $('.suggestions').children().remove();	
-                        isComplete = true;
-                    });
-                });			
-            } else {
-                $('.suggestions').children().remove();
-            }  
-        });
-
+        $( function() {
+            var availableTags = [
+                {% for plant in plants %}
+                    "{{ plant.name|safe }}",
+                {% endfor %}
+            ];
+            $( ".plant-input" ).autocomplete({
+            source: availableTags,
+            focus : function(event, ui) {
+                return false;
+            },
+            autoFocus: true,
+            delay: 500,
+            });
+        } );
     </script>
 {%endblock%}
 
