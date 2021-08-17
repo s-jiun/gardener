@@ -83,11 +83,7 @@
     font-size: 14px;
     font-weight: 600;
   }
-  
-  .btn.btn-primary {
-    height: 50px;
-    background-color: #ccdfcc;
-  }
+
   
   .password-reset-form-control {
     color: black;

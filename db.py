@@ -13,7 +13,7 @@ with open(CSV_PATH, newline='') as csvfile:
     data_reader = csv.DictReader(csvfile)
     for row in data_reader:
         print(row)
-        Plant.objects.create(
+        Plant.objects.get_or_create(
             name = row["name"],
             photo_url = row["photo_url"],
             growth_form = row["growth_form"],
