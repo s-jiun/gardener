@@ -251,7 +251,7 @@
         
         let plants = [
             {% for plant in plants %}
-                {name: "{{ plant.name }}"},
+                {name: "{{ plant.name|safe }}"},
             {% endfor %}
         ]
 
