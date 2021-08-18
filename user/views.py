@@ -273,7 +273,12 @@ class ScrabListView(ListView):
     context_object_name = 'scrab_list'
 
     def get_context_data(self, **kwargs):
+        follower = Follow.objects.filter(user=self.request.user).count()
+        following = Follow.objects.filter(
+            following_user=self.request.user).count()
         context = super().get_context_data(**kwargs)
+        context["follower"] = follower
+        context["following"] = following
         paginator = context['paginator']
         page_numbers_range = 10
         max_index = len(paginator.page_range)
