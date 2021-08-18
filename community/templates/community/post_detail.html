@@ -108,6 +108,7 @@
             <button class="go-to-list" type="button" onclick="location.href='{% url 'community:post_list' %}'">목록으로</button>
         </div>
     </div>
+     {% if user.is_authenticated %}
     <div class="col post-edit text-center">
         <div style="margin-top: 10px;" id="post-edit-container">
             <span><a href="{% url 'user:profile' post.user_id.pk %}" style="margin-top: 5px;"><img class="profile-img" src="{{ post.user_id.Image.url }}"> {{post.user_id}}</a></span>
@@ -129,6 +130,7 @@
             {%endif%}
         </div>
     </div>
+    {% endif %}
 </div>
 {% endblock %}
 
