@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from django.contrib.auth.decorators import login_required
+
 
 app_name = 'community'
 
@@ -18,7 +20,7 @@ urlpatterns = [
          view=views.delete_reply, name='delete_reply'),
     path('post/<int:pk>/like_ajax/', view=views.like_ajax, name='like_ajax'),
     path('tag/<tag>/', view=views.tagListView.as_view(), name='search_tag'),
-    path('follow_post/', view=views.FollowPostView.as_view(),
+    path('follow_post/', login_required(views.FollowPostView.as_view()),
          name='follow_post_list'),
     path('notice/', view=views.NoticeListView.as_view(), name='notice'),
     path('notice/<int:pk>/', view=views.notice_detail, name='notice_detail'),
