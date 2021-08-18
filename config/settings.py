@@ -52,7 +52,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -216,7 +216,7 @@ TAGGIT_STRING_FROM_TAGS = 'community.utils.hashtag_joiner'
 CKEDITOR_UPLOAD_PATH = 'uploads/'
 CKEDITOR_IMAGE_BACKEND = 'pillow'
 CKEDITOR_CONFIGS = {
-    'config.language' :"ko",
+    'config.language': "ko",
     'answer_ckeditor': {
         # 'skin': 'moono',
         # 'skin': 'office2013',
