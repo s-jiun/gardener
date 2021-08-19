@@ -2,6 +2,28 @@ html {
   background-color: #e8eae5;
 }
 
+@keyframes fadeTop {
+  0% {
+    opacity: 0;
+    bottom: 3vh;
+  }
+  100% {
+    opacity: 1;
+    bottom: 0;
+  }
+}
+
+@keyframes fadeBottom {
+  0% {
+    opacity: 0;
+    top: 3vh;
+  }
+  100% {
+    opacity: 1;
+    top: 0;
+  }
+}
+
 body {
   font-family: "Gowun Batang", serif;
   display: flex;
@@ -46,6 +68,8 @@ body {
   position: relative;
   color: #5c5427;
   z-index: 1;
+  animation-name: fadeTop;
+  animation-duration: 2.5s;
   font-size: 100px;
   font-weight: 600;
 }
@@ -53,6 +77,8 @@ body {
 .look-around {
   position: relative;
   background: #a0cab5;
+  animation-name: fadeBottom;
+  animation-duration: 2.5s;
   z-index: 0;
   width: 30vw;
   height: 6vh;
@@ -60,7 +86,6 @@ body {
   box-sizing: border-box;
   border-radius: 80vw;
   font-family: "Gowun Batang", serif;
-  /* font-size: large/; */
   cursor: pointer;
   margin-bottom: 2vh;
 }
@@ -74,6 +99,8 @@ body {
 .login {
   position: relative;
   background: #eceef1;
+  animation-name: fadeBottom;
+  animation-duration: 2.5s;
   z-index: 0;
   width: 30vw;
   height: 6vh;
@@ -94,6 +121,8 @@ body {
 
 .signup {
   position: relative;
+  animation-name: fadeBottom;
+  animation-duration: 2.5s;
   z-index: 1;
   cursor: pointer;
 }
@@ -103,105 +132,3 @@ body {
   flex-direction: column;
   align-items: center;
 }
-/*body {*/
-/* margin: 0;
-  padding: 0;
-  background:url('/static/images/welcome.jpg');
-  background-size: cover;
-  background-position: center;
-  font-family: sans-serif;
-  background-repeat: no-repeat; */
-/*height:100vh;
-  background: #E9EAE5;
-}*/
-/* #background{
-  margin: 0;
-  padding: 0;
-  background:url('/static/images/welcome.jpg');
-  background-size: contain;
-  background-position: center;
-  font-family: sans-serif;
-  background-repeat: no-repeat;
-  height:100%;
-  width: 100%;
-  display: inline-block;
-  vertical-align: middle;
-}
-
-.loginbox {
-  width: 320px;
-  height: 430px;
-  background: #000;
-  color: #fff;
-  top: 50%;
-  left: 50%;
-  position: absolute;
-  transform: translate(-50%, -50%);
-  box-sizing: border-box;
-  padding: 70px 30px
-}
-
-.avatar {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  position: absolute;
-  top: -50px;
-  left: calc(50% - 50px)
-}
-
-h1 {
-  margin: 0;
-  padding: 0 0 20px;
-  text-align: center;
-  font-size: 22px
-}
-
-.loginbox p {
-  margin: 0;
-  padding: 0;
-  font-weight: bold
-}
-
-.loginbox input {
-  width: 100%;
-  margin-bottom: 20px
-}
-
-.loginbox input[type="text"],
-input[type="password"] {
-  border: none;
-  border-bottom: 1px solid #fff;
-  background: transparent;
-  outline: none;
-  height: 40px;
-  color: #fff;
-  font-size: 16px
-}
-
-.loginbox input[type="submit"] {
-  border: none;
-  outline: none;
-  height: 40px;
-  background: #fb2525;
-  color: #fff;
-  font-size: 18px;
-  border-radius: 20px
-}
-
-.loginbox input[type="submit"]:hover {
-  cursor: pointer;
-  background: #ffc107;
-  color: #000
-}
-
-.loginbox a {
-  text-decoration: none;
-  font-size: 12px;
-  line-height: 20px;
-  color: darkgrey
-}
-
-.loginbox a:hover {
-  color: #ffc107
-} */
