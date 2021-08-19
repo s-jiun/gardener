@@ -43,7 +43,11 @@
                         <a class="nav-link" href="{% url 'community:notice' %}">공지사항</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'user:search_gardener'%}">친구찾기</a>
+                        {% if request.user.is_authenticated %}
+                            <a class="nav-link" href="{% url 'user:search_gardener'%}">친구찾기</a>
+                        {% else %}
+                            <a class="nav-link" onclick="alert('로그인이 필요합니다!')" href="{% url 'user:login'%}">친구찾기</a>
+                        {% endif %}
                     </li>
                 </ul>
                 {% if request.user.is_authenticated %}
