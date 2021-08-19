@@ -69,7 +69,7 @@ body {
   color: #5c5427;
   z-index: 1;
   animation-name: fadeTop;
-  animation-duration: 2s;
+  animation-duration: 2.5s;
   font-size: 100px;
   font-weight: 600;
 }
@@ -78,7 +78,7 @@ body {
   position: relative;
   background: #a0cab5;
   animation-name: fadeBottom;
-  animation-duration: 2s;
+  animation-duration: 2.5s;
   z-index: 0;
   width: 30vw;
   height: 6vh;
@@ -100,7 +100,7 @@ body {
   position: relative;
   background: #eceef1;
   animation-name: fadeBottom;
-  animation-duration: 2s;
+  animation-duration: 2.5s;
   z-index: 0;
   width: 30vw;
   height: 6vh;
@@ -122,7 +122,7 @@ body {
 .signup {
   position: relative;
   animation-name: fadeBottom;
-  animation-duration: 2s;
+  animation-duration: 2.5s;
   z-index: 1;
   cursor: pointer;
 }
