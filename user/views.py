@@ -12,6 +12,7 @@ from django.core.paginator import Paginator
 from community.models import Like
 from django.db.models import Count
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 
 def login(request):
@@ -87,6 +88,7 @@ def member_modification(request):
     return render(request, 'user/update.html', {'user_change_form': user_change_form})
 
 
+@login_required
 def profile(request, pk):
     user = GeneralUser.objects.get(id=pk)
     follower = Follow.objects.filter(user=user).count()
@@ -119,6 +121,7 @@ def profile(request, pk):
     return render(request, template_name='user/profile.html', context=ctx)
 
 
+@login_required
 def follow_list(request, pk):
     user = GeneralUser.objects.get(id=pk)
     followers = user.following.all()
@@ -138,6 +141,7 @@ def follow_list(request, pk):
     return render(request, template_name='user/follower.html', context=ctx)
 
 
+@login_required
 def profile_update(request):
     user = GeneralUser.objects.get(id=request.user.id)
     if request.method == 'POST':
@@ -162,6 +166,7 @@ def profile_update(request):
     return render(request, template_name='user/profile_update.html', context=ctx)
 
 
+@login_required
 def my_profile(request):
     return redirect('user:profile', pk=request.user.id)
 
@@ -223,14 +228,6 @@ def base_image_ajax(request):
     user.Image = '../static/images/default_profile.svg'
     user.save()
     return JsonResponse({'user_image': user.Image.url})
-
-
-def liked_posts(request, pk):
-    user = GeneralUser.objects.get(id=pk)
-    liked = Like.objects.filter(user_id=user)
-    print(liked)
-    ctx = {'liked': liked, 'user': user}
-    return render(request, 'user/my_pick.html', context=ctx)
 
 
 class liked_post_ListView(ListView):
