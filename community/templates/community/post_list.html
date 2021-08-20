@@ -12,7 +12,7 @@
             {% if q %}
             <h1>'{{ q }}' 검색 결과입니다.</h1>
             {% else %}
-            <h2 style=''>🌵 마음에 드는 플랜테리어를 찾아보세요 🌵</h2>
+            <h2><img src="{% static 'images/post_list.png' %}" style='width:33px;'>마음에 드는 플랜테리어를 찾아보세요<img src="{% static 'images/post_list.png' %}" style='width:33px;'></h2>
             {% endif %}
             {% if messages%}
                 {% for message in messages %}
