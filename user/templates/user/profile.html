@@ -79,7 +79,7 @@
                             <div class="col col-lg-4">
                                 <div id="card-post" class="card text-center m-3">
                                     <a href="{% url 'community:post_detail' post.pk %}"><img class="lazyload" data-src={{post.image.url}}
-                                            class="card-img-top" alt="..." style="height:150px; max-height: 160px;"></a>
+                                            class="card-img-top" alt="..." style= "width:100%; max-height: 160px;"></a>
                                     <div class="card-body ">
                                         <a href="{% url 'community:post_detail' post.pk %}">
                                             <p class="card-title" id="post-title"> {{post.title}}</p>

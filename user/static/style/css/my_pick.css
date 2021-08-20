@@ -12,17 +12,21 @@ a {
   object-fit: cover;
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 600px) {
   .page-image {
     display: none;
   }
-}
-
-@media screen and (max-width: 1000px) {
+  /* .image-container {
+    display: none;
+  } */
+  .main-container{
+    display: block;
+  }
   .page-phrase {
     display: none;
   }
 }
+
 
 .content-box {
   padding: 10px;

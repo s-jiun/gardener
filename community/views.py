@@ -104,8 +104,12 @@ class FollowPostView(ListView):
 
         followings = Follow.objects.filter(following_user=self.request.user.id)
         post_list = []
+        following_list = []
         for following in followings:
-            post_list += Post.objects.filter(user_id_id=following.user_id)
+            following_list.append(following.user_id)
+
+        post_list = Post.objects.filter(user_id__in=following_list)
+
         if search_keyword:
             if len(search_keyword) > 1:
                 if search_type == 'tag':

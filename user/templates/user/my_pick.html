@@ -6,8 +6,8 @@
 {% endblock %}
 
 {% block content %}
-    <div class="row row-cols-3 container-fluid" style="padding-left: 0;">
-        <div class="col" style="max-width: 20vw;">
+    <div class="row row-cols-3 container-fluid main-container" style="padding-left: 0;">
+        <div class="col image-container" style="max-width: 20vw;">
             <img class="lazyload page-image" data-src="{% static 'images/mypick_background.jpg' %}" />
         </div>
         <div class="col page-phrase"  style='writing-mode: vertical-rl; width: fit-content;'>
@@ -30,13 +30,20 @@
                                         <span class="d-flex">
                                             <img class="lazyload profile-img" data-src="{{ like.post_id.user_id.Image.url }}" />
                                             <p>{{ like.post_id.user_id }}</p>
+                                            <br>
+ 
                                         </span>
+                                        <div>
+                                            {% for tag in like.post_id.tags.all %}
+                                                <span>#{{ tag.name }} </span>
+                                            {% endfor %}
+                                        </div>
                                     </div>
                                 </div>
                     </div>
                 {% endfor %}                
             {% else %}
-                <h4 class="no-posts">아직 좋아요를 누른 개시물이 없습니다<img src="{% static 'images/sad.svg' %}" style="width: 3vh; height: 3vh; margin: 5px;"></h4>
+                <h4 class="no-posts">아직 좋아요를 누른 게시물이 없습니다<img src="{% static 'images/sad.svg' %}" style="width: 3vh; height: 3vh; margin: 5px;"></h4>
             {% endif %}
             <div id='list-paginator' style = 'margin-bottom:1rem;'>
                 {% if is_paginated %}
