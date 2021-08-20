@@ -29,7 +29,8 @@ const followingHandleResponse = () => {
       const listConatiner = document.querySelector('.list-container')
       listConatiner.innerHTML += `
       <div class="text-center" style="margin-top: 50px; height: 300px;">
-      <h4> 아직 함께하는 가드너가 없네요😥</h4>
+      <h4> 아직 함께하는 가드너가 없네요
+      <img src="{% static 'images/sad.svg' %}" alt="" style="width: 30px; height: 30px;"></h4>
       </div>`
     }
   }
@@ -76,7 +77,9 @@ const followHandleResponse = () => {
     <img src="${user_image_url}">
     </div>
     <div class="col" style="width:80%">
-    <h5 id="follow-name">🌱ID : ${user_userid}</h5>
+    <h5 id="follow-name">
+    <img src="{% static 'images/ID.png' %}" alt="" style="width:20px; height:20px; margin-bottom: 5px;">
+    ID : ${user_userid}</h5>
     <div class="follow-wraper-${user_id}" style="display:inline; ">
     <div class="following-${user_id}" style="display:inline;"> 
     <button onclick="onClickFollowing(${user_id})" style="background: white; border: 1px solid #ACA790; padding:5px; border-radius:10px; font-size:16px;">팔로잉</button>
@@ -88,27 +91,6 @@ const followHandleResponse = () => {
     </div>
     </div>
     `
-    
-    // else {
-    //   listConatiner.innerHTML += `
-    //   <div class="row row-cols-2 row-cols-lg-2 p-3 follow-object-${user_id}" id="follow-user-box2">  
-    //   <div class="col p-0 mt-2" id="follow-user-img">
-    //   <img src="${user_image_url}">
-    //   </div>
-    //   <div class="col" style="width:80%">
-    //   <h5 id="follow-name">🌱ID : ${user_userid}</h5>
-    //   <div class="follow-wraper-${user_id}" style="display:inline; ">
-    //   <div class="following-${user_id}" style="display:inline;"> 
-    //   <button onclick="onClickFollowing(${user_id})" style="background: white; border: 1px solid #ACA790; padding:5px; border-radius:10px; font-size:16px;">팔로잉</button>
-    //   </div>
-    //   </div>
-    //   <hr class="m-1">
-    //   <span> &nbsp; Name : ${user_name}</span><br>
-    //   <span> &nbsp; Point : ${user_point}</span>
-    //   </div>
-    //   </div>
-    //   `
-    // }
   }
 };
 requestFollow.onreadystatechange = () => {
