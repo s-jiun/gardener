@@ -45,22 +45,22 @@
                     <div class="card p-2 m-3" id="gardener-card" >
                         <div class="image" >
                             <a href="{% url 'user:profile' gardener.pk%} ">
-                            <img src={{gardener.Image.url}} class="card-img-top"  id="gardener-img" alt="..." >
+                            <img data-src={{gardener.Image.url}} class="lazyload card-img-top"  id="gardener-img" alt="..." >
                             <span><h3 style="font-weight:bold">😉 {{gardener.name}} 님 😉 </h3><br> {{gardener.profile | truncatechars:20}}</span>
                             </a>
                         </div>
                         <div class="card-body">
                             <h5 class="card-title" style="width:50%; display:inline">{{ gardener.name }}
                             {% if gardener.point < 100 %}
-                            <h6 style="display: inline;  float: right;">  <img class='rank-image' src = "{% static 'images/sf.png'%}" style="width:1rem; heigth:auto"> 입문 정원사 <img class='rank-image' src = "{% static 'images/sf.png'%}"></h6>
+                            <h6 style="display: inline;  float: right;">  <img class='lazyload rank-image' data-src = "{% static 'images/sf.png'%}" style="width:1rem; heigth:auto"> 입문 정원사 <img class='rank-image' src = "{% static 'images/sf.png'%}"></h6>
                             {% elif gardener.point < 300 %}
-                            <h6 style="display: inline;  float: right;"> <img class='rank-image' src = "{% static 'images/dy.png'%}"> 초보 정원사 <img class='rank-image' src = "{% static 'images/dy.png'%}"></h6>
+                            <h6 style="display: inline;  float: right;"> <img class='lazyload rank-image' data-src = "{% static 'images/dy.png'%}"> 초보 정원사 <img class='rank-image' src = "{% static 'images/dy.png'%}"></h6>
                             {% elif gardener.point < 600 %}
-                            <h6 style="display: inline;  float: right;"> <img class='rank-image' src = "{% static 'images/cm.png'%}"> 아마추어 정원사 <img class='rank-image' src = "{% static 'images/cm.png'%}"></h6>
+                            <h6 style="display: inline;  float: right;"> <img class='lazyload rank-image' data-src = "{% static 'images/cm.png'%}"> 아마추어 정원사 <img class='rank-image' src = "{% static 'images/cm.png'%}"></h6>
                             {% elif gardener.point < 1000 %}
-                            <h6 style="display: inline;  float: right;"> <img class='rank-image' src = "{% static 'images/cs.png'%}"> 프로 정원사 <img class='rank-image' src = "{% static 'images/cs.png'%}"></h6>
+                            <h6 style="display: inline;  float: right;"> <img class='lazyload rank-image' data-src = "{% static 'images/cs.png'%}"> 프로 정원사 <img class='rank-image' src = "{% static 'images/cs.png'%}"></h6>
                             {% else %}
-                            <h6 style="display: inline;  float: right;"> <img class='rank-image' src = "{% static 'images/hs.png'%}"> 국가대표 정원사 <img class='rank-image' src = "{% static 'images/hs.png'%}"></h6>
+                            <h6 style="display: inline;  float: right;"> <img class='lazyload rank-image' data-src = "{% static 'images/hs.png'%}"> 국가대표 정원사 <img class='rank-image' src = "{% static 'images/hs.png'%}"></h6>
                             {% endif %}
                             </h5>
                             <hr class="m-0">

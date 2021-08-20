@@ -59,7 +59,7 @@
                     <div class="card p-2 m-3" id="plant-card" >
                         <div class="image" >
                             <a data-bs-toggle="modal" data-bs-target="#plantDetailModal-{{plant.pk}}">
-                            <img src={{plant.photo_url}} class="card-img-top"  id="plant-img" alt="..." >
+                            <img data-src={{plant.photo_url}} class="lazyload card-img-top"  id="plant-img" alt="..." >
                             <h3>🌱{{plant.name}}🌱 <br> 알아보기</h3>
                             </a>
                         </div>
@@ -84,14 +84,14 @@
                                 {% endif %}
                             </div>
                             <div class="modal-body text-center">
-                                <img src={{plant.photo_url}}>
+                                <img class="lazyload" data-src={{plant.photo_url}}>
                                 <hr class="m-1"><hr class="m-1">
                                 <div>
                                     <table class="table table-striped text-start mt-2">
                                         <tbody>
                                             <tr>
                                                 <td class="p-2"> 
-                                                <img src={%static 'images/plant1.png'%}> 
+                                                <img class="lazyload" data-src="{%static 'images/plant.png'%}"> 
                                                 <span>생육형태<span>
                                                 </td>
                                             </tr>
@@ -103,7 +103,7 @@
                                             </tr>
                                             <tr>
                                                 <td class="p-2"> 
-                                                <img src={%static 'images/difficulty.png'%}> 
+                                                <img class="lazyload" data-src="{%static 'images/difficulty.png'%}"> 
                                                 <span>관리 난이도<span>
                                                 </td>
                                             </tr>
@@ -114,7 +114,7 @@
                                             </tr>
                                             <tr>
                                                 <td class="p-2"> 
-                                                    <img src={%static 'images/watering.png'%}> 
+                                                    <img class="lazyload" data-src="{%static 'images/watering.png'%}"> 
                                                     <span>관리 요구 수준<span>
                                                     </td>
                                                 </tr>
@@ -131,7 +131,7 @@
                                             </tr>
                                             <tr>
                                                 <td class="p-2"> 
-                                                <img src={%static 'images/temperature.png'%}> 
+                                                <img class="lazyload" data-src="{%static 'images/temperature.png'%}"> 
                                                 <span>생육 온도<span>
                                                 </td>
                                             </tr>
@@ -142,7 +142,7 @@
                                             </tr>
                                             <tr>
                                                 <td class="p-2"> 
-                                                <img src={%static 'images/humidity.png'%}> 
+                                                <img class="lazyload" data-src="{%static 'images/humidity.png'%}"> 
                                                 <span>생육 습도<span>
                                                 </td>
                                             </tr>
@@ -153,7 +153,7 @@
                                             </tr>
                                             <tr>
                                             <td class="p-2"> 
-                                                <img src={%static 'images/spring.png'%}> 
+                                                <img class="lazyload" data-src="{%static 'images/spring.png'%}"> 
                                                 <span>봄철 물주기<span>
                                                 </td>
                                             </tr>
@@ -163,7 +163,7 @@
                                                 </td> 
                                             </tr>
                                             <td class="p-2"> 
-                                                <img src={%static 'images/summer.png'%}> 
+                                                <img class="lazyload" data-src="{%static 'images/summer.png'%}"> 
                                                 <span>여름철 물주기<span>
                                                 </td>
                                             </tr>
@@ -173,7 +173,7 @@
                                                 </td> 
                                             </tr>
                                             <td class="p-2"> 
-                                                <img src={%static 'images/fall.png'%}> 
+                                                <img class="lazyload" data-src="{%static 'images/fall.png'%}"> 
                                                 <span>가을철 물주기<span>
                                                 </td>
                                             </tr>
@@ -183,7 +183,7 @@
                                                 </td> 
                                             </tr>
                                             <td class="p-2"> 
-                                                <img src={%static 'images/winter.png'%}> 
+                                                <img class="lazyload" data-src="{%static 'images/winter.png'%}"> 
                                                 <span>겨울철 물주기<span>
                                                 </td>
                                             </tr>
