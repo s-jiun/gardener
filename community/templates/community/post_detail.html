@@ -32,12 +32,17 @@
             {% endfor %}
             <br />
             <div class='likes post-id-{{ post.id }} d-flex justify-content-end'>
-                {% if user.pk in liked_user %}
-                    <span><button class = 'heart' onclick="onClickLike({{ post.id }})"><i class="fas fa-heart"></i></button></span>
-                    <span class='like_num'>좋아요 {{post.like_set.all.count}}</span>
+                {% if request.user.is_authenticated %}
+                    {% if user.pk in liked_user %}
+                        <span><button class = 'heart' onclick="onClickLike({{ post.id }})"><i class="fas fa-heart"></i></button></span>
+                        <span class='like_num'>좋아요 {{post.like_set.all.count}}</span>
+                    {% else %}
+                        <span><button class = 'heart' onclick="onClickLike({{ post.id }})"><i class="far fa-heart"></i></button></span>
+                        <span class='like_num'>좋아요 {{post.like_set.all.count}}</span>
+                    {% endif %}
                 {% else %}
-                    <span><button class = 'heart' onclick="onClickLike({{ post.id }})"><i class="far fa-heart"></i></button></span>
-                    <span class='like_num'>좋아요 {{post.like_set.all.count}}</span>
+                        <span><button class = 'heart'><a onclick="alert('로그인이 필요한 서비스입니다.')" href="{% url 'user:login' %}"><i class="far fa-heart"></i></a></button></span>
+                        <span class='like_num'>좋아요 {{post.like_set.all.count}}</span>
                 {% endif %}
             </div>
         </div>
@@ -108,6 +113,7 @@
             <button class="go-to-list" type="button" onclick="location.href='{% url 'community:post_list' %}'">목록으로</button>
         </div>
     </div>
+     {% if user.is_authenticated %}
     <div class="col post-edit text-center">
         <div style="margin-top: 10px;" id="post-edit-container">
             <span><a href="{% url 'user:profile' post.user_id.pk %}" style="margin-top: 5px;"><img class="lazyload profile-img" data-src="{{ post.user_id.Image.url }}"> {{post.user_id}}</a></span>
@@ -129,6 +135,7 @@
             {%endif%}
         </div>
     </div>
+    {% endif %}
 </div>
 {% endblock %}
 

@@ -100,7 +100,13 @@
         {% endif %}
     </div>
     <div class='col-md-offset-6'>
-    <button type="submit"class= 'move-to-other mb-4'><a href = '{% url "QnA:makequestion" %}' class= 'button-a'>질문하기</a></button>
+    <button type="submit"class= 'move-to-other mb-4'>
+        {% if request.user.is_authenticated %}
+            <a href = '{% url "QnA:makequestion" %}' class= 'button-a'>질문하기</a>
+        {% else %}
+            <a onclick="alert('로그인이 필요한 서비스입니다.')" href="{% url 'user:login' %}">질문하기</a>
+        {% endif %}
+    </button>
     {% if q %}
     <button type='submit'class= 'move-to-other mb-4'>
         <a href = '{% url "QnA:communityquestion_list" %}' class= 'button-a'>뒤로가기</a>

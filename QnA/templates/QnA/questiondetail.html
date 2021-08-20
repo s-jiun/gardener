@@ -56,7 +56,8 @@
                                 작성자 <img class="lazyload" id='question-profile-img' data-src="{{ ans.user_id.Image.url }}">{{ans.user_id}}
                                 <a style = 'color: #a0cab5;' href = '{% url "QnA:deleteanswer" ans.pk %}'>답글 삭제하기</a>
                                 <a style = 'color: #a0cab5;'href = '{% url "QnA:editanswer" ans.pk %}'>답글 편집하기</a>
-
+                            {% else %}
+                                작성자 <img id='question-profile-img' src="{{ ans.user_id.Image.url }}">{{ans.user_id}}
                             {% endif %}
                         </div>
                       </div>
