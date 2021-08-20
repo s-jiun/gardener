@@ -6,8 +6,8 @@
 {% endblock %}
 
 {% block content %}
-    <div class="row row-cols-3 container-fluid" style="padding-left: 0;">
-        <div class="col" style="max-width: 20vw;">
+    <div class="row row-cols-3 container-fluid main-container" style="padding-left: 0;">
+        <div class="col image-container" style="max-width: 20vw;">
             <img class="lazyload page-image" data-src="{% static 'images/mypick_background.jpg' %}" />
         </div>
         <div class="col page-phrase"  style='writing-mode: vertical-rl; width: fit-content;'>
@@ -30,7 +30,14 @@
                                         <span class="d-flex">
                                             <img class="lazyload profile-img" data-src="{{ like.post_id.user_id.Image.url }}" />
                                             <p>{{ like.post_id.user_id }}</p>
+                                            <br>
+ 
                                         </span>
+                                        <div>
+                                            {% for tag in like.post_id.tags.all %}
+                                                <span>#{{ tag.name }} </span>
+                                            {% endfor %}
+                                        </div>
                                     </div>
                                 </div>
                     </div>
