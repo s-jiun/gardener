@@ -8,7 +8,7 @@
 {% block content %}
 <div class="row row-cols-3 container-fluid" style="padding-left: 0;">
     <div class="col" style="max-width: 20vw;">
-        <img class="page-image" src="{% static 'images/tagged_list.jpg' %}" />
+        <img class="lazyload page-image" data-src="{% static 'images/tagged_list.jpg' %}" />
     </div>
     <div class="col page-phrase">
         <h4 class='mt-3'>
@@ -22,12 +22,12 @@
         {% for post in posts %}
             <div class="content-box">
                 <div class="d-flex">
-                    <a href="{% url 'community:post_detail' post.pk %}"><img class="content-img" src = '{{ post.image.url }}' /></a>
+                    <a href="{% url 'community:post_detail' post.pk %}"><img class="lazyload content-img" data-src = '{{ post.image.url }}' /></a>
                     <div class="d-flex flex-column" style="width: -webkit-fill-available;">
-                        <a href="{% url 'community:post_detail' post.pk %}"><h4><img class="title-img" src="{% static 'images/title_img.svg' %}"/>{{post.title}}</h4></a>
+                        <a href="{% url 'community:post_detail' post.pk %}"><h4><img class="lazyload title-img" data-src="{% static 'images/title_img.svg' %}"/>{{post.title}}</h4></a>
                         <hr style="width: 100%;"/>
                         <span class="d-flex">
-                            <img class="profile-img" src="{{ post.user_id.Image.url }}" />
+                            <img class="lazyload profile-img" data-src="{{ post.user_id.Image.url }}" />
                             <p>{{ post.user_id }}</p>
                         </span>
                     </div>

@@ -13,7 +13,7 @@
                     <h3>#{{forloop.counter}}</h3>
                     <div id = 'same-tag-question-header'>
                         <h5>[질문]{{question.title}}</h5>
-                        <span>작성자</span> <img id='question-profile-img' src="{{ question.user_id.Image.url }}">{{question.user_id}}님
+                        <span>작성자</span> <img class="lazyload" id='question-profile-img' data-src="{{ question.user_id.Image.url }}">{{question.user_id}}님
                         <span>수정일</span> {{question.updated_at}}
                         {% if user == question.user_id %}
                         <div class= 'me-2'style='display:inline; float:right'>

@@ -15,7 +15,7 @@
                 <div class="container profile_in">
                     <div class="row justify-content-center row-cols-1 row-cols-md-2">
                         <div class="col text-center" style="margin-right:-5%; padding:0;">
-                            <img id="user-img" src={{user.Image.url}} />
+                            <img class="lazyload" id="user-img" data-src={{user.Image.url}} />
                         </div>
                         <div class="col">
                             <div id="user-info">
@@ -78,7 +78,7 @@
                             {%for post in posts%}
                             <div class="col col-lg-4">
                                 <div id="card-post" class="card text-center m-3">
-                                    <a href="{% url 'community:post_detail' post.pk %}"><img src={{post.image.url}}
+                                    <a href="{% url 'community:post_detail' post.pk %}"><img class="lazyload" data-src={{post.image.url}}
                                             class="card-img-top" alt="..." style="height:150px; max-height: 160px;"></a>
                                     <div class="card-body ">
                                         <a href="{% url 'community:post_detail' post.pk %}">
@@ -88,7 +88,7 @@
                                         {{post.created_at}}<br>
                                         {% if post.tags.all %}
                                         {% for tag in post.tags.all %}
-                                        <img style="width: 1rem;" src="{% static 'images/label.png'%}" />
+                                        <img class="lazyload" style="width: 1rem;" data-src="{% static 'images/label.png'%}" />
                                         <span>{{tag.name}}</span>
                                         {% endfor %}
                                         {%endif%}
@@ -98,9 +98,9 @@
                             {% endfor %}
                             {%else%}
                             <div id="no-post" class="text-center">
-                                <img style="width: 2rem;" src="{% static 'images/flower.png'%}" />
+                                <img class="lazyload" style="width: 2rem;" data-src="{% static 'images/flower.png'%}" />
                                 <span> 현재 게시글이 없습니다. </span>
-                                <img style="width: 2rem;" src="{% static 'images/flower.png'%}" />
+                                <img class="lazyload" style="width: 2rem;" data-src="{% static 'images/flower.png'%}" />
                             </div>
                             {% endif %}
                         </div>

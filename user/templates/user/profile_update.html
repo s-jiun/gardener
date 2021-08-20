@@ -12,11 +12,11 @@
             <form action="" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div id="update-card" class="card px-5">
-                    <p class="h8 py-3 px-5"><img id="update-icon1" src="{%static 'images/leaf.png' %}">프로필 수정<img src="{%static 'images/leaf.png' %}" id="update-icon2" > </p> 
+                    <p class="h8 py-3 px-5"><img class="lazyload" id="update-icon1" data-src="{%static 'images/leaf.png' %}">프로필 수정<img src="{%static 'images/leaf.png' %}" id="update-icon2" > </p> 
                     <div class="row gx-3">
                         <div class="col-12 d-flex justify-content-center align-items-center">
                             <div class="d-flex flex-column">
-                                <img id="blah" src="{{request.user.Image.url}}" alt="" >
+                                <img class="lazyload" id="blah" data-src="{{request.user.Image.url}}" alt="" >
                                 <button class="btn btn-primary mt-3" style="background-color: #a0cab5;" type="button" onclick="onClickBaseImage({{user.id}})">기본이미지 지정</button>
                             </div>
                         </div>

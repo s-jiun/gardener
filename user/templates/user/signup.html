@@ -11,7 +11,7 @@
         <form action="" method="POST">
             {% csrf_token %}
             <div class="card px-5">
-				<p class="h8 py-4"><img id="login-icon2" src="{% static 'images/botanic.png' %}">&nbsp 회원가입 &nbsp<img id="login-icon1" src="{% static 'images/botanic.png' %}"></p>
+				<p class="h8 py-4"><img class="lazyload" id="login-icon2" data-src="{% static 'images/botanic.png' %}">&nbsp 회원가입 &nbsp<img class="lazyload" id="login-icon1" data-src="{% static 'images/botanic.png' %}"></p>
                 <div class="row gx-3">           
                     <div class="col-12">
                         <div class="d-flex flex-column">

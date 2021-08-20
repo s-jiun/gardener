@@ -31,7 +31,7 @@
                             {% for follower in followers %}
                                 <div class="row row-cols-2 row-cols-lg-2 p-3" id="follow-user-box1" >
                                 <div class="col p-0 mt-2" id="follow-user-img">
-                                    <img src={{follower.following_user.Image.url}} >
+                                    <img class="lazyload" data-src={{follower.following_user.Image.url}} >
                                 </div>
                                 <div class="col" style="width:80%">
                                     <h5 id="follow-name">🌱ID : {{follower.following_user.userid}}</h5>
@@ -75,7 +75,7 @@
                             {% for following in followings %}
                                     <div class="row row-cols-2 row-cols-lg-2 p-3 follow-object-{{following.user_id}}" id="follow-user-box1" >
                                     <div class="col p-0 mt-2" id="follow-user-img">
-                                        <img src={{following.user.Image.url}} >
+                                        <img class="lazyload" data-src={{following.user.Image.url}} >
                                 </div>
                                 <div class="col" style="width:80%">
                                     <h5 id="follow-name">🌱ID : {{following.user.userid}}</h5>
