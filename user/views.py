@@ -172,6 +172,10 @@ def my_profile(request):
 
 
 def start_page(request):
+    if request.user.is_authenticated:
+        if request.user.name == "":
+            return redirect('user:profile_update')
+
     return render(request, template_name='welcome.html')
 
 
