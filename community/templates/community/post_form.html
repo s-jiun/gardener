@@ -40,11 +40,11 @@
                                 {% endif %}
                                 (썸네일 이미지를 변경해보세요!)                                
                                 <input type="file" class='form-control' onchange="readURL(this);" name="image" accept="image/*" id="id_image">
-                                <img id="blah" src="" class='mt-2'/>
+                                <img class="lazyload" id="blah" data-src="" class='mt-2'/>
                                 {% else %}
                                 (썸네일을 지정하지 않으면 기본이미지가 썸네일로 적용됩니다.)
                                 <input type="file" class='form-control' onchange="readURL(this);" name="image" accept="image/*" id="id_image">
-                                <img id="blah" src="" class='mt-2'/>
+                                <img class="lazyload" id="blah" data-src="" class='mt-2'/>
                                 {% endif %}
                             </div>
                             <div class='form-group mb-3'>

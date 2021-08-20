@@ -40,10 +40,10 @@
             <div class='row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3'>
                 {% for post in post_list %}
                 <div class='col mb-3'>
-                    <p id='thumbnail-p'><img id='post-list-thumbnail' src="{{ post.user_id.Image.url }}"> {{ post.user_id }}</p>
+                    <p id='thumbnail-p'><img class="lazyload" id='post-list-thumbnail' data-src="{{ post.user_id.Image.url }}"> {{ post.user_id }}</p>
                     <figure class="snip1384">
                         {% if post.image %}
-                            <image src='{{ post.image.url }}' class='img-thumbnail'/>
+                            <image data-src='{{ post.image.url }}' class='lazyload img-thumbnail'/>
                         {% endif %}
                         <figcaption>
                           <h3>{{post.title}}</h3>
