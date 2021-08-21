@@ -52,7 +52,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['gardener.ml', '3.37.58.145:8000']
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
