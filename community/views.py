@@ -2,7 +2,8 @@ from user.models import Follow, GeneralUser
 import json
 from django.http.response import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Post, Like, Reply, Postviews, Notice, Noticetviews
+from .models import Post, Like, Reply, Postviews, Notice, Noticetviews, TaggedPost
+from taggit.models import Tag
 from .forms import PostForm, ReplyForm
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
@@ -234,7 +235,10 @@ def post_update(request, pk):
 @login_required
 def post_delete(request, pk):
     post = Post.objects.get(id=pk)
+    tag_id = TaggedPost.objects.get(content_object_id=pk).tag_id
+    tag = Tag.objects.get(id=tag_id)
     post.delete()
+    tag.delete()
     return redirect('community:post_list')
 
 
