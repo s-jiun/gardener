@@ -138,7 +138,8 @@ def follow_list(request, pk):
     ctx = {
         'followings': followings,
         'followers': followers,
-        'cur_users_followings_list': cur_users_followings_list
+        'cur_users_followings_list': cur_users_followings_list,
+        'user': user
     }
 
     return render(request, template_name='user/follower.html', context=ctx)
@@ -360,5 +361,5 @@ class GardenerListView(ListView):
         return gardener_list
 
 
-def about(request) :
+def about(request):
     return render(request, template_name='about.html')
