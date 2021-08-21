@@ -63,10 +63,13 @@ def signup(request):
 def member_del(request):
     if not request.user.is_authenticated:
         return redirect('user:login')
+
+    user = request.user
+
     if request.method == 'POST':
-        user = request.user
         user.delete()
         return render(request, template_name='user/signout_done.html')
+
     return render(request, template_name='user/signout.html')
 
 
@@ -299,7 +302,8 @@ class ScrabListView(ListView):
         return context
 
     def get_queryset(self):
-        scrab_list = PlantScrap.objects.filter(user=self.request.user)
+        scrab_list = PlantScrap.objects.filter(
+            user=self.request.user).order_by('-id')
         return scrab_list
 
 
@@ -333,6 +337,12 @@ class GardenerListView(ListView):
 
         page_range = paginator.page_range[start_index:end_index]
         context['page_range'] = page_range
+
+        search_keyword = self.request.GET.get('q', '')
+
+        if len(search_keyword) > 1:
+            context['q'] = search_keyword
+
         return context
 
     def get_queryset(self):

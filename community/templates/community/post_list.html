@@ -80,8 +80,9 @@
             {% else %}
             <div class='row row-cols-1' id='no-search-input'>
                 {% if q %}
-                <h1>일치하는 검색 결과가 없습니다.</h1>
-    
+                <h3>일치하는 검색 결과가 없습니다.</h3>
+                <a href = '{% url "community:post_list" %}' class= 'button-a'>뒤로가기</a>
+
                 {% else %}
                 <h3>작성된 게시글이 없습니다.</h3>
                 {% endif %}

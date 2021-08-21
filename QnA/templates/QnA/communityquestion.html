@@ -40,7 +40,13 @@
             {% for question in communityquestion_list %}
             <tr class="text-center">
                 <th scope='row'>{{ paginator.count|sub:page_obj.start_index|sub:forloop.counter0|add:1 }}</th>
-                <td><a href='{% url "QnA:questiondetail" question.pk %}' class= 'button-a'>{{ question.title|truncatechars:30 }}</a></td>
+                <td>
+                    {% if request.user.is_authenticated %}
+                    <a href='{% url "QnA:questiondetail" question.pk %}' class= 'button-a'>{{ question.title|truncatechars:30 }}</a>
+                    {% else %}
+                    <a onclick="alert('로그인이 필요한 서비스입니다.')" href="{% url 'user:login' %}" class='button-a'>{{ question.title|truncatechars:30 }}</a>
+                    {% endif %}
+                </td>
                 <td>{{ question.user_id }}</td>
                 <td>{{ question.created_at|date:'Y. m. d' }}</td>
             </tr>
@@ -100,7 +106,7 @@
         {% endif %}
     </div>
     <div class='col-md-offset-6'>
-    <button type="submit"class= 'move-to-other mb-4'>
+    <button type="submit"class= 'move-to-other mb-4' style='border:0;'>
         {% if request.user.is_authenticated %}
             <a href = '{% url "QnA:makequestion" %}' class= 'button-a'>질문하기</a>
         {% else %}
@@ -108,7 +114,7 @@
         {% endif %}
     </button>
     {% if q %}
-    <button type='submit'class= 'move-to-other mb-4'>
+    <button type='submit'class= 'move-to-other mb-4' style='border:0;'>
         <a href = '{% url "QnA:communityquestion_list" %}' class= 'button-a'>뒤로가기</a>
     </button>
     {% endif %}
