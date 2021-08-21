@@ -348,3 +348,7 @@ class GardenerListView(ListView):
             else:
                 messages.error(self.request, '검색어는 2글자 이상 입력해주세요.')
         return gardener_list
+
+
+def about(request) :
+    return render(request, template_name='about.html')
