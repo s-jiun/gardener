@@ -49,6 +49,9 @@
                             <a class="nav-link" onclick="alert('로그인이 필요합니다!')" href="{% url 'user:login'%}">친구찾기</a>
                         {% endif %}
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'user:about' %}">사이트 소개</a>
+                    </li>
                 </ul>
                 {% if request.user.is_authenticated %}
                     <div class="d-flex justify-content-end">

@@ -33,6 +33,7 @@ a {
   margin: 10px;
   border: solid lightslategray 1px;
   border-radius: 10px;
+  min-width: 300px;
 }
 
 .content-img {

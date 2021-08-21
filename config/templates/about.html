@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+    <link href="{% static 'style/css/about.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div id="about-back">
+<div class="container-fluid main-body d-flex align-items-center justify-content-center" style="height:100vh;">
+<div class="slide mb-4" style="height:80%; width:80%;">
+    <input type="radio" name="pos" id="pos1" checked>
+    <input type="radio" name="pos" id="pos2">
+    <input type="radio" name="pos" id="pos3">
+    <ul>
+      <li>
+        <div class="row" style="height:50%; overflow:hidden;">
+           <img class="lazyload" data-src="{%static 'images/slide_img1.png'%}" style="overflow:hidden;"> 
+        </div>
+        <div class="row">
+        </div>
+      </li>
+      <li></li>
+      <li></li>
+    </ul>
+    <p class="bullet">
+      <label for="pos1">1</label>
+      <label for="pos2">2</label>
+      <label for="pos3">3</label>
+    </p>
+  </div>
+  </div>
+  </div>
+  
+
+{% endblock %}
