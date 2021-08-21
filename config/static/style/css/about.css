@@ -2,9 +2,25 @@
 ul,li{list-style:none;}
 .slide{overflow:hidden;position:relative;}
 .slide li{position:absolute;left:0;right:0;top:0;bottom:0;opacity:0;transition:1s;}
-.slide li:nth-child(1){border:3px solid #ccdfcc;}
-.slide li:nth-child(2){border:3px solid#5c5427;}
-.slide li:nth-child(3){border:3px solid #ccdfcc;}
+.slide li:nth-child(1){border:3px solid #ccdfcc;
+    background: url("/static/images/back5.jpg");
+    background-repeat: no-repeat;
+    background-position: 80% 65%;
+    background-size: cover;
+}
+.slide li:nth-child(2){
+    border:3px solid#ccdfcc;
+    background: url("/static/images/back11.png");
+    background-repeat: no-repeat;
+    background-position: 80% 65%;
+    background-size: cover;
+}
+.slide li:nth-child(3){border:3px solid #ccdfcc;
+    background: url("/static/images/back9.png");
+    background-repeat: no-repeat;
+    background-position: 80% 65%;
+    background-size: cover;
+}
 .slide input{display:none;}
 .slide .bullet{position:absolute;bottom:20px;left:0;right:0;text-align:center;z-index:10;}
 .slide .bullet label{width:10px;height:10px;border-radius:10px;border:2px solid #666;display:inline-block;background:#fff;font-size:0;transition:0.5s;cursor:pointer;}
@@ -20,8 +36,18 @@ ul,li{list-style:none;}
 #about-back{
     width:100%;
     height: 100%;
-    background: url("/static/images/back1.png");
-    background-repeat: no-repeat;
-    background-position: 80% 65%;
-    background-size: cover;
+}
+#about-list{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+}
+#about-list2{
+    display: flex;
+    /* align-items: center; */
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
 }

@@ -7,20 +7,57 @@
 {% block content %}
 <div id="about-back">
 <div class="container-fluid main-body d-flex align-items-center justify-content-center" style="height:100vh;">
-<div class="slide mb-4" style="height:80%; width:80%;">
+<div class="slide mb-4 text-center" style="height:80%; width:80%;">
     <input type="radio" name="pos" id="pos1" checked>
     <input type="radio" name="pos" id="pos2">
     <input type="radio" name="pos" id="pos3">
     <ul>
-      <li>
-        <div class="row" style="height:50%; overflow:hidden;">
-           <img class="lazyload" data-src="{%static 'images/slide_img1.png'%}" style="overflow:hidden;"> 
-        </div>
-        <div class="row">
+      <li id="about-list">
+        <h1 style="font-weight:bold; font-size: calc(1.7rem + 1.5vw);">GARDENER</h1>
+        <div class="p-1">
+        <h5 class="mt-4" style="font-size: calc(0.5rem + 1.1vw);line-height: 2.5rem;">
+        자신만의 플랜테리어를 기록하고 관련 정보를 함께 공유하는<br>플랜테리어 전문 웹서비스<br>
+        </h5>
         </div>
       </li>
-      <li></li>
-      <li></li>
+      <li id="about-list2">
+      <div class="p-3">
+        <div class="row row-cols-1 row-cols-md-3">
+          <div class="col p-2">
+            <h5 class="mt-4" style="font-size: calc(0.5rem + 1.1vw);line-height: 2.5rem;">
+            자신의 플랜테리어 기록, 공유
+            </h5>
+          </div>
+            <div class="col p-2">
+            <h5 class="mt-4" style="font-size: calc(0.5rem + 1.1vw);line-height: 2.5rem;">
+              기르고자 하는 식물 검색, 스크랩
+            </h5>
+          </div>
+          <div class="col p-2">
+          <h5 class="mt-4" style="font-size: calc(0.5rem + 1.1vw);line-height: 2.5rem;">
+            플랜테리어 정보 질문 + 답변
+          </h5>
+          </div>
+        </div>
+      </div>      
+      </li>
+      <li id="about-list">
+       <h1 style="font-weight:bold; font-size: calc(1.7rem + 1.5vw);">DEVELOPER</h1>
+        <div class="p-1">
+        <h5 class="mt-4" style="font-size: calc(0.5rem + 1.1vw);line-height: 2.5rem;">
+         CEO : 서지운<br>
+         부장 : 김승주  <br>
+         차장 : 구건모 <br>
+         인턴 : 최도윤 
+        </h5>
+        </div>
+      <li>
+      
+      
+      
+      
+      
+      </li>
     </ul>
     <p class="bullet">
       <label for="pos1">1</label>
