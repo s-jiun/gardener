@@ -41,11 +41,4 @@ function SelectHandleOnchange(e) {
         search_box.innerHTML +=`<a href='?type=managelevel&q=경험자' class='btn mx-1'>경험자</a>`
         search_box.innerHTML +=`<a href='?type=managelevel&q=전문가' class='btn mx-1'>전문가</a>`
     }
-    else {
-        search_box.innerHTML = ""
-        search_box.innerHTML += `
-        <input class="plant-input" type="text" name ='q' value="{{q}}" placeholder="검색어를 입력하세요" />
-        <button class="plant-input-1" type="submit">검색</button>
-        `
-    }
 }
