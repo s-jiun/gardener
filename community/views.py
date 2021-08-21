@@ -235,10 +235,16 @@ def post_update(request, pk):
 @login_required
 def post_delete(request, pk):
     post = Post.objects.get(id=pk)
-    tag_id = TaggedPost.objects.get(content_object_id=pk).tag_id
-    tag = Tag.objects.get(id=tag_id)
+    tagged_posts = TaggedPost.objects.filter(content_object_id=pk)
+    for tagged_post in tagged_posts:
+        tag_id = tagged_post.tag_id
+        tag = Tag.objects.get(id=tag_id)
+        if TaggedPost.objects.filter(tag_id=tag_id).count() > 1:
+            pass
+        else:
+            tag.delete()
+
     post.delete()
-    tag.delete()
     return redirect('community:post_list')
 
 
