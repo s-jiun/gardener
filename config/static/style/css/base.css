@@ -10,7 +10,9 @@ main {
   height: auto;
   min-height: 100%;
   padding-bottom: 100px;
+  overflow: hidden;
 }
+
 header {
   font-family: "Gowun Batang", serif;
   width: auto;
@@ -99,5 +101,5 @@ footer {
 }
 
 .pagination {
-  font-size: calc(0.5rem + 1vw);
+  font-size: calc(0.5rem + 0.5vw);
 }
