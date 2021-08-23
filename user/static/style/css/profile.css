@@ -24,7 +24,7 @@ a {
   border: solid 2px #ccdfcc;
   border-radius: 10px;
   padding: 15px;
-  overflow-x: scroll;
+  overflow-x: auto;
 }
 
 #profile-line,

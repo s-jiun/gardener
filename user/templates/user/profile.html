@@ -33,13 +33,14 @@
                                 <span id="user-level">{{user.name}} 님은 현재 <a tabindex="0" type="button" data-bs-toggle="popover" data-bs-trigger="focus" title="국가대표 정원사 ({{user.point}}점)" data-bs-content="1000점 이상(게시물 34개 이상)"><img class='rank-image' src = "{% static 'images/hs.png'%}">  국가대표 정원사  <img class='rank-image' src = "{% static 'images/hs.png'%}"></a>입니다.<br></span>
                                 {% endif %}
                                 <div id="profile-content">
-                                    <span>
+                                    <span style='overflow:auto;'>
                                         {%if user.profile%}
-                                        {{user.profile}}
+                                        {{user.profile|linebreaksbr}}
                                         {% else %}
                                         프로필 정보가 없습니다.
                                         {%endif%}
-                                    </span><br>
+                                        <br>
+                                    </span>
                                 </div><br>
                                 <div id="user-follow" class="mt-2 mb-3">
                                     <a href="{% url 'user:follow' user.pk %}">팔로워 <span
