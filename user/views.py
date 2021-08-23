@@ -110,7 +110,7 @@ def profile(request, pk):
             break
 
     rank_user = GeneralUser.objects.annotate(num_resp=Count(
-        'following')).exclude(pk=request.user.pk).order_by('-num_resp')
+        'following')).order_by('-num_resp')
 
     ctx = {
         'user': user,
@@ -246,7 +246,7 @@ class liked_post_ListView(ListView):
 
     def get_queryset(self):
         user = GeneralUser.objects.get(id=self.kwargs['pk'])
-        liked = Like.objects.filter(user_id=user).order_by('id')
+        liked = Like.objects.filter(user_id=user).order_by('-id')
         return liked
 
     def get_context_data(self, **kwargs):
