@@ -43,21 +43,39 @@
                                     <h5 id="follow-name">
                                         <img src="{% static 'images/ID.png' %}" alt="" style="width:20px; height:20px; margin-bottom: 5px;">
                                         ID : {{follower.following_user.userid}}</h5>
-                                    {% if request.user != follower.following_user%}
+                                    {% if request.user == user %}
+                                        {% if request.user != follower.following_user%}
                                             {% if follower.following_user_id in cur_users_followings_list %}
-                                            <div class="follow-wraper-{{follower.following_user_id}}" style="display:inline; ">
-                                                <div class='following-{{follower.following_user_id}}' style="display:inline;">
-                                                    <button onclick="onClickFollowing({{follower.following_user_id}})" style="background: white; border: 1px solid #ACA790; padding:5px; border-radius:10px; font-size:16px;">팔로잉</button>
+                                                <div class="follow-wraper-{{follower.following_user_id}}" style="display:inline; ">
+                                                    <div class='following-{{follower.following_user_id}}' style="display:inline;">
+                                                        <button onclick="onClickFollowing({{follower.following_user_id}})" style="background: white; border: 1px solid #ACA790; padding:5px; border-radius:10px; font-size:16px;">팔로잉</button>
+                                                    </div>
                                                 </div>
-                                            </div>
                                             {% else %}
-                                            <div class="follow-wraper-{{follower.following_user_id}}" style="display:inline; ">
-                                                <div class="follow-{{follower.following_user_id}}" style="display:inline;">
-                                                    <button onclick="onClickFollow({{follower.following_user_id}})" style="background: white; border: 1px solid #ACA790; padding:5px; border-radius:10px; font-size:16px;">팔로우</button>
+                                                <div class="follow-wraper-{{follower.following_user_id}}" style="display:inline; ">
+                                                    <div class="follow-{{follower.following_user_id}}" style="display:inline;">
+                                                        <button onclick="onClickFollow({{follower.following_user_id}})" style="background: white; border: 1px solid #ACA790; padding:5px; border-radius:10px; font-size:16px;">팔로우</button>
+                                                    </div>
                                                 </div>
-                                            </div>
                                             {% endif %}
-                                    {%endif%}
+                                        {%endif%}
+                                    {% else %}
+                                        {% if request.user != follower.following_user%}
+                                            {% if follower.following_user_id in cur_users_followings_list %}
+                                                <div class="follow-wraper-{{follower.following_user_id}}" style="display:inline; ">
+                                                    <div class='following-{{follower.following_user_id}}' style="display:inline;">
+                                                        <button onclick="onClickOtherFollowing({{follower.following_user_id}})" style="background: white; border: 1px solid #ACA790; padding:5px; border-radius:10px; font-size:16px;">팔로잉</button>
+                                                    </div>
+                                                </div>
+                                            {% else %}
+                                                <div class="follow-wraper-{{follower.following_user_id}}" style="display:inline; ">
+                                                    <div class="follow-{{follower.following_user_id}}" style="display:inline;">
+                                                        <button onclick="onClickOtherFollow({{follower.following_user_id}})" style="background: white; border: 1px solid #ACA790; padding:5px; border-radius:10px; font-size:16px;">팔로우</button>
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+                                        {%endif%}
+                                    {% endif %}
                                     <hr class="m-1">
                                     <span> &nbsp Name : {{follower.following_user.name}}</span><br>
                                     <span> &nbsp Point : {{follower.following_user.point}}</span>
@@ -91,22 +109,39 @@
                                     <h5 id="follow-name">
                                         <img src="{% static 'images/ID.png' %}" alt="" style="width:20px; height:20px; margin-bottom: 5px;">
                                         ID : {{following.user.userid}}</h5>
-                                    {% if request.user != following.user%}
-                                        {% if following.user_id in cur_users_followings_list %}
-                                            <div class="follow-wraper-{{following.user_id}}" style="display:inline; ">
-                                                <div class='following-{{following.user_id}}' style="display:inline;">
-                                                    <button onclick="onClickFollowing({{following.user_id}})"  style="background: white; border: 1px solid #ACA790; padding:5px; border-radius:10px; font-size:16px;">팔로잉</button>
+                                    {% if request.user == user %}
+                                        {% if request.user != following.user%}
+                                            {% if following.user_id in cur_users_followings_list %}
+                                                <div class="follow-wraper-{{following.user_id}}" style="display:inline; ">
+                                                    <div class='following-{{following.user_id}}' style="display:inline;">
+                                                        <button onclick="onClickFollowing({{following.user_id}})"  style="background: white; border: 1px solid #ACA790; padding:5px; border-radius:10px; font-size:16px;">팔로잉</button>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        {% else %}
-
-                                            <div class="follow-wraper-{{following.user_id}}" style="display:inline; ">
-                                                <div class="follow-{{following.user_id}}" style="display:inline;">
-                                                    <button  onclick="onClickFollow({{following.user_id}})" style="background: white; border: 1px solid #ACA790; padding:5px; border-radius:10px; font-size:16px;">팔로우</button>
+                                            {% else %}
+                                                <div class="follow-wraper-{{following.user_id}}" style="display:inline; ">
+                                                    <div class="follow-{{following.user_id}}" style="display:inline;">
+                                                        <button  onclick="onClickFollow({{following.user_id}})" style="background: white; border: 1px solid #ACA790; padding:5px; border-radius:10px; font-size:16px;">팔로우</button>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        {% endif %}
-                                    {%endif%}
+                                            {% endif %}
+                                        {%endif%}
+                                    {% else %}
+                                        {% if request.user != following.user%}
+                                            {% if following.user_id in cur_users_followings_list %}
+                                                <div class="follow-wraper-{{following.user_id}}" style="display:inline; ">
+                                                    <div class='following-{{following.user_id}}' style="display:inline;">
+                                                        <button onclick="onClickOtherFollowing({{following.user_id}})"  style="background: white; border: 1px solid #ACA790; padding:5px; border-radius:10px; font-size:16px;">팔로잉</button>
+                                                    </div>
+                                                </div>
+                                            {% else %}
+                                                <div class="follow-wraper-{{following.user_id}}" style="display:inline; ">
+                                                    <div class="follow-{{following.user_id}}" style="display:inline;">
+                                                        <button  onclick="onClickOtherFollow({{following.user_id}})" style="background: white; border: 1px solid #ACA790; padding:5px; border-radius:10px; font-size:16px;">팔로우</button>
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+                                        {%endif%}                                                
+                                    {% endif %}
                                     <hr class="m-1">
                                     <span> &nbsp Name : {{following.user.name}}</span><br>
                                     <span> &nbsp Point : {{following.user.point}}</span>
