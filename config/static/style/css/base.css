@@ -30,6 +30,7 @@ a {
   width: 80%;
   padding-left: 0;
   padding-right: 0;
+  font-family: "Gowun Batang", serif;
 }
 
 footer {
@@ -95,4 +96,8 @@ footer {
 .activate a {
   background-color: #a0cab5;
   color: white;
+}
+
+.pagination {
+  font-size: calc(0.5rem + 1vw);
 }

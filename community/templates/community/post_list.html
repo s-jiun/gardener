@@ -12,7 +12,7 @@
             {% if q %}
             <h1>'{{ q }}' 검색 결과입니다.</h1>
             {% else %}
-            <h2 style=''>🌵 마음에 드는 플랜테리어를 찾아보세요 🌵</h2>
+            <h2><img src="{% static 'images/post_list.png' %}" style='width:33px;'>마음에 드는 플랜테리어를 찾아보세요<img src="{% static 'images/post_list.png' %}" style='width:33px;'></h2>
             {% endif %}
             {% if messages%}
                 {% for message in messages %}
@@ -80,8 +80,9 @@
             {% else %}
             <div class='row row-cols-1' id='no-search-input'>
                 {% if q %}
-                <h1>일치하는 검색 결과가 없습니다.</h1>
-    
+                <h3>일치하는 검색 결과가 없습니다.</h3>
+                <a href = '{% url "community:post_list" %}' class= 'button-a'>뒤로가기</a>
+
                 {% else %}
                 <h3>작성된 게시글이 없습니다.</h3>
                 {% endif %}

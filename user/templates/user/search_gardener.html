@@ -16,20 +16,23 @@
                         <span style="font-size: 28px;">'{{ q }}' 검색 결과입니다. </span>
                         {% else %}
                         <h2>
-                            🍀 새로운 가드너들과 함께하세요  🍀
+                            <img src="{% static 'images/clover.png' %}" alt="" style="height:2rem; width:2rem;">새로운 가드너들과 함께하세요<img src="{% static 'images/clover.png' %}" alt="" style="height:2rem; width:2rem;">
+                            
                         </h2>
                         {% endif %}
                         <!-- 에러메시지 -->
-                        {% if messages %}
+                        <span style= 'background-color:#ccdfcc; color: #5c5427 ; font-weight:900;'>
+                            {% if messages %}
                             {% for message in messages %}
                                 {{message}}
                             {% endfor %}
-                        {% endif %}
+                            {% endif %}
+                        </span>
                     </div>
                     <div id='gardener-header-form'>
                         <form action = '' method="GET" >
                             <div id="search_option" style="display:inline">
-                                <input class="gardener-input" type="text" name ='q' value="{{q}}" placeholder="검색어를 입력하세요" />
+                                <input class="gardener-input" type="text" name ='q' value="{{q}}" placeholder="가드너의 아이디를 검색해 보세요." />
                                 <button class="gardener-input-1" type="submit">검색</button>
                             </div>
                         </form>
@@ -37,7 +40,7 @@
                 </div>
             </div>
         </div><!--header 닫힘-->
-        <div class="container-fluid main-body mt-4 mb-4" id="gardener-body">
+        <div class="container-fluid main-body mt-4 mb-4 text-center" id="gardener-body">
         {% if gardener_list %}
         <div class='row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3'>
             {% for gardener in gardener_list %}
@@ -69,22 +72,24 @@
                 </div>
                 
             {% endfor %}
+        </div>
+        {% else %}
+            {%if q%}           
+            <tr class="text-center">
+                <td colspan="5">
+                    <div class="text-center" style="font-size: 28px;">
+                        일치하는 검색 결과가 없습니다.<br/>
+                        <a style="font-size: 14px;" href = '{% url "user:search_gardener" %}'>뒤로가기</a>
+                    </div>
+                </td>
+            </tr>
             {% else %}
-                {%if q%}
-                <tr class="text-center">
-                    <td colspan="5">
-                        <div class="text-center" style="font-size: 28px;">
-                            일치하는 검색 결과가 없습니다.
-                        </div>
-                    </td>
-                </tr>
-                {% else %}
-                <tr class="text-center" style="font-size: 28px;">
-                    <td colspan="5">
-                    아직 가드너들의 정보가 없습니다. 
-                    </td>
-                </tr>
-                {%endif%}
+            <tr class="text-center" style="font-size: 28px;">
+                <td colspan="5">
+                아직 가드너들의 정보가 없습니다. 
+                </td>
+            </tr>
+            {%endif%}
         </div>
         {% endif %}
 
