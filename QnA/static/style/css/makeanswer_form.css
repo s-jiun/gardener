@@ -1,5 +1,10 @@
+main {
+  padding-bottom: 0;
+}
+
 #makeanswer-body {
   background-color: #f5f5f5;
+  padding-bottom: 100px;
 }
 
 #makeanswer-main {
