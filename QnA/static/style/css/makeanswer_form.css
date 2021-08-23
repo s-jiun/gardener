@@ -37,3 +37,9 @@ main {
   margin-left: 1vw;
   margin-right: 1vw;
 }
+
+@media screen and (max-width: 800px) {
+  #makeanswer-writing {
+    display: none;
+  }
+}

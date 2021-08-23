@@ -167,10 +167,6 @@ a {
   width: auto;
 }
 
-#image-container {
-  /* height: 100vh; */
-}
-
 @media screen and (max-width: 800px) {
   #image-container {
     display: none;

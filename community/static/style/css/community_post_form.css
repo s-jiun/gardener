@@ -24,6 +24,8 @@
   writing-mode: vertical-rl;
 }
 
-/* #post-form-image {
-  overflow: auto;
-} */
+@media screen and (max-width: 800px) {
+  .text-container {
+    display: none;
+  }
+}
