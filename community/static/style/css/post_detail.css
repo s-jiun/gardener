@@ -23,6 +23,7 @@ a {
 .page-image {
   position: relative;
   width: 80%;
+  min-height: 100vh;
   height: 100%;
   overflow: hidden;
   object-fit: cover;
@@ -164,10 +165,6 @@ a {
 
 #post-edit-container {
   width: auto;
-}
-
-#image-container {
-  height: 100vh;
 }
 
 @media screen and (max-width: 800px) {

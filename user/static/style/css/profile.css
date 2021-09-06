@@ -7,7 +7,7 @@ a {
 .profile {
   width: 100%;
   display: left;
-  margin: 50px 20px 20px 20px;
+  margin: 50px 20px 20px 12px;
   padding: 15px;
   border: solid 3px #ccdfcc;
   border-radius: 10px;
@@ -24,25 +24,25 @@ a {
   border: solid 2px #ccdfcc;
   border-radius: 10px;
   padding: 15px;
-  overflow-x: scroll;
+  overflow-x: auto;
 }
 
 #profile-line,
 #user-img {
-  border-style:double;
-  padding:1px 3px;
+  border-style: double;
+  padding: 1px 3px;
   border-width: 5px;
-  border-color:#5c5427;
-  width:12rem;
-  height:12rem;
+  border-color: #5c5427;
+  width: 12rem;
+  height: 12rem;
   border-radius: 50%;
   position: relative;
   overflow: auto;
   max-height: 230px;
-  max-width:230px;
+  max-width: 230px;
   min-height: 130px;
-  min-width:130px;
-  margin-top:3%;
+  min-width: 130px;
+  margin-top: 3%;
 }
 #profile-line {
   height: 230px;
@@ -79,7 +79,7 @@ a {
   font-size: 40px;
 }
 #user-level {
-  font-size: 20px;
+  font-size: 1.1rem;
   margin-left: 10px;
   vertical-align: text-top;
 }
@@ -102,8 +102,8 @@ a {
   width: 2vw;
   height: auto;
 }
-#user-follow a:hover{
-  color:#ccdfcc;
+#user-follow a:hover {
+  color: #ccdfcc;
 }
 
 #post-title {
@@ -136,14 +136,13 @@ a {
   border-radius: 5px;
   border: solid 2px white;
 }
-.sidebar span{
+.sidebar span {
   font-weight: bold;
-  color:#5c5427;
+  color: #5c5427;
   font-size: 15px;
-  text-decoration:none; 
-  border-bottom:1px solid #5c5427;
-  padding-bottom:3px;
-
+  text-decoration: none;
+  border-bottom: 1px solid #5c5427;
+  padding-bottom: 3px;
 }
 
 #no-post {
@@ -157,7 +156,7 @@ a {
 }
 #no-post img {
   vertical-align: text-bottom;
-  width:2rem;
+  width: 2rem;
 }
 
 #card-post {
@@ -174,16 +173,17 @@ a {
   border-radius: 100px;
   font-family: "Gowun Batang", serif;
 }
-.follow-wrapper{
+.follow-wrapper {
   display: inline;
 }
-.follow-wrapper .follow, .follow-wrapper .following{
-  display:inline;
+.follow-wrapper .follow,
+.follow-wrapper .following {
+  display: inline;
 }
-#profile-post-line{
-  text-align:center; 
-  border:solid 2px #ccdfcc; 
+#profile-post-line {
+  text-align: center;
+  border: solid 2px #ccdfcc;
   border-width: 3px 0px 3px 0px;
-  padding:0; 
-  margin:0;
+  padding: 0;
+  margin: 0;
 }

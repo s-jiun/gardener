@@ -2,7 +2,8 @@ from user.models import Follow, GeneralUser
 import json
 from django.http.response import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Post, Like, Reply, Postviews, Notice, Noticetviews
+from .models import Post, Like, Reply, Postviews, Notice, Noticetviews, TaggedPost
+from taggit.models import Tag
 from .forms import PostForm, ReplyForm
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
@@ -104,8 +105,12 @@ class FollowPostView(ListView):
 
         followings = Follow.objects.filter(following_user=self.request.user.id)
         post_list = []
+        following_list = []
         for following in followings:
-            post_list += Post.objects.filter(user_id_id=following.user_id)
+            following_list.append(following.user_id)
+
+        post_list = Post.objects.filter(user_id__in=following_list)
+
         if search_keyword:
             if len(search_keyword) > 1:
                 if search_type == 'tag':
@@ -138,7 +143,7 @@ def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
     Postviews.objects.get_or_create(
         post=post, client_ip=get_client_ip(request))
-    print(len(Postviews.objects.filter(post=post)))
+
     comments = post.reply_set.filter(parent_reply__isnull=True)
     liked_user = Like.objects.filter(
         post_id=pk).values_list('user_id', flat=True)
@@ -230,6 +235,15 @@ def post_update(request, pk):
 @login_required
 def post_delete(request, pk):
     post = Post.objects.get(id=pk)
+    tagged_posts = TaggedPost.objects.filter(content_object_id=pk)
+    for tagged_post in tagged_posts:
+        tag_id = tagged_post.tag_id
+        tag = Tag.objects.get(id=tag_id)
+        if TaggedPost.objects.filter(tag_id=tag_id).count() > 1:
+            pass
+        else:
+            tag.delete()
+
     post.delete()
     return redirect('community:post_list')
 

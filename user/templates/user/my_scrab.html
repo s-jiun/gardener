@@ -16,7 +16,7 @@
                 <div class="container profile_in">
                     <div class="row justify-content-center row-cols-1 row-cols-md-2">
                         <div class="col text-center" style="margin-right:-5%; padding:0;">
-                            <img id="user-img" src={{user.Image.url}} />
+                            <img class="lazyload" id="user-img" data-src={{user.Image.url}} />
                         </div>
                         <div class="col">
                             <div id="user-info">
@@ -79,7 +79,7 @@
                             <div class="col col-lg-4">
                                 <div id="card-post" class="card text-center m-3" >
                                     <a data-bs-toggle="modal" data-bs-target="#plantDetailModal-{{scrab.plant.pk}}">
-                                    <img src={{scrab.plant.photo_url}} class="card-img-top" alt="..." style="height:150px; max-height: 160px;">
+                                    <img data-src={{scrab.plant.photo_url}} class="lazyload card-img-top" alt="..." style="height:150px; max-height: 160px;">
                                     <div class="card-body ">
                                         <hr style="margin:0px 0px 5px 0px;">
                                         {{scrab.plant.name}}
@@ -95,13 +95,13 @@
                                             <a href="{% url 'user:delete_scrab' scrab.plant.pk %}" style="margin-left: 3vw;"><i class="fas fa-bookmark"></i></a>
                                         </div>
                                         <div class="modal-body text-center">
-                                            <img src={{scrab.plant.photo_url}}>
+                                            <img class="lazyload" data-src={{scrab.plant.photo_url}}>
                                             <hr class="m-1"><hr class="m-1">
                                             <table class="table table-striped text-start mt-2">
                                                 <tbody>
                                                     <tr>
                                                         <td class="p-2"> 
-                                                        <img src={%static 'images/plant.png'%}> 
+                                                        <img class="lazyload" data-src="{%static 'images/plant.png'%}"> 
                                                         <span>생육형태<span>
                                                         </td>
                                                     </tr>
@@ -113,7 +113,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td class="p-2"> 
-                                                        <img src={%static 'images/difficulty.png'%}> 
+                                                        <img class="lazyload" data-src="{%static 'images/difficulty.png'%}"> 
                                                         <span>관리 난이도<span>
                                                         </td>
                                                     </tr>
@@ -124,7 +124,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td class="p-2"> 
-                                                            <img src={%static 'images/watering.png'%}> 
+                                                            <img class="lazyload" data-src="{%static 'images/watering.png'%}"> 
                                                             <span>관리 요구 수준<span>
                                                             </td>
                                                         </tr>
@@ -141,7 +141,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td class="p-2"> 
-                                                        <img src={%static 'images/temperature.png'%}> 
+                                                        <img class="lazyload" data-src="{%static 'images/temperature.png'%}"> 
                                                         <span>생육 온도<span>
                                                         </td>
                                                     </tr>
@@ -152,7 +152,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td class="p-2"> 
-                                                        <img src={%static 'images/humidity.png'%}> 
+                                                        <img class="lazyload" data-src="{%static 'images/humidity.png'%}"> 
                                                         <span>생육 습도<span>
                                                         </td>
                                                     </tr>
@@ -163,7 +163,7 @@
                                                     </tr>
                                                     <tr>
                                                     <td class="p-2"> 
-                                                        <img src={%static 'images/spring.png'%}> 
+                                                        <img class="lazyload" data-src="{%static 'images/spring.png'%}"> 
                                                         <span>봄철 물주기<span>
                                                         </td>
                                                     </tr>
@@ -173,7 +173,7 @@
                                                         </td> 
                                                     </tr>
                                                     <td class="p-2"> 
-                                                        <img src={%static 'images/summer.png'%}> 
+                                                        <img class="lazyload" data-src="{%static 'images/summer.png'%}"> 
                                                         <span>여름철 물주기<span>
                                                         </td>
                                                     </tr>
@@ -183,7 +183,7 @@
                                                         </td> 
                                                     </tr>
                                                     <td class="p-2"> 
-                                                        <img src={%static 'images/fall.png'%}> 
+                                                        <img class="lazyload" data-src="{%static 'images/fall.png'%}"> 
                                                         <span>가을철 물주기<span>
                                                         </td>
                                                     </tr>
@@ -193,7 +193,7 @@
                                                         </td> 
                                                     </tr>
                                                     <td class="p-2"> 
-                                                        <img src={%static 'images/winter.png'%}> 
+                                                        <img class="lazyload" data-src="{%static 'images/winter.png'%}"> 
                                                         <span>겨울철 물주기<span>
                                                         </td>
                                                     </tr>
@@ -211,9 +211,9 @@
                             {% endfor %}
                             {%else%}
                             <div id="no-post" class="text-center">
-                                <img style="width: 2rem;" src="{% static 'images/flower.png'%}" />
-                                <span> 현재 게시글이 없습니다. </span>
-                                <img style="width: 2rem;" src="{% static 'images/flower.png'%}" />
+                                <img class="lazyload" style="width: 2rem;" data-src="{% static 'images/flower.png'%}" />
+                                <span> 현재 스크랩한 식물이 없습니다. </span>
+                                <img class="lazyload" style="width: 2rem;" data-src="{% static 'images/flower.png'%}" />
                             </div>
                             {% endif %}
                         </div>

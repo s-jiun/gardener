@@ -12,6 +12,7 @@ from django.core.paginator import Paginator
 from community.models import Like
 from django.db.models import Count
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 
 def login(request):
@@ -62,10 +63,13 @@ def signup(request):
 def member_del(request):
     if not request.user.is_authenticated:
         return redirect('user:login')
+
+    user = request.user
+
     if request.method == 'POST':
-        user = request.user
         user.delete()
         return render(request, template_name='user/signout_done.html')
+
     return render(request, template_name='user/signout.html')
 
 
@@ -87,6 +91,7 @@ def member_modification(request):
     return render(request, 'user/update.html', {'user_change_form': user_change_form})
 
 
+@login_required
 def profile(request, pk):
     user = GeneralUser.objects.get(id=pk)
     follower = Follow.objects.filter(user=user).count()
@@ -105,7 +110,7 @@ def profile(request, pk):
             break
 
     rank_user = GeneralUser.objects.annotate(num_resp=Count(
-        'following')).exclude(pk=request.user.pk).order_by('-num_resp')
+        'following')).order_by('-num_resp')
 
     ctx = {
         'user': user,
@@ -119,6 +124,7 @@ def profile(request, pk):
     return render(request, template_name='user/profile.html', context=ctx)
 
 
+@login_required
 def follow_list(request, pk):
     user = GeneralUser.objects.get(id=pk)
     followers = user.following.all()
@@ -130,14 +136,17 @@ def follow_list(request, pk):
         cur_users_followings_list.append(cur_users_following.user_id)
 
     ctx = {
+        'user':user,
         'followings': followings,
         'followers': followers,
-        'cur_users_followings_list': cur_users_followings_list
+        'cur_users_followings_list': cur_users_followings_list,
+        'user': user
     }
 
     return render(request, template_name='user/follower.html', context=ctx)
 
 
+@login_required
 def profile_update(request):
     user = GeneralUser.objects.get(id=request.user.id)
     if request.method == 'POST':
@@ -162,11 +171,16 @@ def profile_update(request):
     return render(request, template_name='user/profile_update.html', context=ctx)
 
 
+@login_required
 def my_profile(request):
     return redirect('user:profile', pk=request.user.id)
 
 
 def start_page(request):
+    if request.user.is_authenticated:
+        if request.user.name == "":
+            return redirect('user:profile_update')
+
     return render(request, template_name='welcome.html')
 
 
@@ -225,14 +239,6 @@ def base_image_ajax(request):
     return JsonResponse({'user_image': user.Image.url})
 
 
-def liked_posts(request, pk):
-    user = GeneralUser.objects.get(id=pk)
-    liked = Like.objects.filter(user_id=user)
-    print(liked)
-    ctx = {'liked': liked, 'user': user}
-    return render(request, 'user/my_pick.html', context=ctx)
-
-
 class liked_post_ListView(ListView):
     model = Like
     paginate_by = 5
@@ -241,7 +247,7 @@ class liked_post_ListView(ListView):
 
     def get_queryset(self):
         user = GeneralUser.objects.get(id=self.kwargs['pk'])
-        liked = Like.objects.filter(user_id=user).order_by('id')
+        liked = Like.objects.filter(user_id=user).order_by('-id')
         return liked
 
     def get_context_data(self, **kwargs):
@@ -298,7 +304,8 @@ class ScrabListView(ListView):
         return context
 
     def get_queryset(self):
-        scrab_list = PlantScrap.objects.filter(user=self.request.user)
+        scrab_list = PlantScrap.objects.filter(
+            user=self.request.user).order_by('-id')
         return scrab_list
 
 
@@ -332,6 +339,12 @@ class GardenerListView(ListView):
 
         page_range = paginator.page_range[start_index:end_index]
         context['page_range'] = page_range
+
+        search_keyword = self.request.GET.get('q', '')
+
+        if len(search_keyword) > 1:
+            context['q'] = search_keyword
+
         return context
 
     def get_queryset(self):
@@ -347,3 +360,7 @@ class GardenerListView(ListView):
             else:
                 messages.error(self.request, '검색어는 2글자 이상 입력해주세요.')
         return gardener_list
+
+
+def about(request):
+    return render(request, template_name='about.html')

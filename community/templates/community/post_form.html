@@ -40,11 +40,11 @@
                                 {% endif %}
                                 (썸네일 이미지를 변경해보세요!)                                
                                 <input type="file" class='form-control' onchange="readURL(this);" name="image" accept="image/*" id="id_image">
-                                <img id="blah" src="" class='mt-2'/>
+                                <img class="lazyload" id="blah" data-src="" class='mt-2'/>
                                 {% else %}
                                 (썸네일을 지정하지 않으면 기본이미지가 썸네일로 적용됩니다.)
                                 <input type="file" class='form-control' onchange="readURL(this);" name="image" accept="image/*" id="id_image">
-                                <img id="blah" src="" class='mt-2'/>
+                                <img class="lazyload" id="blah" data-src="" class='mt-2'/>
                                 {% endif %}
                             </div>
                             <div class='form-group mb-3'>
@@ -81,17 +81,18 @@
             </div>
             <div class='col col-1' id='new-post-comment'>
                 {% if form.title.value %}
-                    <h4 class='mt-3' style='margin-left:0; margin-right:1vw;'>
+                    <h4 class='mt-3 text-container' style='margin-left:0; margin-right:1vw;'>
                         포스트 수정중입니다
                     </h4>
-                    
                 {% else %}
-                    <h4 class='mt-3' style='margin-left:1vw; margin-right:1vw;'>
-                        여러분의 플랜테리어를
-                    </h4>
-                    <h4 class='mt-3' style='margin-left:0; margin-right:0;'>
-                        공유해보세요
-                    </h4>
+                    <div class="text-container">
+                        <h4 class='mt-3' style='margin-left:1vw; margin-right:1vw;'>
+                            여러분의 플랜테리어를
+                        </h4>
+                        <h4 class='mt-3' style='margin-left:0; margin-right:0;'>
+                            공유해보세요
+                        </h4>
+                    </div>
                 {% endif %}
             </div>
         </div>

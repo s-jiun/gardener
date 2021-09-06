@@ -13,7 +13,24 @@
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
     <link href="{% static 'style/css/base.css' %}" rel="stylesheet">
-    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script  src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <style>
+        /* 스크롤 바 넓이 16px */
+        ::-webkit-scrollbar{width: 16px;}
+        /* 스크롤 바 기본 색상 */
+        ::-webkit-scrollbar-track {background-color:#ffff;}
+        /* 스크롤 구간 배경 색상 */
+        ::-webkit-scrollbar-thumb {background-color:#ccdfcc;} 
+        /* 스크롤 바 위에 마우스 올렸을 때(hover) 색상 */
+        ::-webkit-scrollbar-thumb:hover {background-color: #a0cab5;} 
+        /* 스크롤 상하단 버튼 넓이와 색상 */
+        ::-webkit-scrollbar-button:start:decrement{
+        background-color: #d8d8d8; border-end-start-radius: 3px;
+        }
+        ::-webkit-scrollbar-button:end:increment {
+            background-color: #d8d8d8; border-end-end-radius: 3px;
+        } 
+    </style>
     {% block head %}
     {% endblock %}
     <title>Gardener</title>
@@ -22,7 +39,7 @@
 
 <header>
     <nav class="navbar navbar-expand-lg navbar-light">
-        <img class="logo-image" src ="{% static 'images/flowers.svg' %}" />
+        <img class="lazyload logo-image" data-src ="{% static 'images/flowers.svg' %}" />
         <div class="container-fluid d-flex">
             <a class="navbar-brand" href="{% url 'community:post_list' %}">Gardener</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,13 +60,20 @@
                         <a class="nav-link" href="{% url 'community:notice' %}">공지사항</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'user:search_gardener'%}">친구찾기</a>
+                        {% if request.user.is_authenticated %}
+                            <a class="nav-link" href="{% url 'user:search_gardener'%}">친구찾기</a>
+                        {% else %}
+                            <a class="nav-link" onclick="alert('로그인이 필요합니다!')" href="{% url 'user:login'%}">친구찾기</a>
+                        {% endif %}
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'user:about' %}">사이트 소개</a>
                     </li>
                 </ul>
                 {% if request.user.is_authenticated %}
                     <div class="d-flex justify-content-end">
                         <ul class="navbar-nav align-items-center flex-row">
-                            <div class='profile-image'><img src="{{ user.Image.url }}"></div>
+                            <div class='profile-image'><img class="lazyload" data-src="{{ request.user.Image.url }}"></div>
                             <a href="{% url 'user:my_profile' %}">{{ request.user.userid }}</a>
                         </ul>
                         <ul class="navbar-nav align-items-center">
@@ -93,7 +117,9 @@
         <div class="flex-column">
             <div>&copy;Pirogramming 15th Team Gardner</div>
             <div>All rights reserved</div>
-            <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+            <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
+            <br><a href="https://www.freepik.com/vectors/background">Background vector created by freepik - www.freepik.com</a>
+            </div>
         </div>
     </div>
 </footer>
@@ -122,7 +148,7 @@
         
 
 </script>
-
+<script src="{% static 'javascripts/lazysizes.min.js' %}"></script>
 {% block js %}
 {% endblock %}
 </html>

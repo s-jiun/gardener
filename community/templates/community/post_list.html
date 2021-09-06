@@ -12,7 +12,7 @@
             {% if q %}
             <h1>'{{ q }}' 검색 결과입니다.</h1>
             {% else %}
-            <h2 style=''>🌵 마음에 드는 플랜테리어를 찾아보세요 🌵</h2>
+            <h2><img src="{% static 'images/post_list.png' %}" style='width:33px;'>마음에 드는 플랜테리어를 찾아보세요<img src="{% static 'images/post_list.png' %}" style='width:33px;'></h2>
             {% endif %}
             {% if messages%}
                 {% for message in messages %}
@@ -35,8 +35,20 @@
             </form>
         </div>
         <div class="pb-5">
-            <button id='list-create-post'><a href="{% url 'community:post_create' %}">포스트 작성</a></button>
-            <button id='list-watch-post'><a href = '{% url "community:follow_post_list" %}'>친구 게시물 보기</a></button>
+            <button id='list-create-post' >
+                {% if request.user.is_authenticated %}
+                    <a href="{% url 'community:post_create' %}">포스트 작성</a>
+                {% else %}
+                    <a onclick="alert('로그인이 필요한 서비스입니다.')" href="{% url 'user:login' %}">포스트 작성</a>
+                {% endif %}
+            </button>
+            <button id='list-watch-post'>
+                {% if request.user.is_authenticated %}
+                    <a href = '{% url "community:follow_post_list" %}'>친구 게시물 보기</a>
+                {% else %}
+                    <a onclick="alert('로그인이 필요한 서비스입니다.')" href="{% url 'user:login' %}">친구 게시물 보기</a>
+                {% endif %}
+            </button>
         </div>
     </div>            
 </div>
@@ -47,10 +59,10 @@
             <div class='row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3'>
                 {% for post in post_list %}
                 <div class='col mb-3'>
-                    <p id='thumbnail-p'><img id='post-list-thumbnail' src="{{ post.user_id.Image.url }}"> {{ post.user_id }}</p>
+                    <p id='thumbnail-p'><img class="lazyload" id='post-list-thumbnail' data-src="{{ post.user_id.Image.url }}"> {{ post.user_id }}</p>
                     <figure class="snip1384">
                         {% if post.image %}
-                            <image src='{{ post.image.url }}' class='img-thumbnail'/>
+                            <image data-src='{{ post.image.url }}' class='lazyload img-thumbnail'/>
                         {% endif %}
                         <figcaption>
                           <h3>{{post.title|truncatechars:10 }}</h3>
@@ -68,8 +80,9 @@
             {% else %}
             <div class='row row-cols-1' id='no-search-input'>
                 {% if q %}
-                <h1>일치하는 검색 결과가 없습니다.</h1>
-    
+                <h3>일치하는 검색 결과가 없습니다.</h3>
+                <a href = '{% url "community:post_list" %}' class= 'button-a'>뒤로가기</a>
+
                 {% else %}
                 <h3>작성된 게시글이 없습니다.</h3>
                 {% endif %}

@@ -9,7 +9,7 @@
     <div class="d-flex flex-column container" style='background-color:#F5F5F5; min-height: 85vh;'>
         <div class="content-box">
             <div class='d-flex title justify-content-between'>
-                <h3><img class="title-img" src="{% static 'images/notice-title.svg' %}"/>{{notice.title}}</h3>
+                <h3><img class="lazyload title-img" data-src="{% static 'images/notice-title.svg' %}"/>{{notice.title}}</h3>
                 <span>조회수 {{views}}</span>
             </div>
             <hr/>

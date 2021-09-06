@@ -34,3 +34,9 @@
   background-color: #ccdfcc;
   color: white;
 }
+
+#question-profile-img {
+  border-radius: 100px;
+  width: 1rem;
+  height: 1rem;
+}
