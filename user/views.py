@@ -136,6 +136,7 @@ def follow_list(request, pk):
         cur_users_followings_list.append(cur_users_following.user_id)
 
     ctx = {
+        'user':user,
         'followings': followings,
         'followers': followers,
         'cur_users_followings_list': cur_users_followings_list,

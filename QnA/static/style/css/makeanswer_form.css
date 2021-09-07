@@ -1,5 +1,10 @@
+main {
+  padding-bottom: 0;
+}
+
 #makeanswer-body {
   background-color: #f5f5f5;
+  padding-bottom: 100px;
 }
 
 #makeanswer-main {
@@ -31,4 +36,10 @@
 #makeanswer-writing h4 {
   margin-left: 1vw;
   margin-right: 1vw;
+}
+
+@media screen and (max-width: 800px) {
+  #makeanswer-writing {
+    display: none;
+  }
 }

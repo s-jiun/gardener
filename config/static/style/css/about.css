@@ -23,7 +23,7 @@ ul,li{list-style:none;}
 }
 .slide input{display:none;}
 .slide .bullet{position:absolute;bottom:20px;left:0;right:0;text-align:center;z-index:10;}
-.slide .bullet label{width:10px;height:10px;border-radius:10px;border:2px solid #666;display:inline-block;background:#fff;font-size:0;transition:0.5s;cursor:pointer;}
+.slide .bullet label{width:10px;height:10px;border-radius:10px;border:2px solid #ccdfcc;display:inline-block;background:#fff;font-size:0;transition:0.5s;cursor:pointer;}
 /* 슬라이드 조작 */
 #pos1:checked ~ ul li:nth-child(1),
 #pos2:checked ~ ul li:nth-child(2),
@@ -31,7 +31,7 @@ ul,li{list-style:none;}
 /* bullet 조작 */
 #pos1:checked ~ .bullet label:nth-child(1),
 #pos2:checked ~ .bullet label:nth-child(2),
-#pos3:checked ~ .bullet label:nth-child(3){background:#666;}
+#pos3:checked ~ .bullet label:nth-child(3){background:#ccdfcc}
 
 #about-back{
     width:100%;
@@ -50,4 +50,13 @@ ul,li{list-style:none;}
     flex-direction: column;
     flex-wrap: nowrap;
     justify-content: center;
+}
+#about-list-text1{
+    font-size: calc(0.5rem + 1.2vw);
+    line-height: 2.5rem;
+    font-weight: bold;
+}
+#about-list-text2{
+    font-size: calc(0.5rem + 0.5vw);
+    line-height: 2.5rem;
 }
