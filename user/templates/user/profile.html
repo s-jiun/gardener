@@ -152,6 +152,7 @@
                     <div class="btn-group-vertical" role="group" aria-label="Basic outlined example">
                         <a href="{% url 'user:my_pick' user.pk %}">My Pick</a>
                         <a href="{% url 'user:my_scrab_plant' user.pk%}">My Scrab</a>
+                        <a href="{% url 'user:my_plants' user.pk%}">My Plants</a>
                         <a href="{% url 'community:post_create' %}">게시물 작성</a>
                         <a href="{% url 'user:profile_update' %}">프로필 수정</a>
                         <a href="{% url 'user:update' %}">회원정보 수정</a>
@@ -162,7 +163,6 @@
             {% else %}
             <div class="col mt-3 mb-5">
                 <div class="container sidebar text-center p-1">
-                    <!--내 프로필 경우-->
                     <div class="btn-group-vertical" role="group" aria-label="Basic outlined example">
                         <span>** Top Gardener **</span> 
                         {%if rank_user%}

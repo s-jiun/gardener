@@ -48,42 +48,45 @@
         </div>
     </div>
 </div>
-<script>
-    function readURL(input) {
-        console.log(input);
-        if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        reader.onload = function (e) {
-        $('#blah').attr('src', e.target.result);
+{% endblock %}
+
+{% block js %}
+    <script>
+        function readURL(input) {
+            console.log(input);
+            if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+            $('#blah').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+            }
         }
-        reader.readAsDataURL(input.files[0]);
-        }
-    }
 
-    const requestBaseImage = new XMLHttpRequest();
+        const requestBaseImage = new XMLHttpRequest();
 
-    const onClickBaseImage = (user_id) => {
-      const url = "/base_image_ajax/";
-      requestBaseImage.open("POST", url, true);
-      requestBaseImage.setRequestHeader(
-        "Content-Type",
-        "application/x-www-form-urlencoded"
-      );
-      requestBaseImage.send(JSON.stringify({ user_id: user_id }));
-    };
-
-    const baseImageHandleResponse = () => {
-        if (requestBaseImage.status < 400) {
-            const { user_image } = JSON.parse(requestBaseImage.response);
-            const profileImage = document.querySelector('#blah')
-            profileImage.setAttribute('src', user_image)
+        const onClickBaseImage = (user_id) => {
+            const url = "/base_image_ajax/";
+            requestBaseImage.open("POST", url, true);
+            requestBaseImage.setRequestHeader(
+                "Content-Type",
+                "application/x-www-form-urlencoded"
+            );
+            requestBaseImage.send(JSON.stringify({ user_id: user_id }));
         };
-    }
 
-    requestBaseImage.onreadystatechange = () => {
-      if (requestBaseImage.readyState === XMLHttpRequest.DONE) {
-        baseImageHandleResponse();
-      }
-    };
-</script>
+        const baseImageHandleResponse = () => {
+            if (requestBaseImage.status < 400) {
+                const { user_image } = JSON.parse(requestBaseImage.response);
+                const profileImage = document.querySelector('#blah')
+                profileImage.setAttribute('src', user_image)
+            };
+        }
+
+        requestBaseImage.onreadystatechange = () => {
+            if (requestBaseImage.readyState === XMLHttpRequest.DONE) {
+                baseImageHandleResponse();
+            }
+        };
+    </script>
 {% endblock %}

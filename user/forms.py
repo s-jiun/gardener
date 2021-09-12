@@ -1,5 +1,5 @@
 from django.core.exceptions import ValidationError
-from .models import GeneralUser, UserManager
+from .models import GeneralUser, UserManager, MyPlants
 from django import forms
 from django.contrib.auth.forms import UserChangeForm, AuthenticationForm, UsernameField, UserCreationForm
 from django.contrib.auth import get_user_model, authenticate
@@ -122,16 +122,6 @@ class CustomUserChangeForm(UserChangeForm):
             raise forms.ValidationError("비밀번호가 일치하지 않습니다.")
         return password2
 
-    # def clean_email(self):
-    #     if GeneralUser.objects.filter(email=self.cleaned_data['email']).exists():
-    #         raise forms.ValidationError('이미 존재하는 이메일입니다.')
-    #     return self.cleaned_data['email']
-
-    # def clean_userid(self):
-    #     if GeneralUser.objects.filter(userid=self.cleaned_data['userid']).exists():
-    #         raise forms.ValidationError('이미 존재하는 아이디입니다.')
-    #     return self.cleaned_data['userid']
-
 
 class UserProfileChangeForm(UserChangeForm):
 
@@ -164,3 +154,9 @@ class UserIdfindForm(forms.ModelForm):
     class Meta:
         model = GeneralUser
         fields = ['email']
+
+
+class MyPlantsForm(forms.ModelForm):
+    class Meta:
+        model = MyPlants
+        fields = ['user', 'plant_name', 'Image']
