@@ -102,6 +102,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.kakao',
 
     # image-resize
     'imagekit',
@@ -280,4 +281,4 @@ ACCOUNT_AUTHENTICATION_METHOD = 'username'
 # ACCOUNT_USERNAME_REQUIRED = False
 
 
-ACCOUNT_FORMS = {'signup': 'user.forms.MyCustomSignupForm'}
+ACCOUNT_FORMS = {'signup': 'user.forms.CustomUserCreationForm'}
