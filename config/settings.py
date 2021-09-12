@@ -94,7 +94,7 @@ INSTALLED_APPS = [
     'community',
     'search',
     'QnA',
-
+    'event',
     # editor
     'ckeditor',
     'ckeditor_uploader',
