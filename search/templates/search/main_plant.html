@@ -58,7 +58,7 @@
                     <div class="card p-2 m-3" id="plant-card" >
                         <div class="image" >
                             <a data-bs-toggle="modal" data-bs-target="#plantDetailModal-{{plant.pk}}">
-                            <img data-src={{plant.photo_url}} class="lazyload card-img-top"  id="plant-img" alt="..." >
+                            <img data-src={% static "images/가울테리아.jpg" %} class="lazyload card-img-top"  id="plant-img" alt="..." >
                             <h3>🌱{{plant.name}}🌱 <br> 알아보기</h3>
                             </a>
                         </div>
