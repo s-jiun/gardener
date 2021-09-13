@@ -56,6 +56,12 @@ class GeneralUser(AbstractBaseUser, PermissionsMixin):
         null=True
     )
 
+    Date_of_birth = models.DateField(
+        null=True,
+        blank=True,
+        verbose_name="Date of Birth"
+    )
+
     point = models.IntegerField(
         verbose_name='Point',
         default=0,
