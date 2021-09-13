@@ -1,5 +1,5 @@
 from django.core.exceptions import ValidationError
-from .models import GeneralUser, UserManager, MyPlants
+from .models import GeneralUser, UserManager, MyPlant
 from django import forms
 from django.contrib.auth.forms import UserChangeForm, AuthenticationForm, UsernameField, UserCreationForm
 from django.contrib.auth import get_user_model, authenticate
@@ -158,5 +158,5 @@ class UserIdfindForm(forms.ModelForm):
 
 class MyPlantsForm(forms.ModelForm):
     class Meta:
-        model = MyPlants
-        fields = ['user', 'plant_name', 'Image']
+        model = MyPlant
+        fields = ['plant_name', 'Image']

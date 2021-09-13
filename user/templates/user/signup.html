@@ -310,24 +310,3 @@
 </div>
 
 {% endblock %}
-
-{% block js %}
-    <script type="text/javascript">
-        function CheckForm(){
-        
-            var chk1=document.getElementById(flexCheckterm1).checked;
-            console.log(chk1);
-            var chk2=document.getElementById(flexCheckterm2).checked;
-            console.log(chk2);
-
-            if(!chk1){
-                alert('개인정보 처리방침 약관에 동의해 주세요');
-                return false;
-            } 
-            if(!chk2) {
-                alert('사이트 이용 약관에 동의해 주세요');
-                return false;
-            }
-        }
-    </script>
-{% endblock %}

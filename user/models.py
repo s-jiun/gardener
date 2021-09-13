@@ -101,7 +101,7 @@ class Follow(models.Model):
         GeneralUser, related_name='followers', on_delete=CASCADE)
 
 
-class MyPlants(models.Model):
+class MyPlant(models.Model):
     user = models.ForeignKey(
         GeneralUser, on_delete=CASCADE, related_name='user'
     )

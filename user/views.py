@@ -1,6 +1,7 @@
+import user
 from search.models import Plant, PlantScrap
 from django.views.generic.list import ListView
-from user.models import GeneralUser, Follow, MyPlants
+from user.models import GeneralUser, Follow, MyPlant
 from django.shortcuts import render, redirect
 from .forms import CustomUserCreationForm, CustomUserChangeForm, UserProfileChangeForm, UserAuthenticationForm, UserIdfindForm, MyPlantsForm
 from django.contrib.auth import login as auth_login
@@ -367,7 +368,7 @@ def about(request):
 
 
 class MyPlantsListView(ListView):
-    model = MyPlants
+    model = MyPlant
     paginate_by = 12
     template_name = 'user/my_plants.html'
     context_object_name = 'plants_list'
@@ -393,25 +394,21 @@ class MyPlantsListView(ListView):
         return context
 
     def get_queryset(self):
-        plants_list = MyPlants.objects.filter(
+        plants_list = MyPlant.objects.filter(
             user=self.request.user).order_by('-id')
         return plants_list
 
-    @csrf_exempt
-    def save_myplants(request):
-        if request.method == 'POST':
-            form = MyPlantsForm(
-                request.POST, request.FILES)
-            if form.is_valid():
-                plant = form.save()
-                plant.user = request.user
-                ctx = {
-                    'form': form
-                }
-                return ctx
-        else:
-            form = MyPlantsForm(request.POST, request.FILES)
-            ctx = {
-                'form': form
-            }
-        return ctx
+
+@login_required
+def add_myplant(request):
+    if request.method == 'POST':
+        form = MyPlantsForm(request.POST, request.FILES)
+        if form.is_valid():
+            plant = form.save(commit=False)
+            plant.user = request.user
+            plant = form.save()
+            return redirect('user:my_plants', pk=plant.user.pk)
+    else:
+        form = MyPlantsForm()
+        ctx = {'form': form}
+        return render(request, template_name='user/add_myplant.html', context=ctx)

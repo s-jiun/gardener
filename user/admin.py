@@ -12,6 +12,6 @@ class FollowAdmin(admin.ModelAdmin):
     pass
 
 
-@admin.register(models.MyPlants)
+@admin.register(models.MyPlant)
 class MyPlantsAdmin(admin.ModelAdmin):
     pass

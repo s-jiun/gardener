@@ -25,6 +25,7 @@ urlpatterns = [
          login_required(views.ScrabListView.as_view()), name='my_scrab_plant'),
     path('profile/<int:pk>/my_plants',
          login_required(views.MyPlantsListView.as_view()), name='my_plants'),
+    path('profile/add_myplant', views.add_myplant, name='add_myplant'),
     path('profile/delete_scrab/<int:pk>',
          view=views.delete_scrab, name='delete_scrab'),
     path('accounts/login/', views.login, name='account_login'),
