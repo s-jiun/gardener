@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'style/css/challenge.css' %}" />
+{% endblock %}
+
+{% block content %}
+    {{issue}}<br>
+    {{issue.writer}}<br>
+{% endblock %}
+
+{% block js %}
+{% endblock %}

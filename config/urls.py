@@ -27,6 +27,7 @@ urlpatterns = [
     path('search/', include('search.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('accounts/', include('allauth.urls')),
+    path('event/', include('event.urls')),
 
     path('password_reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='password_reset/password_reset_done.html'),
      name='password_reset_done'),
