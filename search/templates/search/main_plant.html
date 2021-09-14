@@ -269,7 +269,10 @@
                 {% endfor %}
             ];
             $( ".plant-input" ).autocomplete({
-            source: availableTags,
+            source: function(request, response) {
+                var results = $.ui.autocomplete.filter(availableTags, request.term);
+                response(results.slice(0, 10));
+            },
             focus : function(event, ui) {
                 return false;
             },

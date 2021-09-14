@@ -58,6 +58,8 @@
                         <a href="{% provider_login_url 'kakao' %}" class="row">
                             <img class="lazyload" data-src="{% static 'images/google_logo.png' %}" alt="" class="col-12" >
                         </a>
+                        {% load socialaccount %}
+                        <a href=" {% provider_login_url 'naver' %}">네이버 로그인</a>
                     </div>
                 </div>
             </div>

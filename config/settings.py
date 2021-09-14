@@ -56,7 +56,6 @@ DEBUG = True
 ALLOWED_HOSTS = ['gardener.ml', '3.37.58.145', '127.0.0.1']
 
 
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # Email 전송
 # 메일을 호스트하는 서버
@@ -102,13 +101,19 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.naver',
     'allauth.socialaccount.providers.kakao',
+
 
     # image-resize
     'imagekit',
 
 ]
 
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
 
 SITE_ID = 1
 
