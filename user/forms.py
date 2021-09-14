@@ -4,6 +4,7 @@ from django import forms
 from django.contrib.auth.forms import UserChangeForm, AuthenticationForm, UsernameField, UserCreationForm
 from django.contrib.auth import get_user_model, authenticate
 from allauth.account.forms import SignupForm
+from datetime import datetime
 
 
 class UserAuthenticationForm(AuthenticationForm):
@@ -26,6 +27,25 @@ class UserAuthenticationForm(AuthenticationForm):
             return password
 
 
+Year_choices = list()
+for i in range(1900, 2022):
+    Year_choices.append(i)
+Month_choices = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+
+
+def age(birth_year, birth_month, birth_day):
+    now = datetime.now()
+    if birth_month < now.year:
+        return now.year - birth_year
+    elif birth_month == now.month:
+        if birth_day <= now.day:
+            return now.year - birth_year
+        else:
+            return now.year - birth_year - 1
+    else:
+        return now.year - birth_year - 1
+
+
 class CustomUserCreationForm(UserCreationForm):
     # 사용자 생성 폼
     name = forms.CharField(
@@ -38,9 +58,8 @@ class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(
         label=('Email'),
         required=True,
-        widget=forms.EmailInput(
-            attrs={'class': 'signup-form-control'}
-        )
+        widget=forms.DateInput(
+            attrs={'class': 'signup-form-control'})
     )
     userid = forms.CharField(
         label=('userid'),
@@ -48,9 +67,19 @@ class CustomUserCreationForm(UserCreationForm):
             attrs={'class': 'signup-form-control'})
     )
 
+    Date_of_birth = forms.DateField(
+        label=("Birth"),
+        required=True,
+        widget=forms.SelectDateWidget(
+            empty_label=("Choose Year", "Choose Month", "Choose Day"),
+            years=Year_choices,
+            attrs={'class': 'signup-form-control'}
+        )
+    )
+
     class Meta:
         model = GeneralUser
-        fields = ('name', 'email', 'userid',)
+        fields = ('name', 'email', 'userid', 'Date_of_birth')
 
     def clean_password2(self):
         # 두 비밀번호 입력 일치 확인
@@ -69,6 +98,11 @@ class CustomUserCreationForm(UserCreationForm):
         if GeneralUser.objects.filter(userid=self.cleaned_data['userid']).exists():
             raise forms.ValidationError('이미 존재하는 아이디입니다.')
         return self.cleaned_data['userid']
+
+    # def clean_Date_of_birth(self):
+    #     if age(self.cleaned_data['Date_of_birth'].year, self.cleaned_data['Date_of_birth'].month, self.cleaned_data['Date_of_birth'].day) < 14:
+    #         raise forms.ValidationError('만 14세 이상만 이용가능한 서비스입니다.')
+    #     return self.cleaned_data['Date_of_birth']
 
     def save(self, commit=True):
         # Save the provided password in hashed format

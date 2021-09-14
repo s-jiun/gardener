@@ -14,6 +14,7 @@ from community.models import Like
 from django.db.models import Count
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from datetime import datetime
 
 
 def login(request):
@@ -43,18 +44,36 @@ def logout(request):
     return redirect('/')
 
 
+def age(birth_year, birth_month, birth_day):
+    now = datetime.now()
+    if birth_month < now.year:
+        return now.year - birth_year
+    elif birth_month == now.month:
+        if birth_day <= now.day:
+            return now.year - birth_year
+        else:
+            return now.year - birth_year - 1
+    else:
+        return now.year - birth_year - 1
+
+
 def signup(request):
     if request.user.is_authenticated:
         # 수정 필요
         return redirect('user:start_page')
     if request.method == 'POST':
-        res = {}
+        # res = {}
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
+            if age(form.cleaned_data["Date_of_birth"].year, form.cleaned_data["Date_of_birth"].month, form.cleaned_data["Date_of_birth"].day) < 14:
+                messages.error(request, "만 14세 이상만 이용가능한 서비스입니다.")
+                return redirect('user:signup')
+
             user = form.save(commit=False)
             user.set_password(form.cleaned_data['password1'])
             user.save()
             return redirect('user:login')
+
     elif request.method == 'GET':
         form = CustomUserCreationForm()
 
@@ -154,6 +173,9 @@ def profile_update(request):
         form = UserProfileChangeForm(
             request.POST, request.FILES, instance=user)
         if form.is_valid():
+            form.Image = user.Image
+            print(user.Image)
+            print(form.Image)
             form.save()
             follower = Follow.objects.filter(user=user).count()
             following = Follow.objects.filter(following_user=user).count()
@@ -236,9 +258,19 @@ def base_image_ajax(request):
     user_id = req['user_id']
     user = GeneralUser.objects.get(id=user_id)
     user.Image = '../static/images/default_profile.svg'
-    user.save()
+    # user.save()
     return JsonResponse({'user_image': user.Image.url})
 
+@csrf_exempt
+def save_image_ajax(requset):
+    req = json.loads(requset.body)
+    user_id = req['user_id']
+    src = req['src']
+    print('ajax src: ',src)
+    user = GeneralUser.objects.get(id=user_id)
+    user.Image = '..'+ src
+    user.save()
+    return JsonResponse({'user_image': user.Image.url})
 
 class liked_post_ListView(ListView):
     model = Like

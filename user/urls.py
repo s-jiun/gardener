@@ -32,5 +32,6 @@ urlpatterns = [
     path('search_gardener/', login_required(views.GardenerListView.as_view()),
          name='search_gardener'),
     path('base_image_ajax/', views.base_image_ajax, name='base_image_ajax'),
+    path('save_image_ajax/', views.save_image_ajax, name='save_image_ajax'),
     path('about/', views.about, name='about'),
 ]
