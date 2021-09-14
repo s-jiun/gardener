@@ -93,7 +93,7 @@ INSTALLED_APPS = [
     'community',
     'search',
     'QnA',
-
+    'event',
     # editor
     'ckeditor',
     'ckeditor_uploader',
@@ -102,6 +102,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.naver',
+    'allauth.socialaccount.providers.kakao',
+
 
     # image-resize
     'imagekit',
@@ -284,4 +286,4 @@ ACCOUNT_AUTHENTICATION_METHOD = 'username'
 # ACCOUNT_USERNAME_REQUIRED = False
 
 
-ACCOUNT_FORMS = {'signup': 'user.forms.MyCustomSignupForm'}
+ACCOUNT_FORMS = {'signup': 'user.forms.CustomUserCreationForm'}

@@ -58,7 +58,7 @@
                     <div class="card p-2 m-3" id="plant-card" >
                         <div class="image" >
                             <a data-bs-toggle="modal" data-bs-target="#plantDetailModal-{{plant.pk}}">
-                            <img data-src={{plant.photo_url}} class="lazyload card-img-top"  id="plant-img" alt="..." >
+                            <img src={{plant.photo_url|safe}} class="lazyload card-img-top"  id="plant-img" alt="..." >
                             <h3>🌱{{plant.name}}🌱 <br> 알아보기</h3>
                             </a>
                         </div>
@@ -83,7 +83,7 @@
                                 {% endif %}
                             </div>
                             <div class="modal-body text-center">
-                                <img class="lazyload" data-src={{plant.photo_url}}>
+                                <img class="lazyload" data-src={{plant.photo_url|safe}}>
                                 <hr class="m-1"><hr class="m-1">
                                 <div>
                                     <table class="table table-striped text-start mt-2">

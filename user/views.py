@@ -1,8 +1,9 @@
+import user
 from search.models import Plant, PlantScrap
 from django.views.generic.list import ListView
-from user.models import GeneralUser, Follow
+from user.models import GeneralUser, Follow, MyPlant
 from django.shortcuts import render, redirect
-from .forms import CustomUserCreationForm, CustomUserChangeForm, UserProfileChangeForm, UserAuthenticationForm, UserIdfindForm
+from .forms import CustomUserCreationForm, CustomUserChangeForm, UserProfileChangeForm, UserAuthenticationForm, UserIdfindForm, MyPlantsForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 import json
@@ -172,6 +173,9 @@ def profile_update(request):
         form = UserProfileChangeForm(
             request.POST, request.FILES, instance=user)
         if form.is_valid():
+            form.Image = user.Image
+            print(user.Image)
+            print(form.Image)
             form.save()
             follower = Follow.objects.filter(user=user).count()
             following = Follow.objects.filter(following_user=user).count()
@@ -254,9 +258,19 @@ def base_image_ajax(request):
     user_id = req['user_id']
     user = GeneralUser.objects.get(id=user_id)
     user.Image = '../static/images/default_profile.svg'
-    user.save()
+    # user.save()
     return JsonResponse({'user_image': user.Image.url})
 
+@csrf_exempt
+def save_image_ajax(requset):
+    req = json.loads(requset.body)
+    user_id = req['user_id']
+    src = req['src']
+    print('ajax src: ',src)
+    user = GeneralUser.objects.get(id=user_id)
+    user.Image = '..'+ src
+    user.save()
+    return JsonResponse({'user_image': user.Image.url})
 
 class liked_post_ListView(ListView):
     model = Like
@@ -383,3 +397,50 @@ class GardenerListView(ListView):
 
 def about(request):
     return render(request, template_name='about.html')
+
+
+class MyPlantsListView(ListView):
+    model = MyPlant
+    paginate_by = 12
+    template_name = 'user/my_plants.html'
+    context_object_name = 'plants_list'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        paginator = context['paginator']
+        page_numbers_range = 10
+        max_index = len(paginator.page_range)
+
+        page = self.request.GET.get('page')
+        current_page = int(page) if page else 1
+
+        start_index = int((current_page - 1) /
+                          page_numbers_range) * page_numbers_range
+        end_index = start_index + page_numbers_range
+        if end_index >= max_index:
+            end_index = max_index
+
+        page_range = paginator.page_range[start_index:end_index]
+        context['page_range'] = page_range
+
+        return context
+
+    def get_queryset(self):
+        plants_list = MyPlant.objects.filter(
+            user=self.request.user).order_by('-id')
+        return plants_list
+
+
+@login_required
+def add_myplant(request):
+    if request.method == 'POST':
+        form = MyPlantsForm(request.POST, request.FILES)
+        if form.is_valid():
+            plant = form.save(commit=False)
+            plant.user = request.user
+            plant = form.save()
+            return redirect('user:my_plants', pk=plant.user.pk)
+    else:
+        form = MyPlantsForm()
+        ctx = {'form': form}
+        return render(request, template_name='user/add_myplant.html', context=ctx)
