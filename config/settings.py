@@ -53,7 +53,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 DEBUG = True
 
 
-ALLOWED_HOSTS = ['gardener.ml', '3.37.58.145', '127.0.0.1']
+ALLOWED_HOSTS = ['ourplant.kr', '3.37.58.145', '127.0.0.1']
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
