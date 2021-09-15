@@ -53,8 +53,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 DEBUG = True
 
 
-ALLOWED_HOSTS = ['gardener.ml', '3.37.58.145', '127.0.0.1']
-
+ALLOWED_HOSTS = ['ourplant.kr', '3.37.58.145', '127.0.0.1']
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -94,7 +93,7 @@ INSTALLED_APPS = [
     'community',
     'search',
     'QnA',
-
+    'event',
     # editor
     'ckeditor',
     'ckeditor_uploader',
@@ -102,12 +101,19 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.naver',
+    'allauth.socialaccount.providers.kakao',
+
 
     # image-resize
     'imagekit',
 
 ]
 
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
 
 SITE_ID = 1
 
@@ -280,4 +286,4 @@ ACCOUNT_AUTHENTICATION_METHOD = 'username'
 # ACCOUNT_USERNAME_REQUIRED = False
 
 
-ACCOUNT_FORMS = {'signup': 'user.forms.MyCustomSignupForm'}
+ACCOUNT_FORMS = {'signup': 'user.forms.CustomUserCreationForm'}

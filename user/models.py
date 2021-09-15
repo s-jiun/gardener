@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
+from django.db.models.base import Model
 from django.db.models.deletion import CASCADE
 
 
@@ -56,16 +57,24 @@ class GeneralUser(AbstractBaseUser, PermissionsMixin):
         null=True
     )
 
+    Date_of_birth = models.DateField(
+        null=True,
+        blank=True,
+        verbose_name="Date of Birth"
+    )
+
     point = models.IntegerField(
         verbose_name='Point',
         default=0,
     )
+
     Image = models.ImageField(
         default='../static/images/default_profile.svg', upload_to='profile/%y/%m/%d/')
 
     profile = models.TextField(
         blank=True
     )
+
     # django usermodel의 필수 필드
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
@@ -96,3 +105,17 @@ class Follow(models.Model):
         GeneralUser, on_delete=CASCADE, related_name='following')
     following_user = models.ForeignKey(
         GeneralUser, related_name='followers', on_delete=CASCADE)
+
+
+class MyPlant(models.Model):
+    user = models.ForeignKey(
+        GeneralUser, on_delete=CASCADE, related_name='user'
+    )
+
+    plant_name = models.CharField(
+        verbose_name='PlantName',
+        max_length=100
+    )
+
+    Image = models.ImageField(
+        blank=True, null=True, upload_to='plants/%y/%m/%d/')
