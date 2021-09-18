@@ -1,4 +1,108 @@
-div {
+*{
+  font-family: "Noto Sans KR"!important;
+  font-size: 62.5%;
+}
+
+#container{
+  min-height: 60rem;
+}
+.post-title{
+  font-size: 2.6rem;
+  margin-bottom: 2rem;
+  font-weight: bold;
+  color:#354847;
+}
+#post-header{
+  margin-bottom: 3rem;
+}
+#post-head{
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+#post-date{
+  margin-left:0.5rem;
+  font-size: 1.4rem;
+  color:#8F8F8F;
+}
+
+#post-detail-thumbnail {
+  overflow: hidden;
+  width: 30px;
+  height: 30px;
+  padding: 2px;
+  border-radius: 100%;
+}
+#post-follow-button{
+  background-color: white;
+  border-radius: 20px;
+  border: 0.1rem solid #76B79C;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  color:#76B79C;
+}
+#post-content{
+  margin-top: 4rem;
+}
+#post-detail-content > *{
+  font-size: 1.6rem;
+}
+#post-detail-content p{
+  overflow-x:auto;
+}
+#post-detail-like * {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+.tags{
+  background-color: white;
+  border-radius: 20px;
+  padding:0.6rem;
+  border: 0.1rem solid #8F8F8F;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  color:#8F8F8F;
+  min-width: 4.3rem;
+}
+.create-comment{
+  background-color: white;
+  border-radius: 20px;
+  padding:0.6rem;
+  border: 0.1rem solid #8F8F8F;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  color:#8F8F8F;
+  min-width: 4.3rem;
+}
+#comment-head, #reply-head{
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+#comment-body p, #comment-body span, #reply-body,#reply-body >*{
+  font-size: 1.4rem;
+}
+.create-reply{
+  background-color: white;
+  border-radius: 20px;
+  padding:0.6rem;
+  border: 0.1rem solid #8F8F8F;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  color:#8F8F8F;
+  min-width: 4.3rem;
+}
+#collapseComment{
+  margin-top:2rem;
+}
+.reply textarea{
+  width: 100%;
+}
+.reply-content{
+  background-color: #F8F8F8;
+}
+
+
+/* div {
   font-family: "Gowun Batang", serif;
 }
 
@@ -206,4 +310,4 @@ a {
   border-radius: 10px;
   font-family: "Gowun Batang", serif;
   margin-bottom: 5px;
-}
+} */
