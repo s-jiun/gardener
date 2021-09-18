@@ -1,30 +1,19 @@
-{% extends "base.html" %}
+
+{% extends "login_base.html" %}
 {% load static %}
+{% load socialaccount %}
 {% block head %}
     <link href="{% static 'style/css/login.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
-<div class="d-flex justify-content-center align-items-center main-container" style="background-image: url({%static 'images/login_background.jpg'%});">
-	<div class="container p-0">
-		<form action="" method="POST">
-			{% csrf_token %}
-			<div class="card px-5" style="max-width: 460px;">
-				<p class="h8 py-5 px-5">회원 탈퇴 완료</p>
-				<div class="row gx-3">
-					<div class="col-12 text-center mb-5">
-						<div class="d-flex flex-column">
-							<p class="text mb-1"> 그 동안 Gardener를 이용해주셔서 감사합니다.</p>
-						</div>
-					</div>
-					<div class="col-12 text-center">
-						<div class="d-flex flex-column">
-							<a href="{% url 'user:start_page'%}"><button class="btn btn-primary">메인페이지로 돌아가기</button></a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</form>  
+<div class=" mx-auto col-5 d-flex flex-column justify-content-center" style="margin-right: 6.3125rem;">
+    <div style="margin-bottom: 3.125rem;">
+        <img src="{% static 'images/logo.png' %}" alt="">
+    </div>
+	<div>
+		<p style="font-weight: bold;"> 그 동안 Gardener를 이용해주셔서 감사합니다.</p>
 	</div>
+	<a href="{% url 'user:start_page' %}" style="text-decoration: none;"><button style="width: 100%; height: 2.5rem; color: white; background-color: #354847;" class="btn">메인페이지로 돌아가기</button></a>
 </div>
-{% endblock %}
+{%endblock%}
