@@ -6,33 +6,19 @@ a {
 
 .profile {
   width: 100%;
-  display: left;
   margin: 50px 20px 20px 12px;
-  padding: 15px;
-  border: solid 3px #ccdfcc;
-  border-radius: 10px;
-  background-image: url("../../images/background.png");
-  background-size: 900px;
-  z-index: -1;
-  box-shadow: 3px 3px 3px 0px #a0cab5;
-  color: #5c5427;
+  color: #354847;
 }
 
 .profile_in {
   z-index: 1;
   background: white;
-  border: solid 2px #ccdfcc;
-  border-radius: 10px;
-  padding: 15px;
   overflow-x: auto;
 }
 
 #profile-line,
 #user-img {
-  border-style: double;
-  padding: 1px 3px;
-  border-width: 5px;
-  border-color: #5c5427;
+  object-fit: cover;
   width: 12rem;
   height: 12rem;
   border-radius: 50%;
@@ -42,7 +28,6 @@ a {
   max-width: 230px;
   min-height: 130px;
   min-width: 130px;
-  margin-top: 3%;
 }
 #profile-line {
   height: 230px;
@@ -51,13 +36,11 @@ a {
   object-fit: cover;
 }
 #profile-content {
-  width: 90%;
+  width: 100%;
   height: auto;
-  padding: 10px;
   display: inline-block;
-  margin-top: 10px;
-  border: solid 3px#CCDFCC;
-  border-radius: 5px;
+  margin-top: 15px;
+  margin-bottom: 20px;
   overflow: auto;
 }
 .sidebar {
@@ -70,17 +53,41 @@ a {
   top: 0;
   box-shadow: 3px 3px 3px 0px #a0cab5;
 }
+.user-id-config {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
+.profile-post-header {
+  display: flex;
+  justify-content: center;
+}
+.profile-post-header__item {
+  display: flex;
+  align-items: center;
+}
+.profile-post-header__like {
+  margin-right: 2rem;
+}
+.profile-post-header__scrap {
+  margin-right: 2rem;
+}
+.profile-post-header__text {
+  margin-left: 5px;
+}
 #user-info {
   margin-top: 15px;
   width: auto;
 }
 #user-info #user-id {
-  font-size: 40px;
+  font-size: 2rem;
+  font-weight: 500;
 }
 #user-level {
-  font-size: 1.1rem;
-  margin-left: 10px;
+  font-weight: 300;
+  font-size: 0.85rem;
+  color: #76B79C;
   vertical-align: text-top;
 }
 #plant-icon {
@@ -152,7 +159,6 @@ a {
   vertical-align: text-top;
 }
 #no-post span {
-  font-size: 30px;
 }
 #no-post img {
   vertical-align: text-bottom;
