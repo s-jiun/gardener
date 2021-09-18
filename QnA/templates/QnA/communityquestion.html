@@ -6,6 +6,93 @@
 {% endblock %}
 
 {% block content %}
+<div class = 'container-fluid mt-4 text-center' style='width:80%;'>
+
+    <table class='table table-borderless table-hover'>
+        <thead>
+            <tr style="color:#8F8F8F;">
+                <th scope='col col-1'>번호</th>
+                <th scope='col col-7' style="text-align:start;">제목</th>
+                <th scope='col-2'>작성자</th>
+                <th scope='col-2'>날짜</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if communityquestion_list %}
+            {% for question in communityquestion_list %}
+            <tr class="text-center">
+                <th scope='row' style="font-weight: normal;">{{ paginator.count|sub:page_obj.start_index|sub:forloop.counter0|add:1 }}</th>
+                <td style="text-align:start;">
+                    {% if request.user.is_authenticated %}
+                    <a href='{% url "QnA:questiondetail" question.pk %}' class= 'button-a'>{{ question.title|truncatechars:30 }}</a>
+                    {% else %}
+                    <a onclick="alert('로그인이 필요한 서비스입니다.')" href="{% url 'user:login' %}" class='button-a'>{{ question.title|truncatechars:30 }}</a>
+                    {% endif %}
+                </td>
+                <td>{{ question.user_id }}</td>
+                <td>{{ question.created_at|date:'Y. m. d' }}</td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            {% if q %}
+                <tr class='text-center'>
+                    <th style="font-weight: normal;" scope='row'>0</th>
+                    <td style="text-align:start;">일치하는 게시글이 없습니다.</td>
+                    <td>User</td>
+                    <td></td>
+                </tr>
+            {% else %}
+                <tr class='text-center'>
+                    <th style="font-weight: normal;" scope='row'>0</th>
+                    <td style="text-align:start;">작성된 게시글이 없습니다.</td>
+                    <td>User</td>
+                    <td></td>
+                </tr>
+            {% endif %}
+
+            {% endif %}
+        </tbody>
+    </table>
+    <div class ="line">
+        
+    </div>
+    <div class="col-md-offset-6">
+        {% if is_paginated %}
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?type={{ type }}&q={{ q }}&page={{ page_obj.previous_page_number }}"
+                    tabindex="-1" style="border:none; font-size: 15px;">&lt;</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1" style="font-size: 15px; border:none;">&lt;</a>
+            </li>
+            {% endif %}
+
+            {% for page in page_range %}
+            <li class="page-item {% if page == page_obj.number %} activate {% endif %}">
+                <a class="page-link" href="?type={{ type }}&q={{ q }}&page={{ page }}" style="border-radius:100%;font-size: 12px; margin-right:7px;">{{ page }}</a>
+            </li>
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link"
+                    href="?type={{ type }}&q={{ q }}&page={{ page_obj.next_page_number }}" style="border:none; font-size: 15px; margin-left:-7px;">&gt;</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" href="#" style="border:none; font-size: 15px; margin-left:-7px;">&gt;</a>
+            </li>
+            {% endif %}
+        </ul>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% comment %}
 <div class='row'>
     <div id='question-header' class='d-flex flex-column justify-content-center'>
         {% if q %}
@@ -121,4 +208,4 @@
     </div>
     
 </div>
-{% endblock %}
+{% endcomment %}

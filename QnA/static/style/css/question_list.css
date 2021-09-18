@@ -45,3 +45,15 @@
 .move-to-other {
   border-radius: 10px;
 }
+
+.page-link {
+  padding: 0.25rem 0.6rem;
+  color: #354847;
+}
+
+.line {
+  background-color: #eaeaea;
+  width: 100%;
+  height: 1px;
+  margin-bottom: 1rem;
+}
