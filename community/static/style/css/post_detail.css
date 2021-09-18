@@ -1,6 +1,6 @@
 *{
   font-family: "Noto Sans KR"!important;
-  font-size: 62.5%;
+  font-size: 62.5%; /*1rem : 10px*/
 }
 
 #container{
