@@ -1,24 +1,49 @@
-.content-box {
-  margin: 2vh 2vw;
-  border: solid gray 1px;
-  border-radius: 10px;
-  padding: 1vh 1vw;
+* {
+  font-family: "Noto Sans KR" !important;
+  font-size: 62.5%; /*1rem : 10px*/
 }
 
-.go-to-list {
-  position: relative;
-  background: #ccdfcc;
-  z-index: 0;
-  width: 100px;
-  height: 30px;
-  border: 1px solid #b8b8b8;
-  box-sizing: border-box;
-  border-radius: 10px;
-  font-family: "Gowun Batang", serif;
-  margin-bottom: 5px;
+#container {
+  min-height: 60rem;
 }
 
-.title-img {
-  width: 1.5rem;
-  margin-right: 10px;
+.notice-detail-title {
+  font-size: 2.6rem;
+  margin-bottom: 4rem;
+  font-weight: bold;
+  color: #354847;
+}
+
+#notice-detail-header {
+  margin-bottom: 5rem;
+}
+
+#notice-detail-head {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+#notice-detail-date {
+  margin-left: 0.5rem;
+  font-size: 1.4rem;
+  color: #8f8f8f;
+}
+
+#notice-detail-box {
+  margin-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+#notice-detail-content p {
+  overflow-x: auto;
+}
+
+#notice-detail-like {
+  margin-bottom: 5rem;
+}
+
+#notice-detail-like * {
+  font-weight: bold;
+  font-size: 1.2rem;
 }
