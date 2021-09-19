@@ -321,3 +321,4 @@ $RECYCLE.BIN/
 media/
 
 secrets.json
+db.py
