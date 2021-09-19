@@ -9,16 +9,22 @@
 <div class='container-fluid mt-4 mb-3' id="container" style='width:70%;'>
     <div class="row border-bottom">
         <span class="question-detail-title"> {{ question.title }}</span>
-        <div class="row row-cols-1 row-cols-md-2 d-flex justify-content-between" id="question-detail-header">
+        <div class="row row-cols-2 d-flex justify-content-between" id="question-detail-header">
             <div class="col">
                 <span id="question-detail-head"><img class="lazyload" id='question-detail-thumbnail' data-src="{{ question.user_id.Image.url }}"> {{ question.user_id }}</span>
                 <span>&#183</span>
                 <span id="question-detail-date">{{question.created_at | date:"Y.m.d h:m"}}</span>
-                {% if request.user == ans.user_id or request.user == question.user_id %}
-                    <a style = 'color: #8F8F8F;' href = '{% url "QnA:deletequestion" question.pk %}'><i class="fas fa-trash-alt"></i></a>
-                    <a style = 'color: #8F8F8F;' href = '{% url "QnA:editquestion" question.pk %}'><i class="far fa-edit"></i></a>
-                {% endif %}
             </div>
+            {% if request.user == ans.user_id or request.user == question.user_id %}
+            <div class="col d-flex justify-content-end">
+                <button class="edit-button me-3" >
+                    <a href = '{% url "QnA:deletequestion" question.pk %}'>삭제</a>
+                </button>
+                <button class="edit-button">
+                    <a href = '{% url "QnA:editquestion" question.pk %}'>수정</a>
+                </button>
+            </div>
+            {% endif %}
         </div>
     </div>
     <div class="row d-flex border-bottom" id="question-detail-box">
@@ -56,14 +62,20 @@
                     <span style="font-size: 1.7rem; font-weight:bold;">{{ans.title}}</span>
                 </div>
                 <span id="ans-head"><img class="lazyload" id='question-detail-thumbnail' data-src="{{ ans.user_id.Image.url }}"> {{ ans.user_id }}</span>
+                {% if request.user == ans.user_id %}
+                <div style="float:right;">
+                    <button class="edit-button me-3" >
+                        <a href = '{% url "QnA:deletequestion" question.pk %}'>삭제</a>
+                    </button>
+                    <button class="edit-button">
+                        <a href = '{% url "QnA:editquestion" question.pk %}'>수정</a>
+                    </button>
+                </div>
+                {% endif %}
                 <div class="mt-2" id="ans-body">
                     {{ ans.content|safe }}
                     <div style="margin-bottom:3rem;"> 
                         <span style="font-size: 1.2rem;">{{ ans.created_at }}</span>
-                        {% if request.user == ans.user_id or request.user == question.user_id %}
-                            <a style = 'color: #8F8F8F;' href = '{% url "QnA:deleteanswer" ans.pk %}'><i class="fas fa-trash-alt"></i></a>
-                            <a style = 'color: #8F8F8F;' href = '{% url "QnA:editanswer" ans.pk %}'><i class="far fa-edit"></i></a>
-                        {% endif %}
                     </div>
                 </div>                
             </div>
