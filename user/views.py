@@ -261,16 +261,18 @@ def base_image_ajax(request):
     # user.save()
     return JsonResponse({'user_image': user.Image.url})
 
+
 @csrf_exempt
 def save_image_ajax(requset):
     req = json.loads(requset.body)
     user_id = req['user_id']
     src = req['src']
-    print('ajax src: ',src)
+    print('ajax src: ', src)
     user = GeneralUser.objects.get(id=user_id)
-    user.Image = '..'+ src
+    user.Image = '..' + src
     user.save()
     return JsonResponse({'user_image': user.Image.url})
+
 
 class liked_post_ListView(ListView):
     model = Like
@@ -351,9 +353,22 @@ def delete_scrab(request, pk):
 
 class GardenerListView(ListView):
     model = GeneralUser
-    paginate_by = 9
+    paginate_by = 6
     template_name = 'user/search_gardener.html'
     context_object_name = 'gardener_list'
+
+    def get_queryset(self):
+        search_keyword = self.request.GET.get('q', '')
+        gardener_list = GeneralUser.objects.order_by(
+            'name').exclude(pk=self.request.user.pk)
+        if search_keyword:
+            if len(search_keyword) > 1:
+                search_gardener_list = gardener_list.filter(
+                    userid__icontains=search_keyword).exclude(pk=self.request.user.pk)
+                return search_gardener_list
+            else:
+                messages.error(self.request, '검색어는 2글자 이상 입력해주세요.')
+        return gardener_list
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -377,22 +392,12 @@ class GardenerListView(ListView):
 
         if len(search_keyword) > 1:
             context['q'] = search_keyword
+        following_list = []
+        for i in Follow.objects.filter(following_user=self.request.user):
+            following_list.append(i.user.userid)
+        context['following_list'] = following_list
 
         return context
-
-    def get_queryset(self):
-        search_keyword = self.request.GET.get('q', '')
-        gardener_list = GeneralUser.objects.order_by(
-            'name').exclude(pk=self.request.user.pk)
-
-        if search_keyword:
-            if len(search_keyword) > 1:
-                search_gardener_list = gardener_list.filter(
-                    userid__icontains=search_keyword).exclude(pk=self.request.user.pk)
-                return search_gardener_list
-            else:
-                messages.error(self.request, '검색어는 2글자 이상 입력해주세요.')
-        return gardener_list
 
 
 def about(request):
