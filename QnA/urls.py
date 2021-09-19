@@ -9,7 +9,7 @@ urlpatterns = [
     path('makequestion/', views.make_question, name='makequestion'),
     path('editquestion/<int:pk>/', views.edit_question, name='editquestion'),
     path('deletequestion/<int:pk>/', views.delete_question, name='deletequestion'),
-    path('tag/<tag>/', views.Tagging,
+    path('tag/<tag>/', views.TaggingListView.as_view(),
          name='tagged'),
 
     path('<int:pk>/makeanswer/', views.make_answer, name='makeanswer'),
