@@ -6,19 +6,26 @@
 {% endblock %}
 
 {% block content %}
-    <div class="d-flex flex-column container" style='background-color:#F5F5F5; min-height: 85vh;'>
-        <div class="content-box">
-            <div class='d-flex title justify-content-between'>
-                <h3><img class="lazyload title-img" data-src="{% static 'images/notice-title.svg' %}"/>{{notice.title}}</h3>
-                <span>조회수 {{views}}</span>
+<div class='container-fluid mt-4 mb-3' id="container" style='width:70%;'>
+    <div class="row border-bottom">
+        <span class="notice-detail-title"> {{ notice.title }}</span>
+        <div class="row row-cols-1 row-cols-md-2 d-flex justify-content-between" id="notice-detail-header">
+            <div class="col">
+                <span id="notice-detail-head">관리자</span>
+                <span>&#183</span>
+                <span id="notice-detail-date">{{notice.created_at | date:"Y.m.d h:m"}}</span>
             </div>
-            <hr/>
-            <div class="content">
-                {{notice.content|safe}}
-            </div>
-        </div>
-        <div class="d-flex justify-content-center">
-            <button class="go-to-list" type="button" onclick="location.href='{% url 'community:notice' %}'">목록으로</button>
         </div>
     </div>
+    <div class="row d-flex border-bottom" id="notice-detail-box">
+        <div id="notice-detail-content">
+            {{ notice.content|safe }}
+        </div>
+    </div>
+    <div class="row mt-4" id="notice-detail-like">
+        <div>
+            <span class="ms-2 me-1" id="notice-detail-views">조회수 {{views}}</span>
+        </div>
+    </div>
+</div>
 {% endblock %}
