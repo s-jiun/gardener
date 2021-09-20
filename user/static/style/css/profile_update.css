@@ -16,7 +16,6 @@
     justify-content: center;
     max-height: 800px;
     background-color: rgba(0, 0, 0, 0.2);
-    border-style: double; 
     border-width: 8px; 
     border-color:#a0cab5;
     background:#DAE7DD;
@@ -103,7 +102,6 @@
     border-radius: 100%; 
     width: 140px; 
     height: 140px;
-    border-style: double; 
     border-width: 5px; 
     border-color:#3b260f;
   }

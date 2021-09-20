@@ -1,45 +1,38 @@
-{% extends "base.html" %}
-{% load static %}
 
+{% extends "login_base.html" %}
+{% load static %}
+{% load socialaccount %}
 {% block head %}
-    <link href="{% static 'style/css/signout.css' %}" rel="stylesheet">
+    <link href="{% static 'style/css/login.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
-<div class="d-flex justify-content-center align-items-center main-container" style="background-image: url({%static 'images/login_background.jpg'%});">
-	<div class="container p-0">	
-		<div class="card px-5">
-			<p class="h8 py-5 px-5">회원 탈퇴</p>
-			<div class="row gx-3">
-				<div class="col-12">
-					<div class="d-flex flex-column">
-						<p class="text mb-1"> 계정을 삭제하면 고객님의 프로필, 가드닝 사진,  댓글, 좋아요,  팔로워가 
-                            영구적으로 삭제됩니다.
-                            <br>
-                            <br>
-                            계정이 삭제된 후, 회원님께서 사용하셨던 닉네임을 다른 고객이 Gardener에서 사용하지 않는 한 
-                            <br>
-                            <br>
-                            동일한 닉네임으로  다시 가입하거나 해당 닉네임으로 다시 가입하여 이용하실 수 있습니다.
-                            <br>
-                            <br>
-                            <br>
-                            정말 탈퇴하시겠습니까?</p>
-					</div>
-				</div>
-				<div class="col-12 text-center">
-					<div class="d-flex flex-column">
-						<p class="text mt-3 mb-1"></p>
-						<form action="" method="POST">
-							{% csrf_token %}
-							<button class="btn btn-primary mb-1" type="submit">탈퇴하기</button>
-						</form>
-                        <a href="{% url 'user:my_profile' %}" style="text-decoration: none;"><button class="btn btn-primary">취소</button></a>
-					</div>
-				</div>
-			</div>
-		</div>
+<div class="col-5 d-flex flex-column justify-content-center" style="margin-right: 6.3125rem; width: 21.5rem;">
+    <div style="margin-bottom: 3.125rem;">
+        <img src="{% static 'images/logo.png' %}" alt="">
+    </div>
+    <div>
+		<p style="font-weight: bold;"> 
+			계정을 삭제하면 고객님의 프로필, 가드닝 사진,  댓글, 좋아요, 
+			<br> 팔로워가 영구적으로 삭제됩니다.
+			<br>
+			계정이 삭제된 후, 회원님께서 사용하셨던 닉네임을 
+			<br>
+			다른 고객이 Ourpalnt에서 사용하지 않는 한 동일한 
+			<br>
+			닉네임으로 다시 가입하거나 해당 닉네임으로 
+			<br>
+			다시 가입하여 이용하실 수 있습니다.
+			<br>
+			<br>
+			정말 탈퇴하시겠습니까?</p>
+    </div>
+	<div>
+		<form action="" method="POST">
+			{% csrf_token %}
+			<button style="width: 100%; height: 2.5rem; color: white; background-color: #354847; margin-bottom:1rem;" class="btn" type="submit">탈퇴하기</button>
+		</form>
+		<a href="{% url 'user:my_profile' %}" style="text-decoration: none;"><button style="width: 100%; height: 2.5rem; color: white; background-color: #354847;" class="btn">취소</button></a>
 	</div>
 </div>
-
-{% endblock %}
+{%endblock%}

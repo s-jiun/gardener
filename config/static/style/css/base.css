@@ -1,10 +1,21 @@
+*{
+  font-family: "Noto Sans KR"!important;
+  font-size: 100%;
+}
+
 html,
 body {
   margin: 0;
   padding: 0;
   width: 100%;
   height: 100%;
+  font-size: 16px;
 }
+
+@media screen and (max-width : 900px){
+  html {font-size:0.8rem}  
+}
+
 
 main {
   height: auto;
@@ -47,9 +58,12 @@ footer {
 }
 
 .navbar {
-  background-color: #ccdfcc;
   z-index: 0;
   position: sticky;
+}
+
+.nav-link.active {
+  color: #a0cab5!important;
 }
 
 .navbar-brand {
@@ -110,3 +124,4 @@ footer {
   height: 1px;
   margin-bottom: 1rem;
 }
+
