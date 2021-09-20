@@ -45,3 +45,8 @@
 .move-to-other {
   border-radius: 10px;
 }
+
+.page-link {
+  padding: 0.25rem 0.6rem;
+  color: #354847;
+}

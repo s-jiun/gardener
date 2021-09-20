@@ -6,69 +6,84 @@
 {% endblock %}
 
 {% block content %}
-<div class='container' id = 'question-detail-body'>
-    <div class= 'pt-5 mb-3'>
-        <h1 style = 'display:inline-block;' class='mb-3'>Gardener Q&A</h1>
-        <button id= 'return-botton' class='mb-3 mt-2' type="submit" style='float:right;'><a href = '{% url "QnA:communityquestion_list" %}'>목록으로</a></button>
+<div class='container-fluid mt-4 mb-3' id="container" style='width:70%;'>
+    <div class="row border-bottom">
+        <span class="question-detail-title"> {{ question.title }}</span>
+        <div class="row row-cols-2 d-flex justify-content-between" id="question-detail-header">
+            <div class="col">
+                <span id="question-detail-head"><img class="lazyload" id='question-detail-thumbnail' data-src="{{ question.user_id.Image.url }}"> {{ question.user_id }}</span>
+                <span>&#183</span>
+                <span id="question-detail-date">{{question.created_at | date:"Y.m.d h:m"}}</span>
+            </div>
+            {% if request.user == ans.user_id or request.user == question.user_id %}
+            <div class="col d-flex justify-content-end">
+                <button class="edit-button me-3" >
+                    <a href = '{% url "QnA:deletequestion" question.pk %}'>삭제</a>
+                </button>
+                <button class="edit-button">
+                    <a href = '{% url "QnA:editquestion" question.pk %}'>수정</a>
+                </button>
+            </div>
+            {% endif %}
+        </div>
     </div>
-    
-    <div class ='row row-cols-1'>
-        <div class = 'col'>
-            <div id = 'question-detail-header'>
-                <h5>[질문]{{question.title}}</h5>
-                <span>작성자</span> <img class="lazyload" id='question-profile-img' data-src="{{ question.user_id.Image.url }}">{{question.user_id}}님
-                <span>수정일</span> {{question.updated_at}}
-                <span>조회수</span> {{views}}
-                {% if user == question.user_id %}
-                <div class= 'me-2'>
-                    <a href = '{% url "QnA:editquestion" pk=question.pk %}' style='color:#F4F4F4;'>수정</a>
-                    &nbsp;
-                    <a href = '{% url "QnA:deletequestion" pk=question.pk %}' style='color:#F4F4F4;'>삭제</a>
-                </div>
+    <div class="row d-flex border-bottom" id="question-detail-box">
+        <div id="question-detail-content">
+            {{ question.content|safe }}
+        </div>
+        <div >
+            {% for tag in question.tags.all %}
+                <form action="{% url 'QnA:tagged' tag %}" style="display: inline;">
+                    <input class="tags" type="submit" value="{{ tag.name }}"></input>
+                </form>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row mt-4" id="question-detail-like">
+        <div>
+            <img class="me-1" src="{% static 'images/comment_line.svg' %}" alt="코멘트">{{answer|length}}
+            <span class="ms-2 me-1" id="post-detail-views">조회수 {{views}}</span>
+            <div style="display: inline">
+                {% if user.is_authenticated %}
+                    <button class="create-answer" type="button">
+                        <a href = "{% url 'QnA:makeanswer' question.pk %}">답글달기</a>
+                    </button>
+                {% else %}
+                    <p>댓글 작성을 위해서는 로그인이 필요합니다</p>
                 {% endif %}
             </div>
-            <div id = 'question-detail-main'>
-                {{question.content|safe}}
-            </div>
-            {% for tag in question.tags.all %}
-            <div class = 'question-detail-tag'>
-                <a href="{% url 'QnA:tagged' tag %}">#{{ tag.name }} </a>
-            </div>
-            {% endfor %}
-            <div class='mt-5 mb-2'>
-                <h4 style='display:inline;' class= 'ms-1 mt-5 mb-2' style='font-weight:bold;'>답변목록</h4>
-                <button id='makeanswer-button'><a style='color: white;' href = '{% url "QnA:makeanswer" pk=question.pk%}'>답글달기</a></button>
-            </div>
-
-            <div id= 'question-detail-comment'>
-                <div class="accordion accordion-flush" id="accordionFlushExample">
-                    {% for ans in answer %}
-                    <div class="accordion-item mb-2" style='border-radius:20px;'>
-                      <h2 class="accordion-header" id="flush-heading{{ans.pk}}">
-                        <button style='border-radius:20px;' class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse{{ans.pk}}" aria-expanded="false" aria-controls="flush-collapse{{ans.pk}}">
-                          [답글]{{ans.title}}
-                        </button>
-                      </h2>
-                      <div id="flush-collapse{{ans.pk}}" class="accordion-collapse collapse" aria-labelledby="flush-heading{{ans.pk}}" data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">
-                            {{ans.content|safe}}
-                            {% if user == ans.user_id %}
-                                작성자 <img class="lazyload" id='question-profile-img' data-src="{{ ans.user_id.Image.url }}">{{ans.user_id}}
-                                <a style = 'color: #a0cab5;' href = '{% url "QnA:deleteanswer" ans.pk %}'>답글 삭제하기</a>
-                                <a style = 'color: #a0cab5;'href = '{% url "QnA:editanswer" ans.pk %}'>답글 편집하기</a>
-                            {% else %}
-                                작성자 <img id='question-profile-img' src="{{ ans.user_id.Image.url }}">{{ans.user_id}}
-                            {% endif %}
-                        </div>
-                      </div>
-                    </div>
-                    {% endfor %}
-                  </div>
-            </div>
-            <div id = 'question-detail-footer' class='text-center mt-5'>
-                <h6>답변을 남기고 포인트를 받아가세요!</h6>
-            </div>
         </div>
+    </div>
+    <div class="row mt-4 mb-4" id="question-detail-comment">
+        {% for ans in answer %}
+        <div class="answer answer-{{ans.id}}" style="margin-bottom:2rem;">
+            <div class="ans-content" style="margin-bottom: 3rem;">
+                <div class='mb-4'>
+                    <span style="font-size: 1.7rem; font-weight:bold;">{{ans.title}}</span>
+                </div>
+                <span id="ans-head"><img class="lazyload" id='question-detail-thumbnail' data-src="{{ ans.user_id.Image.url }}"> {{ ans.user_id }}</span>
+                {% if request.user == ans.user_id %}
+                <div style="float:right;">
+                    <button class="edit-button me-3" >
+                        <a href = '{% url "QnA:deletequestion" question.pk %}'>삭제</a>
+                    </button>
+                    <button class="edit-button">
+                        <a href = '{% url "QnA:editquestion" question.pk %}'>수정</a>
+                    </button>
+                </div>
+                {% endif %}
+                <div class="mt-2" id="ans-body">
+                    {{ ans.content|safe }}
+                    <div style="margin-bottom:3rem;"> 
+                        <span style="font-size: 1.2rem;">{{ ans.created_at }}</span>
+                    </div>
+                </div>                
+            </div>
+            <div class="line"></div>
+        </div>
+        {% empty %}
+        <p>아직 작성된 댓글이 없습니다</p>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}
