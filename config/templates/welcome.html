@@ -1,40 +1,22 @@
+{% extends 'login_base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'style/css/welcome.css' %}"/>
-    <title>Gardener</title>
-</head>
-<body>
-    <div class="row">
-        <div class="col-5 mt-5 mb-5 d-flex flex-column justify-content-center" style="margin-right: 6.3125rem;">
-            <div>
-                <img src="{% static 'images/logo.png' %}" alt="">
-            </div>
-            <div style="margin-bottom: 2.68rem;">
-                <p class="mt-3 pt-3 pb-3" style="font-size: 1.5rem; font-weight: 900;">"나와 지구의 환경을 위한 방법"</p>
-                <p style="font-size:0.875rem; width: 28rem;">‘OUR PLANT’는 끝에 청춘이 피어나는 것은 용감하고 그들을 약동하다.<br>
-                    이상의 눈에 넣는 아니다. 인류의 것은 청춘의 아니다.<br>
-                    예가 희망의 이상은 뿐이다. 내는 피부가 몸이 인생을 유소년에게서 사막이다.</p>
-            </div>
-            <div>
-                <a href="{% url 'community:post_list' %}">
-                    <button style="height: 2.625rem; width: 9.18rem; color:white; background-color: #354847;">둘러보기</button>
-                </a>
-            </div>
-        </div>
-        <div class="col-5">
-            <img src="{% static  'images/welcome_image.png'%}" alt="">
-        </div>
+{% block content %}
+<div class="col-6 d-flex flex-column justify-content-center" style="width: 30vw;">
+    <div>
+        <img src="{% static 'images/logo.png' %}" alt="">
     </div>
-</body>
-</html>
+    <div style="margin-bottom: 2.68rem;">
+        <p class="mt-3 pt-3 pb-3" style="font-size: 1.5rem; font-weight: 900;">"나와 지구의 환경을 위한 방법"</p>
+        <p style="font-size:0.875rem; width: 28rem;">‘OUR PLANT’는 끝에 청춘이 피어나는 것은 용감하고 그들을 약동하다.<br>
+            이상의 눈에 넣는 아니다. 인류의 것은 청춘의 아니다.<br>
+            예가 희망의 이상은 뿐이다. 내는 피부가 몸이 인생을 유소년에게서 사막이다.</p>
+    </div>
+    <div>
+        <a href="{% url 'community:post_list' %}">
+            <button style="height: 2.625rem; width: 9.18rem; color:white; background-color: #354847;">둘러보기</button>
+        </a>
+    </div>
+</div>
+
+{% endblock %}

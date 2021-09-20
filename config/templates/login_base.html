@@ -6,21 +6,69 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'style/css/welcome.css' %}"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
+    <link href="{% static 'style/css/base.css' %}" rel="stylesheet">
+    <script  src="https://code.jquery.com/jquery-latest.min.js"></script>
+
+    {% block head %}
+    {% endblock %}
     <title>Gardener</title>
 </head>
-<body>
-    <div class="row">
-        {%block content%}
-        {%endblock%}
-        <div class="col-5">
-            <img src="{% static  'images/welcome_image.png'%}" alt="">
+
+<header>
+    <div class="d-flex justify-content-end" style="font-size: 0.825rem;">
+        {% if request.user.is_authenticated %}
+        <div style="padding-right: 20rem; margin-top: 1rem;">
+            <a href="">{{user.name}}</a>
+            <a href="{% url 'user:logout' %}">로그아웃</a>
         </div>
+        {% else %}
+        <div style="padding-right: 20rem; margin-top: 1rem;">
+            <a href="{% url 'user:signup' %}" style="padding-right:5px">회원가입</a>
+            <a href="{% url 'user:login' %}">로그인</a>
+        </div>
+        {% endif %}
     </div>
-</body>
+</header>
+
+<div class="row justify-content-center align-items-center" style="width:100vw; height:100vh;">
+    {% block content %}
+    {% endblock %}
+    <div class="col-6" style="width: 470px; height: 610px;">
+        <img src="{% static  'images/welcome_image.png'%}" alt="">
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        var url = window.location;
+        $('ul.navbar-nav a[href="'+ url +'"]').addClass('active');
+        $('ul.navbar-nav a').filter(function() {
+             return this.href == url;
+        }).addClass('active');
+    });
+
+    CKEDITOR.on('dialogDefinition', function (ev) {    
+    var dialogName = ev.data.name;        
+    var dialog = ev.data.definition.dialog;
+    var dialogDefinition = ev.data.definition;
+    if (dialogName == 'image') {
+        dialog.on('show', function (obj) {
+            this.selectPage('Upload'); //업로드텝으로 시작
+        });
+    dialogDefinition.removeContents('advanced'); // 자세히탭 제거
+    dialogDefinition.removeContents('Link'); // 링크탭 제거
+    }
+    });
+
+        
+
+</script>
+<script src="{% static 'javascripts/lazysizes.min.js' %}"></script>
+{% block js %}
+{% endblock %}
 </html>

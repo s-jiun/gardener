@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content %}
-<div class=" mx-auto col-5 d-flex flex-column justify-content-center" style="margin-right: 6.3125rem;">
+<div class="col-6 d-flex flex-column justify-content-center" style="margin-right: 6.3125rem; width: 21.5rem;">
     <div style="margin-bottom: 3.125rem;">
         <img src="{% static 'images/logo.png' %}" alt="">
     </div>
@@ -30,20 +30,20 @@
                     <input style="width: 20rem; height: 2.5rem;" type="password" name="password" autocomplete="current-password" class="" placeholder="" required="" id="id_password">
                 </div>
             </div>
-            <div class="col-12 row mx-auto" style="width: 15rem; font-size: 0.825rem; margin-bottom: 1.25rem;">
+            <div class="col-12 row justify-content-center" style="width: 100%; font-size: 0.825rem; margin:auto; margin-bottom: 1.25rem;">
                 <div class="col-4 px-0">
                     <a href="{% url 'user:find_id' %}" style="text-decoration: none; color: #8F8F8F;">
-                        <p class="text text-center mb-0">아이디 찾기</p>
+                        <p class="text text-center p-0" style="font-size: 0.825rem;">아이디 찾기</p>
                     </a>
                 </div>
                 <div class="col-4 px-0">
                     <a href="/password_reset" style="text-decoration: none; color: #8F8F8F;">
-                        <p class="text text-center mb-0">비밀번호 찾기</p>
+                        <p class="text text-center p-0" style="font-size: 0.825rem;">비밀번호 찾기</p>
                     </a>
                 </div>
                 <div class="col-4 px-0">
                     <a href="{% url 'user:signup' %}" style="text-decoration: none; color: #8F8F8F;">
-                        <p class="text text-center mb-0">회원가입</p>
+                        <p class="text text-center p-0" style="font-size: 0.825rem;">회원가입</p>
                     </a>
                 </div>
             </div>
