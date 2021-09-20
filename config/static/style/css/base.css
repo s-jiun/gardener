@@ -12,7 +12,23 @@ body {
 }
 
 @media screen and (max-width : 900px){
-  html {font-size:0.8rem}  
+  html {font-size:8px}  
+}
+
+@media screen and (max-width : 560px){
+  html {font-size:6px}  
+}
+
+@media screen and (max-width : 900px){
+  #image-container{
+    display: none;
+  }
+  #image-container img {
+    display: none;
+  }
+  #left-container{
+    margin-right: 0px!important;
+  } 
 }
 
 
