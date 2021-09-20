@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import ListView
 from django.contrib import messages
 from django.db.models import Q
@@ -6,7 +6,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 
 from user.models import Follow, GeneralUser
-from .models import Challenge, Issue
+from .models import Challenge, CardNews,ChallengeReply,NewsReply
+from .forms import ChallengeReplyForm
 
 # Create your views here.
 class ChallengeListView(ListView):
@@ -64,14 +65,41 @@ class ChallengeListView(ListView):
 
 def challenge_detail(request,pk):
     challenge = get_object_or_404(Challenge, pk=pk)
+    comments = challenge.challengereply_set.filter(parent_reply__isnull=True)
+    
+    if request.method == 'POST':
+        comment_form = ChallengeReplyForm(request.POST, request.FILES)
+        if comment_form.is_valid():
+            parent_obj = None
+            try:
+                parent_id = int(request.POST.get('parent_id'))
+            except:
+                parent_id = None
+            if parent_id:
+                parent_obj = ChallengeReply.objects.get(id=parent_id)
+                if parent_obj:
+                    replay_comment = comment_form.save(commit=False)
+                    replay_comment.parent_reply = parent_obj
+            new_comment = comment_form.save(commit=False)
+            new_comment.challenge_id = challenge
+
+            new_comment.user_id = GeneralUser.objects.get(
+                userid=request.user.get_username())
+            new_comment.save()
+            return redirect('event:challenge_detail', pk=challenge.pk)
+    else:
+        comment_form = ChallengeReplyForm()
+
     ctx={
-        'challenge':challenge
+        'challenge':challenge,
+        'comments': comments,
+        'comment_form': comment_form,
     }
     return render(request,'event/challenge_detail.html', context=ctx)
    
 
-class IssueListView(ListView):
-    model = Issue
+class NewsListView(ListView):
+    model = CardNews
     paginate_by = 9
     template_name = 'event/issue_list.html'
     context_object_name = 'issue_list'
@@ -86,7 +114,7 @@ class IssueListView(ListView):
         current_page = int(page) if page else 1
 
         start_index = int((current_page - 1) /
-                          page_numbers_range) * page_numbers_range
+                        page_numbers_range) * page_numbers_range
         end_index = start_index + page_numbers_range
         if end_index >= max_index:
             end_index = max_index
@@ -105,7 +133,7 @@ class IssueListView(ListView):
 
         search_keyword = self.request.GET.get('q', '')
         search_type = self.request.GET.get('type', '')
-        issue_list = Issue.objects.order_by('-id')
+        issue_list = CardNews.objects.order_by('-id')
         if search_keyword:
             if len(search_keyword) > 1:
                 return issue_list
@@ -115,7 +143,7 @@ class IssueListView(ListView):
 
 
 def issue_detail(request,pk):
-    issue = get_object_or_404(Issue, pk=pk)
+    issue = get_object_or_404(CardNews, pk=pk)
     ctx={
         'issue' : issue
     }

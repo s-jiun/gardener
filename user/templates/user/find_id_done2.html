@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+    <link href="{% static 'style/css/find_id.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center main-container" style="background-image: url({% static 'images/id_find.jpg' %});">
+    <div class="d-flex justify-content-center align-items-center main-container">
+        <div class="container p-0">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="card px-3">
+                      <p class="h8 py-5 px-3"><img class="lazyload" id="login-icon2" data-src="{% static 'images/plant.png' %}"> 아이디 찾기 <img id="login-icon2" src="{% static 'images/plant.png' %}"></p>
+                    <div class="row gx-3">
+                        <div class="col-12 mb-5">
+                            <div class="d-flex flex-column">
+                                <p class="text mb-1 text-center">{{email}}로 등록된 아이디 입니다.</p>
+                            </div>
+                        </div>
+                        <div class="col-12 mb-5">
+                            <div class="d-flex flex-column">
+                                <h2 class="mb-1 text-center">ID: {{user.userid}}</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>  
+        </div>
+    </div>
+</div>
+{% endblock %}
