@@ -27,7 +27,7 @@
         <div style="padding-right: 20rem; margin-top: 1rem;">
             <a href="{% url 'user:logout' %}">로그아웃</a>
             <a href="{% url 'user:my_profile' %}">{{ request.user.userid }}</a>
-            <img class="lazyload" data-src="{{ request.user.Image.url }}">
+            <img class="lazyload" data-src="{{ request.user.Image.url }}" style="width: 1.5rem">
         </div>
         {% else %}
         <div style="padding-right: 20rem; margin-top: 1rem;">
