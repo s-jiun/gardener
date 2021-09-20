@@ -4,28 +4,25 @@
 
 {%block head%}
 <link href="{% static 'style/css/main_plant.css' %}" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
-<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 {%endblock%}
 
 {% block content %}
         
     <div class="container-fluid main-body mt-4 mb-4" id="plant-body">
-    {% if plant_list %}
+        {% if plant_list %}
         <div class='row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3'>
             {% for plant in plant_list %}
                 <div class="col">
-                    <div class="card p-2 m-3" id="plant-card" >
+                    <div class="card p-2 m-3" id="plant-card" style="border:none;">
                         <div class="image" >
                             <a data-bs-toggle="modal" data-bs-target="#plantDetailModal-{{plant.pk}}">
                             <img src={{plant.photo_url|safe}} class="lazyload card-img-top"  id="plant-img" alt="..." >
-                            <h3>🌱{{plant.name}}🌱 <br> 알아보기</h3>
+                            <h3>{{plant.name}}<br> 알아보기</h3>
                             </a>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" style="padding : 1rem 0 0 0;">
                             <h5 class="card-title">{{ plant.name }}</h5>
                         </div>
                     </div>
@@ -33,9 +30,8 @@
                 <div class="modal fade" id="plantDetailModal-{{plant.pk}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable">
                         <div class="modal-content" id="plantDetailModal-content">
-                            <div class="modal-header justify-content-center">
-                                <h5 class="modal-title" id="plantDetailLabel">{{plant.name}}</h5>
-                                <button type="button" class="btn-close me-2" data-bs-dismiss="modal" aria-label="Close" style="margin-left:40px;"></button>
+                                <button type="button" class="btn-close me-2" data-bs-dismiss="modal" aria-label="Close" style="margin-left:40px; margin-top:40px;"></button>
+                            <div class="d-flex justify-content-center align-items-start pb-3">
                                 {%if plant in scrap_plant_list %}
                                     <div class="btn btn-success btn-sm post__del_scrap" onclick="onClickScrap({{plant.pk}})"><i class="fas fa-bookmark"></i></div>
                                 {% else %}
@@ -43,16 +39,15 @@
                                     <div class="btn btn-success btn-sm post__scrap" onclick="onClickScrap({{plant.pk}})"><i class="far fa-bookmark"></i></div>
                                     {% endif %}
                                 {% endif %}
+                                <h5 class="modal-title" id="plantDetailLabel">{{plant.name}}</h5>
                             </div>
                             <div class="modal-body text-center">
                                 <img class="lazyload" data-src={{plant.photo_url|safe}}>
-                                <hr class="m-1"><hr class="m-1">
                                 <div>
                                     <table class="table table-striped text-start mt-2">
                                         <tbody>
                                             <tr>
                                                 <td class="p-2"> 
-                                                <img class="lazyload" data-src="{%static 'images/plant1.png'%}"> 
                                                 <span>생육형태<span>
                                                 </td>
                                             </tr>
@@ -64,7 +59,7 @@
                                             </tr>
                                             <tr>
                                                 <td class="p-2"> 
-                                                <img class="lazyload" data-src="{%static 'images/difficulty.png'%}"> 
+                                                
                                                 <span>관리 난이도<span>
                                                 </td>
                                             </tr>
@@ -75,7 +70,7 @@
                                             </tr>
                                             <tr>
                                                 <td class="p-2"> 
-                                                    <img class="lazyload" data-src="{%static 'images/watering.png'%}"> 
+                                                    
                                                     <span>관리 요구 수준<span>
                                                     </td>
                                                 </tr>
@@ -92,7 +87,7 @@
                                             </tr>
                                             <tr>
                                                 <td class="p-2"> 
-                                                <img class="lazyload" data-src="{%static 'images/temperature.png'%}"> 
+                                                
                                                 <span>생육 온도<span>
                                                 </td>
                                             </tr>
@@ -103,7 +98,7 @@
                                             </tr>
                                             <tr>
                                                 <td class="p-2"> 
-                                                <img class="lazyload" data-src="{%static 'images/humidity.png'%}"> 
+                                                
                                                 <span>생육 습도<span>
                                                 </td>
                                             </tr>
@@ -114,7 +109,7 @@
                                             </tr>
                                             <tr>
                                             <td class="p-2"> 
-                                                <img class="lazyload" data-src="{%static 'images/spring.png'%}"> 
+                                                
                                                 <span>봄철 물주기<span>
                                                 </td>
                                             </tr>
@@ -124,7 +119,7 @@
                                                 </td> 
                                             </tr>
                                             <td class="p-2"> 
-                                                <img class="lazyload" data-src="{%static 'images/summer.png'%}"> 
+                                                
                                                 <span>여름철 물주기<span>
                                                 </td>
                                             </tr>
@@ -134,7 +129,7 @@
                                                 </td> 
                                             </tr>
                                             <td class="p-2"> 
-                                                <img class="lazyload" data-src="{%static 'images/fall.png'%}"> 
+                                                
                                                 <span>가을철 물주기<span>
                                                 </td>
                                             </tr>
@@ -144,7 +139,7 @@
                                                 </td> 
                                             </tr>
                                             <td class="p-2"> 
-                                                <img class="lazyload" data-src="{%static 'images/winter.png'%}"> 
+                                                
                                                 <span>겨울철 물주기<span>
                                                 </td>
                                             </tr>
@@ -154,7 +149,7 @@
                                                 </td> 
                                             </tr>
                                             <td class="p-2"> 
-                                                <img class="lazyload" data-src="{%static 'images/plant.png'%}"> 
+                                                
                                                 <span>기타사항<span>
                                                 </td>
                                             </tr>
@@ -190,38 +185,40 @@
                 </tr>
                 {%endif%}
         </div>
-    {% endif %}
+        {% endif %}
     </div>
-    <div id="plant-paginator">
+    <div class="col-md-offset-6">
         {% if is_paginated %}
-        <ul class="pagination">
-        {% if page_obj.has_previous %}
-        <li class="page-item">
-            <a class="page-link" href="?type={{type}}&q={{q}}&page={{ page_obj.previous_page_number }}"
-            tabindex="-1">이전</a>
-        </li>
-        {% else %}
-        <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1">이전</a>
-        </li>
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?type={{ type }}&q={{ q }}&page={{ page_obj.previous_page_number }}"
+                    tabindex="-1" style="border:none; font-size: 15px;">&lt;</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1" style="font-size: 15px; border:none;">&lt;</a>
+            </li>
+            {% endif %}
+
+            {% for page in page_range %}
+            <li class="page-item {% if page == page_obj.number %} activate {% endif %}">
+                <a class="page-link page-link-circle" href="?type={{ type }}&q={{ q }}&page={{ page }}" style="border-radius:100%; border:none; font-size: 12px; margin-right:7px;">{{ page }}</a>
+            </li>
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link"
+                    href="?type={{ type }}&q={{ q }}&page={{ page_obj.next_page_number }}" style="border:none; font-size: 15px; margin-left:-7px;">&gt;</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" href="#" style="border:none; font-size: 15px; margin-left:-7px;">&gt;</a>
+            </li>
+            {% endif %}
+        </ul>
         {% endif %}
-        {% for page in page_range %}
-        <li class="page-item {% if page == page_obj.number %} activate {% endif %}">
-            <a class="page-link" href="?type={{type}}&q={{q}}&page={{ page }}">{{ page }}</a>
-        </li>
-        {% endfor %}
-        {% if page_obj.has_next %}
-        <li class="page-item">
-        <a class="page-link"
-            href="?type={{type}}&q={{q}}&page={{ page_obj.next_page_number }}">다음</a>
-        </li>
-        {% else %}
-        <li class="page-item disabled">
-            <a class="page-link" href="#">다음</a>
-        </li>
-        {% endif %}
-    </ul>
-    {% endif %}
     </div>
     <script>
         $( function() {
