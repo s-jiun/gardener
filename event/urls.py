@@ -14,5 +14,5 @@ urlpatterns = [
     #      view=views.challenge_delete, name='challenge_delete'),
     path('issue/<int:pk>/', view=views.issue_detail, name='issue_detail'),
     path('challenge/', view=views.ChallengeListView.as_view(), name='challenge'),
-    path('issue/', view=views.IssueListView.as_view(), name='issue'),
+    path('issue/', view=views.NewsListView.as_view(), name='issue'),
 ]

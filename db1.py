@@ -14,6 +14,7 @@ with open(CSV_PATH, newline='', encoding='utf-8') as csvfile:
     for row in data_reader:
         Plant.objects.get_or_create(
             name = row['\ufeffname'],
+            growth_form = 0,
             photo_url = row['photo_url'],
             care_difficulty = row["manageDemandNm"],
             management_level = row["manageLevelNm"],

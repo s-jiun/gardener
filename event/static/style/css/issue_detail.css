@@ -6,34 +6,34 @@
 #container{
   min-height: 60rem;
 }
-.post-title{
+.issue-title{
   font-size: 2.6rem;
   margin-bottom: 2rem;
   font-weight: bold;
   color:#354847;
 }
-#post-header{
+#issue-header{
   margin-bottom: 3rem;
 }
-#post-head{
+#issue-head{
   font-size: 1.4rem;
   font-weight: bold;
   margin-right: 0.5rem;
 }
-#post-date{
+#issue-date{
   margin-left:0.5rem;
   font-size: 1.4rem;
   color:#8F8F8F;
 }
 
-#post-detail-thumbnail {
+#issue-detail-thumbnail {
   overflow: hidden;
   width: 30px;
   height: 30px;
   padding: 2px;
   border-radius: 100%;
 }
-#post-follow-button{
+#issue-follow-button{
   background-color: white;
   border-radius: 20px;
   border: 0.1rem solid #76B79C;
@@ -41,16 +41,16 @@
   margin-right: 0.5rem;
   color:#76B79C;
 }
-#post-content{
+#issue-content{
   margin-top: 4rem;
 }
-#post-detail-content > *{
+#issue-detail-content > *{
   font-size: 1.6rem;
 }
-#post-detail-content p{
+#issue-detail-content p{
   overflow-x:auto;
 }
-#post-detail-like * {
+#issue-detail-like * {
   font-weight: bold;
   font-size: 1.2rem;
 }
@@ -100,9 +100,7 @@
 .reply-content{
   background-color: #F8F8F8;
 }
-#trashImg{
-  width: 1.5rem;
-}
+
 
 /* div {
   font-family: "Gowun Batang", serif;
@@ -114,7 +112,7 @@ a {
   color: black;
 }
 
-.post {
+.issue {
   position: relative;
   width: 50%;
 }
@@ -139,7 +137,7 @@ a {
   width: 100%;
 }
 
-.post-title {
+.issue-title {
   font-size: x-large;
   font-weight: bold;
 }
@@ -169,7 +167,7 @@ a {
   border: 0;
 }
 
-.post-edit {
+.issue-edit {
   width: auto;
   height: 170px;
   background: #ccdfcc;
@@ -269,7 +267,7 @@ a {
   color: #cc3d3d;
 }
 
-#post-edit-container {
+#issue-edit-container {
   width: auto;
 }
 
@@ -280,22 +278,22 @@ a {
   .main-container {
     display: block;
   }
-  .post {
+  .issue {
     width: 100vw;
   }
-  .post-edit {
+  .issue-edit {
     width: 200px;
     margin: 0;
     margin: auto;
     margin-bottom: 20px;
   }
 
-  #post-edit-container {
+  #issue-edit-container {
     width: 100%;
     margin: auto;
   }
 
-  #post-edit-container hr {
+  #issue-edit-container hr {
     width: 100%;
     margin-top: 10px;
   }
