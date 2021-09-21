@@ -1,80 +1,106 @@
-{% extends "base.html" %}
+{% extends "login_base.html" %}
 {% load static %}
 {% load socialaccount %}
 {% block head %}
     <link href="{% static 'style/css/login.css' %}" rel="stylesheet">
+    <style>
+	    *{
+	        font-size: 100%;
+	    }
+        @media screen and (max-width : 900px){
+        html {font-size:0.8rem}  
+    	}
+
+    	@media screen and (max-width : 560px){
+    	    html {font-size:0.6rem}  
+    	}
+    	@media screen and (max-width : 900px){
+    		#image-container{
+    		  display: none;
+    		}
+    		#image-container img {
+    		  display: none;
+    		}
+    		#left-container{
+    		  margin-right: 0px!important;
+    		} 
+		}
+	</style>
 {% endblock %}
 
 {% block content %}
-<div class="d-flex justify-content-center align-items-center main-container" style="background-image: url({% static 'images/login_background.jpg' %});">
-    <div class="container p-0">
+<div id="left-container" class="col-6 d-flex flex-column justify-content-center" style="margin-right: 6.3125rem; width: 21.5rem;">
+    <div style="margin-bottom: 3.125rem;">
+        <img src="{% static 'images/logo.png' %}" alt="">
+    </div>
+    <div>
         <form action="" method="POST">
             {% csrf_token %}
-            <div class="card text-center px-5">
-                <p class="h8"><img class="lazyload" id="login-icon1" data-src="{% static 'images/black_leaf.png' %}">로그인<img id="login-icon2" class="lazyload" data-src="{% static 'images/black_leaf.png' %}"></p>
-                <p class="h9 mt-1">- Always With Gardener -</p>
-                <div class="row gx-3 mt-5">
-                    <div class="col-12">
-                        <p class="text mb-1">
-                            {{form.password.errors}}
-                        </p>
-                    </div>
-                    <div class="col-12">
-                        <div class="d-flex flex-column">
-                            <p class="text mb-1"></p> <input type="text" name="username" autofocus="" class="form-control mb-3" placeholder="아이디" autocapitalize="none" autocomplete="username" maxlength="30" required="" id="id_username">
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="d-flex flex-column">
-                            <p class="text mb-1"></p>
-                            <input type="password" name="password" autocomplete="current-password" class="form-control mb-3" placeholder="비밀번호" required="" id="id_password">
-                        </div>
-                    </div>
-                    <div class="col-12 row mb-3" style="margin-left: 3px;">
-                        <div class="col-4 px-0">
-                            <a href="{% url 'user:find_id' %}"><p class="text text-center">아이디 찾기</p></a>
-                        </div>
-                        <div class="col-4 px-0">
-                            <a href="/password_reset">
-                                <p class="text text-center">비밀번호 찾기</p>
-                            </a>
-                        </div>
-                        <div class="col-4 px-0">
-                            <a href="{% url 'user:signup' %}">
-                                <p class="text text-center">회원가입</p>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <button class="btn btn-primary mb-3" type="submit"><span>로그인</span></button>
-                    </div>
-                    <div class="col-12">
-                        <a href="{% provider_login_url 'google' %}" class="row">
-                            <img class="lazyload" data-src="{% static 'images/google_logo.png' %}" alt="" class="col-12" >
-                        </a>
-                    </div>
-                    <div class="col-12">
-                        <!-- 카카오 -->
-                        <a href="{% provider_login_url 'kakao' %}" class="row">
-                            <img class="lazyload" data-src="{% static 'images/google_logo.png' %}" alt="" class="col-12" >
-                        </a>
-                        <!-- 네이버 로그인-->
-                        <a href="#" onclick="naverLogin()">
-                            네이버 로그인
-                        </a>
-                        {% comment %}
-                        {% load socialaccount %}
-                        <a href=" {% provider_login_url 'naver' %}">네이버 로그인</a>
-                        {% endcomment %}
-                    </div>
+            <div class="col-12">
+                <p class="text mb-1">
+                    {{form.password.errors}}
+                </p>
+            </div>
+            <div class="col-12" style="margin-bottom: 1.25rem;">
+                <div class="d-flex flex-column">
+                    <p class="text mb-1">아이디</p> 
+                    <input style="width: 20rem; height: 2.5rem;" type="text" name="username" autofocus="" class="" placeholder="" autocapitalize="none" autocomplete="username" maxlength="30" required="" id="id_username">
                 </div>
             </div>
+            <div class="col-12" style="margin-bottom: 1.25rem;">
+                <div class="d-flex flex-column">
+                    <p class="text mb-1">비밀번호</p>
+                    <input style="width: 20rem; height: 2.5rem;" type="password" name="password" autocomplete="current-password" class="" placeholder="" required="" id="id_password">
+                </div>
+            </div>
+            <div class="col-12 row justify-content-center" style="width: 100%; font-size: 0.825rem; margin:auto; margin-bottom: 1.25rem;">
+                <div class="col-4 px-0">
+                    <a href="{% url 'user:find_id' %}" style="text-decoration: none; color: #8F8F8F;">
+                        <p class="text text-center p-0" style="font-size: 0.825rem;">아이디 찾기</p>
+                    </a>
+                </div>
+                <div class="col-4 px-0">
+                    <a href="/password_reset" style="text-decoration: none; color: #8F8F8F;">
+                        <p class="text text-center p-0" style="font-size: 0.825rem;">비밀번호 찾기</p>
+                    </a>
+                </div>
+                <div class="col-4 px-0">
+                    <a href="{% url 'user:signup' %}" style="text-decoration: none; color: #8F8F8F;">
+                        <p class="text text-center p-0" style="font-size: 0.825rem;">회원가입</p>
+                    </a>
+                </div>
+            </div>
+            <div class="col-12">
+                <button style="width: 20rem; height: 2.5rem; color: white; background-color: #354847;" class="btn mb-3" type="submit"><span>로그인</span></button>
+            </div>
         </form>
+        <hr>
+    </div>
+    <div class="col-12 d-flex flex-column justify-content-center">
+        {% load socialaccount %}
+        <a href="{% provider_login_url 'google' %}" style="width: 20rem; height: 2.5rem; text-align: center; vertical-align: center; border: solid 1px #8F8F8F; margin-bottom: 1rem; color: #8F8F8F; text-decoration: #8F8F8F;">
+            <div class="d-flex align-items-center justify-content-center" style="height: 100%;">
+                <img src="{% static 'images/google_logo.png' %}" alt="">
+                구글 아이디로 로그인
+            </div>
+        </a>
+        <a href=" {% provider_login_url 'naver' %}" style="width: 20rem; height: 2.5rem; text-align: center; vertical-align: center; border: solid 1px #8F8F8F; margin-bottom: 1rem; color: #8F8F8F; text-decoration: #8F8F8F;">
+            <div class="d-flex align-items-center justify-content-center" style="height: 100%;">
+                <img style="margin-right: 5px;" src="{% static 'images/naver_logo.png' %}" alt="">
+                네이버 아이디로 로그인
+            </div>    
+        </a>
+        <a href="{% provider_login_url 'kakao' %}" style="width: 20rem; height: 2.5rem; text-align: center; vertical-align: center; border: solid 1px #8F8F8F; margin-bottom: 1rem; color: #8F8F8F; text-decoration: #8F8F8F;">
+            <div class="d-flex align-items-center justify-content-center" style="height: 100%;">
+                <img src="{% static 'images/kakao_logo.png' %}" alt="">
+                카카오 아이디로 로그인
+            </div>
+        </a>
     </div>
 </div>
-
 {% endblock %}
 
 {% block js %}
 <script src="{% static 'javascripts/social_login.js' %}"></script>
 {% endblock %}
+

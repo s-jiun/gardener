@@ -144,6 +144,8 @@ def profile(request, pk):
     return render(request, template_name='user/profile.html', context=ctx)
 
 
+
+
 @login_required
 def follow_list(request, pk):
     user = GeneralUser.objects.get(id=pk)
@@ -286,7 +288,12 @@ class liked_post_ListView(ListView):
         return liked
 
     def get_context_data(self, **kwargs):
+        follower = Follow.objects.filter(user=self.request.user).count()
+        following = Follow.objects.filter(
+            following_user=self.request.user).count()
         context = super().get_context_data(**kwargs)
+        context["follower"] = follower
+        context["following"] = following
         paginator = context['paginator']
         page_numbers_range = 10
         max_index = len(paginator.page_range)
@@ -301,9 +308,8 @@ class liked_post_ListView(ListView):
             end_index = max_index
 
         page_range = paginator.page_range[start_index:end_index]
-
-        context['user'] = GeneralUser.objects.get(id=self.kwargs['pk'])
         context['page_range'] = page_range
+
         return context
 
 

@@ -68,7 +68,7 @@
                     <div class="mt-1" > 
                         <span>{{ comment.created_at }}</span>
                         {% if user == post.user_id or user == comment.user_id %}
-                            <span class="trash" onclick="onClickDeleteComment({{post.id}}, {{comment.id}})"><i class="far fa-trash-alt"></i></span>
+                            <span class="trash" onclick="onClickDeleteComment({{post.id}}, {{comment.id}})"></span>
                         {% endif %}
                         <button class="create-reply" type="button" data-bs-toggle="collapse" data-bs-target="#collapseReply-{{comment.id}}" aria-expanded="false" aria-controls="collapseReply-{{comment.id}}">
                             답글
@@ -99,7 +99,7 @@
                         <div class="mt-1">
                         {{ reply.created_at }}
                         {% if user == post.user_id or user == reply.user_id %}
-                            <span class="trash" onclick="onClickDeleteReply({{reply.parent_reply.id}}, {{post.id}}, {{reply.id}})"><i class="far fa-trash-alt"></i></span>
+                            <span class="trash" onclick="onClickDeleteReply({{reply.parent_reply.id}}, {{post.id}}, {{reply.id}})"><img class="me-1" id="trashImg" src="{% static 'images/trash.svg' %}" alt="삭제"></span>
                         {% endif %}
                         </div>
                     </div>

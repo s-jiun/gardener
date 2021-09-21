@@ -1,3 +1,8 @@
+*{
+  font-family: "Noto Sans KR"!important;
+  font-size: 62.5%;
+}
+
 html,
 body {
   margin: 0;
@@ -5,6 +10,27 @@ body {
   width: 100%;
   height: 100%;
 }
+
+@media screen and (max-width : 900px){
+  html {font-size:8px}  
+}
+
+@media screen and (max-width : 560px){
+  html {font-size:6px}  
+}
+
+@media screen and (max-width : 900px){
+  #image-container{
+    display: none;
+  }
+  #image-container img {
+    display: none;
+  }
+  #left-container{
+    margin-right: 0px!important;
+  } 
+}
+
 
 main {
   height: auto;
@@ -47,9 +73,12 @@ footer {
 }
 
 .navbar {
-  background-color: #ccdfcc;
   z-index: 0;
   position: sticky;
+}
+
+.nav-link.active {
+  color: #a0cab5!important;
 }
 
 .navbar-brand {
@@ -91,10 +120,6 @@ footer {
   width: 100%;
 }
 
-.page-link {
-  color: brown;
-}
-
 .activate a {
   background-color: #a0cab5;
   color: white;
@@ -110,3 +135,4 @@ footer {
   height: 1px;
   margin-bottom: 1rem;
 }
+
