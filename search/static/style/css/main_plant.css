@@ -71,27 +71,6 @@
   display: inline-block;
   width: 80%;
   padding: 10px 20px;
-  border-right: 2px solid #5c5427;
-  border-left: 2px solid #ccdfcc;
-  border-radius: 10px;
-  background: linear-gradient(
-      to right,
-      #ccdfcc calc(50% - 5px),
-      transparent calc(50% - 5px),
-      transparent calc(50% + 5px),
-      #5c5427 calc(50% + 5px)
-    ),
-    linear-gradient(
-      to right,
-      #ccdfcc calc(50% - 5px),
-      transparent calc(50% - 5px),
-      transparent calc(50% + 5px),
-      #5c5427 calc(50% + 5px)
-    );
-  background-size: 150% 2px;
-  background-position: top left, bottom right;
-  background-repeat: no-repeat;
-  transition: 0.5s all;
 }
 #plant-card:hover {
   background-position: top right, bottom left;
@@ -103,10 +82,7 @@
   width: auto;
   position: relative;
   cursor: pointer;
-  box-shadow: 0 0 25px 1px rgba(0, 0, 0, 0.3);
   transition: 0.5s;
-  text-align: center;
-  border-radius: 10px;
 }
 .image:after {
   content: "";
@@ -138,7 +114,6 @@
   left: 50%;
   transform: translate(-50%, -50%);
   transition: 0.5s;
-  border-radius: 10px;
 }
 .image h3 {
   width: 100%;

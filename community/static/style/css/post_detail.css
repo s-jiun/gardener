@@ -100,7 +100,9 @@
 .reply-content{
   background-color: #F8F8F8;
 }
-
+#trashImg{
+  width: 1.5rem;
+}
 
 /* div {
   font-family: "Gowun Batang", serif;
