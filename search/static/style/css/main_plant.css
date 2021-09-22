@@ -7,6 +7,25 @@
   width: 100%;
   padding: 0;
 }
+
+.level-con {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+.level-btn {
+  margin-left: 2rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 3em;
+  border: 1px solid #8F8F8F;
+  color: #8F8F8F;
+}
+.level-btn:after {
+  border: 1px solid #76B79C;
+  color: #76B79C;
+}
+
 #plant-header {
   padding-left: 0;
   padding-right: 0;
