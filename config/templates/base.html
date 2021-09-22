@@ -43,7 +43,7 @@
             </a>
         </div>
         <div class="col-4 d-flex justify-content-center align-items-center" style="display: inline-block;">
-            <form action='' method="GET">
+            <!-- <form action='' method="GET">
                 <select name="type" style="border: none; font-size: 1.4rem;">
                     <option value="tag">태그</option>
                     <option value="title">제목</option>
@@ -51,7 +51,9 @@
                 </select>
                 <input style="border-color: #76B79C; border-radius: 20px; width: 31.4rem; height: 4rem;" type="text" name='q' value="{{q}}" placeholder="검색어를 입력하세요"/>
                 <button style="display: none;" type="submit"></button>
-            </form>
+            </form> -->
+            {% block search %}
+            {% endblock %}
         </div>
     </div>
 
@@ -87,9 +89,9 @@
                     <a class="nav-link" style="font-size:1.4rem" href="{% url 'event:challenge' %}">챌린지</a>
                 </li>
             </ul>
-          </div>
+        </div>
         {% block button %}
-        {% endblock %}      
+        {% endblock %}    
     </nav>
 </header>
 
