@@ -79,6 +79,8 @@ a {
 #user-info {
   margin-top: 15px;
   width: auto;
+  display: flex;
+  flex-direction: column;
 }
 #user-info #user-id {
   font-size: 2rem;
@@ -177,7 +179,7 @@ a {
   border: 1px solid #b8b8b8;
   box-sizing: border-box;
   border-radius: 100px;
-  font-family: "Gowun Batang", serif;
+  font-family: 'Noto Sans KR', sans-serif;
 }
 .follow-wrapper {
   display: inline;
