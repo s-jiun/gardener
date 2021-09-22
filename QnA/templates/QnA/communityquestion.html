@@ -5,12 +5,18 @@
     <link href="{% static 'style/css/question_list.css' %}" rel="stylesheet">
 {% endblock %}
 
+{% block search %}
+<form action='' method="GET">
+    <input style="padding-left:1rem; border-color: #76B79C; border-radius: 20px; width: 31.4rem; height: 4rem;" type="text" name='q' value="{{q}}" placeholder="질문의 태그를 입력하세요"/>
+    <button style="display: none;" type="submit"></button>
+</form>
+{% endblock %}
 {% block content %}
 <div class = 'container-fluid mt-4 text-center' style='width:80%;'>
 
     <table class='table table-borderless table-hover'>
         <thead>
-            <tr style="color:#8F8F8F;">
+            <tr class ="list-header">
                 <th scope='col col-1'>번호</th>
                 <th scope='col col-7' style="text-align:start;">제목</th>
                 <th scope='col-2'>작성자</th>
@@ -20,7 +26,7 @@
         <tbody>
             {% if communityquestion_list %}
             {% for question in communityquestion_list %}
-            <tr class="text-center">
+            <tr class="list-main text-center">
                 <th scope='row' style="font-weight: normal;">{{ paginator.count|sub:page_obj.start_index|sub:forloop.counter0|add:1 }}</th>
                 <td style="text-align:start;">
                     {% if request.user.is_authenticated %}

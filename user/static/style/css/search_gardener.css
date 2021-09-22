@@ -30,6 +30,10 @@
   margin: 0 auto;
 }
 
+.gardener-profile * {
+  font-size: 12px;
+}
+
 .follow-button {
   border-radius: 15px;
   border: solid 1px #76b79c;
