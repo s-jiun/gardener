@@ -8,6 +8,8 @@ from django.contrib.auth.decorators import login_required
 from user.models import Follow, GeneralUser
 from .models import Challenge, CardNews,ChallengeReply,NewsReply
 from .forms import ChallengeReplyForm
+import json
+from django.http.response import JsonResponse
 
 # Create your views here.
 class ChallengeListView(ListView):
@@ -66,7 +68,8 @@ class ChallengeListView(ListView):
 def challenge_detail(request,pk):
     challenge = get_object_or_404(Challenge, pk=pk)
     comments = challenge.challengereply_set.filter(parent_reply__isnull=True)
-    
+    commentCount = ChallengeReply.objects.filter(challenge_id=pk).count()
+
     if request.method == 'POST':
         comment_form = ChallengeReplyForm(request.POST, request.FILES)
         if comment_form.is_valid():
@@ -148,3 +151,34 @@ def issue_detail(request,pk):
         'issue' : issue
     }
     return render(request,'event/issue_detail.html', context=ctx)
+
+@login_required
+@csrf_exempt
+def delete_comment(request, pk):
+    req = json.loads(request.body)
+    challenge_id = req['challenge_id']
+    challengeReply_id = req['challengeReply_id']
+
+    comment = ChallengeReply.objects.get(challenge_id_id=challenge_id, id=challengeReply_id)
+    ChallengeReply.objects.filter(challenge_id=challenge_id, parent_reply=comment).delete()
+    comment.delete()
+    commentCount = ChallengeReply.objects.filter(challenge_id=challenge_id).count()
+    return JsonResponse({'challenge_id': challenge_id, 'challengeReply_id': challengeReply_id, 'comment_count':commentCount})
+
+@login_required
+@csrf_exempt
+def delete_reply(request, pk):
+    req = json.loads(request.body)
+    challenge_id = req['challenge_id']
+    parent_reply_id = req['parent_reply_id']
+    challengeReply_id = req['challengeReply_id']
+    if parent_reply_id != None:
+        parent_obj = ChallengeReply.objects.get(challenge_id=challenge_id, id=parent_reply_id)
+        ChallengeReply.objects.get(
+            challenge_id=challenge_id, parent_reply=parent_obj, id=challengeReply_id).delete()
+    else:
+        comment = ChallengeReply.objects.get(challenge_id=challenge_id, id=challengeReply_id)
+        ChallengeReply.objects.filter(challenge_id=challenge_id, parent_reply=comment).delete()
+        comment.delete()
+
+    return JsonResponse({'parent_reply_id': parent_reply_id, 'challenge_id': challenge_id, 'challengeReply_id': challengeReply_id})

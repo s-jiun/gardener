@@ -67,6 +67,13 @@ a {
   display: flex;
   align-items: center;
 }
+.header-active {
+  color: #76B79C;
+  font-weight: 500;
+}
+.profile-post-header__img {
+  width: 20px;
+}
 .profile-post-header__like {
   margin-right: 2rem;
 }
@@ -83,14 +90,26 @@ a {
   flex-direction: column;
 }
 #user-info #user-id {
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-weight: 500;
 }
 #user-level {
   font-weight: 300;
-  font-size: 0.85rem;
   color: #76B79C;
   vertical-align: text-top;
+}
+#user-level a {
+  font-size: 1.2rem;
+  font-weight: 300;
+}
+#profile-content span {
+  font-size: 1.4rem;
+  color: #8F8F8F;
+  font-weight: 300;
+}
+
+#user-follow a, span {
+  font-size: 1.4rem;
 }
 #plant-icon {
   width: 2vw;
@@ -125,6 +144,7 @@ a {
   color: #5c5427;
   margin: 0;
 }
+
 
 .sidebar a {
   width: 100%;
