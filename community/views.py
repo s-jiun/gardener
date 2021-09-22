@@ -1,3 +1,4 @@
+from django.contrib.auth import authenticate
 from user.models import Follow, GeneralUser
 import json
 from django.http.response import JsonResponse
@@ -37,6 +38,12 @@ class PostListView(ListView):
         context['page_range'] = page_range
 
         search_keyword = self.request.GET.get('q', '')
+        
+        # user= self.request.user;
+
+        # liked_user = Like.objects.filter(
+        # post_id=user.pk).values_list('user_id', flat=True)
+
 
         if len(search_keyword) > 1:
             context['q'] = search_keyword
@@ -145,6 +152,7 @@ def post_detail(request, pk):
         post=post, client_ip=get_client_ip(request))
 
     comments = post.reply_set.filter(parent_reply__isnull=True)
+    comments_num = comments.count()
     liked_user = Like.objects.filter(
         post_id=pk).values_list('user_id', flat=True)
     is_following = False
@@ -178,13 +186,14 @@ def post_detail(request, pk):
     else:
         comment_form = ReplyForm()
     return render(request,
-                  'community/post_detail.html',
-                  {'post': post,
-                   'comments': comments,
-                   'comment_form': comment_form,
-                   'liked_user': liked_user,
-                   'is_following': is_following,
-                   'views': len(Postviews.objects.filter(post=post))})
+                'community/post_detail.html',
+                {'post': post,
+                'comments': comments,
+                'comments_num' : comments_num,
+                'comment_form': comment_form,
+                'liked_user': liked_user,
+                'is_following': is_following,
+                'views': len(Postviews.objects.filter(post=post))})
 
 
 @login_required
@@ -283,10 +292,10 @@ def delete_comment(request, pk):
 
 @login_required
 @csrf_exempt
-def like_ajax(request, pk):
+def like_ajax(request,pk):
+    print("post_like")
     req = json.loads(request.body)
     post_id = req['id']
-
     post = Post.objects.get(id=post_id)
     if(Like.objects.filter(user_id=request.user, post_id=post).count() != 0):
         Like.objects.get(user_id=request.user, post_id=post).delete()
@@ -363,7 +372,6 @@ class NoticeListView(ListView):
         return context
 
     def get_queryset(self):
-
         search_keyword = self.request.GET.get('q', '')
         search_type = self.request.GET.get('type', '')
         notice_list = Notice.objects.order_by('-id')
