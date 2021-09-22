@@ -34,9 +34,23 @@
     </div>
     <div class="row mt-4 mb-4" id="post-detail-like">
         <div>
-            <img class="me-1" src="{% static 'images/heart_line.svg' %}" alt="하트">15
+            {% comment %} <img class="me-1" src="{% static 'images/heart_line.svg' %}" alt="하트">15
             <img class="me-1" src="{% static 'images/comment_line.svg' %}" alt="코멘트">2
-            <span class="ms-2 me-1" id="post-detail-views">조회수 {{views}}</span>
+            <span class="ms-2 me-1" id="post-detail-views">조회수 {{views}}</span> {% endcomment %}
+             <div class='likes post-id-{{ post.id }} d-flex justify-content-end'>
+                            {% if request.user.is_authenticated %}
+                                {% if user.pk in liked_user %}
+                                    <span><button class = 'heart' onclick="onClickLike({{ post.id }})"> <img class="me-1" src="{% static 'images/heart_fill.svg' %}" alt="하트"></button></span>
+                                    <span class='like_num'>{{post.like_set.all.count}}</span>
+                                {% else %}
+                                    <span><button class = 'heart' onclick="onClickLike({{ post.id }})"> <img class="me-1" src="{% static 'images/heart_line.svg' %}" alt="하트"></button></span>
+                                    <span class='like_num'>좋아요 {{post.like_set.all.count}}</span>
+                                {% endif %}
+                            {% else %}
+                                    <span><button class = 'heart'><a onclick="alert('로그인이 필요한 서비스입니다.')" href="{% url 'user:login' %}"> <img class="me-1" src="{% static 'images/heart_line.svg' %}" alt="하트"></a></button></span>
+                                    <span class='like_num'>좋아요 {{post.like_set.all.count}}</span>
+                            {% endif %}
+            </div>
             <div style="display: inline">
                 {% if user.is_authenticated %}
                     <button class="create-comment" type="button" data-bs-toggle="collapse" data-bs-target="#collapseComment" aria-expanded="false" aria-controls="collapseComment">
@@ -236,7 +250,7 @@
 {% endblock %}
 
 {% block js %}
-    <script src="{% static 'javascripts/post_comment.js' %}"></script>
+    {% comment %} <script src="{% static 'javascripts/post_comment.js' %}"></script> {% endcomment %}
     <script src="{% static 'javascripts/likes.js' %}"></script>
-    <script src="{% static 'javascripts/post_follow.js' %}"></script>
+    {% comment %} <script src="{% static 'javascripts/post_follow.js' %}"></script> {% endcomment %}
 {% endblock %}
