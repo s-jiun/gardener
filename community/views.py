@@ -152,6 +152,7 @@ def post_detail(request, pk):
         post=post, client_ip=get_client_ip(request))
 
     comments = post.reply_set.filter(parent_reply__isnull=True)
+    comments_num = comments.count()
     liked_user = Like.objects.filter(
         post_id=pk).values_list('user_id', flat=True)
     is_following = False
@@ -185,13 +186,14 @@ def post_detail(request, pk):
     else:
         comment_form = ReplyForm()
     return render(request,
-                  'community/post_detail.html',
-                  {'post': post,
-                   'comments': comments,
-                   'comment_form': comment_form,
-                   'liked_user': liked_user,
-                   'is_following': is_following,
-                   'views': len(Postviews.objects.filter(post=post))})
+                'community/post_detail.html',
+                {'post': post,
+                'comments': comments,
+                'comments_num' : comments_num,
+                'comment_form': comment_form,
+                'liked_user': liked_user,
+                'is_following': is_following,
+                'views': len(Postviews.objects.filter(post=post))})
 
 
 @login_required
