@@ -45,7 +45,10 @@
                                                             {% endif %}
                                                             <div class="user-id-config">
                                                                 <span id="user-id"> {{user.userid}}</span>
-                                                                <img class="" src="{% static 'images/ios-settings 1.svg'%}" />
+                                                                <a href="{% url 'user:profile_update' %}">
+                                                                    <img class=""
+                                                                        src="{% static 'images/ios-settings 1.svg'%}" />
+                                                                </a>
                                                             </div>
                                                             <div id="profile-content">
                                                                 <span style='overflow:auto;'>
