@@ -7,6 +7,25 @@
   width: 100%;
   padding: 0;
 }
+
+.level-con {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+.level-btn {
+  margin-left: 2rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 3em;
+  border: 1px solid #8F8F8F;
+  color: #8F8F8F;
+}
+.level-btn:after {
+  border: 1px solid #76B79C;
+  color: #76B79C;
+}
+
 #plant-header {
   padding-left: 0;
   padding-right: 0;
@@ -76,6 +95,15 @@
   background-position: top right, bottom left;
   cursor: pointer;
 }
+
+.card-body {
+  text-align: center;
+
+}
+.card-title {
+  font-weight: 500;
+  font-size: 1rem;
+}
 .image {
   overflow: hidden;
   height: 200px;
@@ -93,7 +121,7 @@
   width: 500px;
   height: 500px;
   transform: translate(-140%, -50%);
-  background-color: #ccdfcc;
+  background-color: #00000046;
   opacity: 0.8;
   border-radius: 50%;
   transition: 0.5s;
@@ -130,17 +158,19 @@
 .image:hover h3 {
   transform: translate(-50%, -50%);
   transition-timing-function: ease;
+  text-align: center;
+  font-size: 1.3rem;
+  line-height: 1.8rem;
+  font-weight: 400;
 }
 
 .modal-dialog {
+  border-radius: .3rem;
   margin-top: 80px;
   height: 600px;
   background-color: #fff;
   background-clip: border-box;
   margin-bottom: 28px;
-  box-shadow: 0px 0px 8px #a0cab5;
-  border-radius: 35px 0;
-  border: solid 3px #a0cab5;
   overflow: hidden;
   transition: 0.3s;
 }
@@ -150,8 +180,6 @@
 .modal-body img {
   width: 50%;
   height: 150px;
-  border: solid 1px #a0cab5;
-  border-radius: 10px;
   margin-bottom: 5px;
 }
 
@@ -166,10 +194,8 @@
 }
 .modal-header {
   /* margin-left:50px; */
-  background: #a0cab5;
 }
 .modal-header h5 {
-  margin-left: 50px;
   font-weight: bold;
 }
 
@@ -185,7 +211,7 @@
 
 .btn {
   height: 34px;
-  background-color: #a0cab5;
+  background-color: white;
   color: white;
 }
 
@@ -205,8 +231,18 @@
 }
 
 .fa-bookmark {
-  color: black;
+  color: #76B79C;
 }
 table{
-  font-family: "Gowun Batang", serif;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+.table-title {
+  font-weight: 500;
+  font-size: 1rem;
+}
+.table-con {
+  font-weight: 300;
+  color: #8F8F8F;
+  font-size: 0.85rem;
 }

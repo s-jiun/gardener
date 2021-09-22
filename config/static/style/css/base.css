@@ -3,6 +3,8 @@
   font-size: 62.5%;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500&display=swap');
+
 html,
 body {
   margin: 0;
@@ -40,12 +42,12 @@ main {
 }
 
 header {
-  font-family: "Gowun Batang", serif;
+  font-family: 'Noto Sans KR', sans-serif;
   width: auto;
 }
 
 #mainbody {
-  font-family: "Gowun Batang", serif;
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
 a {
@@ -58,13 +60,13 @@ a {
   width: 80%;
   padding-left: 0;
   padding-right: 0;
-  font-family: "Gowun Batang", serif;
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
 footer {
   padding: 2%;
-  font-family: "Gowun Batang", serif;
-  font-size: small;
+  font-family: 'Noto Sans KR', sans-serif;
+    font-size: small;
   background-color: #ccdfcc;
   height: auto;
   position: relative;
@@ -120,6 +122,10 @@ footer {
   width: 100%;
 }
 
+.page-link {
+  color: #354847;
+}
+
 .activate a {
   background-color: #a0cab5;
   color: white;
@@ -127,6 +133,10 @@ footer {
 
 .pagination {
   font-size: calc(0.5rem + 0.5vw);
+}
+
+.page-link-circle {
+  background: #f3f3f3;
 }
 
 .line {

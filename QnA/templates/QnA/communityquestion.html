@@ -72,7 +72,7 @@
 
             {% for page in page_range %}
             <li class="page-item {% if page == page_obj.number %} activate {% endif %}">
-                <a class="page-link" href="?type={{ type }}&q={{ q }}&page={{ page }}" style="border-radius:100%;font-size: 12px; margin-right:7px;">{{ page }}</a>
+                <a class="page-link  page-link-circle" href="?type={{ type }}&q={{ q }}&page={{ page }}" style="border-radius:100%; border:none; font-size: 12px; margin-right:7px;">{{ page }}</a>
             </li>
             {% endfor %}
 

@@ -10,13 +10,13 @@ from search.models import Plant
 CSV_PATH ='식물백과사전.csv'
 
 with open(CSV_PATH, newline='') as csvfile:
-    data_reader = csv.DictReader(csvfile)
+    data_reader = csv.DictReader(csvfile, encoding="cp949")
     static_url = '/static/plant_image/'
     for row in data_reader:
         print(row)
         Plant.objects.get_or_create(
             name = row["name"],
-            photo_url = static_url + row["name"].replace(' ','') + '.jpeg',
+            photo_url = static_url + row["name"].replace(' ','') + '.jpg',
             growth_form = row["growth_form"],
             care_difficulty = row["care_difficulty"],
             management_level = row["management_level"],
