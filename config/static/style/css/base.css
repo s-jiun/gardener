@@ -1,9 +1,18 @@
+<<<<<<< HEAD
 * {
   font-family: "Noto Sans KR" !important;
   font-size: 62.5%;
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500&display=swap");
+=======
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500&display=swap');
+*{
+  font-family: "Noto Sans KR"!important;
+  font-size: 62.5%;
+}
+
+>>>>>>> b46325eb500e5409a8b899614e66708ee6933959
 
 html,
 body {
