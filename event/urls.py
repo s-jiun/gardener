@@ -7,6 +7,8 @@ app_name = 'event'
 
 urlpatterns = [
     path('challenge/<int:pk>/', view=views.challenge_detail, name='challenge_detail'),
+    path('challenge/<int:pk>/delete_comment/', view=views.delete_comment, name='delete_comment'),
+    path('challenge/<int:pk>/delete_reply/', view=views.delete_reply, name='delete_reply'),
     # path('challenge/create/', view=views.challenge_create, name='challenge_create'),
     # path('challenge/<int:pk>/update/',
     #      view=views.challenge_update, name='challenge_update'),
