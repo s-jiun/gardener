@@ -50,11 +50,11 @@
         </div>
     </div>
 
-    <nav class="navbar navbar-expand-lg navbar-light" style="border-top: solid 1px #c7c7c7; border-bottom: solid 1px #c7c7c7; ">
+    <nav class="navbar navbar-expand-lg navbar-light" style="border-top: solid 1px #c7c7c7; border-bottom: solid 1px #c7c7c7; width: 80%; margin:auto">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>  
-        <div class="collapse navbar-collapse justify-content-center" id="navbarTogglerDemo01" style="width: 70%;">
+        <div class="collapse navbar-collapse justify-content-start" id="navbarTogglerDemo01" style="width: 70%;">
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" style="font-size:1.4rem" href="{% url 'community:post_list' %}">커뮤니티</a>
@@ -84,7 +84,11 @@
             </ul>
         </div>
         {% block button %}
-        {% endblock %}    
+        {% endblock %}
+        <!-- <div>
+            <button style="background-color: white; border: solid 1px #76B79C; border-radius: 15px;"><a href="{% url 'QnA:makequestion' %}" style="font-size: 1.4rem; color:#76B79C;">질문하기</a></button>
+            <button style="background-color: white; border: solid 1px #76B79C; border-radius: 15px;"><a href="{% url 'QnA:makequestion' %}" style="font-size: 1.4rem; color:#76B79C;">질문하기</a></button>    
+        </div> -->
     </nav>
 </header>
 
