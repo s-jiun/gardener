@@ -8,6 +8,27 @@ body {
   height: 100%;
 }
 
+@media screen and (max-width : 900px){
+  html {font-size:8px}  
+}
+
+@media screen and (max-width : 560px){
+  html {font-size:6px}  
+}
+
+@media screen and (max-width : 900px){
+  #image-container{
+    display: none;
+  }
+  #image-container img {
+    display: none;
+  }
+  #left-container{
+    margin-right: 0px!important;
+  } 
+}
+
+
 main {
   height: auto;
   min-height: 100%;
@@ -49,9 +70,12 @@ footer {
 }
 
 .navbar {
-  background-color: #ccdfcc;
   z-index: 0;
   position: sticky;
+}
+
+.nav-link.active {
+  color: #a0cab5!important;
 }
 
 .navbar-brand {
@@ -116,3 +140,4 @@ footer {
   height: 1px;
   margin-bottom: 1rem;
 }
+

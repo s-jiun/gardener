@@ -321,4 +321,5 @@ $RECYCLE.BIN/
 media/
 
 secrets.json
+social_login.js
 db.py

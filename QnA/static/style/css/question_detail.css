@@ -60,6 +60,18 @@
   font-size: 1.2rem;
 }
 
+.edit-button {
+  border-radius: 15px;
+  width: 4.5rem;
+  background-color: white;
+  border: solid 1px #8f8f8f;
+}
+
+.edit-button a {
+  color: #8f8f8f;
+  font-size: 1.2rem;
+}
+
 .tags {
   background-color: white;
   border-radius: 20px;

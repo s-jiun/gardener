@@ -13,35 +13,38 @@
 <div class='row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3'>
     {% for gardener in gardener_list %}
         <div class="col col-design">
-            <div id ="gardener-image-box" style= "margin-bottom:16px;">
-                <img src = {{gardener.Image.url}} id = "gardener-img">
-            </div>
-            <div class="text-center" style="margin-bottom:10px;">
-                {% if gardener.point < 100 %}
-                <span class= "gardener-ranking">입문 정원사</span>
-                <br/>
-                <span class="gardener-name">{{ gardener.name}}</span>
-                {% elif gardener.point < 300 %}
-                <span class= "gardener-ranking">초보 정원사 </span>
-                <br/>
-                <span class="gardener-name">{{ gardener.name}}</span>
-                {% elif gardener.point < 600 %}
-                <span class= "gardener-ranking">아마추어 정원사</span>
-                <br/>
-                <span class="gardener-name">{{ gardener.name}}</span>
-                {% elif gardener.point < 1000 %}
-                <span class= "gardener-ranking">프로 정원사</span>
-                <br/>
-                <span class="gardener-name">{{ gardener.name}}</span>
-                {% else %}
-                <span class= "gardener-ranking">국가대표 정원사</span>
-                <br/>
-                <span class="gardener-name">{{ gardener.name}}</span>
-                {% endif %}
-            </div>
-            <div class = "mb-1 gardener-profile" style="height:50px;">
-                <p style="word-wrap: break-word;" >{{gardener.profile | truncatechars:75}}</p>
-            </div>
+            <a href="{% url 'user:profile' gardener.pk%} ">
+                <div id ="gardener-image-box" style= "margin-bottom:16px;">
+                    <img src = {{gardener.Image.url}} id = "gardener-img">
+                </div>
+                <div class="text-center" style="margin-bottom:10px;">
+                    {% if gardener.point < 100 %}
+                    <span class= "gardener-ranking">입문 정원사</span>
+                    <br/>
+                    <span class="gardener-name">{{ gardener.name}}</span>
+                    {% elif gardener.point < 300 %}
+                    <span class= "gardener-ranking">초보 정원사 </span>
+                    <br/>
+                    <span class="gardener-name">{{ gardener.name}}</span>
+                    {% elif gardener.point < 600 %}
+                    <span class= "gardener-ranking">아마추어 정원사</span>
+                    <br/>
+                    <span class="gardener-name">{{ gardener.name}}</span>
+                    {% elif gardener.point < 1000 %}
+                    <span class= "gardener-ranking">프로 정원사</span>
+                    <br/>
+                    <span class="gardener-name">{{ gardener.name}}</span>
+                    {% else %}
+                    <span class= "gardener-ranking">국가대표 정원사</span>
+                    <br/>
+                    <span class="gardener-name">{{ gardener.name}}</span>
+                    {% endif %}
+                </div>
+                <div class = "mb-1 gardener-profile" style="height:50px;">
+                    <p style="word-wrap: break-word;" >{{gardener.profile | truncatechars:75}}</p>
+                </div>
+            </a>
+            
             <div id ='follow-buttons-{{gardener.id}}'class="text-center mb-3" >
                 {% if gardener.userid in following_list %}
                 <button class="following-button" onclick="onClickFollowing({{gardener.id}})">팔로우 끊기</button>
