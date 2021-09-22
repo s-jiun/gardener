@@ -19,6 +19,15 @@
                             <input type="text" class='form-control' name="title" maxlength="100" required="" id="id_title" style="font-size:1.4rem;">
                             {% endif %}
                         </div>
+                        <div style="float:right;">
+                            {% if form.title.value%}
+                            <button class="go-to-main" style="margin-right:10px;"><a href="{% url 'QnA:questiondetail' pk %}">취소하기</a></button>
+                            <input type="submit" value = '수정하기' class='make-something' style="font-size:1.4rem; color:#76b79c;"/>
+                            {% else %}
+                            <button class="go-to-main" style="margin-right:10px;"><a href="{% url 'QnA:communityquestion_list' %}">돌아가기</a></button>
+                            <input type="submit" value = '저장하기' class='make-something' style="font-size:1.4rem; color:#76b79c;"/>
+                            {% endif %}
+                        </div>
                         <div class='form-group' style="margin-bottom:3rem;">
                             <label for="content" class="form-label" style="font-size:1.6rem; font-weight:bold;">내용</label>
                             <div style='width: 100%;'>

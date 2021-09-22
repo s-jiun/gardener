@@ -157,3 +157,25 @@ footer {
   height: 1px;
   margin-bottom: 1rem;
 }
+
+.make-something {
+  background-color: white;
+  border: solid 1px #76b79c;
+  border-radius: 15px;
+}
+
+.make-something a {
+  font-size: 1.4rem;
+  color: #76b79c;
+}
+
+.go-to-main {
+  background-color: white;
+  border: solid 1px #8f8f8f;
+  border-radius: 15px;
+}
+
+.go-to-main a {
+  font-size: 1.4rem;
+  color: #8f8f8f;
+}

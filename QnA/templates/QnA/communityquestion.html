@@ -11,6 +11,11 @@
     <button style="display: none;" type="submit"></button>
 </form>
 {% endblock %}
+
+{% block button %}
+<button class="make-something"><a href="{% url 'QnA:makequestion' %}">질문하기</a></button>
+{% endblock %}
+
 {% block content %}
 <div class = 'container-fluid mt-4 text-center' style='width:80%;'>
 
