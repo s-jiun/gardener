@@ -323,8 +323,6 @@ media/
 secrets.json
 social_login.js
 db.py
-<<<<<<< HEAD
-=======
 
 
 
@@ -589,4 +587,3 @@ Temporary Items
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,visualstudiocode,django,python
->>>>>>> b46325eb500e5409a8b899614e66708ee6933959
