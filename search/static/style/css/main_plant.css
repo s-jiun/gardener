@@ -212,8 +212,18 @@
 }
 
 .fa-bookmark {
-  color: black;
+  color: #76B79C;
 }
 table{
   font-family: 'Noto Sans KR', sans-serif;
+}
+
+.table-title {
+  font-weight: 500;
+  font-size: 1rem;
+}
+.table-con {
+  font-weight: 300;
+  color: #8F8F8F;
+  font-size: 0.85rem;
 }
