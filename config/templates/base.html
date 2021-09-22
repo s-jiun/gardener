@@ -12,7 +12,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <link href="{% static 'style/css/base.css' %}" rel="stylesheet">
     <script  src="https://code.jquery.com/jquery-latest.min.js"></script>
 
@@ -22,71 +21,67 @@
 </head>
 
 <header>
-    <div class="d-flex justify-content-end" style="font-size: 0.825rem;">
+    <div class="d-flex justify-content-end" style="font-size: 1rem;">
         {% if request.user.is_authenticated %}
-        <div style="padding-right: 20rem; margin-top: 1rem;">
+        <div style="padding-right: 32rem; margin-top: 1.6rem;">
             <a href="{% url 'user:logout' %}">로그아웃</a>
             <a href="{% url 'user:my_profile' %}">{{ request.user.userid }}</a>
-            <img class="lazyload" data-src="{{ request.user.Image.url }}">
+            <img class="lazyload" data-src="{{ request.user.Image.url }}" style="width: 1.5rem; height: 1.5rem; border-radius: 50%;">
         </div>
         {% else %}
-        <div style="padding-right: 20rem; margin-top: 1rem;">
+        <div style="padding-right: 32rem; margin-top: 1.6rem;">
             <a href="{% url 'user:signup' %}" style="padding-right:5px">회원가입</a>
             <a href="{% url 'user:login'%}">로그인</a>
         </div>
         {% endif %}
     </div>
-    <div class="row justify-content-between" style="margin: auto; width: 80%; margin-bottom: 1.25rem;">
+    <div class="row justify-content-between" style="margin: auto; width: 80%; margin-bottom: 2rem;">
         <div class="col-3" style="display: inline-block;">
             <a href="{% url 'community:post_list'%}">
-                <img src="{% static 'images/logo.png' %}" alt="">
+                <img style="width: 15rem; height: 6.8rem;" src="{% static 'images/logo.png' %}" alt="">
             </a>
         </div>
         <div class="col-4 d-flex justify-content-center align-items-center" style="display: inline-block;">
-            <form action='' method="GET">
-                <select name="type" style="border: none;">
-                    <option value="tag">태그</option>
-                    <option value="title">제목</option>
-                    <option value="content">내용</option>
-                </select>
-                <input style="border-color: #76B79C; border-radius: 20px; width: 19.625rem; height: 2.5rem;" type="text" name='q' value="{{q}}" placeholder="검색어를 입력하세요"/>
-                <button style="display: none;" type="submit"></button>
-            </form>
+            {% block search %}
+            {% endblock %}
         </div>
     </div>
 
     <nav class="navbar navbar-expand-lg navbar-light" style="border-top: solid 1px #c7c7c7; border-bottom: solid 1px #c7c7c7;">
-          <div class="collapse navbar-collapse justify-content-center" style="width: 70%;">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>  
+        <div class="collapse navbar-collapse justify-content-center" id="navbarTogglerDemo01" style="width: 70%;">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'community:post_list' %}">커뮤니티</a>
+                    <a class="nav-link" style="font-size:1.4rem" href="{% url 'community:post_list' %}">커뮤니티</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'search:plant_list' %}">식물검색</a>
+                    <a class="nav-link" style="font-size:1.4rem" href="{% url 'search:plant_list' %}">식물검색</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'QnA:communityquestion_list' %}">질문게시판</a>
+                    <a class="nav-link" style="font-size:1.4rem" href="{% url 'QnA:communityquestion_list' %}">질문게시판</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'community:notice' %}">공지사항</a>
+                    <a class="nav-link" style="font-size:1.4rem" href="{% url 'community:notice' %}">공지사항</a>
                 </li>
                 <li class="nav-item">
                     {% if request.user.is_authenticated %}
-                        <a class="nav-link" href="{% url 'user:search_gardener'%}">친구찾기</a>
+                        <a class="nav-link" style="font-size:1.4rem" href="{% url 'user:search_gardener'%}">친구찾기</a>
                     {% else %}
-                        <a class="nav-link" onclick="alert('로그인이 필요합니다!')" href="{% url 'user:login'%}">친구찾기</a>
+                        <a class="nav-link" style="font-size:1.4rem" onclick="alert('로그인이 필요합니다!')" href="{% url 'user:login'%}">친구찾기</a>
                     {% endif %}
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'event:issue' %}">카드뉴스</a>
+                    <a class="nav-link" style="font-size:1.4rem" href="{% url 'event:issue' %}">카드뉴스</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'event:challenge' %}">챌린지</a>
+                    <a class="nav-link" style="font-size:1.4rem" href="{% url 'event:challenge' %}">챌린지</a>
                 </li>
             </ul>
-          </div>
+        </div>
         {% block button %}
-        {% endblock %}      
+        {% endblock %}    
     </nav>
 </header>
 

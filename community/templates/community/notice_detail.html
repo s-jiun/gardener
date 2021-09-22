@@ -5,6 +5,11 @@
     <link rel="stylesheet" href="{% static 'style/css/notice_detail.css' %}" />
 {% endblock %}
 
+{% block button %}
+<button class="go-to-main"><a href="{% url 'community:notice' %}">목록으로</a></button>
+{% endblock %}  
+
+
 {% block content %}
 <div class='container-fluid mt-4 mb-3' id="container" style='width:70%;'>
     <div class="row border-bottom">

@@ -1,8 +1,32 @@
 {% extends "login_base.html" %}
 {% load static %}
+{% block head %}
+<style>
+    *{
+        font-size: 100%;
+    }
+    @media screen and (max-width : 900px){
+        html {font-size:0.8rem}  
+    }
 
+    @media screen and (max-width : 560px){
+        html {font-size:0.6rem}  
+    }
+    @media screen and (max-width : 900px){
+    #image-container{
+      display: none;
+    }
+    #image-container img {
+      display: none;
+    }
+    #left-container{
+      margin-right: 0px!important;
+    } 
+}
+</style>
+{%endblock%}
 {% block content %}
-<div class="col-6 d-flex flex-column justify-content-center" style="margin-right: 6.3125rem; width: 21.5rem;">
+<div id="left-container" class="col-6 d-flex flex-column justify-content-center" style="margin-right: 6.3125rem; width: 21.5rem;">
     <div style="margin-bottom: 3.125rem;">
         <img src="{% static 'images/logo.png' %}" alt="">
     </div>
