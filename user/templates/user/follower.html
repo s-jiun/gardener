@@ -4,165 +4,194 @@
 {%block head%}
 <link href="{% static 'style/css/follow.css' %}" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet"> <!--CDN 링크 -->
+<link href="{% static 'style/css/profile.css' %}" rel="stylesheet">
 {%endblock%}
 
 {% block content %}
-        <div class= "main-follow">
-            <div class='row'>
-                <div id='follow-header' class='d-flex flex-column justify-content-center'>
-                    <div id='follow-header-p'>
-                            <span><h2>
-                                <img src="{% static 'images/friend2.png' %}" alt="" style="height: 40px; width: 40px;">
-
-                                {{user.userid}}님과 함께하는 가드너들 입니다!
-
-                                <img src="{% static 'images/friend2.png' %}" alt="" style="height: 40px; width: 40px;">
-                            </h2></span>
-                            <button id = 'follow-header-button' type="submit"><a href="{% url 'user:profile' user.pk %}">내 프로필로 돌아가기</a></button>
+<div class="container pe-0 ps-0">
+    <div class="row justify-content-center">
+        <div class="col col-10 mt-3 mb-5">
+            <div class="container profile">
+                <div class="container profile_in">
+                    <div class="row justify-content-center row-cols-1 row-cols-md-2">
+                        <div class="col text-center" style="margin-right:-5%; padding:0;">
+                            <img class="lazyload" id="user-img" data-src={{user.Image.url}} />
                         </div>
-                    
-                </div>
-            </div>
-        </div><!--header 닫힘-->
-
-        <div class="container main-body" id="follow-body">
-            <div class="row row-cols-1 row-cols-lg-2">
-                <div class="col p-2">
-                    <div class="container p-0 follow-box" >
-                        <div class="text-center" id="follow-box-title">
-                            <span id="follower-title">팔로워</span>
+                        <div class="col">
+                            <div id="user-info">
+                                {% if user.point < 100 %} <span id="user-level"><a tabindex="0" type="button"
+                                        data-bs-toggle="popover" data-bs-trigger="focus"
+                                        title="입문 정원사 ({{user.point}}점)" data-bs-content="0~99점(게시물 0개 ~ 3개)">입문
+                                        정원사<br></span>
+                                        {% elif user.point < 300 %} <span id="user-level"><a tabindex="0" type="button"
+                                                data-bs-toggle="popover" data-bs-trigger="focus"
+                                                title="초보 정원사 ({{user.point}}점)"
+                                                data-bs-content="100~299점(게시물 4개 ~ 9개)">초보 정원사</span>
+                                                {% elif user.point < 600 %} <span id="user-level"><a tabindex="0"
+                                                        type="button" data-bs-toggle="popover" data-bs-trigger="focus"
+                                                        title="아마추어 정원사 ({{user.point}}점)"
+                                                        data-bs-content="300~599점(게시물 10개 ~ 19개)">아마추어 정원사</span>
+                                                        {% elif user.point < 1000 %} <span id="user-level"><a
+                                                                tabindex="0" type="button" data-bs-toggle="popover"
+                                                                data-bs-trigger="focus" title="프로 정원사 ({{user.point}}점)"
+                                                                data-bs-content="600~999점(게시물 20개 ~ 33개)">프로 정원사</a>
+                                                            입니다.<br></span>
+                                                            {% else %}
+                                                            <span id="user-level"><a tabindex="0" type="button"
+                                                                    data-bs-toggle="popover" data-bs-trigger="focus"
+                                                                    title="국가대표 정원사 ({{user.point}}점)"
+                                                                    data-bs-content="1000점 이상(게시물 34개 이상)">국가대표
+                                                                    정원사</a>입니다.<br></span>
+                                                            {% endif %}
+                                                            <div class="user-id-config">
+                                                                <span id="user-id"> {{user.userid}}</span>
+                                                                <a href="{% url 'user:profile_update' %}">
+                                                                    <img class=""
+                                                                        src="{% static 'images/ios-settings 1.svg'%}" />
+                                                                </a>
+                                                            </div>
+                                                            <div id="profile-content">
+                                                                <span style='overflow:auto;'>
+                                                                    {%if user.profile%}
+                                                                    {{user.profile|linebreaksbr}}
+                                                                    {% else %}
+                                                                    프로필 정보가 없습니다.
+                                                                    {%endif%}
+                                                                    <br>
+                                                                </span>
+                                                            </div><br>
+                                                            
+                            </div>
                         </div>
-                        <div>
-                        {% if followers %}
-                            {% for follower in followers %}
-                                <div class="row row-cols-2 row-cols-lg-2 p-3" id="follow-user-box1" >
-                                <div class="col p-0 mt-2" id="follow-user-img">
-                                    <img class="lazyload" data-src={{follower.following_user.Image.url}} >
-                                </div>
-                                <div class="col" style="width:80%">
-                                    <h5 id="follow-name">
-                                        <img src="{% static 'images/ID.png' %}" alt="" style="width:20px; height:20px; margin-bottom: 5px;">
-                                        ID : {{follower.following_user.userid}}</h5>
-                                    {% if request.user == user %}
-                                        {% if request.user != follower.following_user%}
-                                            {% if follower.following_user_id in cur_users_followings_list %}
-                                                <div class="follow-wraper-{{follower.following_user_id}}" style="display:inline; ">
-                                                    <div class='following-{{follower.following_user_id}}' style="display:inline;">
-                                                        <button onclick="onClickFollowing({{follower.following_user_id}})" style="background: white; border: 1px solid #ACA790; padding:5px; border-radius:10px; font-size:16px;">팔로잉</button>
-                                                    </div>
-                                                </div>
-                                            {% else %}
-                                                <div class="follow-wraper-{{follower.following_user_id}}" style="display:inline; ">
-                                                    <div class="follow-{{follower.following_user_id}}" style="display:inline;">
-                                                        <button onclick="onClickFollow({{follower.following_user_id}})" style="background: white; border: 1px solid #ACA790; padding:5px; border-radius:10px; font-size:16px;">팔로우</button>
-                                                    </div>
-                                                </div>
-                                            {% endif %}
-                                        {%endif%}
-                                    {% else %}
-                                        {% if request.user != follower.following_user%}
-                                            {% if follower.following_user_id in cur_users_followings_list %}
-                                                <div class="follow-wraper-{{follower.following_user_id}}" style="display:inline; ">
-                                                    <div class='following-{{follower.following_user_id}}' style="display:inline;">
-                                                        <button onclick="onClickOtherFollowing({{follower.following_user_id}})" style="background: white; border: 1px solid #ACA790; padding:5px; border-radius:10px; font-size:16px;">팔로잉</button>
-                                                    </div>
-                                                </div>
-                                            {% else %}
-                                                <div class="follow-wraper-{{follower.following_user_id}}" style="display:inline; ">
-                                                    <div class="follow-{{follower.following_user_id}}" style="display:inline;">
-                                                        <button onclick="onClickOtherFollow({{follower.following_user_id}})" style="background: white; border: 1px solid #ACA790; padding:5px; border-radius:10px; font-size:16px;">팔로우</button>
-                                                    </div>
-                                                </div>
-                                            {% endif %}
-                                        {%endif%}
-                                    {% endif %}
-                                    <hr class="m-1">
-                                    <span> &nbsp Name : {{follower.following_user.name}}</span><br>
-                                    <span> &nbsp Point : {{follower.following_user.point}}</span>
-                                    
-                                </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-6 p-0">
+                            <div class="text-center" style="height:6rem; font-size:1.6rem; border-bottom: solid 1px #8F8F8F; border-top: solid 1px #8F8F8F; border-right:solid 1px #8f8f8f; line-height: 6rem;">
+                                팔로워
                             </div>
-                            {% endfor %}
-                        {% else %} <!--팔로워가 없는 경우-->
-                            <div class="text-center" style="margin-top: 50px; height: 300px;">
-                                <h4> 아직 함께하는 가드너가 없네요
-                                    <img src="{% static 'images/sad.svg' %}" alt="" style="width: 30px; height: 30px;">
-                                </h4>
+                            <div>
+                                {% if followers %}
+                                    {% for follower in followers %}
+                                        <div class="row row-cols-2 row-cols-lg-2 p-3 justify-content-between me-0" style="border-right:solid 1px #8f8f8f;">
+                                            <div class="col">
+                                                <img style="border-radius: 50%; width: 5rem; height: 5rem;" src="{{follower.following_user.Image.url}}" alt="">
+                                                <p style="font-size: 1.8rem; display: inline-block;">{{follower.following_user.name}}</p>
+                                            </div>
+                                            {% if request.user == user %}
+                                                {% if request.user != follower.following_user%}
+                                                    {% if follower.following_user_id in cur_users_followings_list %}
+                                                        <div class="col follow-wraper-{{follower.following_user_id}} d-flex justify-content-end align-items-center" style="display:inline; width: 10rem; ">
+                                                            <div class='following-{{follower.following_user_id}}' style="display:inline;">
+                                                                <button onclick="onClickFollowing({{following.user_id}})">삭제</button>
+                                                            </div>
+                                                        </div>
+                                                    {% else %}
+                                                        <div class="col follow-wraper-{{follower.following_user_id}} d-flex justify-content-end align-items-center" style="display:inline; width: 10rem; ">
+                                                            <div class="follow-{{follower.following_user_id}}" style="display:inline;">
+                                                                <button onclick="onClickFollow({{follower.following_user_id}})">팔로우</button>
+                                                                <button>삭제</button>
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
+                                                {%endif%}
+                                                {% else %}
+                                                    {% if request.user != follower.following_user%}
+                                                        {% if follower.following_user_id in cur_users_followings_list %}
+                                                            <div class="col follow-wraper-{{follower.following_user_id}} d-flex justify-content-end align-items-center" style="display:inline; width: 10rem; ">
+                                                                <div class='following-{{follower.following_user_id}}' style="display:inline;">
+                                                                    <button>팔로우 취소</button>
+                                                                </div>
+                                                            </div>
+                                                        {% else %}
+                                                            <div class="col follow-wraper-{{follower.following_user_id}} d-flex justify-content-end align-items-center" style="display:inline; width: 10rem; ">
+                                                                <div class="follow-{{follower.following_user_id}}" style="display:inline;">
+                                                                    <button onclick="onClickOtherFollow({{follower.following_user_id}})">팔로우</button>
+                                                                </div>
+                                                            </div>
+                                                        {% endif %}
+                                                    {%endif%}
+                                                {% endif %}
+                                        </div>
+                                    {% endfor %}
+                                
+                                {% else %}
+                                    <div>
+                                        <h4>No</h4>
+                                    </div>
+                                {% endif %}
                             </div>
-                        {% endif%}
+                            <!-- 팔로우리스트 끝 -->
+                        </div>
+                        <div class="col-6 p-0">
+                            <div class="text-center" style="height:6rem; font-size:1.6rem; border-top:solid 1px #8F8F8F; border-bottom: solid 1px #8f8f8f; line-height: 6rem;">
+                                팔로잉
+                            </div>
+                            <div>
+                                {% if followings %}
+                                    {% for following in followings %}
+                                    <div class="row row-cols-2 row-cols-lg-2 p-3 justify-content-between me-0">
+                                        <div class="col">
+                                            <img style="border-radius: 50%; width: 5rem; height: 5rem;" src="{{following.user.Image.url}}" alt="">
+                                            <p style="font-size: 1.8rem; display: inline-block;">{{following.user.name}}</p>
+                                        </div>
+                                        {% if request.user == user %}
+                                            {% if request.user != following.user%}
+                                                {% if following.user_id in cur_users_followings_list %}
+                                                    <div class="col follow-wraper-{{following.user_id}} d-flex justify-content-end align-items-center" style="display:inline; width: 10rem; ">
+                                                        <div class='following-{{following.user_id}}' style="display:inline;">
+                                                            <button onclick="onClickFollowing({{following.user_id}})" >삭제</button>
+                                                        </div>
+                                                    </div>
+                                                {% else %}
+                                                    <div class="col follow-wraper-{{following.user_id}} d-flex justify-content-end align-items-center" style="display:inline; width: 10rem; ">
+                                                        <div class="follow-{{following.user_id}}" style="display:inline;">
+                                                            <button  onclick="onClickFollow({{following.user_id}})">팔로우</button>
+                                                        </div>
+                                                    </div>
+                                                {% endif %}
+                                            {%endif%}
+                                        {% else %}
+                                            {% if request.user != following.user%}
+                                                {% if following.user_id in cur_users_followings_list %}
+                                                    <div class="col follow-wraper-{{following.user_id}} d-flex justify-content-end align-items-center" style="display:inline; width: 10rem; ">
+                                                        <div class='following-{{following.user_id}}' style="display:inline;">
+                                                            <button>팔로우 취소</button>
+                                                        </div>
+                                                    </div>
+                                                {% else %}
+                                                    <div class="col follow-wraper-{{following.user_id}} d-flex justify-content-end align-items-center" style="display:inline; width: 10rem; ">
+                                                        <div class="follow-{{following.user_id}}" style="display:inline;">
+                                                            <button  onclick="onClickOtherFollow({{following.user_id}})">팔로우</button>
+                                                        </div>
+                                                    </div>
+                                                {% endif %}
+                                            {%endif%}                                                
+                                        {% endif %}
+                                    </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <div>
+                                        <p>No</p>
+                                    </div>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col p-2">
-                    <div class="container p-0 follow-box following-box" >
-                        <div class="text-center" id="follow-box-title">
-                            <span id="follower-title">팔로잉</span>
-                        </div>
-                        <div class="list-container">
-                        {% if followings %}
-                            {% for following in followings %}
-                                    <div class="row row-cols-2 row-cols-lg-2 p-3 follow-object-{{following.user_id}}" id="follow-user-box1" >
-                                    <div class="col p-0 mt-2" id="follow-user-img">
-                                        <img class="lazyload" data-src={{following.user.Image.url}} >
-                                </div>
-                                <div class="col" style="width:80%">
-                                    <h5 id="follow-name">
-                                        <img src="{% static 'images/ID.png' %}" alt="" style="width:20px; height:20px; margin-bottom: 5px;">
-                                        ID : {{following.user.userid}}</h5>
-                                    {% if request.user == user %}
-                                        {% if request.user != following.user%}
-                                            {% if following.user_id in cur_users_followings_list %}
-                                                <div class="follow-wraper-{{following.user_id}}" style="display:inline; ">
-                                                    <div class='following-{{following.user_id}}' style="display:inline;">
-                                                        <button onclick="onClickFollowing({{following.user_id}})"  style="background: white; border: 1px solid #ACA790; padding:5px; border-radius:10px; font-size:16px;">팔로잉</button>
-                                                    </div>
-                                                </div>
-                                            {% else %}
-                                                <div class="follow-wraper-{{following.user_id}}" style="display:inline; ">
-                                                    <div class="follow-{{following.user_id}}" style="display:inline;">
-                                                        <button  onclick="onClickFollow({{following.user_id}})" style="background: white; border: 1px solid #ACA790; padding:5px; border-radius:10px; font-size:16px;">팔로우</button>
-                                                    </div>
-                                                </div>
-                                            {% endif %}
-                                        {%endif%}
-                                    {% else %}
-                                        {% if request.user != following.user%}
-                                            {% if following.user_id in cur_users_followings_list %}
-                                                <div class="follow-wraper-{{following.user_id}}" style="display:inline; ">
-                                                    <div class='following-{{following.user_id}}' style="display:inline;">
-                                                        <button onclick="onClickOtherFollowing({{following.user_id}})"  style="background: white; border: 1px solid #ACA790; padding:5px; border-radius:10px; font-size:16px;">팔로잉</button>
-                                                    </div>
-                                                </div>
-                                            {% else %}
-                                                <div class="follow-wraper-{{following.user_id}}" style="display:inline; ">
-                                                    <div class="follow-{{following.user_id}}" style="display:inline;">
-                                                        <button  onclick="onClickOtherFollow({{following.user_id}})" style="background: white; border: 1px solid #ACA790; padding:5px; border-radius:10px; font-size:16px;">팔로우</button>
-                                                    </div>
-                                                </div>
-                                            {% endif %}
-                                        {%endif%}                                                
-                                    {% endif %}
-                                    <hr class="m-1">
-                                    <span> &nbsp Name : {{following.user.name}}</span><br>
-                                    <span> &nbsp Point : {{following.user.point}}</span>
-                                    
-                                </div>
-                            </div>
-                            {% endfor %}
-                        {% else %} <!--팔로워가 없는 경우-->
-                            <div class="text-center" style="margin-top: 50px; height: 300px;">
-                                <h4> 아직 함께하는 가드너가 없네요
-                                    <img src="{% static 'images/sad.svg' %}" alt="" style="width: 30px; height: 30px;">
-                                </h4>
-                            </div>
-                        {% endif%}
-                    </div>
-                </div>
             </div>
+
         </div>
     </div>
-</div>
 
+</div>
+<script>
+    $(function () {
+        $('[data-bs-toggle="popover"]').popover()
+    })
+    var popover = new bootstrap.Popover(document.querySelector('.popover-dismiss'), {
+        trigger: 'focus'
+    })
+</script>
 {% endblock %}
 
 {% block js %}
