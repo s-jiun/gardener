@@ -6,14 +6,25 @@
 {% endblock %}
 
 {% block search %}
-<form action='' method="GET">
-    <input style="padding-left:1rem; border-color: #76B79C; border-radius: 20px; width: 31.4rem; height: 4rem;" type="text" name='q' value="{{q}}" placeholder="질문의 태그를 입력하세요"/>
-    <button style="display: none;" type="submit"></button>
+<form action='' method="GET" style="width:100%;">
+    <div class="d-flex align-items-center justify-content-center">
+        <div class="d-flex  justify-content-between" id="search" style="width:80%;">
+            <input class='search-input' type="text" name='q' value="{{q}}" placeholder="질문의 태그를 검색해 보세요."/>
+            <button class='searchbtn' type="submit"><img class='me-1' src='{% static 'images/search.svg' %}' alt='하트'></button>
+        </div>
+    </div>
+
 </form>
 {% endblock %}
 
 {% block button %}
-<button class="make-something"><a href="{% url 'QnA:makequestion' %}">질문하기</a></button>
+<button class="make-something">
+    {% if request.user.is_authenticated %}
+    <a href="{% url 'QnA:makequestion' %}">질문하기</a>
+    {% else %}
+    <a onclick="alert('로그인이 필요한 서비스입니다.')" href="{% url 'user:login' %}">질문하기</a>
+    {% endif %}
+</button>
 {% endblock %}
 
 {% block content %}

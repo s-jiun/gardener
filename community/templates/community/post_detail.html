@@ -31,6 +31,7 @@
                 <span id="post-head"><img class="lazyload" id='post-detail-thumbnail' data-src="{{ post.user_id.Image.url }}"> {{ post.user_id }}</span>
                 <span>&#183</span>
                 <span id="post-date">{{post.created_at | date:"Y.m.d h:m"}}</span>
+                <span class="ms-2 me-1" id="post-detail-views">조회수 {{views}}</span>
             </div>
             <div class="col d-flex justify-content-end">
                 {% if post.user_id != request.user %}

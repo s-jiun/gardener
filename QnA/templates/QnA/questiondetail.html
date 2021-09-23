@@ -6,8 +6,10 @@
 {% endblock %}
 
 {% block button %}
-<button class="make-something"><a href="{% url 'QnA:makeanswer' question.pk %}">답글달기</a></button>
-<button class="go-to-main"><a href="{% url 'QnA:communityquestion_list' %}">목록으로</a></button>
+<div>
+    <button class="make-something"><a href="{% url 'QnA:makeanswer' question.pk %}">답글달기</a></button>
+    <button class="go-to-main"><a href="{% url 'QnA:communityquestion_list' %}">목록으로</a></button>
+</div>
 {% endblock %}
 
 {% block content %}
@@ -48,25 +50,12 @@
         <div>
             <img class="me-1" src="{% static 'images/comment_line.svg' %}" alt="코멘트">{{answer|length}}
             <span class="ms-2 me-1" id="post-detail-views">조회수 {{views}}</span>
-            <div style="display: inline">
-                {% if user.is_authenticated %}
-                    <button class="create-answer" type="button">
-                        <a href = "{% url 'QnA:makeanswer' question.pk %}">답글달기</a>
-                    </button>
-                {% else %}
-                    <p>댓글 작성을 위해서는 로그인이 필요합니다</p>
-                {% endif %}
-            </div>
         </div>
     </div>
     <div class="row mt-4 mb-4" id="question-detail-comment">
         {% for ans in answer %}
         <div class="answer answer-{{ans.id}}" style="margin-bottom:2rem;">
             <div class="ans-content" style="margin-bottom: 3rem;">
-                <div class='mb-4'>
-                    <span style="font-size: 1.7rem; font-weight:bold;">{{ans.title}}</span>
-                </div>
-                <span id="ans-head"><img class="lazyload" id='question-detail-thumbnail' data-src="{{ ans.user_id.Image.url }}"> {{ ans.user_id }}</span>
                 {% if request.user == ans.user_id %}
                 <div style="float:right;">
                     <button class="edit-button me-3" >
@@ -77,6 +66,10 @@
                     </button>
                 </div>
                 {% endif %}
+                <div class='mb-4'>
+                    <span style="font-size: 1.7rem; font-weight:bold;">{{ans.title}}</span>
+                </div>
+                <span id="ans-head"><img class="lazyload" id='question-detail-thumbnail' data-src="{{ ans.user_id.Image.url }}"> {{ ans.user_id }}</span>
                 <div class="mt-2" id="ans-body">
                     {{ ans.content|safe }}
                     <div style="margin-bottom:3rem;"> 
