@@ -27,9 +27,20 @@
   color: #8F8F8F;
   font-size: 1.2rem;
 }
-.level-btn:after {
+.level-btn:hover {
   border: 1px solid #76B79C;
   color: #76B79C;
+}
+.level-btn a:hover {
+  color: #76B79C;
+}
+.level-btn-active{
+  border: 1px solid #76B79C;
+  background-color: #76B79C;
+  color: white;
+}
+.level-btn-active {
+  color: white;
 }
 
 #plant-header {
