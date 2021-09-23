@@ -51,7 +51,7 @@
                 {% endif %}
             </div>
             <div style="display: inline; margin-left: 1rem;">
-                <img class="me-1" src="{% static 'images/comment_line.svg' %}" alt="코멘트">{{comments_num}}
+                <img class="me-1" src="{% static 'images/comment_line.svg' %}" alt="코멘트">{{post.reply_set.count}}
             </div>
             <div style="display: inline; margin-left: 1rem;">
                 {% if user.is_authenticated %}
@@ -97,7 +97,6 @@
                         {% csrf_token %}
                         {{comment_form.media}}
                         {{ comment_form.as_p }}
-
                         <input type="hidden" name="parent_id" value="{{ comment.id }}">
                         <div class="d-flex justify-content-end">
                             <input class="create-reply" type="submit" value="Submit">
