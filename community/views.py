@@ -280,8 +280,9 @@ def delete_comment(request, pk):
     comment = Reply.objects.get(post_id=post_id, id=comment_id)
     Reply.objects.filter(post_id=post_id, parent_reply=comment).delete()
     comment.delete()
-
-    return JsonResponse({'post_id': post_id, 'comment_id': comment_id})
+    comment_count = Reply.objects.filter(post_id=post_id).count()
+    print(comment_count)
+    return JsonResponse({'post_id': post_id, 'comment_id': comment_id, 'comment_count':comment_count})
 
 
 @login_required

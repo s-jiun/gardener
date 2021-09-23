@@ -33,9 +33,9 @@
                 <span id="post-date">{{post.created_at | date:"Y.m.d h:m"}}</span>
                 <span class="ms-2 me-1" id="post-detail-views">조회수 {{views}}</span>
             </div>
-            <div class="col d-flex justify-content-end">
+            <div id="follow-wrapper" class="col d-flex justify-content-end">
                 {% if post.user_id != request.user %}
-                    <button type="button" class="btn btn-outline-success" onclick="onClickFollow({{post.user_id}})" id="post-follow-button">팔로우</button> 
+                    <button type="button" class="btn btn-outline-success" onclick="onClickFollow({{post.user_id_id}})" id="post-follow-button">팔로우</button> 
                 {% endif %}
             </div>
         </div>
@@ -69,7 +69,10 @@
                 {% endif %}
             </div>
             <div style="display: inline; margin-left: 1rem;">
-                <img class="me-1" src="{% static 'images/comment_line.svg' %}" alt="코멘트">{{post.reply_set.count}}
+                <img class="me-1" src="{% static 'images/comment_line.svg' %}" alt="코멘트">
+                <div id="comment-count" style="display: inline-block;">
+                    {{post.reply_set.count}}
+                </div>
             </div>
             <div style="display: inline; margin-left: 1rem;">
                 {% if user.is_authenticated %}
@@ -102,7 +105,7 @@
                     <div class="mt-1" > 
                         <span>{{ comment.created_at }}</span>
                         {% if user == post.user_id or user == comment.user_id %}
-                            <span class="trash" onclick="onClickDeleteComment({{post.id}}, {{comment.id}})"></span>
+                            <span class="trash" onclick="onClickDeleteComment({{post.id}}, {{comment.id}})"><img class="me-1" id="trashImg" src="{% static 'images/trash.svg' %}" alt="삭제"></span>
                         {% endif %}
                         <button class="create-reply" type="button" data-bs-toggle="collapse" data-bs-target="#collapseReply-{{comment.id}}" aria-expanded="false" aria-controls="collapseReply-{{comment.id}}">
                             답글
@@ -269,7 +272,7 @@
 {% endblock %}
 
 {% block js %}
-    {% comment %} <script src="{% static 'javascripts/post_comment.js' %}"></script> {% endcomment %}
+    <script src="{% static 'javascripts/post_comment.js' %}"></script>
     <script src="{% static 'javascripts/likes.js' %}"></script>
-    {% comment %} <script src="{% static 'javascripts/post_follow.js' %}"></script> {% endcomment %}
+    <script src="{% static 'javascripts/post_follow.js' %}"></script>
 {% endblock %}
