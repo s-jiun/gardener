@@ -186,16 +186,16 @@
   border-radius: .3rem;
   margin-top: 80px;
   height: 600px;
-  background-color: #fff;
+  /* background-color: #fff; */
   background-clip: border-box;
   margin-bottom: 28px;
   overflow: hidden;
   transition: 0.3s;
 }
-.modal-content button {
+/* .modal-content button {
   font-size: 100%;
   font-family: none;
-}
+} */
 .modal {
   height: auto;
 }
@@ -217,7 +217,7 @@
   margin-left: 3px;
 }
 .modal-header {
-  /* margin-left:50px; */
+  font-size: 15px;
 }
 .modal-header h5 {
   font-weight: bold;
