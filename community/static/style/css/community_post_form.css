@@ -1,3 +1,8 @@
+#makepost-main {
+  margin: 0 auto;
+  align-items: center;
+}
+
 #blah {
   width: 30%;
   height: auto;
@@ -22,10 +27,4 @@
 
 #new-post-comment {
   writing-mode: vertical-rl;
-}
-
-@media screen and (max-width: 800px) {
-  .text-container {
-    display: none;
-  }
 }

@@ -12,8 +12,8 @@
         <div class="row row-cols-1 row-cols-md-2 d-flex justify-content-between" id="challenge-header">
             <div class="col">
                 <span id="challenge-head"><img class="lazyload" id='challenge-detail-thumbnail' data-src="{% static 'images/baseimg.jpg' %}">관리자</span>
-                <span>&#183</span>
                 <span id="challenge-date">{{challenge.created_at | date:"Y.m.d h:m"}}</span>
+                <span class="ms-2 me-1" id="challenge-detail-views">조회수 {{views}}</span>
             </div>
         </div>
     </div>
