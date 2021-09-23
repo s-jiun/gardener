@@ -23,6 +23,10 @@ const deleteCommentHandleResponse = () => {
         element1.innerHTML = '';
         const element_comment_count = document.querySelector(`.comment-count`);
         element_comment_count.innerHTML = comment_count
+        if (comment_count == 0) {
+            const element3 = document.querySelector(`#challenge-detail-comment`)
+            element3.innerHTML = `<p>아직 작성된 댓글이 없습니다</p>`
+        }
     }
 };
 

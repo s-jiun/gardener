@@ -17,19 +17,14 @@
         <div class="row row-cols-1 row-cols-md-2 d-flex justify-content-between" id="notice-detail-header">
             <div class="col">
                 <span id="notice-detail-head">관리자</span>
-                <span>&#183</span>
                 <span id="notice-detail-date">{{notice.created_at | date:"Y.m.d h:m"}}</span>
+                <span class="ms-2 me-1" id="notice-detail-views">조회수 {{views}}</span>
             </div>
         </div>
     </div>
     <div class="row d-flex border-bottom" id="notice-detail-box">
         <div id="notice-detail-content">
             {{ notice.content|safe }}
-        </div>
-    </div>
-    <div class="row mt-4" id="notice-detail-like">
-        <div>
-            <span class="ms-2 me-1" id="notice-detail-views">조회수 {{views}}</span>
         </div>
     </div>
 </div>

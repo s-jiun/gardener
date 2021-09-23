@@ -31,7 +31,9 @@
 {% block content %}
 <div id="left-container" class="col-6 d-flex flex-column justify-content-center" style="margin-right: 6.3125rem; width: 21.5rem;">
     <div style="margin-bottom: 3.125rem;">
-        <img src="{% static 'images/logo.png' %}" alt="">
+        <a href="{% url 'user:start_page' %}">
+            <img src="{% static 'images/logo.png' %}" alt="">
+        </a>
     </div>
     <div>
         <form action="" method="POST">
@@ -80,19 +82,19 @@
         {% load socialaccount %}
         <a href="{% provider_login_url 'google' %}" style="width: 20rem; height: 2.5rem; text-align: center; vertical-align: center; border: solid 1px #8F8F8F; margin-bottom: 1rem; color: #8F8F8F; text-decoration: #8F8F8F;">
             <div class="d-flex align-items-center justify-content-center" style="height: 100%;">
-                <img src="{% static 'images/google_logo.png' %}" alt="">
+                <img style="width: 1.5625rem; height: 1.5625rem" src="{% static 'images/google_logo.png' %}" alt="">
                 구글 아이디로 로그인
             </div>
         </a>
         <a href=" {% provider_login_url 'naver' %}" style="width: 20rem; height: 2.5rem; text-align: center; vertical-align: center; border: solid 1px #8F8F8F; margin-bottom: 1rem; color: #8F8F8F; text-decoration: #8F8F8F;">
             <div class="d-flex align-items-center justify-content-center" style="height: 100%;">
-                <img style="margin-right: 5px;" src="{% static 'images/naver_logo.png' %}" alt="">
+                <img style="margin-right: 5px; width: 0.8125rem; height: 0.75rem;" src="{% static 'images/naver_logo.png' %}" alt="">
                 네이버 아이디로 로그인
             </div>    
         </a>
         <a href="{% provider_login_url 'kakao' %}" style="width: 20rem; height: 2.5rem; text-align: center; vertical-align: center; border: solid 1px #8F8F8F; margin-bottom: 1rem; color: #8F8F8F; text-decoration: #8F8F8F;">
             <div class="d-flex align-items-center justify-content-center" style="height: 100%;">
-                <img src="{% static 'images/kakao_logo.png' %}" alt="">
+                <img style="width: 2.4rem; height: 1rem;" src="{% static 'images/kakao_logo.png' %}" alt="">
                 카카오 아이디로 로그인
             </div>
         </a>
