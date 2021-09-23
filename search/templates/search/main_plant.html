@@ -9,18 +9,17 @@
 {% block search %}
 <form action='' method="GET" style="width:100%">
     <div class="d-flex align-items-center justify-content-center">
-    <select name="type" class="search-input-1">
-<option value="name">식물명</option>
-        <option value="content">내용</option>
-    </select>
-    <div class="d-flex  justify-content-between" id="search" style="width:80%;">
-        <input class='search-input' type="text" name='q' value="{{q}}" placeholder="반려식물의 정보를 입력해보세요"/>
-        <button class='searchbtn' type="submit"><img class='me-1' src='{% static 'images/search.svg' %}' alt='하트'></button>
+        <select name="type" class="search-input-1">
+            <option value="name">식물명</option>
+            <option value="content">내용</option>
+        </select>
+        <div class="d-flex  justify-content-between" id="search" style="width:80%;">
+            <input class='search-input' type="text" name='q' value="{{q}}" placeholder="반려식물의 정보를 입력해보세요" />
+            <button class='searchbtn' type="submit"><img class='me-1' src='{% static ' images/search.svg' %}'
+                    alt='하트'></button>
+        </div>
     </div>
-    </div>
-    <input style="padding-left:1rem; border-color: #76B79C; border-radius: 20px; width: 31.4rem; height: 4rem;"
-        type="text" name='q' value="{{q}}" placeholder="반려식물의 정보를 입력해보세요" />
-    <button style="display: none;" type="submit"></button>
+
 </form>
 {% endblock %}
 
@@ -199,23 +198,23 @@
         </div>
         {% endfor %}
         {% else %}
-            {%if q%}
-            <tr class="text-center">
-                <td colspan="5">
-                    <div class="text-center" style="font-size: 28px;">
-                        일치하는 검색 결과가 없습니다.
-                        <br />
-                        <a href='{% url "search:plant_list" %}' style='font-size:1.3rem; '>뒤로가기</a>
-                    </div>
-                </td>
-            </tr>
-            {% else %}
-            <tr class="text-center" style="font-size: 28px;">
-                <td colspan="5">
-                    저장된 식물 정보가 없습니다.
-                </td>
-            </tr>
-            {%endif%}
+        {%if q%}
+        <tr class="text-center">
+            <td colspan="5">
+                <div class="text-center" style="font-size: 28px;">
+                    일치하는 검색 결과가 없습니다.
+                    <br />
+                    <a href='{% url "search:plant_list" %}' style='font-size:1.3rem; '>뒤로가기</a>
+                </div>
+            </td>
+        </tr>
+        {% else %}
+        <tr class="text-center" style="font-size: 28px;">
+            <td colspan="5">
+                저장된 식물 정보가 없습니다.
+            </td>
+        </tr>
+        {%endif%}
         {% endif %}
     </div>
     <div class="col-md-offset-6">
