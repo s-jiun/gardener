@@ -5,6 +5,23 @@
     <link rel="stylesheet" href="{% static 'style/css/post_detail.css' %}" />
 {% endblock %}
 
+{% block button %}
+<button id='list-edit-post' >
+    {% if request.user.is_authenticated %}
+        <a href="{% url 'community:post_update' post.pk %}">포스트 수정</a>
+    {% else %}
+        <a onclick="alert('로그인이 필요한 서비스입니다.')" href="{% url 'user:login' %}">포스트 작성</a>
+    {% endif %}
+</button>
+ <button id='list-create-post' >
+                {% if request.user.is_authenticated %}
+                    <a href="{% url 'community:post_create' %}">포스트 작성</a>
+                {% else %}
+                    <a onclick="alert('로그인이 필요한 서비스입니다.')" href="{% url 'user:login' %}">포스트 작성</a>
+                {% endif %}
+</button>
+{% endblock %}
+
 {% block content %}
 <div class='container-fluid mt-4 mb-3' id="container" style='width:70%;'>
     <div class="row border-bottom">
