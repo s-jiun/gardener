@@ -1,3 +1,5 @@
+
+
 .main-plant {
   background: url("/static/images/background-top.jpg");
   background-position: 70% 30%;
@@ -9,17 +11,21 @@
 }
 
 .level-con {
-  margin-top: 40px;
+  margin-top: 4rem;
   display: flex;
   justify-content: center;
   align-items: flex-end;
 }
+.level-con h5 {
+  font-size: 1.7rem;
+}
 .level-btn {
-  margin-left: 2rem;
-  padding: 0.4rem 0.6rem;
+  margin-left: 1.5rem;
+  padding: 0.4rem 0.9rem;
   border-radius: 3em;
   border: 1px solid #8F8F8F;
   color: #8F8F8F;
+  font-size: 1.2rem;
 }
 .level-btn:after {
   border: 1px solid #76B79C;
@@ -102,7 +108,8 @@
 }
 .card-title {
   font-weight: 500;
-  font-size: 1rem;
+  font-size: 1.7rem;
+  font-weight: 500;
 }
 .image {
   overflow: hidden;
@@ -159,8 +166,8 @@
   transform: translate(-50%, -50%);
   transition-timing-function: ease;
   text-align: center;
-  font-size: 1.3rem;
-  line-height: 1.8rem;
+  font-size: 1.5rem;
+  line-height: 2.2rem;
   font-weight: 400;
 }
 
@@ -168,18 +175,24 @@
   border-radius: .3rem;
   margin-top: 80px;
   height: 600px;
-  background-color: #fff;
+  /* background-color: #fff; */
   background-clip: border-box;
   margin-bottom: 28px;
   overflow: hidden;
   transition: 0.3s;
 }
+/* .modal-content button {
+  font-size: 100%;
+  font-family: none;
+} */
 .modal {
   height: auto;
 }
+.modal-title {
+  font-size: 2rem;
+}
 .modal-body img {
-  width: 50%;
-  height: 150px;
+  height: 200px;
   margin-bottom: 5px;
 }
 
@@ -193,7 +206,7 @@
   margin-left: 3px;
 }
 .modal-header {
-  /* margin-left:50px; */
+  font-size: 15px;
 }
 .modal-header h5 {
   font-weight: bold;
@@ -237,12 +250,12 @@ table{
   font-family: 'Noto Sans KR', sans-serif;
 }
 
-.table-title {
+.table-title span {
   font-weight: 500;
-  font-size: 1rem;
+  font-size: 1.5rem;
 }
 .table-con {
   font-weight: 300;
   color: #8F8F8F;
-  font-size: 0.85rem;
+  font-size: 1.2rem;
 }

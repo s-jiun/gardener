@@ -75,26 +75,14 @@
                     </figure>
                     </a> 
                     <div class="row d-flex justify-content-between">
-                        <div class="col ps-4 pe-4">
-                            <div class='likes post-id-{{ post.id }} d-flex justify-content-end'>
-                                {% if request.user.is_authenticated %}
-                                    {% if user.pk in liked_user %}
-                                        <span><button class = 'heart' onclick="onClickLike({{ post.id }})"> <img class='me-1' src='{% static 'images/heart_fill.svg' %}' alt='하트'></button></span>
-                                        <span class='like_num'>{{post.like_set.all.count}}</span>
-                                    {% else %}
-                                        <span><button class = 'heart' onclick="onClickLike({{ post.id }})"> <img class='me-1' src='{% static 'images/heart_line.svg' %}' alt='하트'></button></span>
-                                        <span class='like_num'>좋아요 {{post.like_set.all.count}}</span>
-                                    {% endif %}
-                                {% else %}
-                                        <span><button class = 'heart'><a onclick="alert('로그인이 필요한 서비스입니다.')" href="{% url 'user:login' %}"> <img class="me-1" src="{% static 'images/heart_line.svg' %}" alt="하트"></a></button></span>
-                                        <span class='like_num'>좋아요 {{post.like_set.all.count}}</span>
-                                {% endif %}
+                        <div class="col pe-4">
+                            <div class='likes post-id-{{ post.id }} d-flex ps-2'>
+                                <img class='me-1' src='{% static 'images/heart_line.svg' %}' alt='하트'>
+                                <span class='like_num me-3'>{{post.like_set.all.count}}</span>
+                                <img class='me-1' src='{% static 'images/comment_line.svg' %}' alt='댓글'>
+                                <span class='like_num'>{{post.reply_set.count}}</span>
                             </div>
                         </div>
-                        {% comment %} <div class="col ps-4 pe-4">
-                            <img class="me-1" src="{% static 'images/heart_line.svg' %}" alt="하트">15
-                            <img class="me-1" src="{% static 'images/comment_line.svg' %}" alt="코멘트">2
-                        </div> {% endcomment %}
                         <div class="col text-end">
                             <span id="postcard-date">{{post.created_at | date:"Y.m.d"}}</span>
                         </div>

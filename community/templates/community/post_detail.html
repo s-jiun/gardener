@@ -5,6 +5,23 @@
     <link rel="stylesheet" href="{% static 'style/css/post_detail.css' %}" />
 {% endblock %}
 
+{% block button %}
+<button id='list-edit-post' >
+    {% if request.user.is_authenticated %}
+        <a href="{% url 'community:post_update' post.pk %}">포스트 수정</a>
+    {% else %}
+        <a onclick="alert('로그인이 필요한 서비스입니다.')" href="{% url 'user:login' %}">포스트 작성</a>
+    {% endif %}
+</button>
+ <button id='list-create-post' >
+                {% if request.user.is_authenticated %}
+                    <a href="{% url 'community:post_create' %}">포스트 작성</a>
+                {% else %}
+                    <a onclick="alert('로그인이 필요한 서비스입니다.')" href="{% url 'user:login' %}">포스트 작성</a>
+                {% endif %}
+</button>
+{% endblock %}
+
 {% block content %}
 <div class='container-fluid mt-4 mb-3' id="container" style='width:70%;'>
     <div class="row border-bottom">
@@ -51,7 +68,7 @@
                 {% endif %}
             </div>
             <div style="display: inline; margin-left: 1rem;">
-                <img class="me-1" src="{% static 'images/comment_line.svg' %}" alt="코멘트">{{comments_num}}
+                <img class="me-1" src="{% static 'images/comment_line.svg' %}" alt="코멘트">{{post.reply_set.count}}
             </div>
             <div style="display: inline; margin-left: 1rem;">
                 {% if user.is_authenticated %}
@@ -97,7 +114,6 @@
                         {% csrf_token %}
                         {{comment_form.media}}
                         {{ comment_form.as_p }}
-
                         <input type="hidden" name="parent_id" value="{{ comment.id }}">
                         <div class="d-flex justify-content-end">
                             <input class="create-reply" type="submit" value="Submit">
