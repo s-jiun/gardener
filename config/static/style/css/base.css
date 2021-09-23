@@ -183,22 +183,26 @@ footer {
   color: #8f8f8f;
 }
 
+.search-input-1 {
+  border: none;
+}
+
 .search-input {
   width: 80%;
   border: none;
   border-radius: 20px;
 }
-#search{
-  display :inline-block;
+
+#search {
+  display: inline-block;
   padding: 0.3rem 0.3rem 0.3rem 1rem;
   border: 1px solid #76b79c;
   border-radius: 20px;
   height: 3.5rem;
 }
-.searchbtn{
-  border:none;
+  
+.searchbtn {
+  border: none;
   background: none;
 }
-.search-input-1 {
-  border:none;
-}
+

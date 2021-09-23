@@ -1,29 +1,33 @@
-*{
-  font-family: "Noto Sans KR"!important;
+* {
+  font-family: "Noto Sans KR" !important;
   font-size: 62.5%; /*1rem : 10px*/
 }
 
-#container{
+#container {
   min-height: 60rem;
 }
-.post-title{
+.post-title {
   font-size: 2.6rem;
   margin-bottom: 2rem;
   font-weight: bold;
-  color:#354847;
+  color: #354847;
 }
-#post-header{
+#post-header {
   margin-bottom: 3rem;
 }
-#post-head{
+#post-detail-views {
+  font-weight: bold;
+  font-size: 1.4rem;
+}
+#post-head {
   font-size: 1.4rem;
   font-weight: bold;
   margin-right: 0.5rem;
 }
-#post-date{
-  margin-left:0.5rem;
+#post-date {
+  margin-left: 0.5rem;
   font-size: 1.4rem;
-  color:#8F8F8F;
+  color: #8f8f8f;
 }
 
 #post-detail-thumbnail {
@@ -33,74 +37,78 @@
   padding: 2px;
   border-radius: 100%;
 }
-#post-follow-button{
+#post-follow-button {
   background-color: white;
   border-radius: 20px;
-  border: 0.1rem solid #76B79C;
+  border: 0.1rem solid #76b79c;
   margin-left: 0.5rem;
   margin-right: 0.5rem;
-  color:#76B79C;
+  color: #76b79c;
 }
-#post-content{
+#post-content {
   margin-top: 4rem;
 }
-#post-detail-content > *{
+#post-detail-content > * {
   font-size: 1.6rem;
 }
-#post-detail-content p{
-  overflow-x:auto;
+#post-detail-content p {
+  overflow-x: auto;
 }
 #post-detail-like * {
   font-weight: bold;
   font-size: 1.2rem;
 }
-.tags{
+.tags {
   background-color: white;
   border-radius: 20px;
-  padding:0.6rem;
-  border: 0.1rem solid #8F8F8F;
+  padding: 0.6rem;
+  border: 0.1rem solid #8f8f8f;
   margin-left: 0.5rem;
   margin-right: 0.5rem;
-  color:#8F8F8F;
+  color: #8f8f8f;
   min-width: 4.3rem;
 }
-.create-comment{
+.create-comment {
   background-color: white;
   border-radius: 20px;
-  padding:0.6rem;
-  border: 0.1rem solid #8F8F8F;
+  padding: 0.6rem;
+  border: 0.1rem solid #8f8f8f;
   margin-left: 0.5rem;
   margin-right: 0.5rem;
-  color:#8F8F8F;
+  color: #8f8f8f;
   min-width: 4.3rem;
 }
-#comment-head, #reply-head{
+#comment-head,
+#reply-head {
   font-size: 1.4rem;
   font-weight: bold;
 }
-#comment-body p, #comment-body span, #reply-body,#reply-body >*{
+#comment-body p,
+#comment-body span,
+#reply-body,
+#reply-body > * {
   font-size: 1.4rem;
 }
-.create-reply{
+.create-reply {
   background-color: white;
   border-radius: 20px;
-  padding:0.6rem;
-  border: 0.1rem solid #8F8F8F;
+  padding: 0.6rem;
+  border: 0.1rem solid #8f8f8f;
   margin-left: 0.5rem;
   margin-right: 0.5rem;
-  color:#8F8F8F;
+  color: #8f8f8f;
   min-width: 4.3rem;
 }
-#collapseComment{
-  margin-top:2rem;
+#collapseComment {
+  margin-top: 2rem;
 }
-.reply textarea{
+.reply textarea {
   width: 100%;
 }
-.reply-content{
-  background-color: #F8F8F8;
+.reply-content {
+  background-color: #f8f8f8;
 }
-#trashImg{
+#trashImg {
   width: 1.5rem;
 }
 
