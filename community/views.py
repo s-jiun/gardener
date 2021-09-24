@@ -39,10 +39,6 @@ class PostListView(ListView):
 
         search_keyword = self.request.GET.get('q', '')
         
-        # user= self.request.user;
-
-        # liked_user = Like.objects.filter(
-        # post_id=user.pk).values_list('user_id', flat=True)
 
 
         if len(search_keyword) > 1:
@@ -152,7 +148,6 @@ def post_detail(request, pk):
         post=post, client_ip=get_client_ip(request))
 
     comments = post.reply_set.filter(parent_reply__isnull=True)
-    comments_num = comments.count()
     liked_user = Like.objects.filter(
         post_id=pk).values_list('user_id', flat=True)
     is_following = False
@@ -189,7 +184,6 @@ def post_detail(request, pk):
                 'community/post_detail.html',
                 {'post': post,
                 'comments': comments,
-                'comments_num' : comments_num,
                 'comment_form': comment_form,
                 'liked_user': liked_user,
                 'is_following': is_following,
@@ -286,8 +280,9 @@ def delete_comment(request, pk):
     comment = Reply.objects.get(post_id=post_id, id=comment_id)
     Reply.objects.filter(post_id=post_id, parent_reply=comment).delete()
     comment.delete()
-
-    return JsonResponse({'post_id': post_id, 'comment_id': comment_id})
+    comment_count = Reply.objects.filter(post_id=post_id).count()
+    print(comment_count)
+    return JsonResponse({'post_id': post_id, 'comment_id': comment_id, 'comment_count':comment_count})
 
 
 @login_required

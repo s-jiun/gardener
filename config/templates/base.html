@@ -37,9 +37,9 @@
         {% endif %} 
     </div>
     <div class="row justify-content-between" style="margin: auto; width: 80%; margin-bottom: 2rem;">
-        <div class="col-3" style="display: inline-block;">
+        <div id="main-logo" class="col-3" style="display: inline-block;">
             <a href="{% url 'community:post_list'%}">
-                <img style="width: 15rem; height: 6.8rem;" src="{% static 'images/logo.png' %}" alt="">
+                <img style="width: 15rem; height: 6.8rem;" src="{% static 'images/ourplant_logo.svg' %}" alt="">
             </a>
         </div>
         <div class="col-sm-6 col-md-4 d-flex align-items-center">
@@ -94,6 +94,21 @@
 
 {% block content %}
 {% endblock %}
+
+<footer class="text-lg-start d-flex align-items-center">
+    <div style="width:150rem; margin: auto;" class="d-flex justify-content-between align-items-center">
+        <div style="font-size: 1.4rem;" class="text-start p-3" style="color: 8F8F8F;">
+            Contact Us <br>
+            pirogardener@gmail.com
+        </div>
+        <div style="font-size: 1.4rem;" class="text-end p-3" style="color: 8F8F8F;">
+            © Our Plant All rights reserved <br>
+            plants images : 
+            <a style="font-size: 1.4rem;" href="http://www.nongsaro.go.kr">www.nongsaro.go.kr</a>
+        </div>
+    </div>
+    <!-- Copyright -->
+</footer>
 
 <script>
     $(document).ready(function () {

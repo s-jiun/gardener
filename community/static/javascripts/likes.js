@@ -1,7 +1,6 @@
 const requestLike = new XMLHttpRequest();
 
 const onClickLike = (id) => {
-  console.log("아이디", id);
   const url = "like_ajax/";
   requestLike.open("POST", url, true);
   requestLike.setRequestHeader(

@@ -5,6 +5,27 @@
     <link rel="stylesheet" href="{% static 'style/css/post_detail.css' %}" />
 {% endblock %}
 
+{% block button %}
+<div>
+    <button class="make-something">
+        {% if request.user.is_authenticated %}
+        <a href="{% url 'community:post_create' %}">포스트 작성</a>
+        {% else %}
+        <a onclick="alert('로그인이 필요한 서비스입니다.')" href="{% url 'user:login' %}">포스트 작성</a>
+        {% endif %}
+    </button>
+    {% if post.user_id == request.user %}
+    <button class="go-to-main">
+        {% if request.user.is_authenticated %}
+            <a href="{% url 'community:post_update' post.pk %}">포스트 수정</a>
+        {% else %}
+            <a onclick="alert('로그인이 필요한 서비스입니다.')" href="{% url 'user:login' %}">포스트 작성</a>
+        {% endif %}
+    </button>
+    {% endif %}
+</div>
+{% endblock %}
+
 {% block content %}
 <div class='container-fluid mt-4 mb-3' id="container" style='width:70%;'>
     <div class="row border-bottom">
@@ -16,9 +37,9 @@
                 <span id="post-date">{{post.created_at | date:"Y.m.d h:m"}}</span>
                 <span class="ms-2 me-1" id="post-detail-views">조회수 {{views}}</span>
             </div>
-            <div class="col d-flex justify-content-end">
+            <div id="follow-wrapper" class="col d-flex justify-content-end">
                 {% if post.user_id != request.user %}
-                    <button type="button" class="btn btn-outline-success" onclick="onClickFollow({{post.user_id}})" id="post-follow-button">팔로우</button> 
+                    <button type="button" class="btn btn-outline-success" onclick="onClickFollow({{post.user_id_id}})" id="post-follow-button">팔로우</button> 
                 {% endif %}
             </div>
         </div>
@@ -52,7 +73,10 @@
                 {% endif %}
             </div>
             <div style="display: inline; margin-left: 1rem;">
-                <img class="me-1" src="{% static 'images/comment_line.svg' %}" alt="코멘트">{{comments_num}}
+                <img class="me-1" src="{% static 'images/comment_line.svg' %}" alt="코멘트">
+                <div id="comment-count" style="display: inline-block;">
+                    {{post.reply_set.count}}
+                </div>
             </div>
             <div style="display: inline; margin-left: 1rem;">
                 {% if user.is_authenticated %}
@@ -85,7 +109,7 @@
                     <div class="mt-1" > 
                         <span>{{ comment.created_at }}</span>
                         {% if user == post.user_id or user == comment.user_id %}
-                            <span class="trash" onclick="onClickDeleteComment({{post.id}}, {{comment.id}})"></span>
+                            <span class="trash" onclick="onClickDeleteComment({{post.id}}, {{comment.id}})"><img class="me-1" id="trashImg" src="{% static 'images/trash.svg' %}" alt="삭제"></span>
                         {% endif %}
                         <button class="create-reply" type="button" data-bs-toggle="collapse" data-bs-target="#collapseReply-{{comment.id}}" aria-expanded="false" aria-controls="collapseReply-{{comment.id}}">
                             답글
@@ -98,7 +122,6 @@
                         {% csrf_token %}
                         {{comment_form.media}}
                         {{ comment_form.as_p }}
-
                         <input type="hidden" name="parent_id" value="{{ comment.id }}">
                         <div class="d-flex justify-content-end">
                             <input class="create-reply" type="submit" value="Submit">
@@ -253,7 +276,7 @@
 {% endblock %}
 
 {% block js %}
-    {% comment %} <script src="{% static 'javascripts/post_comment.js' %}"></script> {% endcomment %}
+    <script src="{% static 'javascripts/post_comment.js' %}"></script>
     <script src="{% static 'javascripts/likes.js' %}"></script>
-    {% comment %} <script src="{% static 'javascripts/post_follow.js' %}"></script> {% endcomment %}
+    <script src="{% static 'javascripts/post_follow.js' %}"></script>
 {% endblock %}

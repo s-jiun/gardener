@@ -107,6 +107,9 @@ a {
   color: #8F8F8F;
   font-weight: 300;
 }
+/* #user-follow {
+  justify-content: space-between;
+} */
 
 #user-follow a, span {
   font-size: 1.4rem;
