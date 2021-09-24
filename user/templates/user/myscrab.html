@@ -2,6 +2,7 @@
 {% load static %}
 {%block head%}
 <link href="{% static 'style/css/profile.css' %}" rel="stylesheet">
+<link href="{% static 'style/css/main_plant.css' %}" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
 <!--CDN 링크 -->
 
@@ -114,16 +115,164 @@
                         <!--포스트 리스트-->
                         {% if scrab_list%}
                         {%for scrab in scrab_list%}
-                        <div class="col col-lg-4">
+
+
+                        <div class="col">
                             <div class="card p-2 m-3" id="plant-card" style="border:none;">
                                 <div class="image">
-                                    {% comment %} <a data-bs-toggle="modal" data-bs-target="#plantDetailModal-{{plant.pk}}"> {% endcomment %}
+                                    <a data-bs-toggle="modal" data-bs-target="#plantDetailModal-{{scrab.plant.pk}}">
                                         <img src={{scrab.plant.photo_url|safe}} class="lazyload card-img-top" id="plant-img" alt="...">
                                         <h3>{{scrab.plant.name}}<br> 알아보기</h3>
-                                    {% comment %} </a> {% endcomment %}
+                                    </a>
                                 </div>
                                 <div class="card-body" style="padding : 1rem 0 0 0;">
-                                    <h5 class="card-title" style="font-size:1.7rem;">{{ scrab.plant.name }}</h5>
+                                    <h5 class="card-title" style="font-size:1.7rem;">{{ plant.name }}</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="plantDetailModal-{{plant.pk}}" data-bs-backdrop="static" data-bs-keyboard="false"
+                            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable">
+                                <div class="modal-content" id="plantDetailModal-content">
+                                    <div class="modal-header" style="border: none; padding-right: 3rem; padding-top:3rem;">
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="d-flex justify-content-center align-items-start pb-3">
+                                        {%if scrab.plant in scrap_plant_list %}
+                                        <div class="btn btn-success btn-sm post__del_scrap" onclick="onClickScrap({{scrab.plant.pk}})">
+                                            <img class="profile-post-header__img" src="{% static 'images/mark_fill.svg'%}" />
+                                        </div>
+                                        {% else %}
+                                        {% if request.user.is_authenticated %}
+                                        <div class="btn btn-success btn-sm post__scrap" onclick="onClickScrap({{scrab.plant.pk}})">
+                                            <img class="profile-post-header__img" src="{% static 'images/mark_line.svg'%}" />
+                                        </div>
+                                        {% endif %}
+                                        {% endif %}
+                                        <h5 class="modal-title" id="plantDetailLabel">{{scrab.plant.name}}</h5>
+                                    </div>
+                                    <div class="modal-body text-center"
+                                        style="padding-left:40px; padding-right:40px; padding-bottom:40px;">
+                                        <img class="lazyload" data-src={{plant.photo_url|safe}}>
+                                        <div>
+                                            <table class="text-start mt-2">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="p-2 table-title">
+                                                            <span>생육형태<span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="p-2 table-con">
+                                                            {{scrab.plant.growth_form}}
+                                                        </td>
+                
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="p-2 table-title">
+                
+                                                            <span>관리 난이도<span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="p-2 table-con">
+                                                            {{scrab.plant.name}}의 관리 난이도는 {{scrab.plant.care_difficulty}} 입니다.
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="p-2 table-title">
+                
+                                                            <span>관리 요구 수준<span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="p-2 table-con">
+                                                            {%if scrab.plant.management_level == "경험자" %}
+                                                            식물을 키워본 경험이 좀 있다면 어렵지 않아요! 도전해보세요!
+                                                            {%elif scrab.plant.management_level == "초보자" %}
+                                                            {{scrab.plant.management_level}}도 쉽게 키울 수 있어요! 어렵지 않아요!
+                                                            {% else %}
+                                                            {{scrab.plant.management_level}} 정도의 수준이 요구되어요!
+                                                            {%endif%}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="p-2 table-title">
+                
+                                                            <span>생육 온도<span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="p-2 table-con">
+                                                            {{scrab.plant.growth_temp}}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="p-2 table-title">
+                
+                                                            <span>생육 습도<span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="p-2 table-con">
+                                                            {{scrab.plant.humidity}}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="p-2 table-title">
+                
+                                                            <span>봄철 물주기<span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="p-2 table-con">
+                                                            {{scrab.plant.water_period_autumn}}
+                                                        </td>
+                                                    </tr>
+                                                    <td class="p-2 table-title">
+                
+                                                        <span>여름철 물주기<span>
+                                                    </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="p-2 table-con">
+                                                            {{scrab.plant.water_period_summer}}
+                                                        </td>
+                                                    </tr>
+                                                    <td class="p-2 table-title">
+                
+                                                        <span>가을철 물주기<span>
+                                                    </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="p-2 table-con">
+                                                            {{scrab.plant.water_period_autumn}}
+                                                        </td>
+                                                    </tr>
+                                                    <td class="p-2 table-title">
+                
+                                                        <span>겨울철 물주기<span>
+                                                    </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="p-2 table-con">
+                                                            {{scrab.plant.water_period_winter}}
+                                                        </td>
+                                                    </tr>
+                                                    <td class="p-2 table-title">
+                
+                                                        <span>기타사항<span>
+                                                    </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="p-2 table-con">
+                                                            {{scrab.plant.content}}
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
