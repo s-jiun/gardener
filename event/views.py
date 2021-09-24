@@ -6,12 +6,14 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 
 from user.models import Follow, GeneralUser
-from .models import Challenge, CardNews,ChallengeReply,NewsReply
+from .models import Challenge, CardNews, ChallengeReply, NewsReply, Challengeviews
 from .forms import ChallengeReplyForm
 import json
 from django.http.response import JsonResponse
 
 # Create your views here.
+
+
 class ChallengeListView(ListView):
     model = Challenge
     paginate_by = 9
@@ -65,8 +67,21 @@ class ChallengeListView(ListView):
         return challenge_list
 
 
-def challenge_detail(request,pk):
+def get_client_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
+
+
+def challenge_detail(request, pk):
     challenge = get_object_or_404(Challenge, pk=pk)
+    if not Challengeviews.objects.filter(client_ip=get_client_ip(request)):
+        Challengeviews.objects.create(
+            challenge=challenge, client_ip=get_client_ip(request))
+
     comments = challenge.challengereply_set.filter(parent_reply__isnull=True)
     commentCount = ChallengeReply.objects.filter(challenge_id=pk).count()
 
@@ -93,13 +108,15 @@ def challenge_detail(request,pk):
     else:
         comment_form = ChallengeReplyForm()
 
-    ctx={
-        'challenge':challenge,
+    ctx = {
+        'challenge': challenge,
         'comments': comments,
         'comment_form': comment_form,
+        'views': len(
+            Challengeviews.objects.filter(challenge=challenge))
     }
-    return render(request,'event/challenge_detail.html', context=ctx)
-   
+    return render(request, 'event/challenge_detail.html', context=ctx)
+
 
 class NewsListView(ListView):
     model = CardNews
@@ -117,7 +134,7 @@ class NewsListView(ListView):
         current_page = int(page) if page else 1
 
         start_index = int((current_page - 1) /
-                        page_numbers_range) * page_numbers_range
+                          page_numbers_range) * page_numbers_range
         end_index = start_index + page_numbers_range
         if end_index >= max_index:
             end_index = max_index
@@ -145,12 +162,13 @@ class NewsListView(ListView):
         return issue_list
 
 
-def issue_detail(request,pk):
+def issue_detail(request, pk):
     issue = get_object_or_404(CardNews, pk=pk)
-    ctx={
-        'issue' : issue
+    ctx = {
+        'issue': issue
     }
-    return render(request,'event/issue_detail.html', context=ctx)
+    return render(request, 'event/issue_detail.html', context=ctx)
+
 
 @login_required
 @csrf_exempt
@@ -159,11 +177,15 @@ def delete_comment(request, pk):
     challenge_id = req['challenge_id']
     challengeReply_id = req['challengeReply_id']
 
-    comment = ChallengeReply.objects.get(challenge_id_id=challenge_id, id=challengeReply_id)
-    ChallengeReply.objects.filter(challenge_id=challenge_id, parent_reply=comment).delete()
+    comment = ChallengeReply.objects.get(
+        challenge_id_id=challenge_id, id=challengeReply_id)
+    ChallengeReply.objects.filter(
+        challenge_id=challenge_id, parent_reply=comment).delete()
     comment.delete()
-    commentCount = ChallengeReply.objects.filter(challenge_id=challenge_id).count()
-    return JsonResponse({'challenge_id': challenge_id, 'challengeReply_id': challengeReply_id, 'comment_count':commentCount})
+    commentCount = ChallengeReply.objects.filter(
+        challenge_id=challenge_id).count()
+    return JsonResponse({'challenge_id': challenge_id, 'challengeReply_id': challengeReply_id, 'comment_count': commentCount})
+
 
 @login_required
 @csrf_exempt
@@ -173,12 +195,15 @@ def delete_reply(request, pk):
     parent_reply_id = req['parent_reply_id']
     challengeReply_id = req['challengeReply_id']
     if parent_reply_id != None:
-        parent_obj = ChallengeReply.objects.get(challenge_id=challenge_id, id=parent_reply_id)
+        parent_obj = ChallengeReply.objects.get(
+            challenge_id=challenge_id, id=parent_reply_id)
         ChallengeReply.objects.get(
             challenge_id=challenge_id, parent_reply=parent_obj, id=challengeReply_id).delete()
     else:
-        comment = ChallengeReply.objects.get(challenge_id=challenge_id, id=challengeReply_id)
-        ChallengeReply.objects.filter(challenge_id=challenge_id, parent_reply=comment).delete()
+        comment = ChallengeReply.objects.get(
+            challenge_id=challenge_id, id=challengeReply_id)
+        ChallengeReply.objects.filter(
+            challenge_id=challenge_id, parent_reply=comment).delete()
         comment.delete()
 
     return JsonResponse({'parent_reply_id': parent_reply_id, 'challenge_id': challenge_id, 'challengeReply_id': challengeReply_id})

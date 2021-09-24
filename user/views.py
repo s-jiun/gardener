@@ -144,8 +144,6 @@ def profile(request, pk):
     return render(request, template_name='user/profile.html', context=ctx)
 
 
-
-
 @login_required
 def follow_list(request, pk):
     user = GeneralUser.objects.get(id=pk)
@@ -279,7 +277,7 @@ def save_image_ajax(requset):
 class liked_post_ListView(ListView):
     model = Like
     paginate_by = 5
-    template_name = 'user/my_pick.html'
+    template_name = 'user/mypick.html'
     context_object_name = 'liked'
 
     def get_queryset(self):
@@ -316,7 +314,7 @@ class liked_post_ListView(ListView):
 class ScrabListView(ListView):
     model = PlantScrap
     paginate_by = 9
-    template_name = 'user/my_scrab.html'
+    template_name = 'user/myscrab.html'
     context_object_name = 'scrab_list'
 
     def get_context_data(self, **kwargs):
@@ -354,7 +352,7 @@ def delete_scrab(request, pk):
     plant = Plant.objects.get(pk=pk)
     scrab = PlantScrap.objects.get(user=request.user, plant=plant)
     scrab.delete()
-    return redirect('user:my_scrab_plant', request.user.pk)
+    return redirect('user:myscrab_plant', request.user.pk)
 
 
 class GardenerListView(ListView):
@@ -413,7 +411,7 @@ def about(request):
 class MyPlantsListView(ListView):
     model = MyPlant
     paginate_by = 12
-    template_name = 'user/my_plants.html'
+    template_name = 'user/myplants.html'
     context_object_name = 'plants_list'
 
     def get_context_data(self, **kwargs):
@@ -450,7 +448,7 @@ def add_myplant(request):
             plant = form.save(commit=False)
             plant.user = request.user
             plant = form.save()
-            return redirect('user:my_plants', pk=plant.user.pk)
+            return redirect('user:myplants', pk=plant.user.pk)
     else:
         form = MyPlantsForm()
         ctx = {'form': form}
