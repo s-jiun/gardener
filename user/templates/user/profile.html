@@ -168,14 +168,12 @@
                             <li aria-current="page"
                                 class="page-item {% if page == page_obj.number %} activate {% endif %}">
                                 <a class="page-link page-link-circle" href="?&page={{ page_number }}"
-                                    style="border-radius:100%; border:none; font-size: 12px; margin-right:7px;">{{
-                                    page_number }}</a>
+                                    style="border-radius:100%; border:none; font-size: 12px; margin-right:7px;">{{page_number }}</a>
                             </li>
                             {% else %}
                             <li class="page-item {% if page == page_obj.number %} activate {% endif %}">
                                 <a class="page-link page-link-circle" href="?&page={{ page_number }}"
-                                    style="border-radius:100%; border:none; font-size: 12px; margin-right:7px;">{{
-                                    page_number }}</a>
+                                    style="border-radius:100%; border:none; font-size: 12px; margin-right:7px;">{{page_number }}</a>
                             </li>
                             {% endif %}
                             {% endfor %}
