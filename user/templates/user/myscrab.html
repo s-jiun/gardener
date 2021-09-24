@@ -86,7 +86,7 @@
                     <hr>
                     <div class="profile-post-header">
                         <div class="profile-post-header__item profile-post-header__like">
-                          <a href = "{% url 'user:profile' user.pk %}">
+                            <a href = "{% url 'user:profile' user.pk %}">
                                 <img class="profile-post-header__img" src="{% static 'images/profile-create-line.svg'%}" />
                                 <span class="profile-post-header__text">작성 게시글</span>
                             </a>
@@ -99,15 +99,15 @@
                             </a>
                         </div>
                         <div class="profile-post-header__item profile-post-header__scrap">
-                            <a href ="{% url 'user:my_scrab_plant' user.pk %}">
-                            <img class="profile-post-header__img" src="{% static 'images/profile-mark-line.svg'%}" />
-                            <span class="profile-post-header__text">스크랩</span>
-                            </a>
+                            <img class="profile-post-header__img" src="{% static 'images/profile-mark-fill.svg'%}" />
+                            <span class="profile-post-header__text header-active">스크랩</span>
                         </div>
                         {%endif%}
                         <div class="profile-post-header__item profile-post-header__myplant">
-                            <img class="profile-post-header__img" src="{% static 'images/profile-leaf-fill.svg'%}" />
-                            <span class="profile-post-header__text header-active">마이 플랜트</span>
+                            <a href = "{% url 'user:my_plants' user.pk %}">
+                                <img class="profile-post-header__img" src="{% static 'images/profile-leaf-line.svg'%}" />
+                                <span class="profile-post-header__text">마이 플랜트</span>
+                            </a>
                         </div>
                     </div>
                     <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3" style="margin-left:20px; margin-top:20px;">
