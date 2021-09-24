@@ -17,7 +17,7 @@
             <div class="card" style="border: none;">
                 <div class="image">
                     <a href='{% url "event:issue_detail" issue.pk %}'>
-                        <img src="{{ issue.photo_url|safe }}" alt="" class="lazyload card-img-top" id="plant-img">
+                        <img src={{ issue.thumbnail.url}} alt="" class="lazyload card-img-top" id="plant-img">
                         <h3>{{issue.title|truncatechars:15}}<br> 알아보기</h3>
                     </a>
                 </div>
