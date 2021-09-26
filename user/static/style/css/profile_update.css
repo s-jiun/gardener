@@ -1,107 +1,112 @@
-.main-container {
-    width: 100vw;
-    height: 100vh;
-    background-position: 100% 100%;
-    position: relative; 
-    background-size: cover;
+@media screen and (max-width: 560px) {
+  header {
+    display: none;
   }
-  
-  #update-card {
-    max-width: 400px;
-    max-width: 600px; 
-    min-height: 600px;
-    margin: auto;
-    color: #3b260f;
-    border-radius: 20 px;
-    justify-content: center;
-    max-height: 800px;
-    background-color: rgba(0, 0, 0, 0.2);
-    border-width: 8px; 
-    border-color:#a0cab5;
-    background:#DAE7DD;
-  }
-  
-  p {
-    margin: 0px;
-  }
-  
-  .container .h8 {
-    font-size: 36px;
-    font-weight: 800;
-    text-align: center;
-  }
-  
-  .btn.btn-primary {
-    height: 70px;
-    padding: 0 15px;
-    border: none;
-    transition: 0.5s;
-    background-size: 200% auto;
-    height: 50px;
-    background-color: #ccdfcc;
-    color: #3b260f;
-    font-weight: 800;
-    border: rgba(0, 0, 0, 0.05);
-  }
-  
-  .btn.btn.btn-primary:hover {
-    background-position: right center;
-    color: #fff;
-    text-decoration: none;
-  }
-  
-  .btn.btn-primary:hover .fas.fa-arrow-right {
-    transform: translate(15px);
-    transition: transform 0.2s ease-in;
-  }
-  
-  .form-control {
-    color: #3b260f;
-    border: 1px solid #3b260f;;
-    height: 40px;
-    padding-left: 20px;
-    vertical-align: middle;
-  }
-  
-  .form-control:focus {
-    color: #3b260f;
-    border-color: #3b260f;
-    background-color: #ccdfcc;
-    box-shadow: none;
-  }
-  
-  .text {
-    font-size: 14px;
-    font-weight: 600;
-  }
-  
-  ::placeholder {
-    font-size: 14px;
-    font-weight: 600;
-  }
-  
-  .btn.btn-primary {
-    height: 50px;
-    background-color: #ccdfcc;
-  }
-  
-  #profile-content{
-    height:100px;
-    border-radius: 10px;
-    
-  }
+}
 
-  #update-icon1{
-    width:2.5rem;
-    transform:scaleX(-1);
-  }
-  #update-icon2{
-      width:2.5rem;
-  }
-  #blah{
-    border-radius: 100%; 
-    width: 140px; 
-    height: 140px;
-    border-width: 5px; 
-    border-color:#3b260f;
-  }
+.main-container {
+  width: 100vw;
+  height: 100vh;
+  background-position: 100% 100%;
+  position: relative;
+  background-size: cover;
+}
+
+#update-card {
+  max-width: 400px;
+  max-width: 600px;
+  min-height: 600px;
+  margin: auto;
+  color: #3b260f;
+  border-radius: 20 px;
+  justify-content: center;
+  max-height: 800px;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-width: 8px;
+  border-color: #a0cab5;
+  background: #dae7dd;
+}
+
+p {
+  margin: 0px;
+}
+
+.container .h8 {
+  font-size: 36px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.btn.btn-primary {
+  height: 70px;
+  padding: 0 15px;
+  border: none;
+  transition: 0.5s;
+  background-size: 200% auto;
+  height: 50px;
+  background-color: #ccdfcc;
+  color: #3b260f;
+  font-weight: 800;
+  border: rgba(0, 0, 0, 0.05);
+}
+
+.btn.btn.btn-primary:hover {
+  background-position: right center;
+  color: #fff;
+  text-decoration: none;
+}
+
+.btn.btn-primary:hover .fas.fa-arrow-right {
+  transform: translate(15px);
+  transition: transform 0.2s ease-in;
+}
+
+.form-control {
+  color: #3b260f;
+  border: 1px solid #3b260f;
+  height: 40px;
+  padding-left: 20px;
+  vertical-align: middle;
+}
+
+.form-control:focus {
+  color: #3b260f;
+  border-color: #3b260f;
+  background-color: #ccdfcc;
+  box-shadow: none;
+}
+
+.text {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+::placeholder {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.btn.btn-primary {
+  height: 50px;
+  background-color: #ccdfcc;
+}
+
+#profile-content {
+  height: 100px;
+  border-radius: 10px;
+}
+
+#update-icon1 {
+  width: 2.5rem;
+  transform: scaleX(-1);
+}
+#update-icon2 {
+  width: 2.5rem;
+}
+#blah {
+  border-radius: 100%;
+  width: 140px;
+  height: 140px;
+  border-width: 5px;
+  border-color: #3b260f;
+}

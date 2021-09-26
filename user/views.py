@@ -416,6 +416,11 @@ class MyPlantsListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        follower = Follow.objects.filter(user=self.request.user).count()
+        following = Follow.objects.filter(
+            following_user=self.request.user).count()
+        context["follower"] = follower
+        context["following"] = following
         paginator = context['paginator']
         page_numbers_range = 10
         max_index = len(paginator.page_range)
@@ -432,11 +437,14 @@ class MyPlantsListView(ListView):
         page_range = paginator.page_range[start_index:end_index]
         context['page_range'] = page_range
 
+        user = GeneralUser.objects.get(id=self.kwargs['pk'])
+        context['user'] = user
         return context
 
     def get_queryset(self):
+        user = GeneralUser.objects.get(id=self.kwargs['pk'])
         plants_list = MyPlant.objects.filter(
-            user=self.request.user).order_by('-id')
+            user=user).order_by('-id')
         return plants_list
 
 
@@ -448,7 +456,7 @@ def add_myplant(request):
             plant = form.save(commit=False)
             plant.user = request.user
             plant = form.save()
-            return redirect('user:myplants', pk=plant.user.pk)
+            return redirect('user:my_plants', pk=plant.user.pk)
     else:
         form = MyPlantsForm()
         ctx = {'form': form}
