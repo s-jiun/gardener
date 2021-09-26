@@ -65,14 +65,14 @@
                         </div>
                     </div>
                     <div class="row mt-3">
-                        <div class="col-6 p-0">
-                            <div class="text-center" style="height:6rem; font-size:1.6rem; border-bottom: solid 1px #8F8F8F; border-top: solid 1px #8F8F8F; border-right:solid 1px #8f8f8f; line-height: 6rem;">
+                        <div class="col-6 p-0" style="border-right: solid 1px #8f8f8f;">
+                            <div class="text-center" style="height:6rem; font-size:1.6rem; border-bottom: solid 1px #8F8F8F; border-top: solid 1px #8F8F8F; line-height: 6rem;">
                                 팔로워
                             </div>
-                            <div>
+                            <div id='follower-box'>
                                 {% if followers %}
                                     {% for follower in followers %}
-                                        <div class="row row-cols-2 row-cols-lg-2 p-3 justify-content-between me-0" style="border-right:solid 1px #8f8f8f;">
+                                        <div id="follower-div-{{follower.following_user_id}}" class="follower-div row row-cols-2 row-cols-lg-2 p-3 justify-content-between me-0">
                                             <div class="col">
                                                 <img style="border-radius: 50%; width: 5rem; height: 5rem;" src="{{follower.following_user.Image.url}}" alt="">
                                                 <p style="font-size: 1.8rem; display: inline-block;">{{follower.following_user.name}}</p>
@@ -82,7 +82,7 @@
                                                     {% if follower.following_user_id in cur_users_followings_list %}
                                                         <div class="col follow-wraper-{{follower.following_user_id}} d-flex justify-content-end align-items-center" style="display:inline; width: 10rem; ">
                                                             <div class='following-{{follower.following_user_id}}' style="display:inline;">
-                                                                <button onclick="onClickFollowing({{following.user_id}})">삭제</button>
+                                                                <button onclick="onClickFollowerDelete({{follower.following_user_id}})">삭제</button>
                                                             </div>
                                                         </div>
                                                     {% else %}
@@ -126,10 +126,10 @@
                             <div class="text-center" style="height:6rem; font-size:1.6rem; border-top:solid 1px #8F8F8F; border-bottom: solid 1px #8f8f8f; line-height: 6rem;">
                                 팔로잉
                             </div>
-                            <div>
+                            <div id="following-box">
                                 {% if followings %}
                                     {% for following in followings %}
-                                    <div class="row row-cols-2 row-cols-lg-2 p-3 justify-content-between me-0">
+                                    <div id="following-div-{{following.user_id}}" class="following-div row row-cols-2 row-cols-lg-2 p-3 justify-content-between me-0">
                                         <div class="col">
                                             <img style="border-radius: 50%; width: 5rem; height: 5rem;" src="{{following.user.Image.url}}" alt="">
                                             <p style="font-size: 1.8rem; display: inline-block;">{{following.user.name}}</p>
@@ -139,7 +139,7 @@
                                                 {% if following.user_id in cur_users_followings_list %}
                                                     <div class="col follow-wraper-{{following.user_id}} d-flex justify-content-end align-items-center" style="display:inline; width: 10rem; ">
                                                         <div class='following-{{following.user_id}}' style="display:inline;">
-                                                            <button onclick="onClickFollowing({{following.user_id}})" >삭제</button>
+                                                            <button onclick="onClickFollowingDelete({{following.user_id}})" >삭제</button>
                                                         </div>
                                                     </div>
                                                 {% else %}
@@ -155,13 +155,13 @@
                                                 {% if following.user_id in cur_users_followings_list %}
                                                     <div class="col follow-wraper-{{following.user_id}} d-flex justify-content-end align-items-center" style="display:inline; width: 10rem; ">
                                                         <div class='following-{{following.user_id}}' style="display:inline;">
-                                                            <button>팔로우 취소</button>
+                                                            <button onclick="onClickOtherDeleteFollow({{following.user_id}})">팔로우 취소</button>
                                                         </div>
                                                     </div>
                                                 {% else %}
                                                     <div class="col follow-wraper-{{following.user_id}} d-flex justify-content-end align-items-center" style="display:inline; width: 10rem; ">
                                                         <div class="follow-{{following.user_id}}" style="display:inline;">
-                                                            <button  onclick="onClickOtherFollow({{following.user_id}})">팔로우</button>
+                                                            <button  onclick="onClickOtherFollowing({{following.user_id}})">팔로우</button>
                                                         </div>
                                                     </div>
                                                 {% endif %}
