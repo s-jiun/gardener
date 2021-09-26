@@ -1,19 +1,46 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block head %}
+    <link href="{% static 'style/css/add_myplant.css' %}" rel="stylesheet">
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+{% endblock %}
+
 {% block content %}
-    <form action="" method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        <table>
-            {{form.as_table}}
-        </table>
-
-        <input type="submit" value = '업로드'/>
-
-        <button type="button" id='submit-button'>
-            <a href="{% url 'user:my_plants' user.pk %}">취소</a>
-        </button>
-    </form>
+<div class='container main-body mb-5' id='makequestion-body'>
+    <div class='row'>
+        <div class='col col-12 container-fluid d-flex flex-column' id='make-myplant-main'>
+            <div style='width:80%;'>
+                <div style="margin-top:5rem;">
+                    <form action='' method='POST' enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div style="float:right;">
+                            <button class="go-to-main" style="margin-right:10px;"><a href="{% url 'user:my_profile'%}">취소하기</a></button>
+                            <input type="submit" value = '저장하기' class='make-something' style="font-size:1.4rem; color:#76b79c;"/>
+                            {% comment %}
+                            {% else %}
+                            <button class="go-to-main" style="margin-right:10px;"><a href="{% url 'community:post_list' %}">돌아가기</a></button>
+                            <input type="submit" value = '저장하기' class='make-something' style="font-size:1.4rem; color:#76b79c;"/>
+                            {% endcomment %}
+                        </div>
+                        <div class='form-group' style="margin-bottom:3rem;">
+                            <label for="id_Image" class="form-label" style="font-size:1.6rem; font-weight:bold;">식물사진</label>
+                            (사진을 반드시 첨부해주세요!)
+                            <input type="file" class='form-control' onchange="readURL(this);" name="Image" accept="image/*" id="id_Image" style="font-size:1.4rem;">
+                            <img class="lazyload" id="blah" data-src="" class='mt-2'/>
+                        </div>
+                        <div class='form-group' style="margin-bottom:3rem;">
+                            <label for="id_plant_name" class="form-label" style="font-size:1.6rem; font-weight:bold;">식물명</label>
+                            <input type="text" class='form-control' name="plant_name" maxlength="100" required="" id="id_plant_name" style="font-size:1.4rem;">
+                        </div>            
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+    </div>    
+</div>       
 {% endblock %}
 
 {% block js %}
