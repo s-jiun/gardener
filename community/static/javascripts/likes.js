@@ -19,12 +19,14 @@ const likeHandleResponse = () => {
     console.log(heart);
     if (
       heart ==
-      `<img class="me-1" src="/static/images/heart_line.svg" alt="하트">`
+      '<img class="me-1" src="/static/images/heart_fill.svg" alt="하트">'
     ) {
-      element1.innerHTML = `<img class='me-1' src='/static/images/heart_fill.svg' alt='하트'>`;
+      element1.innerHTML =
+        '<img class="me-1" src="/static/images/heart_line.svg" alt="하트">';
       element2.innerHTML = ` ${like_count}`;
     } else {
-      element1.innerHTML = `<img class="me-1" src="/static/images/heart_line.svg" alt="하트">`;
+      element1.innerHTML =
+        '<img class="me-1" src="/static/images/heart_fill.svg" alt="하트">';
       element2.innerHTML = ` ${like_count}`;
     }
   }
