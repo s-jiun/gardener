@@ -83,7 +83,7 @@ def challenge_detail(request, pk):
             challenge=challenge, client_ip=get_client_ip(request))
 
     comments = challenge.challengereply_set.filter(parent_reply__isnull=True)
-    commentCount = ChallengeReply.objects.filter(challenge_id=pk).count()
+    comment_count = ChallengeReply.objects.filter(challenge_id=pk).count()
 
     if request.method == 'POST':
         comment_form = ChallengeReplyForm(request.POST, request.FILES)
@@ -112,8 +112,9 @@ def challenge_detail(request, pk):
         'challenge': challenge,
         'comments': comments,
         'comment_form': comment_form,
+        'comment_count': comment_count,
         'views': len(
-            Challengeviews.objects.filter(challenge=challenge))
+            Challengeviews.objects.filter(challenge=challenge)),
     }
     return render(request, 'event/challenge_detail.html', context=ctx)
 
@@ -205,5 +206,7 @@ def delete_reply(request, pk):
         ChallengeReply.objects.filter(
             challenge_id=challenge_id, parent_reply=comment).delete()
         comment.delete()
-
-    return JsonResponse({'parent_reply_id': parent_reply_id, 'challenge_id': challenge_id, 'challengeReply_id': challengeReply_id})
+    
+    commentCount = ChallengeReply.objects.filter(
+        challenge_id=challenge_id).count()
+    return JsonResponse({'parent_reply_id': parent_reply_id, 'challenge_id': challenge_id, 'challengeReply_id': challengeReply_id, 'comment_count':commentCount})
