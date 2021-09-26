@@ -36,6 +36,7 @@
                 <span>&#183</span>
                 <span id="post-date">{{post.created_at | date:"Y.m.d h:m"}}</span>
                 <span class="ms-2 me-1" id="post-detail-views">조회수 {{views}}</span>
+                
             </div>
             <div id="follow-wrapper" class="col d-flex justify-content-end">
                 {% if post.user_id != request.user %}
@@ -64,7 +65,7 @@
                         <span><a class="heart" onclick="onClickLike({{ post.id }})"> <img class="me-1" src="{% static 'images/heart_fill.svg' %}" alt="하트"></a></span>
                         <span class='like_num'>{{post.like_set.all.count}}</span>
                     {% else %}
-                        <span><a class = 'heart' onclick="onClickLike({{ post.id }})"> <img class="me-1" src="{% static 'images/heart_line.svg' %}" alt="하트"></button></span>
+                        <span><a class = 'heart' onclick="onClickLike({{ post.id }})"> <img class="me-1" src="{% static 'images/heart_line.svg' %}" alt="하트"></a></span>
                         <span class='like_num'>{{post.like_set.all.count}}</span>
                     {% endif %}
                 {% else %}
@@ -92,7 +93,7 @@
                         {{comment_form.media}}
                         {{ comment_form.as_p }}
                         <div class="d-flex justify-content-end">
-                            <button class="comment-submit" type="submit">Submit</button>
+                            <button class="create-comment" type="submit">작성완료</button>
                         </div>
                     </form>
                 </div>
