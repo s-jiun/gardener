@@ -11,7 +11,7 @@
 
     <table class='table table-borderless table-hover'>
         <thead>
-            <tr style="color:#8F8F8F;">
+            <tr class ="list-header">
                 <th scope='col col-1'>번호</th>
                 <th scope='col col-7' style="text-align:start;">제목</th>
                 <th scope='col-2'>작성자</th>
@@ -21,7 +21,7 @@
         <tbody>
             {% if challenge_list %}
             {% for challenge in challenge_list %}
-            <tr class="text-center">
+            <tr class="list-main text-center">
                 <th scope='row' style="font-weight: normal;">{{ paginator.count|sub:page_obj.start_index|sub:forloop.counter0|add:1 }}</th>
                 <td style="text-align:start;">
                     {% if request.user.is_authenticated %}
@@ -35,22 +35,12 @@
             </tr>
             {% endfor %}
             {% else %}
-            {% if q %}
-                <tr class='text-center'>
-                    <th style="font-weight: normal;" scope='row'>0</th>
-                    <td style="text-align:start;">일치하는 게시글이 없습니다.</td>
-                    <td>관리자</td>
-                    <td></td>
-                </tr>
-            {% else %}
-                <tr class='text-center'>
+                <tr class='list-main text-center'>
                     <th style="font-weight: normal;" scope='row'>0</th>
                     <td style="text-align:start;">작성된 게시글이 없습니다.</td>
                     <td>관리자</td>
                     <td></td>
                 </tr>
-            {% endif %}
-
             {% endif %}
         </tbody>
     </table>
