@@ -2,35 +2,3 @@
   margin: 0 auto;
   align-items: center;
 }
-
-#makequestion-input {
-  background-color: #ccdfcc;
-  border-radius: 10px;
-  border: 0;
-}
-
-#makequestion-button {
-  background-color: #c4c4c4;
-  border-radius: 10px;
-  border: 0;
-}
-
-#makequestion-button a {
-  text-decoration: none;
-  color: black;
-}
-
-#makequestion-writing {
-  writing-mode: vertical-rl;
-}
-
-#makequestion-writing h4 {
-  margin-left: 0;
-  margin-right: 1vw;
-}
-
-@media screen and (max-width: 800px) {
-  #makequestion-writing {
-    display: none;
-  }
-}

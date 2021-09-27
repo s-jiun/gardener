@@ -19,31 +19,33 @@
     {% endblock %}
     <title>Ourplant</title>
 </head>
-
-<header>
-    <div class="row d-flex justify-content-end"  style="margin: auto; width: 80%; margin-top: 1.6rem; padding-right:3rem;">
-        {% if request.user.is_authenticated %}
-            <div class="col d-flex justify-content-end">
-                <a href="{% url 'user:logout' %}" style="margin-right:1rem;">로그아웃</a>
-                <a href="{% url 'user:my_profile' %}">{{ request.user.userid }}</a>
-                <img class="lazyload" data-src="{{ request.user.Image.url }}" style="width: 1.5rem; height: 1.5rem; border-radius: 50%;">
+<main>
+    <header>
+        <div class="row d-flex justify-content-end"  style="margin: auto; width: 80%; margin-top: 1.6rem; padding-right:3rem;">
+            {% if request.user.is_authenticated %}
+                <div class="col d-flex justify-content-end">
+                    <a href="{% url 'user:logout' %}" style="margin-right:1rem;">로그아웃</a>
+                    <a href="{% url 'user:my_profile' %}">{{ request.user.userid }}</a>
+                    <img class="lazyload" data-src="{{ request.user.Image.url }}" style="width: 1.5rem; height: 1.5rem; border-radius: 50%;">
+                </div>
+                {% else %}
+                <div class="col d-flex justify-content-end">
+                    <a href="{% url 'user:signup' %}" style="padding-right:5px">회원가입</a>
+                    <a href="{% url 'user:login'%}">로그인</a>
+                </div>
+                {% endif %} 
             </div>
-            {% else %}
-            <div class="col d-flex justify-content-end">
-                <a href="{% url 'user:signup' %}" style="padding-right:5px">회원가입</a>
-                <a href="{% url 'user:login'%}">로그인</a>
-            </div>
-            {% endif %} 
+    </header>
+    
+    <div class="row justify-content-center align-items-center" style="width:100vw; height:100vh;">
+        {% block content %}
+        {% endblock %}
+        <div id="image-container" class="col-6" style="width: 470px; height: 610px;">
+            <img src="{% static  'images/welcome_image.png'%}" alt="">
         </div>
-</header>
-
-<div class="row justify-content-center align-items-center" style="width:100vw; height:100vh;">
-    {% block content %}
-    {% endblock %}
-    <div id="image-container" class="col-6" style="width: 470px; height: 610px;">
-        <img src="{% static  'images/welcome_image.png'%}" alt="">
     </div>
-</div>
+</main>
+
 
 <footer style="bottom: -6%;" class="text-lg-start d-flex justify-content-center align-items-center">
     <div style="width:93.75rem; font-size: 1.4rem;" class="d-flex justify-content-between align-items-center">
