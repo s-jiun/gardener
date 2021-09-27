@@ -152,26 +152,16 @@
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="d-flex justify-content-center align-items-start pb-3">
-                                        {%if scrab.plant in scrap_plant_list %}
-                                        <div class="btn btn-success btn-sm post__del_scrap"
-                                            onclick="onClickScrap({{scrab.plant.pk}})">
-                                            <img class="profile-post-header__img"
-                                                src="{% static 'images/mark_fill.svg'%}" />
+                                        <div class="btn btn-success btn-sm post__del_scrap">
+                                            <a href="{% url 'user:delete_scrab' scrab.plant.pk %}">
+                                                <img class="profile-post-header__img" src="{% static 'images/mark_fill.svg'%}" />
+                                            </a>
                                         </div>
-                                        {% else %}
-                                        {% if request.user.is_authenticated %}
-                                        <div class="btn btn-success btn-sm post__scrap"
-                                            onclick="onClickScrap({{scrab.plant.pk}})">
-                                            <img class="profile-post-header__img"
-                                                src="{% static 'images/mark_line.svg'%}" />
-                                        </div>
-                                        {% endif %}
-                                        {% endif %}
                                         <h5 class="modal-title" id="plantDetailLabel">{{scrab.plant.name}}</h5>
                                     </div>
                                     <div class="modal-body text-center"
                                         style="padding-left:40px; padding-right:40px; padding-bottom:40px;">
-                                        <img class="lazyload" data-src={{plant.photo_url|safe}}>
+                                        <img class="lazyload" data-src={{scrab.plant.photo_url|safe}}>
                                         <div>
                                             <table class="text-start mt-2">
                                                 <tbody>
@@ -299,7 +289,7 @@
                         {%else%}
                         <div id="no-post" class="text-center">
 
-                            <span> 현재 게시글이 없습니다. </span>
+                            <span> 현재 스크랩한 식물이 없습니다. </span>
                         </div>
                         {% endif %}
                     </div>
@@ -366,4 +356,5 @@
 
 {% block js %}
 <script src="{% static 'javascripts/profile_follow.js' %}"></script>
+<script src="{% static 'javascripts/scrap.js' %}"></script>
 {% endblock %}
