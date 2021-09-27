@@ -61,8 +61,14 @@
                         <span id="postcard-head"><img class="lazyload" id='post-list-thumbnail' data-src="{{ post.user_id.Image.url }}"> {{ post.user_id }}</span>
                         {% if request.user == post.user_id %}
                         {% else %}
-                            <a id="postcard-follow">팔로우</a>
-                        {% endif %}                        
+                        <div id="postcard-follow" class="postcard-{{post.user_id.id}}">
+                            {% if post.user_id.id in following_list %}
+                                <a onclick="onClickListDeleteFollow({{post.user_id.id}})" >팔로우 취소</a>
+                            {% else %}
+                                <a onclick="onClickListFollowing({{post.user_id.id}})">팔로우</a>                        
+                            {% endif %}
+                        </div>
+                        {% endif %}   
                     </div>
                     <a href='{% url "community:post_detail" pk=post.pk %}'>
                     <figure class="snip1384">
@@ -142,5 +148,7 @@
 
 
 {% block js %}
-    <script src="{% static 'javascripts/post_follow.js' %}"></script>
+    {% comment %} <script src="{% static 'javascripts/post_comment.js' %}"></script> {% endcomment %}
+    <script src="{% static 'javascripts/likes.js' %}"></script>
+    <script src="{% static 'javascripts/post_list_follow.js' %}"></script>
 {% endblock %}
