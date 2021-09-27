@@ -12,7 +12,8 @@ const onClickOtherFollowing = (user_id) => {
 
 const otherFollowingHandleResponse = () => {
   if (requestOtherFollowing.status < 400) {
-    const { user_id, user_name, user_point, user_image_url, user_userid } = JSON.parse(requestOtherFollowing.response); 
+    const { user_id, user_name, user_point, user_image_url, user_userid } =
+      JSON.parse(requestOtherFollowing.response);
     const element = document.querySelector(`#follow-wrapper`);
     console.log(element);
     element.innerHTML = `    
@@ -41,12 +42,12 @@ const onClickOtherDeleteFollow = (user_id) => {
 
 const otherFollowHandleResponse = () => {
   if (requestOtherDeleteFollow.status < 400) {
-    const { user_id, user_name, user_point, user_image_url, user_userid } = JSON.parse(requestOtherDeleteFollow.response); 
+    const { user_id, user_name, user_point, user_image_url, user_userid } =
+      JSON.parse(requestOtherDeleteFollow.response);
     const element = document.querySelector(`#follow-wrapper`);
     element.innerHTML = `    
     <button type="button" class="btn btn-outline-success" onclick="onClickOtherFollowing(${user_id})" id="post-follow-button">팔로우</button> 
     `;
-
   }
 };
 requestOtherDeleteFollow.onreadystatechange = () => {

@@ -45,9 +45,9 @@
             <div id="follow-wrapper" class="col d-flex justify-content-end">
                 {% if post.user_id != request.user %}
                     {% if is_following%}
-                        <button type="button" class="btn btn-outline-success" onclick="onClickOtherDeleteFollow({{post.id}})" id="post-follow-button">팔로우 취소</button>
+                        <button type="button" class="btn btn-outline-success" onclick="onClickOtherDeleteFollow({{post.user_id.pk}})" id="post-follow-button">팔로우 취소</button>
                     {% else %}
-                        <button type="button" class="btn btn-outline-success" onclick="onClickOtherFollowing({{post.id}})" id="post-follow-button">팔로우</button> 
+                        <button type="button" class="btn btn-outline-success" onclick="onClickOtherFollowing({{post.user_id.pk}})" id="post-follow-button">팔로우</button> 
                     {% endif %}    
                 {% endif %}
             </div>
