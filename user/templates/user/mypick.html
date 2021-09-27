@@ -1,8 +1,9 @@
 {% extends "base.html" %}
 {% load static %}
 {%block head%}
-<link href="{% static 'style/css/profile.css' %}" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+    <link href="{% static 'style/css/profile.css' %}" rel="stylesheet">
+    <link href="/static/style/css/community_list.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
 <!--CDN 링크 -->
 
 {%endblock%}
@@ -110,27 +111,44 @@
                             </a>
                         </div>
                     </div>
-                    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3" style="margin-left:20px; margin-top:20px;">
+                    <div class='row d-flex' style='flex-wrap:wrap;'>
                         {% if liked%}
                         {%for like in liked%}
                         <div class="col col-lg-4">
-                            <div id="card-post" class="card text-center m-3">
-                                <a href="{% url 'community:post_detail' like.post_id.pk %}"><img class="lazyload"
-                                        data-src={{like.post_id.image.url}} class="card-img-top" alt="..."
-                                        style="width:100%; max-height: 160px;"></a>
+                            <div class="card border-0 border-bottom col-sm-12 col-md-6 col-lg-4" id="postcard" style="width: 100%; object-fit: cover;">
+                                <div class="row d-flex p-1 justify-content-between" >
+                                    <span id="postcard-head"><img class="lazyload" id='post-list-thumbnail' data-src={{like.post_id.user_id.Image.url}}> {{like.post_id.user_id}}</span>
+                                    <a id="postcard-follow">팔로우</a>                        
+                                </div>
                                 <div class="card-body ">
                                     <a href="{% url 'community:post_detail' like.post_id.pk %}">
-                                        <p class="card-title" id="post-title"> {{like.post_id.title}}</p>
+                                        <figure class="snip1384">
+                                            {% if like.post_id.image %}
+                                                <image data-src='{{like.post_id.image.url}}' class='lazyload img-thumbnail' id = "post-image"/>
+                                            {% endif %}
+                                            <figcaption>
+                                            <span id="postcard-title">{{like.post_id.title|truncatechars:10 }}</span>
+                                            <p>
+                                                {% for tag in like.post_id.tags.all %}
+                                                    <button type="button" class="btn btn-outline-success" id="post-tag-button">{{tag.name}}</button> 
+                                                {% endfor %}
+                                            </p>
+                                            </figcaption>
+                                        </figure>
                                     </a>
-                                    <hr style="margin:0px 0px 5px 0px;">
-                                    {{like.post_id.created_at}}<br>
-                                    {% if like.post_id.tags.all %}
-                                    {% for tag in like.post_id.tags.all %}
-                                    <img class="lazyload" style="width: 1rem;"
-                                        data-src="{% static 'images/label.png'%}" />
-                                    <span>{{tag.name}}</span>
-                                    {% endfor %}
-                                    {%endif%}
+                                    <div class="row d-flex justify-content-between">
+                                        <div class="col pe-4">
+                                            <div class='likes post-id-{{ like.post_id.id }} d-flex ps-2'>
+                                                <img class='me-1' src='{% static 'images/heart_line.svg' %}' alt='하트'>
+                                                <span class='like_num me-3'>{{like.post_id.like_set.all.count}}</span>
+                                                <img class='me-1' src='{% static 'images/comment_line.svg' %}' alt='댓글'>
+                                                <span class='like_num'>{{like.post_id.reply_set.count}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col text-end">
+                                            <span id="postcard-date">{{like.post_id.created_at | date:"Y.m.d"}}</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -138,7 +156,7 @@
                         {%else%}
                         <div id="no-post" class="text-center">
 
-                            <span> 현재 게시글이 없습니다. </span>
+                            <span> 현재 좋아요한 게시글이 없습니다. </span>
                         </div>
                         {% endif %}
                     </div>
