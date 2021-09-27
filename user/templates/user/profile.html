@@ -8,6 +8,18 @@
 
 {%endblock%}
 
+{% block button %}
+<div>
+    <button class="make-something">
+        {% if request.user.is_authenticated %}
+        <a href="{% url 'community:post_create' %}">포스트 작성</a>
+        {% else %}
+        <a onclick="alert('로그인이 필요한 서비스입니다.')" href="{% url 'user:login' %}">포스트 작성</a>
+        {% endif %}
+    </button>
+</div>
+{% endblock %}
+
 {% block content %}
 
 <div class="container pe-0 ps-0">
@@ -51,14 +63,14 @@
                                         <div class="follow-wrapper ms-2">
                                             <div class='following'>
                                                 <button class='follow-btn'
-                                                    onclick="onClickFollowing({{user.id}})">팔로잉</button>
+                                                    onclick="onClickDeleteFollow({{user.id}})">팔로우 취소</button>
                                             </div>
                                         </div>
                                         {% else %}
                                         <div class="follow-wrapper">
                                             <div class="follow">
                                                 <button class='follow-btn'
-                                                    onclick="onClickFollow({{user.id}})">팔로우</button>
+                                                    onclick="onClickFollowing({{user.id}})">팔로우</button>
                                             </div>
                                         </div>
                                         {% endif %}

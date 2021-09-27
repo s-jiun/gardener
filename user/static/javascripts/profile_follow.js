@@ -15,12 +15,12 @@ const followingHandleResponse = () => {
         const {user_id} = JSON.parse(requestFollowing.response);
         const element = document.querySelector('.follow-wrapper')
         const follower_count = document.querySelector('.follower-count')
-        const count = Number(follower_count.innerHTML) - 1
+        const count = Number(follower_count.innerHTML) + 1
         follower_count.innerHTML = `${count}`
         console.log(element)
         element.innerHTML = `
         <div class="follow">
-            <button class="follow-btn" onclick="onClickFollow(${user_id})">팔로우</button>
+            <button class="follow-btn" onclick="onClickDeleteFollow(${user_id})">팔로우 취소</button>
         </div>
         `
 
@@ -34,35 +34,35 @@ if (requestFollowing.readyState === XMLHttpRequest.DONE) {
     }
 }
 
-const requestFollow = new XMLHttpRequest()
+const requestDeleteFollow = new XMLHttpRequest()
 
-const onClickFollow = (user_id) => {
-    const url = '/follow_ajax/';
-    requestFollow.open('POST', url, true);
-    requestFollow.setRequestHeader(
+const onClickDeleteFollow = (user_id) => {
+    const url = '/other_delete_ajax/';
+    requestDeleteFollow.open('POST', url, true);
+    requestDeleteFollow.setRequestHeader(
         'Content-Type',
         'application/x-www-form-urlencoded',
     );
-    requestFollow.send(JSON.stringify({user_id:user_id}))
+    requestDeleteFollow.send(JSON.stringify({user_id:user_id}))
 }
 
 const followHandleResponse = () => {
-    if (requestFollow.status < 400) {
-        const {user_id} = JSON.parse(requestFollow.response);
+    if (requestDeleteFollow.status < 400) {
+        const {user_id} = JSON.parse(requestDeleteFollow.response);
         const element = document.querySelector(`.follow-wrapper`)
         const follower_count = document.querySelector('.follower-count')
-        const count = Number(follower_count.innerHTML) + 1
+        const count = Number(follower_count.innerHTML) - 1
         follower_count.innerHTML = `${count}`
         console.log(element)
         element.innerHTML = `    
         <div class='following'>
-            <button class="follow-btn" onclick="onClickFollowing(${user_id})">팔로잉</button>
+            <button class="follow-btn" onclick="onClickFollowing(${user_id})">팔로우</button>
         </div>`
     }
 
 }
-requestFollow.onreadystatechange = () => {
-if (requestFollow.readyState === XMLHttpRequest.DONE) {
+requestDeleteFollow.onreadystatechange = () => {
+if (requestDeleteFollow.readyState === XMLHttpRequest.DONE) {
     followHandleResponse();
     }
 }
