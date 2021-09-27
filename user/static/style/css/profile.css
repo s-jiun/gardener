@@ -68,7 +68,7 @@ a {
   align-items: center;
 }
 .header-active {
-  color: #76B79C;
+  color: #76b79c;
   font-weight: 500;
 }
 .profile-post-header__img {
@@ -95,7 +95,7 @@ a {
 }
 #user-level {
   font-weight: 300;
-  color: #76B79C;
+  color: #76b79c;
   vertical-align: text-top;
 }
 #user-level a {
@@ -104,14 +104,15 @@ a {
 }
 #profile-content span {
   font-size: 1.4rem;
-  color: #8F8F8F;
+  color: #8f8f8f;
   font-weight: 300;
 }
 /* #user-follow {
   justify-content: space-between;
 } */
 
-#user-follow a, span {
+#user-follow a,
+span {
   font-size: 1.4rem;
 }
 
@@ -139,7 +140,12 @@ a {
   margin: 0;
 }
 
-
+.sidebar a {
+  width: 100%;
+  padding: 10px;
+  margin: 0;
+  font-weight: bold;
+  color: #5c5427;
 
 #no-post {
   width: 100%;
@@ -153,13 +159,13 @@ a {
   width: 2rem;
 }
 
-
 .follow-btn {
   position: relative;
   background: #a0cab5;
   width: auto;
   box-sizing: border-box;
   border-radius: 100px;
+  font-family: "Noto Sans KR", sans-serif;
 }
 .follow-wrapper {
   display: inline;

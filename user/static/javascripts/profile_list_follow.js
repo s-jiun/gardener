@@ -1,6 +1,6 @@
 const requestOtherFollowing = new XMLHttpRequest();
 
-const onClickOtherFollowing = (user_id) => {
+const onClickListFollowing = (user_id) => {
   const url = "/following_ajax/";
   requestOtherFollowing.open("POST", url, true);
   requestOtherFollowing.setRequestHeader(
@@ -14,10 +14,12 @@ const otherFollowingHandleResponse = () => {
   if (requestOtherFollowing.status < 400) {
     const { user_id, user_name, user_point, user_image_url, user_userid } =
       JSON.parse(requestOtherFollowing.response);
-    const element = document.querySelector(`#follow-wrapper`);
+    const element = document.querySelector(`.postcard-${user_id}`);
     console.log(element);
+    const element2 = document.querySelector(`.following-count`);
+    element2.innerHTML = Number(element2.innerHTML) + 1
     element.innerHTML = `    
-    <button type="button" class="btn btn-outline-success" onclick="onClickOtherDeleteFollow(${user_id})" id="post-follow-button">팔로우 취소</button>
+    <a onclick="onClickListDeleteFollow(${user_id})" >팔로우 취소</a>
     `;
   }
 };
@@ -30,7 +32,7 @@ requestOtherFollowing.onreadystatechange = () => {
 
 const requestOtherDeleteFollow = new XMLHttpRequest();
 
-const onClickOtherDeleteFollow = (user_id) => {
+const onClickListDeleteFollow = (user_id) => {
   const url = "/other_delete_ajax/";
   requestOtherDeleteFollow.open("POST", url, true);
   requestOtherDeleteFollow.setRequestHeader(
@@ -44,9 +46,11 @@ const otherFollowHandleResponse = () => {
   if (requestOtherDeleteFollow.status < 400) {
     const { user_id, user_name, user_point, user_image_url, user_userid } =
       JSON.parse(requestOtherDeleteFollow.response);
-    const element = document.querySelector(`#follow-wrapper`);
+    const element = document.querySelector(`.postcard-${user_id}`);
+    const element2 = document.querySelector(`.following-count`);
+    element2.innerHTML = Number(element2.innerHTML) - 1
     element.innerHTML = `    
-    <button type="button" class="btn btn-outline-success" onclick="onClickOtherFollowing(${user_id})" id="post-follow-button">팔로우</button> 
+    <a onclick="onClickListFollowing(${user_id})">팔로우</a>
     `;
   }
 };

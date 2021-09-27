@@ -13,36 +13,40 @@
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
     <link href="{% static 'style/css/base.css' %}" rel="stylesheet">
+    <link href="{% static 'style/css/login_base.css' %}" rel="stylesheet">
     <script  src="https://code.jquery.com/jquery-latest.min.js"></script>
 
     {% block head %}
     {% endblock %}
-    <title>Gardener</title>
+    <title>Ourplant</title>
 </head>
-
-<header>
-    <div class="d-flex justify-content-end" style="font-size: 0.825rem;">
-        {% if request.user.is_authenticated %}
-        <div style="padding-right: 20rem; margin-top: 1rem;">
-            <a href="">{{user.name}}</a>
-            <a href="{% url 'user:logout' %}">로그아웃</a>
+<main>
+    <header>
+        <div class="row d-flex justify-content-end"  style="margin: auto; width: 80%; margin-top: 1.6rem; padding-right:3rem;">
+            {% if request.user.is_authenticated %}
+                <div class="col d-flex justify-content-end">
+                    <a href="{% url 'user:logout' %}" style="margin-right:1rem;">로그아웃</a>
+                    <a href="{% url 'user:my_profile' %}">{{ request.user.userid }}</a>
+                    <img class="lazyload" data-src="{{ request.user.Image.url }}" style="width: 1.5rem; height: 1.5rem; border-radius: 50%;">
+                </div>
+                {% else %}
+                <div class="col d-flex justify-content-end">
+                    <a href="{% url 'user:signup' %}" style="padding-right:5px">회원가입</a>
+                    <a href="{% url 'user:login'%}">로그인</a>
+                </div>
+                {% endif %} 
+            </div>
+    </header>
+    
+    <div class="row justify-content-center align-items-center" style="width:100vw; height:100vh;">
+        {% block content %}
+        {% endblock %}
+        <div id="image-container" class="col-6" style="width: 470px; height: 610px;">
+            <img src="{% static  'images/welcome_image.png'%}" alt="">
         </div>
-        {% else %}
-        <div style="padding-right: 20rem; margin-top: 1rem;">
-            <a href="{% url 'user:signup' %}" style="padding-right:5px">회원가입</a>
-            <a href="{% url 'user:login' %}">로그인</a>
-        </div>
-        {% endif %}
     </div>
-</header>
+</main>
 
-<div class="row justify-content-center align-items-center" style="width:100vw; height:100vh;">
-    {% block content %}
-    {% endblock %}
-    <div id="image-container" class="col-6" style="width: 470px; height: 610px;">
-        <img src="{% static  'images/welcome_image.png'%}" alt="">
-    </div>
-</div>
 
 <footer style="bottom: -6%;" class="text-lg-start d-flex justify-content-center align-items-center">
     <div style="width:93.75rem; font-size: 1.4rem;" class="d-flex justify-content-between align-items-center">

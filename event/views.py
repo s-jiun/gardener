@@ -5,9 +5,9 @@ from django.db.models import Q
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 
-from user.models import Follow, GeneralUser
-from .models import Challenge, CardNews, ChallengeReply, NewsReply, Challengeviews
-from .forms import ChallengeReplyForm
+from user.models import GeneralUser
+from .models import Challenge, CardNews, ChallengeReply, NewsReply, Challengeviews, Newsviews
+from .forms import ChallengeReplyForm, NewsReplyForm
 import json
 from django.http.response import JsonResponse
 
@@ -156,6 +156,8 @@ class NewsListView(ListView):
         issue_list = CardNews.objects.order_by('-id')
         if search_keyword:
             if len(search_keyword) > 1:
+                issue_list = CardNews.objects.filter(
+                    title__icontains=search_keyword)
                 return issue_list
             else:
                 messages.error(self.request, '검색어는 2글자 이상 입력해주세요.')
@@ -164,10 +166,85 @@ class NewsListView(ListView):
 
 def issue_detail(request, pk):
     issue = get_object_or_404(CardNews, pk=pk)
+    if not Newsviews.objects.filter(client_ip=get_client_ip(request)):
+        Newsviews.objects.create(
+            issue=issue, client_ip=get_client_ip(request))
+
+    comments = issue.newsreply_set.filter(parent_reply__isnull=True)
+    comment_count = NewsReply.objects.filter(cardnews_id=pk).count()
+
+    if request.method == 'POST':
+        comment_form = NewsReplyForm(request.POST, request.FILES)
+        if comment_form.is_valid():
+            parent_obj = None
+            try:
+                parent_id = int(request.POST.get('parent_id'))
+            except:
+                parent_id = None
+            if parent_id:
+                parent_obj = NewsReply.objects.get(id=parent_id)
+                if parent_obj:
+                    replay_comment = comment_form.save(commit=False)
+                    replay_comment.parent_reply = parent_obj
+            new_comment = comment_form.save(commit=False)
+            new_comment.cardnews_id = issue
+
+            new_comment.user_id = GeneralUser.objects.get(
+                userid=request.user.get_username())
+            new_comment.save()
+            return redirect('event:issue_detail', pk=issue.pk)
+    else:
+        comment_form = NewsReplyForm()
     ctx = {
-        'issue': issue
+        'issue': issue,
+        'comments': comments,
+        'comment_form': comment_form,
+        'comment_count': comment_count,
+        'views': len(
+            Newsviews.objects.filter(issue=issue)),
     }
     return render(request, 'event/issue_detail.html', context=ctx)
+
+
+@login_required
+@csrf_exempt
+def issue_delete_comment(request, pk):
+    req = json.loads(request.body)
+    cardnews_id = req['cardnews_id']
+    NewsReply_id = req['NewsReply_id']
+
+    comment = NewsReply.objects.get(
+        cardnews_id_id=cardnews_id, id=NewsReply_id)
+    NewsReply.objects.filter(
+        cardnews_id=cardnews_id, parent_reply=comment).delete()
+    comment.delete()
+    commentCount = NewsReply.objects.filter(
+        cardnews_id=cardnews_id).count()
+    return JsonResponse({'cardnews_id': cardnews_id, 'NewsReply_id': NewsReply_id, 'comment_count': commentCount})
+
+
+@login_required
+@csrf_exempt
+def issue_delete_reply(request, pk):
+    req = json.loads(request.body)
+    cardnews_id = req['cardnews_id']
+    parent_reply_id = req['parent_reply_id']
+    NewsReply_id = req['NewsReply_id']
+    if parent_reply_id != None:
+        parent_obj = NewsReply.objects.get(
+            cardnews_id=cardnews_id, id=parent_reply_id)
+        NewsReply.objects.get(
+            cardnews_id=cardnews_id, parent_reply=parent_obj, id=NewsReply_id).delete()
+    else:
+        comment = NewsReply.objects.get(
+            cardnews_id=cardnews_id, id=NewsReply_id)
+        NewsReply.objects.filter(
+            cardnews_id=cardnews_id, parent_reply=comment).delete()
+        comment.delete()
+
+    commentCount = NewsReply.objects.filter(
+        cardnews_id=cardnews_id).count()
+    return JsonResponse({'parent_reply_id': parent_reply_id, 'cardnews_id': cardnews_id, 'NewsReply_id': NewsReply_id, 'comment_count': commentCount})
 
 
 @login_required

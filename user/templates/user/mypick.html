@@ -111,33 +111,37 @@
                             </a>
                         </div>
                     </div>
-                    <div class='row d-flex' style='flex-wrap:wrap;'>
-                        {% if liked%}
-                        {%for like in liked%}
-                        <div class="col col-lg-4">
-                            <div class="card border-0 border-bottom col-sm-12 col-md-6 col-lg-4" id="postcard" style="width: 100%; object-fit: cover;">
+                    {% if liked %}
+                        <div class='row d-flex' style='flex-wrap:wrap;' >
+                        {% for like in liked%}
+                            <div class="card border-0 border-bottom col-sm-12 col-md-6 col-lg-4" id="postcard">
                                 <div class="row d-flex p-1 justify-content-between" >
                                     <span id="postcard-head"><img class="lazyload" id='post-list-thumbnail' data-src={{like.post_id.user_id.Image.url}}> {{like.post_id.user_id}}</span>
-                                    <a id="postcard-follow">팔로우</a>                        
+                                    <div id="postcard-follow" class="postcard-{{like.post_id.user_id.id}}">
+                                        {% if like.post_id.user_id.id in following_list %}
+                                            <a onclick="onClickListDeleteFollow({{like.post_id.user_id.id}})" >팔로우 취소</a>
+                                        {% else %}
+                                            <a onclick="onClickListFollowing({{like.post_id.user_id.id}})">팔로우</a>                        
+                                        {% endif %}
+                                    </div>                                
                                 </div>
-                                <div class="card-body ">
-                                    <a href="{% url 'community:post_detail' like.post_id.pk %}">
-                                        <figure class="snip1384">
-                                            {% if like.post_id.image %}
-                                                <image data-src='{{like.post_id.image.url}}' class='lazyload img-thumbnail' id = "post-image"/>
-                                            {% endif %}
-                                            <figcaption>
-                                            <span id="postcard-title">{{like.post_id.title|truncatechars:10 }}</span>
-                                            <p>
-                                                {% for tag in like.post_id.tags.all %}
+                                <a href='{% url "community:post_detail" pk=like.post_id.pk %}'>
+                                    <figure class="snip1384">
+                                        {% if like.post_id.image %}
+                                            <image data-src='{{like.post_id.image.url}}' class='lazyload img-thumbnail' id = "post-image"/>
+                                        {% endif %}
+                                        <figcaption>
+                                        <span id="postcard-title">{{like.post_id.title|truncatechars:10 }}</span>
+                                        <p>
+                                            {% for tag in like.post_id.tags.all %}
                                                     <button type="button" class="btn btn-outline-success" id="post-tag-button">{{tag.name}}</button> 
-                                                {% endfor %}
-                                            </p>
-                                            </figcaption>
-                                        </figure>
-                                    </a>
-                                    <div class="row d-flex justify-content-between">
-                                        <div class="col pe-4">
+                                            {% endfor %}
+                                        </p>
+                                        </figcaption>
+                                    </figure>
+                                </a> 
+                                <div class="row d-flex justify-content-between">
+                                    <div class="col pe-4">
                                             <div class='likes post-id-{{ like.post_id.id }} d-flex ps-2'>
                                                 <img class='me-1' src='{% static 'images/heart_line.svg' %}' alt='하트'>
                                                 <span class='like_num me-3'>{{like.post_id.like_set.all.count}}</span>
@@ -145,20 +149,18 @@
                                                 <span class='like_num'>{{like.post_id.reply_set.count}}</span>
                                             </div>
                                         </div>
-                                        <div class="col text-end">
-                                            <span id="postcard-date">{{like.post_id.created_at | date:"Y.m.d"}}</span>
-                                        </div>
+                                    <div class="col text-end">
+                                        <span id="postcard-date">{{post.created_at | date:"Y.m.d"}}</span>
                                     </div>
                                 </div>
                             </div>
-                        </div>
                         {% endfor %}
-                        {%else%}
+                        </div>
+                    {% else %}
                         <div id="no-post" class="text-center">
-
                             <span> 현재 좋아요한 게시글이 없습니다. </span>
                         </div>
-                        {% endif %}
+                    {% endif %}
                     </div>
                     <div id="paging">
                         <ul class="pagination justify-content-center" style="margin-top: 2rem;">
@@ -220,5 +222,6 @@
 {% endblock %}
 
 {% block js %}
+<script src="{% static 'javascripts/profile_list_follow.js' %}"></script>
 <script src="{% static 'javascripts/profile_follow.js' %}"></script>
 {% endblock %}
