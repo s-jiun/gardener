@@ -124,19 +124,19 @@
                                     <a id="postcard-follow">팔로우</a>                        
                                 </div>
                                 <a href='{% url "community:post_detail" pk=post.pk %}'>
-                                <figure class="snip1384">
-                                    {% if post.image %}
-                                        <image data-src='{{ post.image.url }}' class='lazyload img-thumbnail' id = "post-image"/>
-                                    {% endif %}
-                                    <figcaption>
-                                    <span id="postcard-title">{{post.title|truncatechars:10 }}</span>
-                                    <p>
-                                        {% for tag in post.tags.all %}
-                                            <button type="button" class="btn btn-outline-success" id="post-tag-button">{{tag.name}}</button> 
-                                        {% endfor %}
-                                    </p>
-                                    </figcaption>
-                                </figure>
+                                    <figure class="snip1384">
+                                        {% if post.image %}
+                                            <image data-src='{{ post.image.url }}' class='lazyload img-thumbnail' id = "post-image"/>
+                                        {% endif %}
+                                        <figcaption>
+                                        <span id="postcard-title">{{post.title|truncatechars:10 }}</span>
+                                        <p>
+                                            {% for tag in post.tags.all %}
+                                                <button type="button" class="btn btn-outline-success" id="post-tag-button">{{tag.name}}</button> 
+                                            {% endfor %}
+                                        </p>
+                                        </figcaption>
+                                    </figure>
                                 </a> 
                                 <div class="row d-flex justify-content-between">
                                     <div class="col pe-4">
