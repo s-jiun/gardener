@@ -16,7 +16,6 @@ const deleteCommentHandleResponse = () => {
 
         const {NewsReply_id ,comment_count} = JSON.parse(requestDeleteComment.response);
         const element1 = document.getElementById(`comment-${NewsReply_id}`)
-        console.log(element1);
         const element2 = document.querySelector(`#collapseReply-${NewsReply_id}`);
         const element3 = document.querySelector(`#comment_count`);
         if(element2){
@@ -58,7 +57,7 @@ const deleteReplyHandleResponse = () => {
         const {parent_reply_id, cardnews_id, NewsReply_id, comment_count} = JSON.parse(requestDeleteReply.response);
         const element = document.querySelector(`.reply-${parent_reply_id}-${NewsReply_id}`);
         element.innerHTML = '';
-        const element_comment_count = document.querySelector(`.comment-count`);
+        const element_comment_count = document.querySelector(`#comment_count`);
         element_comment_count.innerHTML = comment_count
         if (comment_count == 0) {
             const element3 = document.querySelector(`#issue-detail-comment`)
