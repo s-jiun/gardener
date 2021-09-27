@@ -207,3 +207,6 @@ footer {
   background: none;
 }
 
+img {
+  object-fit: cover;
+}
