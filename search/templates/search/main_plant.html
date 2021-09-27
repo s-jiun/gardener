@@ -4,6 +4,9 @@
 
 {%block head%}
 <link href="{% static 'style/css/main_plant.css' %}" rel="stylesheet">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 {%endblock%}
 
 {% block search %}
@@ -355,7 +358,7 @@
                 "{{ plant.name|safe }}",
         {% endfor %}
         ];
-    $(".plant-input").autocomplete({
+    $(".search-input").autocomplete({
         source: function (request, response) {
             var results = $.ui.autocomplete.filter(availableTags, request.term);
             response(results.slice(0, 10));
