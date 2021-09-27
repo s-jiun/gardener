@@ -32,7 +32,11 @@
         <span class="post-title"> {{ post.title }}</span>
         <div class="row row-cols-1 row-cols-md-2 d-flex justify-content-between" id="post-header">
             <div class="col">
-                <span id="post-head"><img class="lazyload" id='post-detail-thumbnail' data-src="{{ post.user_id.Image.url }}"> {{ post.user_id }}</span>
+                <span id="post-head"><img class="lazyload" id='post-detail-thumbnail' data-src="{{ post.user_id.Image.url }}"> 
+                    <a href="{% url 'user:profile' post.user_id.pk%}">
+                        {{ post.user_id }}
+                    </a>
+                </span>
                 <span>&#183</span>
                 <span id="post-date">{{post.created_at | date:"Y.m.d h:m"}}</span>
                 <span class="ms-2 me-1" id="post-detail-views">조회수 {{views}}</span>
