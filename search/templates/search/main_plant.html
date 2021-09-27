@@ -4,6 +4,9 @@
 
 {%block head%}
 <link href="{% static 'style/css/main_plant.css' %}" rel="stylesheet">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 {%endblock%}
 
 {% block search %}
@@ -15,8 +18,7 @@
         </select>
         <div class="d-flex  justify-content-between" id="search" style="width:80%;">
             <input class='search-input' type="text" name='q' value="{{q}}" placeholder="반려식물의 정보를 입력해보세요" />
-            <button class='searchbtn' type="submit"><img class='me-1' src='{% static ' images/search.svg' %}'
-                    alt='하트'></button>
+            <button class='searchbtn' type="submit"><img class='me-1' src="{% static 'images/search.svg' %}" alt='하트'></button>
         </div>
     </div>
 
@@ -355,7 +357,7 @@
                 "{{ plant.name|safe }}",
         {% endfor %}
         ];
-    $(".plant-input").autocomplete({
+    $(".search-input").autocomplete({
         source: function (request, response) {
             var results = $.ui.autocomplete.filter(availableTags, request.term);
             response(results.slice(0, 10));
