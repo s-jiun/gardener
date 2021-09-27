@@ -1,29 +1,29 @@
-*{
-  font-family: "Noto Sans KR"!important;
+* {
+  font-family: "Noto Sans KR" !important;
   font-size: 62.5%; /*1rem : 10px*/
 }
 
-#container{
+#container {
   min-height: 60rem;
 }
-.issue-title{
+.issue-title {
   font-size: 2.6rem;
   margin-bottom: 2rem;
   font-weight: bold;
-  color:#354847;
+  color: #354847;
 }
-#issue-header{
+#issue-header {
   margin-bottom: 3rem;
 }
-#issue-head{
+#issue-head {
   font-size: 1.4rem;
   font-weight: bold;
   margin-right: 0.5rem;
 }
-#issue-date{
-  margin-left:0.5rem;
+#issue-date {
+  margin-left: 0.5rem;
   font-size: 1.4rem;
-  color:#8F8F8F;
+  color: #8f8f8f;
 }
 
 #issue-detail-thumbnail {
@@ -33,281 +33,74 @@
   padding: 2px;
   border-radius: 100%;
 }
-#issue-follow-button{
+#issue-follow-button {
   background-color: white;
   border-radius: 20px;
-  border: 0.1rem solid #76B79C;
+  border: 0.1rem solid #76b79c;
   margin-left: 0.5rem;
   margin-right: 0.5rem;
-  color:#76B79C;
+  color: #76b79c;
 }
-#issue-content{
+#issue-content {
   margin-top: 4rem;
 }
-#issue-detail-content > *{
+#issue-detail-content > * {
   font-size: 1.6rem;
 }
-#issue-detail-content p{
-  overflow-x:auto;
+#issue-detail-content p {
+  overflow-x: auto;
 }
 #issue-detail-like * {
   font-weight: bold;
   font-size: 1.2rem;
 }
-.tags{
-  background-color: white;
-  border-radius: 20px;
-  padding:0.6rem;
-  border: 0.1rem solid #8F8F8F;
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
-  color:#8F8F8F;
-  min-width: 4.3rem;
-}
-.create-comment{
-  background-color: white;
-  border-radius: 20px;
-  padding:0.6rem;
-  border: 0.1rem solid #8F8F8F;
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
-  color:#8F8F8F;
-  min-width: 4.3rem;
-}
-#comment-head, #reply-head{
-  font-size: 1.4rem;
-  font-weight: bold;
-}
-#comment-body p, #comment-body span, #reply-body,#reply-body >*{
-  font-size: 1.4rem;
-}
-.create-reply{
-  background-color: white;
-  border-radius: 20px;
-  padding:0.6rem;
-  border: 0.1rem solid #8F8F8F;
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
-  color:#8F8F8F;
-  min-width: 4.3rem;
-}
-#collapseComment{
-  margin-top:2rem;
-}
-.reply textarea{
-  width: 100%;
-}
-.reply-content{
-  background-color: #F8F8F8;
-}
-
-
-/* div {
-  font-family: "Gowun Batang", serif;
-}
-
-a {
-  text-decoration: none;
-  cursor: pointer;
-  color: black;
-}
-
-.issue {
-  position: relative;
-  width: 50%;
-}
-
-.content {
-  width: auto;
-  padding: 25px;
-  border: 1px solid gray;
-  border-radius: 1rem;
-}
-
-.page-image {
-  position: relative;
-  width: 80%;
-  min-height: 100vh;
-  height: 100%;
-  overflow: hidden;
-  object-fit: cover;
-}
-
-.django-ckeditor-widget {
-  width: 100%;
-}
-
-.issue-title {
-  font-size: x-large;
-  font-weight: bold;
-}
-
 .tags {
-  display: inline;
-  position: relative;
-  background: #a0cab5;
-  z-index: 0;
-  width: auto;
-  height: 25px;
-  border: 1px solid #b8b8b8;
-  box-sizing: border-box;
-  border-radius: 100px;
-  font-family: "Gowun Batang", serif;
-  font-size: small;
+  background-color: white;
+  border-radius: 20px;
+  padding: 0.6rem;
+  border: 0.1rem solid #8f8f8f;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  color: #8f8f8f;
+  min-width: 4.3rem;
 }
-
-.title-image {
-  width: 25px;
-  height: 25px;
-}
-
-.heart {
-  color: #cc3d3d;
-  background-color: transparent;
-  border: 0;
-}
-
-.issue-edit {
-  width: auto;
-  height: 170px;
-  background: #ccdfcc;
-  border: solid 3px #ccdfcc;
-  border-radius: 10px;
-  margin-top: 110px;
-  box-shadow: 3px 3px 3px 0px #a0cab5;
-}
-
 .create-comment {
-  position: relative;
-  background: #ccdfcc;
-  z-index: 0;
-  width: 100px;
-  height: 30px;
-  border: 1px solid #b8b8b8;
-  box-sizing: border-box;
-  border-radius: 10px;
-  font-family: "Gowun Batang", serif;
-  margin-bottom: 5px;
+  background-color: white;
+  border-radius: 20px;
+  padding: 0.6rem;
+  border: 0.1rem solid #8f8f8f;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  color: #8f8f8f;
+  min-width: 4.3rem;
 }
-
-.create-reply {
-  position: relative;
-  background: #a0cab5;
-  z-index: 0;
-  width: 100px;
-  height: 30px;
-  border: 1px solid #b8b8b8;
-  box-sizing: border-box;
-  border-radius: 10px;
-  font-family: "Gowun Batang", serif;
-  margin-bottom: 5px;
-}
-
-.comment-list {
+#comment-head,
+#reply-head {
+  font-size: 1.4rem;
   font-weight: bold;
-  font-size: large;
-  margin-top: 15px;
 }
-
-.comment-submit {
-  position: relative;
-  background: #ccdfcc;
-  z-index: 0;
-  width: 100px;
-  height: 30px;
-  border: 1px solid #b8b8b8;
-  box-sizing: border-box;
-  border-radius: 10px;
-  font-family: "Gowun Batang", serif;
+#comment-body p,
+#comment-body span,
+#reply-body,
+#reply-body > * {
+  font-size: 1.4rem;
 }
-
-.follow {
-  position: relative;
-  background: #a0cab5;
-  width: auto;
-  height: 25px;
-  border: 1px solid #b8b8b8;
-  box-sizing: border-box;
-  border-radius: 100px;
-  font-family: "Gowun Batang", serif;
+.create-reply {
+  background-color: white;
+  border-radius: 20px;
+  padding: 0.6rem;
+  border: 0.1rem solid #8f8f8f;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  color: #8f8f8f;
+  min-width: 4.3rem;
 }
-
-.reply {
-  overflow: auto;
+#collapseComment {
+  margin-top: 2rem;
 }
-
-.comment-content {
-  margin-right: 35px;
-  border-radius: 10px;
-  background-color: #ccdfcc;
-  padding: 5px;
+.reply textarea {
+  width: 100%;
 }
-
 .reply-content {
-  border-radius: 10px;
-  background: rgba(92, 84, 39, 0.3);
-  padding: 5px;
-  margin-left: 35px;
+  background-color: #f8f8f8;
 }
-
-.profile-img {
-  overflow: hidden;
-  width: 35px;
-  height: 30px;
-  padding: 2px;
-  border-radius: 100%;
-}
-
-.trash {
-  margin-left: 1vw;
-  cursor: pointer;
-}
-
-.trash:hover {
-  color: #cc3d3d;
-}
-
-#issue-edit-container {
-  width: auto;
-}
-
-@media screen and (max-width: 800px) {
-  #image-container {
-    display: none;
-  }
-  .main-container {
-    display: block;
-  }
-  .issue {
-    width: 100vw;
-  }
-  .issue-edit {
-    width: 200px;
-    margin: 0;
-    margin: auto;
-    margin-bottom: 20px;
-  }
-
-  #issue-edit-container {
-    width: 100%;
-    margin: auto;
-  }
-
-  #issue-edit-container hr {
-    width: 100%;
-    margin-top: 10px;
-  }
-}
-
-.go-to-list {
-  position: relative;
-  background: #ccdfcc;
-  z-index: 0;
-  width: 100px;
-  height: 30px;
-  border: 1px solid #b8b8b8;
-  box-sizing: border-box;
-  border-radius: 10px;
-  font-family: "Gowun Batang", serif;
-  margin-bottom: 5px;
-} */
