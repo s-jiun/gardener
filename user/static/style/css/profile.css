@@ -114,16 +114,7 @@ a {
 #user-follow a, span {
   font-size: 1.4rem;
 }
-#plant-icon {
-  width: 2vw;
-  height: auto;
-}
 
-.rank-image {
-  width: 20px;
-  height: 20px;
-  vertical-align: middle;
-}
 
 .popover-header {
   background-color: #a0cab5;
@@ -149,33 +140,6 @@ a {
 }
 
 
-.sidebar a {
-  width: 100%;
-  padding: 10px;
-  margin: 0;
-  font-weight: bold;
-  color: #5c5427;
-
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
-  border-bottom-color: #5c5427;
-}
-.sidebar a:link {
-  color: #5c5427;
-  text-decoration: none;
-}
-.sidebar a:hover {
-  border-radius: 5px;
-  border: solid 2px white;
-}
-.sidebar span {
-  font-weight: bold;
-  color: #5c5427;
-  font-size: 15px;
-  text-decoration: none;
-  border-bottom: 1px solid #5c5427;
-  padding-bottom: 3px;
-}
 
 #no-post {
   width: 100%;
@@ -183,8 +147,7 @@ a {
   margin-top: 30px;
   vertical-align: text-top;
 }
-#no-post span {
-}
+
 #no-post img {
   vertical-align: text-bottom;
   width: 2rem;
@@ -195,10 +158,8 @@ a {
   position: relative;
   background: #a0cab5;
   width: auto;
-  border: 1px solid #b8b8b8;
   box-sizing: border-box;
   border-radius: 100px;
-  font-family: 'Noto Sans KR', sans-serif;
 }
 .follow-wrapper {
   display: inline;
