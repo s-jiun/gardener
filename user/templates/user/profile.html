@@ -8,6 +8,18 @@
 
 {%endblock%}
 
+{% block button %}
+<div>
+    <button class="make-something">
+        {% if request.user.is_authenticated %}
+        <a href="{% url 'community:post_create' %}">포스트 작성</a>
+        {% else %}
+        <a onclick="alert('로그인이 필요한 서비스입니다.')" href="{% url 'user:login' %}">포스트 작성</a>
+        {% endif %}
+    </button>
+</div>
+{% endblock %}
+
 {% block content %}
 
 <div class="container pe-0 ps-0">

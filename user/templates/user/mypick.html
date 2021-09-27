@@ -114,7 +114,7 @@
                     <div class='row d-flex' style='flex-wrap:wrap;'>
                         {% if liked%}
                         {%for like in liked%}
-                        <div class="col col-lg-4">
+                        <div class="col">
                             <div class="card border-0 border-bottom col-sm-12 col-md-6 col-lg-4" id="postcard" style="width: 100%; object-fit: cover;">
                                 <div class="row d-flex p-1 justify-content-between" >
                                     <span id="postcard-head"><img class="lazyload" id='post-list-thumbnail' data-src={{like.post_id.user_id.Image.url}}> {{like.post_id.user_id}}</span>
