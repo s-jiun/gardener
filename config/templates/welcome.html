@@ -3,32 +3,41 @@
 
 {% block head %}
 <style>
-    *{
+    * {
         font-size: 100%;
     }
-    @media screen and (max-width : 900px){
-        html {font-size:0.8rem}  
+
+    @media screen and (max-width : 900px) {
+        html {
+            font-size: 0.8rem
+        }
     }
 
-    @media screen and (max-width : 560px){
-        html {font-size:0.6rem}  
+    @media screen and (max-width : 560px) {
+        html {
+            font-size: 0.6rem
+        }
     }
-    @media screen and (max-width : 900px){
-    #image-container{
-      display: none;
+
+    @media screen and (max-width : 900px) {
+        #image-container {
+            display: none;
+        }
+
+        #image-container img {
+            display: none;
+        }
+
+        #left-container {
+            margin-right: 0px !important;
+        }
     }
-    #image-container img {
-      display: none;
-    }
-    #left-container{
-      margin-right: 0px!important;
-    } 
-}
 </style>
 {%endblock%}
 
 {% block content %}
-<div id="left-container" class="col-6 d-flex flex-column justify-content-center" style="margin-right: 6.3125rem; width: 23rem;">
+<div id="left-container" class="col-6 d-flex flex-column justify-content-center"
+    style="margin-right: 6.3125rem; width: 23rem;">
     <div>
         <img src="{% static 'images/logo.png' %}" alt="">
     </div>
@@ -40,7 +49,8 @@
     </div>
     <div>
         <a href="{% url 'community:post_list' %}">
-            <button style="height: 2.625rem; width: 9.18rem; color:white; background-color: #354847;">둘러보기</button>
+            <button
+                style="height: 2.625rem; width: 9.18rem; color:white; background-color: #354847; border: none;">둘러보기</button>
         </a>
     </div>
 </div>
