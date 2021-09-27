@@ -26,7 +26,7 @@
     {% if request.user.is_authenticated %}
         <div class="col d-flex justify-content-end">
             <a href="{% url 'user:logout' %}" style="margin-right:1rem;">로그아웃</a>
-            <a href="{% url 'user:my_profile' %}">{{ request.user.userid }}</a>
+            <a href="{% url 'user:my_profile' %}" style="margin-right:0.35rem;">{{ request.user.userid }}</a>
             <img class="lazyload" data-src="{{ request.user.Image.url }}" style="width: 1.5rem; height: 1.5rem; border-radius: 50%;">
         </div>
         {% else %}
@@ -39,7 +39,7 @@
     <div class="row justify-content-between" style="margin: auto; width: 80%; margin-bottom: 2rem;">
         <div id="main-logo" class="col-3" style="display: inline-block;">
             <a href="{% url 'community:post_list'%}">
-                <img style="width: 15rem; height: 6.8rem;" src="{% static 'images/ourplant_logo.svg' %}" alt="">
+                <img style=" height: 6.8rem;" src="{% static 'images/ourplant_logo.svg' %}" alt="">
             </a>
         </div>
         <div class="col-sm-6 col-md-4 d-flex align-items-center">
