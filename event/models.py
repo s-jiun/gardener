@@ -58,3 +58,11 @@ class NewsReply(models.Model):
         'self', on_delete=CASCADE, null=True, blank=True, related_name='replies')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+
+class Newsviews(models.Model):
+    issue = models.ForeignKey(
+        CardNews, on_delete=CASCADE, verbose_name='조회한 게시물')
+    date = models.DateField(auto_now_add=True, verbose_name='조회날짜')
+    client_ip = models.GenericIPAddressField(
+        protocol='both', unpack_ipv4=False, null=True, verbose_name='사용자 Ip주소')

@@ -117,7 +117,13 @@
                             <div class="card border-0 border-bottom col-sm-12 col-md-6 col-lg-4" id="postcard">
                                 <div class="row d-flex p-1 justify-content-between" >
                                     <span id="postcard-head"><img class="lazyload" id='post-list-thumbnail' data-src={{like.post_id.user_id.Image.url}}> {{like.post_id.user_id}}</span>
-                                    <a id="postcard-follow">팔로우</a>                        
+                                    <div id="postcard-follow" class="postcard-{{like.post_id.user_id.id}}">
+                                        {% if like.post_id.user_id.id in following_list %}
+                                            <a onclick="onClickListDeleteFollow({{like.post_id.user_id.id}})" >팔로우 취소</a>
+                                        {% else %}
+                                            <a onclick="onClickListFollowing({{like.post_id.user_id.id}})">팔로우</a>                        
+                                        {% endif %}
+                                    </div>                                
                                 </div>
                                 <a href='{% url "community:post_detail" pk=like.post_id.pk %}'>
                                     <figure class="snip1384">
@@ -216,5 +222,6 @@
 {% endblock %}
 
 {% block js %}
+<script src="{% static 'javascripts/profile_list_follow.js' %}"></script>
 <script src="{% static 'javascripts/profile_follow.js' %}"></script>
 {% endblock %}

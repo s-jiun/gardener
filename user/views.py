@@ -317,7 +317,13 @@ class liked_post_ListView(ListView):
         paginator = context['paginator']
         page_numbers_range = 10
         max_index = len(paginator.page_range)
-
+        cur_users_followings = self.request.user.followers.all()
+        cur_users_followings_list = []
+        for cur_users_following in cur_users_followings:
+            print(cur_users_following)
+            cur_users_followings_list.append(cur_users_following.user_id)
+        context['following_list'] = cur_users_followings_list
+        
         page = self.request.GET.get('page')
         current_page = int(page) if page else 1
 
