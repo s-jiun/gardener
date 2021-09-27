@@ -1,6 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500&display=swap");
 * {
-  font-family: "Noto Sans KR"!important;
+  font-family: "Noto Sans KR" !important;
   font-size: 62.5%;
 }
 
@@ -40,8 +40,6 @@ body {
   }
 }
 
-
-
 main {
   height: auto;
   min-height: 100%;
@@ -78,7 +76,7 @@ footer {
   margin-top: -100px;
   width: auto;
   text-align: center;
-  background-color: #F8F8F8;
+  background-color: #f8f8f8;
 }
 
 .navbar {
@@ -201,7 +199,7 @@ footer {
   border-radius: 20px;
   height: 3.5rem;
 }
-  
+
 .searchbtn {
   border: none;
   background: none;
@@ -209,4 +207,10 @@ footer {
 
 img {
   object-fit: cover;
+}
+
+@media screen and (max-width: 560px) {
+  .profile-post-header__text {
+    display: none;
+  }
 }
