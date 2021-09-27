@@ -232,7 +232,35 @@ def find_id(request):
 
 
 @csrf_exempt
+def follower_delete_ajax(request):
+    req = json.loads(request.body)
+    user_id = req['user_id']
+    user = GeneralUser.objects.get(id=user_id)
+    following = Follow.objects.filter(following_user_id=user_id).filter(
+        user_id=request.user.id)
+    following.delete()
+    return JsonResponse({'user_id': user_id, 'user_userid': user.userid, 'user_name': user.name, 'user_point': user.point, 'user_image_url': user.Image.url})
+
+@csrf_exempt
+def following_delete_ajax(request):
+    req = json.loads(request.body)
+    user_id = req['user_id']
+    user = GeneralUser.objects.get(id=user_id)
+    follower = Follow.objects.filter(following_user_id=request.user.id).filter(user_id=user_id)
+    follower.delete()
+    return JsonResponse({'user_id': user_id, 'user_name': user.name, 'user_point': user.point, 'user_image_url': user.Image.url})
+
+@csrf_exempt
 def following_ajax(request):
+    req = json.loads(request.body)
+    user_id = req['user_id']
+    user = GeneralUser.objects.get(id=user_id)
+    follow = Follow(user=user, following_user=request.user)
+    follow.save()
+    return JsonResponse({'user_id': user_id, 'user_userid': user.userid, 'user_name': user.name, 'user_point': user.point, 'user_image_url': user.Image.url})
+ 
+@csrf_exempt
+def other_delete_ajax(request):
     req = json.loads(request.body)
     user_id = req['user_id']
     user = GeneralUser.objects.get(id=user_id)
@@ -240,17 +268,6 @@ def following_ajax(request):
         following_user=request.user.id)
     following.delete()
     return JsonResponse({'user_id': user_id, 'user_userid': user.userid, 'user_name': user.name, 'user_point': user.point, 'user_image_url': user.Image.url})
-
-
-@csrf_exempt
-def follow_ajax(request):
-    req = json.loads(request.body)
-    user_id = req['user_id']
-    user = GeneralUser.objects.get(id=user_id)
-    follow = Follow(user=user, following_user=request.user)
-    follow.save()
-    return JsonResponse({'user_id': user_id, 'user_userid': user.userid, 'user_name': user.name, 'user_point': user.point, 'user_image_url': user.Image.url})
-
 
 @csrf_exempt
 def base_image_ajax(request):
