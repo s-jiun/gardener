@@ -57,8 +57,12 @@
             {% for post in post_list %}
                 <div class="card border-0 border-bottom col-sm-12 col-md-6 col-lg-4" id="postcard">
                     <div class="row d-flex p-1 justify-content-between" >
-                        <span id="postcard-head"><a href ="{% url 'user:profile' post.user_id.pk %}"><img class="lazyload" id='post-list-thumbnail' data-src="{{ post.user_id.Image.url }}">{{ post.user_id }}</a></span>
-                        <a id="postcard-follow">팔로우</a>                        
+
+                        <span id="postcard-head"><img class="lazyload" id='post-list-thumbnail' data-src="{{ post.user_id.Image.url }}"> {{ post.user_id }}</span>
+                        {% if request.user == post.user_id %}
+                        {% else %}
+                            <a id="postcard-follow">팔로우</a>
+                        {% endif %}                        
                     </div>
                     <a href='{% url "community:post_detail" pk=post.pk %}'>
                     <figure class="snip1384">
@@ -89,8 +93,6 @@
                         </div>
                     </div>
                 </div>
-                    {% comment %} {% if forloop.counter|divisibleby 3%} {% endcomment %}
-            {% comment %} <hr> {% endcomment %}
             {% endfor %}
             </div>
         {% else %}
@@ -142,7 +144,5 @@
 
 
 {% block js %}
-    {% comment %} <script src="{% static 'javascripts/post_comment.js' %}"></script> {% endcomment %}
-    <script src="{% static 'javascripts/likes.js' %}"></script>
     <script src="{% static 'javascripts/post_follow.js' %}"></script>
 {% endblock %}
