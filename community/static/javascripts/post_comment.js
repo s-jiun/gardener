@@ -14,7 +14,7 @@ const onClickDeleteComment = (post_id, comment_id) => {
 const deleteCommentHandleResponse = () => {
     if(requestDeleteComment.status < 400) {
 
-        const {post_id, comment_id, comment_count} = JSON.parse(requestDeleteComment.response);
+        const {comment_id, comment_count} = JSON.parse(requestDeleteComment.response);
         const element1 = document.querySelector(`.comment-${comment_id}`);
         const element2 = document.querySelector(`.reply-${comment_id}`);
         if(element2){
