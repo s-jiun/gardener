@@ -89,8 +89,6 @@
                         </div>
                     </div>
                 </div>
-                    {% comment %} {% if forloop.counter|divisibleby 3%} {% endcomment %}
-            {% comment %} <hr> {% endcomment %}
             {% endfor %}
             </div>
         {% else %}
@@ -142,7 +140,5 @@
 
 
 {% block js %}
-    {% comment %} <script src="{% static 'javascripts/post_comment.js' %}"></script> {% endcomment %}
-    <script src="{% static 'javascripts/likes.js' %}"></script>
     <script src="{% static 'javascripts/post_follow.js' %}"></script>
 {% endblock %}
