@@ -106,40 +106,38 @@
             {% endif %}
         </div>
         {% endif %}
-        <div class="col-md-offset-6">
+       <div class="col-md-offset-6">
             {% if is_paginated %}
             <ul class="pagination justify-content-center">
                 {% if page_obj.has_previous %}
                 <li class="page-item">
-                    <a class="page-link" href="?type={{ type }}&q={{ q }}&page={{ page_obj.previous_page_number }}"
-                        tabindex="-1" style="border:none; font-size: 15px;">&lt;</a>
+                    <a class="page-link page-link-2" href="?type={{ type }}&q={{ q }}&page={{ page_obj.previous_page_number }}"
+                        tabindex="-1">&lt;</a>
                 </li>
                 {% else %}
                 <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1" style="font-size: 15px; border:none;">&lt;</a>
+                    <a class="page-link page-link-2" href="#" tabindex="-1">&lt;</a>
                 </li>
                 {% endif %}
-    
                 {% for page in page_range %}
                 <li class="page-item {% if page == page_obj.number %} activate {% endif %}">
-                    <a class="page-link  page-link-circle" href="?type={{ type }}&q={{ q }}&page={{ page }}" style="border-radius:100%; border:none; font-size: 12px; margin-right:7px;">{{ page }}</a>
+                    <a class="page-link  page-link-circle" href="?type={{ type }}&q={{ q }}&page={{ page }}">{{ page }}</a>
                 </li>
                 {% endfor %}
-    
                 {% if page_obj.has_next %}
                 <li class="page-item">
-                    <a class="page-link"
-                        href="?type={{ type }}&q={{ q }}&page={{ page_obj.next_page_number }}" style="border:none; font-size: 15px; margin-left:-7px;">&gt;</a>
+                    <a class="page-link page-link-2"
+                        href="?type={{ type }}&q={{ q }}&page={{ page_obj.next_page_number }}" style ="margin-left:-7px;">&gt;</a>
                 </li>
                 {% else %}
                 <li class="page-item disabled">
-                    <a class="page-link" href="#" style="border:none; font-size: 15px; margin-left:-7px;">&gt;</a>
+                    <a class="page-link page-link-2" href="#" style="margin-left:-7px;">&gt;</a>
                 </li>
                 {% endif %}
             </ul>
             {% endif %}
         </div>
-        </div>
+    </div>
 {% endblock %}
 
 
