@@ -120,8 +120,7 @@
                         {% for post in posts %}
                             <div class="card border-0 border-bottom col-sm-12 col-md-6 col-lg-4" id="postcard">
                                 <div class="row d-flex p-1 justify-content-between" >
-                                    <span id="postcard-head"><img class="lazyload" id='post-list-thumbnail' data-src="{{ post.user_id.Image.url }}"> {{ post.user_id }}</span>
-                                    <a id="postcard-follow">팔로우</a>                        
+                                    <span id="postcard-head"><img class="lazyload" id='post-list-thumbnail' data-src="{{ post.user_id.Image.url }}"> {{ post.user_id }}</span>                     
                                 </div>
                                 <a href='{% url "community:post_detail" pk=post.pk %}'>
                                     <figure class="snip1384">
