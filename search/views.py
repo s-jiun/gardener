@@ -110,5 +110,4 @@ def scrap_ajax(request):
         scrap = PlantScrap(user=user, plant=plant)
         scrap.save()
         button_type = 'scrap'
-    print(button_type)
     return JsonResponse({'id': plant.pk, 'type': button_type})

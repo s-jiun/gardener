@@ -7,129 +7,307 @@
 
 {%endblock%}
 
-{% block content %}
-        <div class= "main-gardener">
-            <div class='row'>
-                <div id='gardener-header' class='d-flex flex-column justify-content-center'>
-                    <div id='gardener-header-p'>
-                        {% if q %}
-                        <span style="font-size: 28px;">'{{ q }}' 검색 결과입니다. </span>
-                        {% else %}
-                        <h2>
-                            <img src="{% static 'images/clover.png' %}" alt="" style="height:2rem; width:2rem;">새로운 가드너들과 함께하세요<img src="{% static 'images/clover.png' %}" alt="" style="height:2rem; width:2rem;">
-                            
-                        </h2>
-                        {% endif %}
-                        <!-- 에러메시지 -->
-                        <span style= 'background-color:#ccdfcc; color: #5c5427 ; font-weight:900;'>
-                            {% if messages %}
-                            {% for message in messages %}
-                                {{message}}
-                            {% endfor %}
-                            {% endif %}
-                        </span>
-                    </div>
-                    <div id='gardener-header-form'>
-                        <form action = '' method="GET" >
-                            <div id="search_option" style="display:inline">
-                                <input class="gardener-input" type="text" name ='q' value="{{q}}" placeholder="가드너의 아이디를 검색해 보세요." />
-                                <button class="gardener-input-1" type="submit">검색</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div><!--header 닫힘-->
-        <div class="container-fluid main-body mt-4 mb-4 text-center" id="gardener-body">
-        {% if gardener_list %}
-        <div class='row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3'>
-            {% for gardener in gardener_list %}
-                <div class="col">
-                    <div class="card p-2 m-3" id="gardener-card" >
-                        <div class="image" >
-                            <a href="{% url 'user:profile' gardener.pk%} ">
-                            <img data-src={{gardener.Image.url}} class="lazyload card-img-top"  id="gardener-img" alt="..." >
-                            <span><h3 style="font-weight:bold">😉 {{gardener.name}} 님 😉 </h3><br> {{gardener.profile | truncatechars:20}}</span>
-                            </a>
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title" style="width:50%; display:inline">{{ gardener.name }}
-                            {% if gardener.point < 100 %}
-                            <h6 style="display: inline;  float: right;">  <img class='lazyload rank-image' data-src = "{% static 'images/sf.png'%}" style="width:1rem; heigth:auto"> 입문 정원사 <img class='rank-image' src = "{% static 'images/sf.png'%}"></h6>
-                            {% elif gardener.point < 300 %}
-                            <h6 style="display: inline;  float: right;"> <img class='lazyload rank-image' data-src = "{% static 'images/dy.png'%}"> 초보 정원사 <img class='rank-image' src = "{% static 'images/dy.png'%}"></h6>
-                            {% elif gardener.point < 600 %}
-                            <h6 style="display: inline;  float: right;"> <img class='lazyload rank-image' data-src = "{% static 'images/cm.png'%}"> 아마추어 정원사 <img class='rank-image' src = "{% static 'images/cm.png'%}"></h6>
-                            {% elif gardener.point < 1000 %}
-                            <h6 style="display: inline;  float: right;"> <img class='lazyload rank-image' data-src = "{% static 'images/cs.png'%}"> 프로 정원사 <img class='rank-image' src = "{% static 'images/cs.png'%}"></h6>
-                            {% else %}
-                            <h6 style="display: inline;  float: right;"> <img class='lazyload rank-image' data-src = "{% static 'images/hs.png'%}"> 국가대표 정원사 <img class='rank-image' src = "{% static 'images/hs.png'%}"></h6>
-                            {% endif %}
-                            </h5>
-                            <hr class="m-0">
-                        </div>
-                    </div>
-                </div>
-                
-            {% endfor %}
+{% block search %}
+<form action='' method="GET" style="width:100%;">
+    <div class="d-flex align-items-center justify-content-center">
+        <div class="d-flex  justify-content-between" id="search" style="width:80%;">
+            <input class='search-input' type="text" name='q' value="{{q}}" placeholder="가드너의 아이디를 검색해보세요."/>
+            <button class='searchbtn' type="submit"><img class='me-1' src='{% static 'images/search.svg' %}' alt='하트'></button>
         </div>
-        {% else %}
-            {%if q%}           
-            <tr class="text-center">
-                <td colspan="5">
-                    <div class="text-center" style="font-size: 28px;">
-                        일치하는 검색 결과가 없습니다.<br/>
-                        <a style="font-size: 14px;" href = '{% url "user:search_gardener" %}'>뒤로가기</a>
-                    </div>
-                </td>
-            </tr>
-            {% else %}
-            <tr class="text-center" style="font-size: 28px;">
-                <td colspan="5">
-                아직 가드너들의 정보가 없습니다. 
-                </td>
-            </tr>
-            {%endif%}
-        </div>
-        {% endif %}
-
     </div>
 
+</form>
+{% endblock %}
 
-        <!--pagination-->
-    <div id="gardener-paginator">
-        {% if is_paginated %}
-        <ul class="pagination">
+{% block content %}
+<div class="container-fluid main-body mt-4 mb-4 text-center" id="gardener-body">
+{% if gardener_list %}
+<div class='row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3'>
+    {% for gardener in gardener_list %}
+        <div class="col col-design">
+            <a href="{% url 'user:profile' gardener.pk%} ">
+                <div id ="gardener-image-box" style= "margin-bottom:16px;">
+                    <img src = {{gardener.Image.url}} id = "gardener-img">
+                </div>
+                <div class="text-center" style="margin-bottom:10px;">
+                    {% if gardener.point < 100 %}
+                    <span class= "gardener-ranking">입문 정원사</span>
+                    <br/>
+                    <span class="gardener-name">{{ gardener.name}}</span>
+                    {% elif gardener.point < 300 %}
+                    <span class= "gardener-ranking">초보 정원사 </span>
+                    <br/>
+                    <span class="gardener-name">{{ gardener.name}}</span>
+                    {% elif gardener.point < 600 %}
+                    <span class= "gardener-ranking">아마추어 정원사</span>
+                    <br/>
+                    <span class="gardener-name">{{ gardener.name}}</span>
+                    {% elif gardener.point < 1000 %}
+                    <span class= "gardener-ranking">프로 정원사</span>
+                    <br/>
+                    <span class="gardener-name">{{ gardener.name}}</span>
+                    {% else %}
+                    <span class= "gardener-ranking">국가대표 정원사</span>
+                    <br/>
+                    <span class="gardener-name">{{ gardener.name}}</span>
+                    {% endif %}
+                </div>
+                <div class = "mb-1 gardener-profile" style="height:50px;">
+                    <p style="word-wrap: break-word;" >{{gardener.profile | truncatechars:75}}</p>
+                </div>
+            </a>
+            
+            <div id ='follow-buttons-{{gardener.id}}'class="text-center mb-3" >
+                {% if gardener.userid in following_list %}
+                <button class="following-button" onclick="onClickFollowing({{gardener.id}})">팔로우 끊기</button>
+                {% else %}
+                <button class="follow-button" onclick="onClickFollow({{gardener.id}})">팔로우</button>
+                {% endif %}
+            </div>
+
+        </div>       
+    {% endfor %}
+</div>
+{% else %}
+    {%if q%}           
+    <tr class="text-center">
+        <td colspan="5">
+            <div class="text-center" style="font-size: 28px;">
+                일치하는 검색 결과가 없습니다.<br/>
+                <a style="font-size: 14px;" href = '{% url "user:search_gardener" %}'>뒤로가기</a>
+            </div>
+        </td>
+    </tr>
+    {% else %}
+    <tr class="text-center" style="font-size: 28px;">
+        <td colspan="5">
+        아직 가드너들의 정보가 없습니다. 
+        </td>
+    </tr>
+    {%endif%}
+</div>
+{% endif %}
+
+</div>
+
+
+<!--pagination-->
+<div class="col-md-offset-6">
+    {% if is_paginated %}
+    <ul class="pagination justify-content-center">
         {% if page_obj.has_previous %}
         <li class="page-item">
-            <a class="page-link" href="?q={{q}}&page={{ page_obj.previous_page_number }}"
-            tabindex="-1">이전</a>
-         </li>
+            <a class="page-link" href="?type={{ type }}&q={{ q }}&page={{ page_obj.previous_page_number }}"
+                tabindex="-1" style="border:none; font-size: 15px;">&lt;</a>
+        </li>
         {% else %}
         <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1">이전</a>
-         </li>
+            <a class="page-link" href="#" tabindex="-1" style="font-size: 15px; border:none;">&lt;</a>
+        </li>
         {% endif %}
 
         {% for page in page_range %}
         <li class="page-item {% if page == page_obj.number %} activate {% endif %}">
-            <a class="page-link" href="?q={{q}}&page={{ page }}">{{ page }}</a>
+            <a class="page-link" href="?type={{ type }}&q={{ q }}&page={{ page }}" style="border-radius:100%;font-size: 12px; margin-right:7px;">{{ page }}</a>
         </li>
         {% endfor %}
 
         {% if page_obj.has_next %}
         <li class="page-item">
-        <a class="page-link"
-            href="?q={{q}}&page={{ page_obj.next_page_number }}">다음</a>
+            <a class="page-link"
+                href="?type={{ type }}&q={{ q }}&page={{ page_obj.next_page_number }}" style="border:none; font-size: 15px; margin-left:-7px;">&gt;</a>
         </li>
         {% else %}
         <li class="page-item disabled">
-            <a class="page-link" href="#">다음</a>
+            <a class="page-link" href="#" style="border:none; font-size: 15px; margin-left:-7px;">&gt;</a>
         </li>
         {% endif %}
     </ul>
     {% endif %}
-    </div>
+</div>
+<script>
+const requestFollowing = new XMLHttpRequest()
+
+const onClickFollowing = (user_id) => {
+    const url = '/following_ajax/';
+    requestFollowing.open('POST', url, true);
+    requestFollowing.setRequestHeader(
+        'Content-Type',
+        'application/x-www-form-urlencoded',
+    );
+    requestFollowing.send(JSON.stringify({user_id:user_id}))
+}
+
+const followingHandleResponse = () => {
+    if (requestFollowing.status < 400) {
+        const {user_id} = JSON.parse(requestFollowing.response);
+        const element = document.getElementById(`follow-buttons-${user_id}`)
+        console.log(element)
+        element.innerHTML = `
+            <button class="follow-button" onclick="onClickFollow(${user_id})">팔로우</button>
+        `
+    }
+
+}
+
+requestFollowing.onreadystatechange = () => {
+if (requestFollowing.readyState === XMLHttpRequest.DONE) {
+    followingHandleResponse();
+    }
+}
+
+const requestFollow = new XMLHttpRequest()
+
+const onClickFollow = (user_id) => {
+    const url = '/follow_ajax/';
+    requestFollow.open('POST', url, true);
+    requestFollow.setRequestHeader(
+        'Content-Type',
+        'application/x-www-form-urlencoded',
+    );
+    requestFollow.send(JSON.stringify({user_id:user_id}))
+}
+
+const followHandleResponse = () => {
+    if (requestFollow.status < 400) {
+        const {user_id} = JSON.parse(requestFollow.response);
+        const element = document.getElementById(`follow-buttons-${user_id}`)
+        console.log(element)
+        element.innerHTML = `    
+            <button class="following-button" onclick="onClickFollowing(${user_id})">팔로잉 끊기</button>
+            `
+    }
+
+}
+requestFollow.onreadystatechange = () => {
+if (requestFollow.readyState === XMLHttpRequest.DONE) {
+    followHandleResponse();
+    }
+}
+</script>
 {%endblock%}
 
+{% comment %}
+<div class= "main-gardener">
+    <div class='row'>
+        <div id='gardener-header' class='d-flex flex-column justify-content-center'>
+            <div id='gardener-header-p'>
+                {% if q %}
+                <span style="font-size: 28px;">'{{ q }}' 검색 결과입니다. </span>
+                {% else %}
+                <h2>
+                    <img src="{% static 'images/clover.png' %}" alt="" style="height:2rem; width:2rem;">새로운 가드너들과 함께하세요<img src="{% static 'images/clover.png' %}" alt="" style="height:2rem; width:2rem;">
+                    
+                </h2>
+                {% endif %}
+                <!-- 에러메시지 -->
+                <span style= 'background-color:#ccdfcc; color: #5c5427 ; font-weight:900;'>
+                    {% if messages %}
+                    {% for message in messages %}
+                        {{message}}
+                    {% endfor %}
+                    {% endif %}
+                </span>
+            </div>
+            <div id='gardener-header-form'>
+                <form action = '' method="GET" >
+                    <div id="search_option" style="display:inline">
+                        <input class="gardener-input" type="text" name ='q' value="{{q}}" placeholder="가드너의 아이디를 검색해 보세요." />
+                        <button class="gardener-input-1" type="submit">검색</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div><!--header 닫힘-->
+<div class="container-fluid main-body mt-4 mb-4 text-center" id="gardener-body">
+{% if gardener_list %}
+<div class='row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3'>
+    {% for gardener in gardener_list %}
+        <div class="col">
+            <div class="card p-2 m-3" id="gardener-card" >
+                <div class="image" >
+                    <a href="{% url 'user:profile' gardener.pk%} ">
+                    <img data-src={{gardener.Image.url}} class="lazyload card-img-top"  id="gardener-img" alt="..." >
+                    <span><h3 style="font-weight:bold">😉 {{gardener.name}} 님 😉 </h3><br> {{gardener.profile | truncatechars:20}}</span>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title" style="width:50%; display:inline">{{ gardener.name }}
+                    {% if gardener.point < 100 %}
+                    <h6 style="display: inline;  float: right;">  <img class='lazyload rank-image' data-src = "{% static 'images/sf.png'%}" style="width:1rem; heigth:auto"> 입문 정원사 <img class='rank-image' src = "{% static 'images/sf.png'%}"></h6>
+                    {% elif gardener.point < 300 %}
+                    <h6 style="display: inline;  float: right;"> <img class='lazyload rank-image' data-src = "{% static 'images/dy.png'%}"> 초보 정원사 <img class='rank-image' src = "{% static 'images/dy.png'%}"></h6>
+                    {% elif gardener.point < 600 %}
+                    <h6 style="display: inline;  float: right;"> <img class='lazyload rank-image' data-src = "{% static 'images/cm.png'%}"> 아마추어 정원사 <img class='rank-image' src = "{% static 'images/cm.png'%}"></h6>
+                    {% elif gardener.point < 1000 %}
+                    <h6 style="display: inline;  float: right;"> <img class='lazyload rank-image' data-src = "{% static 'images/cs.png'%}"> 프로 정원사 <img class='rank-image' src = "{% static 'images/cs.png'%}"></h6>
+                    {% else %}
+                    <h6 style="display: inline;  float: right;"> <img class='lazyload rank-image' data-src = "{% static 'images/hs.png'%}"> 국가대표 정원사 <img class='rank-image' src = "{% static 'images/hs.png'%}"></h6>
+                    {% endif %}
+                    </h5>
+                    <hr class="m-0">
+                </div>
+            </div>
+        </div>
+        
+    {% endfor %}
+</div>
+{% else %}
+    {%if q%}           
+    <tr class="text-center">
+        <td colspan="5">
+            <div class="text-center" style="font-size: 28px;">
+                일치하는 검색 결과가 없습니다.<br/>
+                <a style="font-size: 14px;" href = '{% url "user:search_gardener" %}'>뒤로가기</a>
+            </div>
+        </td>
+    </tr>
+    {% else %}
+    <tr class="text-center" style="font-size: 28px;">
+        <td colspan="5">
+        아직 가드너들의 정보가 없습니다. 
+        </td>
+    </tr>
+    {%endif%}
+</div>
+{% endif %}
 
+</div>
+
+
+<!--pagination-->
+<div id="gardener-paginator">
+{% if is_paginated %}
+<ul class="pagination">
+{% if page_obj.has_previous %}
+<li class="page-item">
+    <a class="page-link" href="?q={{q}}&page={{ page_obj.previous_page_number }}"
+    tabindex="-1">이전</a>
+ </li>
+{% else %}
+<li class="page-item disabled">
+    <a class="page-link" href="#" tabindex="-1">이전</a>
+ </li>
+{% endif %}
+
+{% for page in page_range %}
+<li class="page-item {% if page == page_obj.number %} activate {% endif %}">
+    <a class="page-link" href="?q={{q}}&page={{ page }}">{{ page }}</a>
+</li>
+{% endfor %}
+
+{% if page_obj.has_next %}
+<li class="page-item">
+<a class="page-link"
+    href="?q={{q}}&page={{ page_obj.next_page_number }}">다음</a>
+</li>
+{% else %}
+<li class="page-item disabled">
+    <a class="page-link" href="#">다음</a>
+</li>
+{% endif %}
+</ul>
+{% endif %}
+</div>
+{% endcomment %}

@@ -15,11 +15,6 @@
   margin-bottom: 25px;
 }
 
-.search-input-1 {
-  border-radius: 10px;
-  background-color: #ccdfcc;
-}
-
 #search-type {
   width: 60px;
   height: 37px;
@@ -30,13 +25,6 @@
   color: white;
   font-weight: bold;
   text-shadow: -1px 0 #a0cab5, 0 1px #a0cab5, 1px 0 #a0cab5, 0 -1px #a0cab5;
-}
-
-.search-input {
-  width: 50%;
-  height: 40px;
-  border: solid 2px #ccdfcc;
-  border-radius: 10px;
 }
 
 #search-input-button {
@@ -54,4 +42,16 @@
 .moveto-other-page {
   text-decoration: none;
   color: black;
+}
+
+.page-link {
+  padding: 0.25rem 0.6rem;
+  color: #354847;
+}
+
+.line {
+  background-color: #eaeaea;
+  width: 100%;
+  height: 1px;
+  margin-bottom: 1rem;
 }

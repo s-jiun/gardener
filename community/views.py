@@ -1,3 +1,4 @@
+from django.contrib.auth import authenticate
 from user.models import Follow, GeneralUser
 import json
 from django.http.response import JsonResponse
@@ -17,9 +18,15 @@ class PostListView(ListView):
     paginate_by = 9
     template_name = 'community/post_list.html'
     context_object_name = 'post_list'
-
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        cur_users_followings = self.request.user.followers.all()
+        cur_users_followings_list = []
+        for cur_users_following in cur_users_followings:
+            print(cur_users_following)
+            cur_users_followings_list.append(cur_users_following.user_id)
+        context['following_list'] = cur_users_followings_list
         paginator = context['paginator']
         page_numbers_range = 10
         max_index = len(paginator.page_range)
@@ -37,6 +44,8 @@ class PostListView(ListView):
         context['page_range'] = page_range
 
         search_keyword = self.request.GET.get('q', '')
+        
+
 
         if len(search_keyword) > 1:
             context['q'] = search_keyword
@@ -78,7 +87,12 @@ class FollowPostView(ListView):
             following_user=self.request.user.id)
         page_numbers_range = 10
         max_index = len(paginator.page_range)
-
+        cur_users_followings = self.request.user.followers.all()
+        cur_users_followings_list = []
+        for cur_users_following in cur_users_followings:
+            print(cur_users_following)
+            cur_users_followings_list.append(cur_users_following.user_id)
+        context['following_list'] = cur_users_followings_list
         page = self.request.GET.get('page')
         current_page = int(page) if page else 1
 
@@ -127,7 +141,6 @@ class FollowPostView(ListView):
                 messages.error(self.request, '검색어는 2글자 이상 입력해주세요.')
         return post_list
 
-# 사용자 ip 주소 받아오는 함수
 
 
 def get_client_ip(request):
@@ -178,13 +191,13 @@ def post_detail(request, pk):
     else:
         comment_form = ReplyForm()
     return render(request,
-                  'community/post_detail.html',
-                  {'post': post,
-                   'comments': comments,
-                   'comment_form': comment_form,
-                   'liked_user': liked_user,
-                   'is_following': is_following,
-                   'views': len(Postviews.objects.filter(post=post))})
+                'community/post_detail.html',
+                {'post': post,
+                'comments': comments,
+                'comment_form': comment_form,
+                'liked_user': liked_user,
+                'is_following': is_following,
+                'views': len(Postviews.objects.filter(post=post))})
 
 
 @login_required
@@ -277,16 +290,15 @@ def delete_comment(request, pk):
     comment = Reply.objects.get(post_id=post_id, id=comment_id)
     Reply.objects.filter(post_id=post_id, parent_reply=comment).delete()
     comment.delete()
-
-    return JsonResponse({'post_id': post_id, 'comment_id': comment_id})
+    comment_count = Reply.objects.filter(post_id=post_id).count()
+    return JsonResponse({'post_id': post_id, 'comment_id': comment_id, 'comment_count':comment_count})
 
 
 @login_required
 @csrf_exempt
-def like_ajax(request, pk):
+def like_ajax(request,pk):
     req = json.loads(request.body)
     post_id = req['id']
-
     post = Post.objects.get(id=post_id)
     if(Like.objects.filter(user_id=request.user, post_id=post).count() != 0):
         Like.objects.get(user_id=request.user, post_id=post).delete()
@@ -300,14 +312,14 @@ def like_ajax(request, pk):
 
 class tagListView(ListView):
     model = Post
-    paginate_by = 4
+    paginate_by = 9
     template_name = 'community/tagged_list.html'
-    context_object_name = 'posts'
+    context_object_name = 'post_list'
 
     def get_queryset(self):
-        posts = Post.objects.filter(
+        post_list= Post.objects.filter(
             tags__name=self.kwargs['tag']).order_by('id')
-        return posts
+        return post_list
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -363,7 +375,6 @@ class NoticeListView(ListView):
         return context
 
     def get_queryset(self):
-
         search_keyword = self.request.GET.get('q', '')
         search_type = self.request.GET.get('type', '')
         notice_list = Notice.objects.order_by('-id')

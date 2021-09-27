@@ -151,11 +151,40 @@ def delete_answer(request, pk):
     return redirect('QnA:questiondetail', pk=pk)
 
 
-def Tagging(request, tag):
+class TaggingListView(ListView):
+    model = CommunityQuestion
 
-    questions = CommunityQuestion.objects.filter(tags__name=tag)
-    context = {
-        'tag': tag,
-        'questions': questions,
-    }
-    return render(request, 'taggit/taggit_post_list.html', context)
+    paginate_by = 10
+
+    # DEFAULT : <app_label>/<model_name>_list.html
+    template_name = 'taggit/taggit_post_list.html'
+    context_object_name = 'taggedquestion_list'  # DEFAULT : <model_name>_list
+
+    def get_queryset(self):
+        search_keyword = self.kwargs['tag']
+        print(search_keyword)
+        question_list = CommunityQuestion.objects.order_by('-id')
+        tagged_question_list = question_list.filter(tags__name=search_keyword)
+        return tagged_question_list
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        paginator = context['paginator']
+        page_numbers_range = 5
+        max_index = len(paginator.page_range)
+        page = self.request.GET.get('page')
+        current_page = int(page) if page else 1
+        start_index = int((current_page - 1) /
+                          page_numbers_range) * page_numbers_range
+        end_index = start_index + page_numbers_range
+        if end_index >= max_index:
+            end_index = max_index
+
+        page_range = paginator.page_range[start_index:end_index]
+        context['page_range'] = page_range
+        search_keyword = self.kwargs['tag']
+
+        if len(search_keyword) > 1:
+            context['tag'] = search_keyword
+
+        return context

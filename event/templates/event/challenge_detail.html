@@ -2,13 +2,111 @@
 {% load static %}
 
 {% block head %}
-    <link rel="stylesheet" href="{% static 'style/css/challenge.css' %}" />
+    <link rel="stylesheet" href="{% static 'style/css/challenge_detail.css' %}" />
 {% endblock %}
 
 {% block content %}
-    {{challenge}}<br>
-    {{challenge.writer}}<br>
+<div class='container-fluid mt-4 mb-3' id="container" style='width:70%;'>
+    <div class="row border-bottom">
+        <span class="challenge-title"> {{challenge.title }}</span>
+        <div class="row row-cols-1 row-cols-md-2 d-flex justify-content-between" id="challenge-header">
+            <div class="col">
+                <span id="challenge-head"><img class="lazyload" id='challenge-detail-thumbnail' data-src="{% static 'images/baseimg.jpg' %}">관리자</span>
+                <span id="challenge-date">{{challenge.created_at | date:"Y.m.d h:m"}}</span>
+                <span class="ms-2 me-1" id="challenge-detail-views">조회수 {{views}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="row d-flex border-bottom" id="challenge-content">
+        <div id="challenge-detail-content">
+            {{ challenge.content|safe }}
+            {% if user == post.user_id or user == comment.user_id %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="row mt-4 mb-4" id="challenge-detail-like">
+        <div>
+            <img class="me-1" src="{% static 'images/comment_line.svg' %}" alt="코멘트">
+            <div class="comment-count" style="display: inline-block;">{{comment_count}}</div>
+            <span class="ms-2 me-1" id="challenge-detail-views">조회수 {{views}}</span>
+            <div style="display: inline">
+                {% if user.is_authenticated %}
+                    <button class="create-comment" type="button" data-bs-toggle="collapse" data-bs-target="#collapseComment" aria-expanded="false" aria-controls="collapseComment">
+                        댓글 작성
+                    </button>
+                {% else %}
+                    <p>댓글 작성을 위해서는 로그인이 필요합니다</p>
+                {% endif %}
+                <div class="collapse" id="collapseComment">
+                    <form class="card card-body" action="." method="post">
+                        {% csrf_token %}
+                        {{comment_form.media}}
+                        {{ comment_form.as_p }}
+                        <div class="d-flex justify-content-end">
+                            <button class="comment-submit" type="submit">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4 mb-4" id="challenge-detail-comment">
+        {% for comment in comments %}
+        <div class="comment comment-{{comment.id}}">
+            <div class="comment-content mb-2">
+                <span id="comment-head"><img class="lazyload" id='challenge-detail-thumbnail' data-src="{{ comment.user_id.Image.url }}"> {{ comment.user_id }}</span>
+                <div class="mt-2" id="comment-body">
+                    {{ comment.content|safe }}
+                    <div class="mt-1" > 
+                        <span>{{ comment.created_at }}</span>
+                        {% if user == challenge.user_id or user == comment.user_id %}
+                            <span class="trash" onclick="onClickDeleteComment({{challenge.id}}, {{comment.id}})"><img class="me-1" id="trashImg" src="{% static 'images/trash.svg' %}" alt="삭제"></span>
+                        {% endif %}
+                        <button class="create-reply" type="button" data-bs-toggle="collapse" data-bs-target="#collapseReply-{{comment.id}}" aria-expanded="false" aria-controls="collapseReply-{{comment.id}}">
+                            답글
+                        </button>
+                    </div>
+                </div>
+                </p>
+                <div class="collapse" id="collapseReply-{{comment.id}}" >
+                    <form class="reply card card-body mb-4" action="." method="post">
+                        {% csrf_token %}
+                        {{comment_form.media}}
+                        {{ comment_form.as_p }}
+
+                        <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                        <div class="d-flex justify-content-end">
+                            <input class="create-reply" type="submit" value="Submit">
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            {% for reply in comment.replies.all %}
+            <div class="reply-{{reply.parent_reply.id}} reply-{{reply.parent_reply.id}}-{{reply.id}}">
+                <div class="reply-content mt-2 mb-2">
+                    ㄴ<span id="reply-head"><img class="lazyload" id='challenge-detail-thumbnail' data-src="{{ reply.user_id.Image.url }}"> {{ reply.user_id }}</span>
+                    <div class="mt-2" id="reply-body"  style="padding-left: 1rem;">
+                        {{ reply.content|safe }}
+                        <div class="mt-1">
+                        {{ reply.created_at }}
+                        {% if user == challenge.user_id or user == reply.user_id %}
+                            <span class="trash" onclick="onClickDeleteReply({{reply.parent_reply.id}}, {{challenge.id}}, {{reply.id}})"><img class="me-1" id="trashImg" src="{% static 'images/trash.svg' %}" alt="삭제"></span>
+                        {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+        {% empty %}
+        <p>아직 작성된 댓글이 없습니다</p>
+        {% endfor %} 
+    </div>
+    </div>
+    {% comment %} </div> {% endcomment %}
 {% endblock %}
 
 {% block js %}
+    <script src="{% static 'javascripts/delete_comment.js' %}"></script>
 {% endblock %}

@@ -1,37 +1,58 @@
-{% extends 'base.html' %}
+{% extends "login_base.html" %}
 {% load static %}
+{% load socialaccount %}
 {% block head %}
-    <link href="{% static 'style/css/find_id.css' %}" rel="stylesheet">
+    <link href="{% static 'style/css/login.css' %}" rel="stylesheet">
+    <style>
+	    *{
+	        font-size: 100%;
+	    }
+        @media screen and (max-width : 900px){
+        html {font-size:0.8rem}  
+    	}
+
+    	@media screen and (max-width : 560px){
+    	    html {font-size:0.6rem}  
+    	}
+    	@media screen and (max-width : 900px){
+    		#image-container{
+    		  display: none;
+    		}
+    		#image-container img {
+    		  display: none;
+    		}
+    		#left-container{
+    		  margin-right: 0px!important;
+    		} 
+		}
+	</style>
 {% endblock %}
 
-{% block content %}  
-<div class="d-flex justify-content-center align-items-center main-container" style="background-image: url({% static 'images/id_find.jpg' %});">
-    <div class="d-flex justify-content-center align-items-center main-container">
-        <div class="container p-0">
-            <form action="" method="POST">
-                {% csrf_token %}
-                <div class="card px-3">
-                    <p class="h8 py-5 px-3"><img class="lazyload" id="login-icon2" data-src="{% static 'images/plant.png' %}"> 아이디 찾기 <img id="login-icon2" src="{% static 'images/plant.png' %}"></p>
-                    <div class="row gx-3">
-                        <div class="col-12 mb-5">
-                            <div class="d-flex flex-column">
-                                <p class="text mb-1 text-center">가입할 때 입력하신 이메일을 입력해주세요!</p>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="d-flex flex-column">
-                                <p class="text mb-1"></p>
-                                <input name="email" class="password-form-control mb-3" placeholder="example@example.com" type="email" id="id_email" required="true" >
-                            </div>
-                        </div>
-                        <div class="col-12 mb-3 text-center mt-3">
-                            <button class="btn btn-primary mb-3" type="submit"><span>아이디 찾기</span></button>
-                        </div>
-                    </div>
+{% block content %}
+<div id="left-container" class="col-5 d-flex flex-column justify-content-center">
+    <div style="margin-bottom: 3.125rem;">
+        <a href="{% url 'user:start_page' %}">
+            <img src="{% static 'images/logo.png' %}" alt="">
+        </a>
+    </div>
+    <div>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div>
+                <div class="d-flex flex-column">
+                    <p class="text mb-1" style="font-weight: bold;">가입할 때 입력하신 이메일을 입력해주세요!</p>
                 </div>
-            </form>  
-        </div>
+            </div>
+            <div>
+                <div class="d-flex flex-column">
+                    <p class="text mb-1"></p>
+                    <input name="email" class="mb-3 regular-size" placeholder="" type="email" id="id_email" required="true" >
+                </div>
+            </div>
+            <div>
+                <button class="btn regular-size button-black" type="submit"><span>아이디 찾기</span></button>
+            </div>
+        </form>
     </div>
 </div>
-
-{% endblock %}
+{%endblock%}

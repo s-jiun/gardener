@@ -1,0 +1,66 @@
+.card-body {
+  text-align: center;
+}
+.card-title {
+  font-weight: 500;
+  font-size: 1.7rem;
+  font-weight: 500;
+}
+.image {
+  overflow: hidden;
+  height: 200px;
+  width: auto;
+  position: relative;
+  cursor: pointer;
+  transition: 0.5s;
+}
+.image:after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  width: 500px;
+  height: 500px;
+  transform: translate(-140%, -50%);
+  background-color: #00000046;
+  opacity: 0.8;
+  border-radius: 50%;
+  transition: 0.5s;
+}
+
+.image:hover:after {
+  transform: translate(-50%, -50%);
+}
+
+#plant-img {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: 0.5s;
+}
+
+.image h3 {
+  width: 100%;
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  transform: translate(-2000px, -50%);
+  color: #fff;
+  transition: 0.5s;
+  transition-timing-function: ease-in;
+  word-break: keep-all;
+}
+
+.image:hover h3 {
+  transform: translate(-50%, -50%);
+  transition-timing-function: ease;
+  text-align: center;
+  font-size: 1.5rem;
+  line-height: 2.2rem;
+  font-weight: 400;
+}

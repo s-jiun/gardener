@@ -232,23 +232,45 @@ def find_id(request):
 
 
 @csrf_exempt
+def follower_delete_ajax(request):
+    req = json.loads(request.body)
+    user_id = req['user_id']
+    user = GeneralUser.objects.get(id=user_id)
+    following = Follow.objects.filter(following_user_id=user_id).filter(
+        user_id=request.user.id)
+    following.delete()
+    return JsonResponse({'user_id': user_id, 'user_userid': user.userid, 'user_name': user.name, 'user_point': user.point, 'user_image_url': user.Image.url})
+
+
+@csrf_exempt
+def following_delete_ajax(request):
+    req = json.loads(request.body)
+    user_id = req['user_id']
+    user = GeneralUser.objects.get(id=user_id)
+    follower = Follow.objects.filter(
+        following_user_id=request.user.id).filter(user_id=user_id)
+    follower.delete()
+    return JsonResponse({'user_id': user_id, 'user_name': user.name, 'user_point': user.point, 'user_image_url': user.Image.url})
+
+
+@csrf_exempt
 def following_ajax(request):
+    req = json.loads(request.body)
+    user_id = req['user_id']
+    user = GeneralUser.objects.get(id=user_id)
+    follow = Follow(user=user, following_user=request.user)
+    follow.save()
+    return JsonResponse({'user_id': user_id, 'user_userid': user.userid, 'user_name': user.name, 'user_point': user.point, 'user_image_url': user.Image.url})
+
+
+@csrf_exempt
+def other_delete_ajax(request):
     req = json.loads(request.body)
     user_id = req['user_id']
     user = GeneralUser.objects.get(id=user_id)
     following = Follow.objects.filter(user_id=user_id).filter(
         following_user=request.user.id)
     following.delete()
-    return JsonResponse({'user_id': user_id, 'user_userid': user.userid, 'user_name': user.name, 'user_point': user.point, 'user_image_url': user.Image.url})
-
-
-@csrf_exempt
-def follow_ajax(request):
-    req = json.loads(request.body)
-    user_id = req['user_id']
-    user = GeneralUser.objects.get(id=user_id)
-    follow = Follow(user=user, following_user=request.user)
-    follow.save()
     return JsonResponse({'user_id': user_id, 'user_userid': user.userid, 'user_name': user.name, 'user_point': user.point, 'user_image_url': user.Image.url})
 
 
@@ -261,21 +283,23 @@ def base_image_ajax(request):
     # user.save()
     return JsonResponse({'user_image': user.Image.url})
 
+
 @csrf_exempt
 def save_image_ajax(requset):
     req = json.loads(requset.body)
     user_id = req['user_id']
     src = req['src']
-    print('ajax src: ',src)
+    print('ajax src: ', src)
     user = GeneralUser.objects.get(id=user_id)
-    user.Image = '..'+ src
+    user.Image = '..' + src
     user.save()
     return JsonResponse({'user_image': user.Image.url})
+
 
 class liked_post_ListView(ListView):
     model = Like
     paginate_by = 5
-    template_name = 'user/my_pick.html'
+    template_name = 'user/mypick.html'
     context_object_name = 'liked'
 
     def get_queryset(self):
@@ -284,11 +308,22 @@ class liked_post_ListView(ListView):
         return liked
 
     def get_context_data(self, **kwargs):
+        follower = Follow.objects.filter(user=self.request.user).count()
+        following = Follow.objects.filter(
+            following_user=self.request.user).count()
         context = super().get_context_data(**kwargs)
+        context["follower"] = follower
+        context["following"] = following
         paginator = context['paginator']
         page_numbers_range = 10
         max_index = len(paginator.page_range)
-
+        cur_users_followings = self.request.user.followers.all()
+        cur_users_followings_list = []
+        for cur_users_following in cur_users_followings:
+            print(cur_users_following)
+            cur_users_followings_list.append(cur_users_following.user_id)
+        context['following_list'] = cur_users_followings_list
+        
         page = self.request.GET.get('page')
         current_page = int(page) if page else 1
 
@@ -299,16 +334,15 @@ class liked_post_ListView(ListView):
             end_index = max_index
 
         page_range = paginator.page_range[start_index:end_index]
-
-        context['user'] = GeneralUser.objects.get(id=self.kwargs['pk'])
         context['page_range'] = page_range
+
         return context
 
 
 class ScrabListView(ListView):
     model = PlantScrap
     paginate_by = 9
-    template_name = 'user/my_scrab.html'
+    template_name = 'user/myscrab.html'
     context_object_name = 'scrab_list'
 
     def get_context_data(self, **kwargs):
@@ -351,9 +385,22 @@ def delete_scrab(request, pk):
 
 class GardenerListView(ListView):
     model = GeneralUser
-    paginate_by = 9
+    paginate_by = 6
     template_name = 'user/search_gardener.html'
     context_object_name = 'gardener_list'
+
+    def get_queryset(self):
+        search_keyword = self.request.GET.get('q', '')
+        gardener_list = GeneralUser.objects.order_by(
+            'name').exclude(pk=self.request.user.pk)
+        if search_keyword:
+            if len(search_keyword) > 1:
+                search_gardener_list = gardener_list.filter(
+                    userid__icontains=search_keyword).exclude(pk=self.request.user.pk)
+                return search_gardener_list
+            else:
+                messages.error(self.request, '검색어는 2글자 이상 입력해주세요.')
+        return gardener_list
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -377,22 +424,12 @@ class GardenerListView(ListView):
 
         if len(search_keyword) > 1:
             context['q'] = search_keyword
+        following_list = []
+        for i in Follow.objects.filter(following_user=self.request.user):
+            following_list.append(i.user.userid)
+        context['following_list'] = following_list
 
         return context
-
-    def get_queryset(self):
-        search_keyword = self.request.GET.get('q', '')
-        gardener_list = GeneralUser.objects.order_by(
-            'name').exclude(pk=self.request.user.pk)
-
-        if search_keyword:
-            if len(search_keyword) > 1:
-                search_gardener_list = gardener_list.filter(
-                    userid__icontains=search_keyword).exclude(pk=self.request.user.pk)
-                return search_gardener_list
-            else:
-                messages.error(self.request, '검색어는 2글자 이상 입력해주세요.')
-        return gardener_list
 
 
 def about(request):
@@ -402,11 +439,16 @@ def about(request):
 class MyPlantsListView(ListView):
     model = MyPlant
     paginate_by = 12
-    template_name = 'user/my_plants.html'
+    template_name = 'user/myplants.html'
     context_object_name = 'plants_list'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        follower = Follow.objects.filter(user=self.request.user).count()
+        following = Follow.objects.filter(
+            following_user=self.request.user).count()
+        context["follower"] = follower
+        context["following"] = following
         paginator = context['paginator']
         page_numbers_range = 10
         max_index = len(paginator.page_range)
@@ -423,11 +465,14 @@ class MyPlantsListView(ListView):
         page_range = paginator.page_range[start_index:end_index]
         context['page_range'] = page_range
 
+        user = GeneralUser.objects.get(id=self.kwargs['pk'])
+        context['user'] = user
         return context
 
     def get_queryset(self):
+        user = GeneralUser.objects.get(id=self.kwargs['pk'])
         plants_list = MyPlant.objects.filter(
-            user=self.request.user).order_by('-id')
+            user=user).order_by('-id')
         return plants_list
 
 

@@ -14,13 +14,19 @@ const onClickDeleteComment = (post_id, comment_id) => {
 const deleteCommentHandleResponse = () => {
     if(requestDeleteComment.status < 400) {
 
-        const {post_id, comment_id} = JSON.parse(requestDeleteComment.response);
+        const {comment_id, comment_count} = JSON.parse(requestDeleteComment.response);
         const element1 = document.querySelector(`.comment-${comment_id}`);
-            const element2 = document.querySelector(`.reply-${comment_id}`);
-            if(element2){
-                element2.innerHTML = '';
-            }
-            element1.innerHTML = '';
+        const element2 = document.querySelector(`.reply-${comment_id}`);
+        if(element2){
+            element2.innerHTML = '';
+        }
+        element1.innerHTML = '';
+        const element_comment_count = document.querySelector(`#comment-count`)
+        element_comment_count.innerHTML = comment_count
+        if (comment_count == 0) {
+            const element3 = document.querySelector(`#post-detail-comment`)
+            element3.innerHTML = `<p>아직 작성된 댓글이 없습니다</p>`
+        }
     }
 };
 

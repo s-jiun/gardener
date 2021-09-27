@@ -1,0 +1,227 @@
+{% extends "base.html" %}
+{% load static %}
+{%block head%}
+    <link href="{% static 'style/css/profile.css' %}" rel="stylesheet">
+    <link href="/static/style/css/community_list.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+<!--CDN 링크 -->
+
+{%endblock%}
+{% block content %}
+
+<div class="container pe-0 ps-0">
+    <div class="row justify-content-center">
+        <div class="col col-10 mt-3 mb-5">
+            <div class="container profile">
+                <div class="container profile_in">
+                    <div class="row justify-content-center row-cols-1 row-cols-md-2">
+                        <div class="col text-center" style="margin-right:-5%; padding:0;">
+                            <img class="lazyload" id="user-img" data-src={{user.Image.url}} />
+                        </div>
+                        <div class="col">
+                            <div id="user-info">
+                                {% if user.point < 100 %} 
+                                <span id="user-level">
+                                    <a tabindex="0" type="button"data-bs-toggle="popover" data-bs-trigger="focus"title="입문 정원사 ({{user.point}}점)" data-bs-content="0~99점(게시물 0개 ~ 3개)">
+                                        입문정원사<br></span>
+                                {% elif user.point < 300 %} 
+                                <span id="user-level">
+                                    <a tabindex="0" type="button" data-bs-toggle="popover" data-bs-trigger="focus" title="초보 정원사 ({{user.point}}점)" data-bs-content="100~299점(게시물 4개 ~ 9개)">초보 정원사</span>
+                                {% elif user.point < 600 %} 
+                                <span id="user-level">
+                                    <a tabindex="0"type="button" data-bs-toggle="popover" data-bs-trigger="focus"title="아마추어 정원사 ({{user.point}}점)"data-bs-content="300~599점(게시물 10개 ~ 19개)">아마추어 정원사</span>
+                                {% elif user.point < 1000 %} 
+                                <span id="user-level">
+                                    <a tabindex="0" type="button" data-bs-toggle="popover" data-bs-trigger="focus" title="프로 정원사 ({{user.point}}점)" data-bs-content="600~999점(게시물 20개 ~ 33개)">프로 정원사</a> 
+                                    입니다.<br></span>
+                                {% else %}
+                                <span id="user-level"><a tabindex="0" type="button" data-bs-toggle="popover" data-bs-trigger="focus" title="국가대표 정원사 ({{user.point}}점)" data-bs-content="1000점 이상(게시물 34개 이상)">국가대표 정원사</a>입니다.<br></span>
+                                {% endif %}
+
+                                <div class="user-id-config">
+                                    <span id="user-id"> {{user.userid}}</span>
+                                    {%if user.id == request.user.id%}
+                                    <a href="{% url 'user:profile_update' %}">
+                                        <img class=""
+                                            src="{% static 'images/ios-settings 1.svg'%}" />
+                                    </a>
+                                    {% else %}
+                                        {% if is_following%}
+                                        <div class="follow-wrapper ms-2">
+                                            <div class='following'>
+                                                <button class='follow-btn'
+                                                    onclick="onClickFollowing({{user.id}})">팔로잉</button>
+                                            </div>
+                                        </div>
+                                        {% else %}
+                                        <div class="follow-wrapper">
+                                            <div class="follow">
+                                                <button class='follow-btn'
+                                                    onclick="onClickFollow({{user.id}})">팔로우</button>
+                                            </div>
+                                        </div>
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+
+                                <div id="profile-content">
+                                    <span style='overflow:auto;'>
+                                        {%if user.profile%}
+                                        {{user.profile|linebreaksbr}}
+                                        {% else %}
+                                        프로필 정보가 없습니다.
+                                        {%endif%}
+                                        <br>
+                                    </span>
+                                </div><br>
+                                <div id="user-follow" class="mt-2 mb-3">
+                                    <a href="{% url 'user:follow' user.pk %}">팔로워 <span
+                                            class="follower-count">{{follower}}</span></a>
+                                    <a href="{% url 'user:follow' user.pk %}">&nbsp&nbsp&nbsp팔로잉
+                                        <span
+                                            class="following-count">{{following}}</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="profile-post-header">
+                        <div class="profile-post-header__item profile-post-header__like">
+                            <a href = "{% url 'user:profile' user.pk %}">
+                                <img class="profile-post-header__img" src="{% static 'images/profile-create-line.svg'%}" />
+                                <span class="profile-post-header__text">작성 게시글</span>
+                            </a>
+                        </div>
+                        {%if user.id == request.user.id%}
+                        <div class="profile-post-header__item profile-post-header__like">
+                            <img class="profile-post-header__img" src="{% static 'images/profile-heart-fill.svg'%}" />
+                            <span class="profile-post-header__text">좋아요</span>
+                        </div>
+                        <div class="profile-post-header__item profile-post-header__scrap">
+                            <a href ="{% url 'user:my_scrab_plant' user.pk %}">
+                                <img class="profile-post-header__img" src="{% static 'images/profile-mark-line.svg'%}" />
+                                <span class="profile-post-header__text">스크랩</span>
+                            </a>
+                        </div>
+                        {%endif%}
+                        <div class="profile-post-header__item profile-post-header__myplant">
+                            <a href = "{% url 'user:my_plants' user.pk %}">
+                                <img class="profile-post-header__img" src="{% static 'images/profile-leaf-line.svg'%}" />
+                                <span class="profile-post-header__text">마이 플랜트</span>
+                            </a>
+                        </div>
+                    </div>
+                    {% if liked %}
+                        <div class='row d-flex' style='flex-wrap:wrap;' >
+                        {% for like in liked%}
+                            <div class="card border-0 border-bottom col-sm-12 col-md-6 col-lg-4" id="postcard">
+                                <div class="row d-flex p-1 justify-content-between" >
+                                    <span id="postcard-head"><img class="lazyload" id='post-list-thumbnail' data-src={{like.post_id.user_id.Image.url}}> {{like.post_id.user_id}}</span>
+                                    <div id="postcard-follow" class="postcard-{{like.post_id.user_id.id}}">
+                                        {% if like.post_id.user_id.id in following_list %}
+                                            <a onclick="onClickListDeleteFollow({{like.post_id.user_id.id}})" >팔로우 취소</a>
+                                        {% else %}
+                                            <a onclick="onClickListFollowing({{like.post_id.user_id.id}})">팔로우</a>                        
+                                        {% endif %}
+                                    </div>                                
+                                </div>
+                                <a href='{% url "community:post_detail" pk=like.post_id.pk %}'>
+                                    <figure class="snip1384">
+                                        {% if like.post_id.image %}
+                                            <image data-src='{{like.post_id.image.url}}' class='lazyload img-thumbnail' id = "post-image"/>
+                                        {% endif %}
+                                        <figcaption>
+                                        <span id="postcard-title">{{like.post_id.title|truncatechars:10 }}</span>
+                                        <p>
+                                            {% for tag in like.post_id.tags.all %}
+                                                    <button type="button" class="btn btn-outline-success" id="post-tag-button">{{tag.name}}</button> 
+                                            {% endfor %}
+                                        </p>
+                                        </figcaption>
+                                    </figure>
+                                </a> 
+                                <div class="row d-flex justify-content-between">
+                                    <div class="col pe-4">
+                                            <div class='likes post-id-{{ like.post_id.id }} d-flex ps-2'>
+                                                <img class='me-1' src='{% static 'images/heart_line.svg' %}' alt='하트'>
+                                                <span class='like_num me-3'>{{like.post_id.like_set.all.count}}</span>
+                                                <img class='me-1' src='{% static 'images/comment_line.svg' %}' alt='댓글'>
+                                                <span class='like_num'>{{like.post_id.reply_set.count}}</span>
+                                            </div>
+                                        </div>
+                                    <div class="col text-end">
+                                        <span id="postcard-date">{{post.created_at | date:"Y.m.d"}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        </div>
+                    {% else %}
+                        <div id="no-post" class="text-center">
+                            <span> 현재 좋아요한 게시글이 없습니다. </span>
+                        </div>
+                    {% endif %}
+                    </div>
+                    <div id="paging">
+                        <ul class="pagination justify-content-center" style="margin-top: 2rem;">
+                            <!-- 이전페이지 -->
+                            {% if page_obj.has_previous %}
+
+                            <li class="page-item">
+                                <a class="page-link" href="?&page={{ page_obj.previous_page_number }}"
+                                    style="border:none; font-size: 15px;">&lt;</a>
+                            </li>
+                            {% else %}
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" aria-disabled="true" tabindex="-1"
+                                    style="font-size: 15px; border:none;">&lt;</a>
+                            </li>
+                            {% endif %}
+                            <!-- 페이지리스트 -->
+                            {% for page_number in page_obj.paginator.page_range %}
+                            {% if page_number == page_obj.number %}
+                            <li aria-current="page" class="page-item {% if page == page_obj.number %} activate {% endif %}">
+                                <a class="page-link page-link-circle" href="?&page={{ page_number }}"
+                                    style="border-radius:100%; border:none; font-size: 12px; margin-right:7px;">{{ page_number }}</a>
+                            </li>
+                            {% else %}
+                            <li class="page-item {% if page == page_obj.number %} activate {% endif %}">
+                                <a class="page-link page-link-circle" href="?&page={{ page_number }}"
+                                    style="border-radius:100%; border:none; font-size: 12px; margin-right:7px;">{{ page_number }}</a>
+                            </li>
+                            {% endif %}
+                            {% endfor %}
+                            <!-- 다음페이지 -->
+                            {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?&page={{ page_obj.next_page_number }}"
+                                    style="border:none; font-size: 15px; margin-left:-7px;">&gt;</a>
+                            </li>
+                            {% else %}
+                            <li class="page-item disabled">
+                                <a class="page-link" tabindex="-1" aria-disabled="true" href="#" style="border:none; font-size: 15px; margin-left:-7px;">&gt;</a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<script>
+    $(function () {
+        $('[data-bs-toggle="popover"]').popover()
+    })
+    var popover = new bootstrap.Popover(document.querySelector('.popover-dismiss'), {
+        trigger: 'focus'
+    })
+</script>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'javascripts/profile_list_follow.js' %}"></script>
+<script src="{% static 'javascripts/profile_follow.js' %}"></script>
+{% endblock %}

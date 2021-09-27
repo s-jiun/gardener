@@ -4,285 +4,373 @@
 
 {%block head%}
 <link href="{% static 'style/css/main_plant.css' %}" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
-<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 {%endblock%}
 
+{% block search %}
+<form action='' method="GET" style="width:100%">
+    <div class="d-flex align-items-center justify-content-center">
+        <select name="type" class="search-input-1">
+            <option value="name">식물명</option>
+            <option value="content">내용</option>
+        </select>
+        <div class="d-flex  justify-content-between" id="search" style="width:80%;">
+            <input class='search-input' type="text" name='q' value="{{q}}" placeholder="반려식물의 정보를 입력해보세요" />
+            <button class='searchbtn' type="submit"><img class='me-1' src="{% static 'images/search.svg' %}" alt='하트'></button>
+        </div>
+    </div>
+
+</form>
+{% endblock %}
+
 {% block content %}
-        <div class= "main-plant">
-            <div class='row'>
-                <div id='plant-header' class='d-flex flex-column justify-content-center'>
-                    <div id='plant-header-p'>
-                        {% if q %}
-                        <span style="font-size: 28px;">'{{ q }}' 검색 결과입니다. </span>
-                        {% else %}
-                        <h2>
-                            <img src="{% static 'images/search_plant.png' %}" style='width:33px;'> 반려식물의 정보를 검색해보세요 <img src="{% static 'images/search_plant.png' %}" style='width:33px;'>
-                        </h2>
-                        {% endif %}
-                        <!-- 에러메시지 -->
-                        {% if messages %}
-                            {% for message in messages %}
-                                {{message}}
-                            {% endfor %}
-                        {% endif %}
+
+<div class="level-con">
+    <h5>관리 난이도</h5>
+    <div class="level-btn"><a href='?type=managelevel&q=초보자'>초보자</a></div>
+    <div class="level-btn"><a href='?type=managelevel&q=경험자'>경험자</a></div>
+    <div class="level-btn"><a href='?type=managelevel&q=초보자'>전문가</a></div>
+</div>
+
+
+<div class="container-fluid main-body mt-4 mb-4" id="plant-body">
+    {% if plant_list %}
+    <div class='row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3'>
+        {% for plant in plant_list %}
+        <div class="col">
+            <div class="card p-2 m-3" id="plant-card" style="border:none;">
+                <div class="image">
+                    <a data-bs-toggle="modal" data-bs-target="#plantDetailModal-{{plant.pk}}">
+                        <img src={{plant.photo_url|safe}} class="lazyload card-img-top" id="plant-img" alt="...">
+                        <h3>{{plant.name}}<br> 알아보기</h3>
+                    </a>
+                </div>
+                <div class="card-body" style="padding : 1rem 0 0 0;">
+                    <h5 class="card-title" style="font-size:1.7rem;">{{ plant.name }}</h5>
+                </div>
+            </div>
+        </div>
+        {% if plant.growth_form != '0' %}
+        <div class="modal fade" id="plantDetailModal-{{plant.pk}}" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content" id="plantDetailModal-content">
+                    <div class="modal-header" style="border: none; padding-right: 3rem; padding-top:3rem;">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div id='plant-header-form'>
-                        <form action = '' method="GET" >
-                            <select class="plant-select" name="type" id="search-type" onchange="SelectHandleOnchange(this)">
-                                <option value="all">전체</option>
-                                <option value="name">식물 이름</option>
-                                <option value="content">내용</option>  
-                                <option value="managelevel">경험자</option>      
-                            </select>
-                            <div id="search_option" style="display:inline">
-                                <input class="plant-input" type="text" name ='q' value="{{q}}" placeholder="검색어를 입력하세요" />
-                                <button class="plant-input-1" type="submit">검색</button>
-                                <div class="suggestions">
-                                </div>
-                            </div>
-                        </form>
+                    <div class="d-flex justify-content-center align-items-start pb-3">
+                        {%if plant in scrap_plant_list %}
+                        <div class="btn btn-success btn-sm post__del_scrap" onclick="onClickScrap({{plant.pk}})">
+                            <img class="profile-post-header__img" src="{% static 'images/mark_fill.svg'%}" />
+                        </div>
+                        {% else %}
+                        {% if request.user.is_authenticated %}
+                        <div class="btn btn-success btn-sm post__scrap" onclick="onClickScrap({{plant.pk}})">
+                            <img class="profile-post-header__img" src="{% static 'images/mark_line.svg'%}" />
+                        </div>
+                        {% endif %}
+                        {% endif %}
+                        <h5 class="modal-title" id="plantDetailLabel">{{plant.name}}</h5>
+                    </div>
+                    <div class="modal-body text-center"
+                        style="padding-left:40px; padding-right:40px; padding-bottom:40px;">
+                        <img class="lazyload" data-src={{plant.photo_url|safe}}>
+                        <div>
+                            <table class="text-start mt-2">
+                                <tbody>
+                                    <tr>
+                                        <td class="p-2 table-title">
+                                            <span>생육형태<span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 table-con">
+                                            {{plant.growth_form}}
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 table-title">
+
+                                            <span>관리 난이도<span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 table-con">
+                                            {{plant.name}}의 관리 난이도는 {{plant.care_difficulty}} 입니다.
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 table-title">
+
+                                            <span>관리 요구 수준<span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 table-con">
+                                            {%if plant.management_level == "경험자" %}
+                                            식물을 키워본 경험이 좀 있다면 어렵지 않아요! 도전해보세요!
+                                            {%elif plant.management_level == "초보자" %}
+                                            {{plant.management_level}}도 쉽게 키울 수 있어요! 어렵지 않아요!
+                                            {% else %}
+                                            {{plant.management_level}} 정도의 수준이 요구되어요!
+                                            {%endif%}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 table-title">
+
+                                            <span>생육 온도<span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 table-con">
+                                            {{plant.growth_temp}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 table-title">
+
+                                            <span>생육 습도<span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 table-con">
+                                            {{plant.humidity}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 table-title">
+
+                                            <span>봄철 물주기<span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 table-con">
+                                            {{plant.water_period_spring}}
+                                        </td>
+                                    </tr>
+                                    <td class="p-2 table-title">
+
+                                        <span>여름철 물주기<span>
+                                    </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 table-con">
+                                            {{plant.water_period_summer}}
+                                        </td>
+                                    </tr>
+                                    <td class="p-2 table-title">
+
+                                        <span>가을철 물주기<span>
+                                    </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 table-con">
+                                            {{plant.water_period_autumn}}
+                                        </td>
+                                    </tr>
+                                    <td class="p-2 table-title">
+
+                                        <span>겨울철 물주기<span>
+                                    </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 table-con">
+                                            {{plant.water_period_winter}}
+                                        </td>
+                                    </tr>
+                                    <td class="p-2 table-title">
+
+                                        <span>기타사항<span>
+                                    </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 table-con">
+                                            {{plant.content}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div><!--header 닫힘-->
-    <div class="container-fluid main-body mt-4 mb-4" id="plant-body">
-    {% if plant_list %}
-        <div class='row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3'>
-            {% for plant in plant_list %}
-                <div class="col">
-                    <div class="card p-2 m-3" id="plant-card" >
-                        <div class="image" >
-                            <a data-bs-toggle="modal" data-bs-target="#plantDetailModal-{{plant.pk}}">
-                            <img src={{plant.photo_url|safe}} class="lazyload card-img-top"  id="plant-img" alt="..." >
-                            <h3>🌱{{plant.name}}🌱 <br> 알아보기</h3>
-                            </a>
+        {% else %} {% comment %} 건조식물 모달 {% endcomment %}
+        <div class="modal fade" id="plantDetailModal-{{plant.pk}}" data-bs-backdrop="static" data-bs-keyboard="false"
+                tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable">
+                    <div class="modal-content" id="plantDetailModal-content">
+                        <div class="modal-header" style="border: none; padding-right: 3rem; padding-top:3rem;">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="card-body">
-                            <h5 class="card-title">{{ plant.name }}</h5>
-                            <hr class="m-0">
-                        </div>
-                    </div>
-                </div>
-                <div class="modal fade" id="plantDetailModal-{{plant.pk}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-scrollable">
-                        <div class="modal-content" id="plantDetailModal-content">
-                            <div class="modal-header justify-content-center">
-                                <h5 class="modal-title" id="plantDetailLabel">{{plant.name}}</h5>
-                                <button type="button" class="btn-close me-2" data-bs-dismiss="modal" aria-label="Close" style="margin-left:40px;"></button>
-                                {%if plant in scrap_plant_list %}
-                                    <div class="btn btn-success btn-sm post__del_scrap" onclick="onClickScrap({{plant.pk}})"><i class="fas fa-bookmark"></i></div>
-                                {% else %}
-                                    {% if request.user.is_authenticated %}
-                                    <div class="btn btn-success btn-sm post__scrap" onclick="onClickScrap({{plant.pk}})"><i class="far fa-bookmark"></i></div>
-                                    {% endif %}
-                                {% endif %}
+                        <div class="d-flex justify-content-center align-items-start pb-3">
+                            {%if plant in scrap_plant_list %}
+                            <div class="btn btn-success btn-sm post__del_scrap" onclick="onClickScrap({{plant.pk}})">
+                                <img class="profile-post-header__img" src="{% static 'images/mark_fill.svg'%}" />
                             </div>
-                            <div class="modal-body text-center">
-                                <img class="lazyload" data-src={{plant.photo_url|safe}}>
-                                <hr class="m-1"><hr class="m-1">
-                                <div>
-                                    <table class="table table-striped text-start mt-2">
-                                        <tbody>
-                                            <tr>
-                                                <td class="p-2"> 
-                                                <img class="lazyload" data-src="{%static 'images/plant1.png'%}"> 
-                                                <span>생육형태<span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                - {{plant.name}}의 생육형태는 {{plant.growth_form}} 입니다
-                                                </td> 
-                                            
-                                            </tr>
-                                            <tr>
-                                                <td class="p-2"> 
-                                                <img class="lazyload" data-src="{%static 'images/difficulty.png'%}"> 
-                                                <span>관리 난이도<span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                - {{plant.name}}의 관리 난이도는 {{plant.care_difficulty}} 입니다. 
-                                                </td> 
-                                            </tr>
-                                            <tr>
-                                                <td class="p-2"> 
-                                                    <img class="lazyload" data-src="{%static 'images/watering.png'%}"> 
-                                                    <span>관리 요구 수준<span>
-                                                    </td>
-                                                </tr>
-                                            <tr>
-                                                <td>
-                                                {%if plant.management_level == "경험자" %}
-                                                - 식물을 키워본 경험이 좀 있다면 어렵지 않아요! 도전해보세요!
-                                                {%elif plant.management_level == "초보자" %}
-                                                - {{plant.management_level}}도 쉽게 키울 수 있어요! 어렵지 않아요!
-                                                {% else %}
-                                                -{{plant.management_level}} 정도의 수준이 요구되어요! 
-                                                {%endif%}
-                                                </td> 
-                                            </tr>
-                                            <tr>
-                                                <td class="p-2"> 
-                                                <img class="lazyload" data-src="{%static 'images/temperature.png'%}"> 
-                                                <span>생육 온도<span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                - {{plant.name}}는 {{plant.growth_temp}} 정도의 온도에서 잘 자라요!
-                                                </td> 
-                                            </tr>
-                                            <tr>
-                                                <td class="p-2"> 
-                                                <img class="lazyload" data-src="{%static 'images/humidity.png'%}"> 
-                                                <span>생육 습도<span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                - {{plant.name}}는 {{plant.humidity}}의 습도 환경이 좋아요!
-                                                </td> 
-                                            </tr>
-                                            <tr>
-                                            <td class="p-2"> 
-                                                <img class="lazyload" data-src="{%static 'images/spring.png'%}"> 
-                                                <span>봄철 물주기<span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                - 봄에는 [ {{plant.water_period_autumn}} ] 정도의 느낌이 들 만큼 물을 주세요!
-                                                </td> 
-                                            </tr>
-                                            <td class="p-2"> 
-                                                <img class="lazyload" data-src="{%static 'images/summer.png'%}"> 
-                                                <span>여름철 물주기<span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                - 여름에는 [ {{plant.water_period_summer}} ] 정도의 느낌이 들 만큼 물을 주세요!
-                                                </td> 
-                                            </tr>
-                                            <td class="p-2"> 
-                                                <img class="lazyload" data-src="{%static 'images/fall.png'%}"> 
-                                                <span>가을철 물주기<span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                - 가을에는 [ {{plant.water_period_autumn}} ] 정도의 느낌이 들 만큼 물을 주세요!
-                                                </td> 
-                                            </tr>
-                                            <td class="p-2"> 
-                                                <img class="lazyload" data-src="{%static 'images/winter.png'%}"> 
-                                                <span>겨울철 물주기<span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                - 겨울에는 [ {{plant.water_period_winter}} ] 정도의 느낌이 들 만큼 물을 주세요!
-                                                </td> 
-                                            </tr>
-                                            <td class="p-2"> 
-                                                <img class="lazyload" data-src="{%static 'images/plant.png'%}"> 
-                                                <span>기타사항<span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                - {{plant.content}}
-                                                </td> 
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                            {% else %}
+                                {% if request.user.is_authenticated %}
+                                <div class="btn btn-success btn-sm post__scrap" onclick="onClickScrap({{plant.pk}})">
+                                    <img class="profile-post-header__img" src="{% static 'images/mark_line.svg'%}" />
                                 </div>
+                                {% endif %}
+                            {% endif %}
+                            <h5 class="modal-title" id="plantDetailLabel">{{plant.name}}</h5>
+                        </div>
+                        <div class="modal-body text-center"
+                            style="padding-left:40px; padding-right:40px; padding-bottom:40px;">
+                            <img class="lazyload" data-src={{plant.photo_url|safe}}>
+                            <div>
+                                <table class="text-start mt-2">
+                                    <tbody> 
+                                    {% comment %} 건조식물 db 확인해서 tr/td 추가 {% endcomment %}
+                                        <tr>
+                                            <td class="p-2 table-title">
+                                                <span>관리 난이도<span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-2 table-con">
+                                                {{plant.name}}의 관리 난이도는 {{plant.care_difficulty}} 입니다.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-2 table-title">
+    
+                                                <span>관리 요구 수준<span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-2 table-con">
+                                                {%if plant.management_level == "경험자" %}
+                                                식물을 키워본 경험이 좀 있다면 어렵지 않아요! 도전해보세요!
+                                                {%elif plant.management_level == "초보자" %}
+                                                {{plant.management_level}}도 쉽게 키울 수 있어요! 어렵지 않아요!
+                                                {% else %}
+                                                {{plant.management_level}} 정도의 수준이 요구되어요!
+                                                {%endif%}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-2 table-title">
+                                                <span>물주기<span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-2 table-con">
+                                                {{plant.water_period_spring}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-2 table-title">
+    
+                                                <span>광도<span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-2 table-con">
+                                                {{plant.sunlight}}
+                                            </td>
+                                        </tr>
+                                        <td class="p-2 table-title">
+
+                                            <span>기타사항<span>
+                                        </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-2 table-con">
+                                                {{plant.content}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
-            {% endfor %}
-            {% else %}
-                {%if q%}
-                <tr class="text-center">
-                    <td colspan="5">
-                        <div class="text-center" style="font-size: 28px;">
-                            일치하는 검색 결과가 없습니다.
-                            <br/>
-                            <a href = '{% url "search:plant_list" %}' style='font-size:1.3rem; '>뒤로가기</a>
-                        </div>
-                    </td>
-                </tr>
-                {% else %}
-                <tr class="text-center" style="font-size: 28px;">
-                    <td colspan="5">
-                    저장된 식물 정보가 없습니다.
-                    </td>
-                </tr>
-                {%endif%}
         </div>
-    {% endif %}
-    </div>
-    <div id="plant-paginator">
-        {% if is_paginated %}
-        <ul class="pagination">
-        {% if page_obj.has_previous %}
-        <li class="page-item">
-            <a class="page-link" href="?type={{type}}&q={{q}}&page={{ page_obj.previous_page_number }}"
-            tabindex="-1">이전</a>
-        </li>
-        {% else %}
-        <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1">이전</a>
-        </li>
         {% endif %}
-        {% for page in page_range %}
-        <li class="page-item {% if page == page_obj.number %} activate {% endif %}">
-            <a class="page-link" href="?type={{type}}&q={{q}}&page={{ page }}">{{ page }}</a>
-        </li>
         {% endfor %}
-        {% if page_obj.has_next %}
-        <li class="page-item">
-        <a class="page-link"
-            href="?type={{type}}&q={{q}}&page={{ page_obj.next_page_number }}">다음</a>
-        </li>
         {% else %}
-        <li class="page-item disabled">
-            <a class="page-link" href="#">다음</a>
-        </li>
+        {%if q%}
+        <tr class="text-center">
+            <td colspan="5">
+                <div class="text-center" style="font-size: 28px;">
+                    일치하는 검색 결과가 없습니다.
+                    <br />
+                    <a href='{% url "search:plant_list" %}' style='font-size:1.3rem; '>뒤로가기</a>
+                </div>
+            </td>
+        </tr>
+        {% else %}
+        <tr class="text-center" style="font-size: 28px;">
+            <td colspan="5">
+                저장된 식물 정보가 없습니다.
+            </td>
+        </tr>
+        {%endif%}
         {% endif %}
-    </ul>
-    {% endif %}
     </div>
-    <script>
-        $( function() {
-            var availableTags = [
-                {% for plant in plants %}
-                    "{{ plant.name|safe }}",
-                {% endfor %}
-            ];
-            $( ".plant-input" ).autocomplete({
-            source: function(request, response) {
-                var results = $.ui.autocomplete.filter(availableTags, request.term);
-                response(results.slice(0, 10));
-            },
-            focus : function(event, ui) {
-                return false;
-            },
-            autoFocus: true,
-            delay: 500,
-            });
+    <div class="col-md-offset-6">
+        {% if is_paginated %}
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link page-link-2" href="?type={{ type }}&q={{ q }}&page={{ page_obj.previous_page_number }}"
+                    tabindex="-1">&lt;</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link page-link-2" href="#" tabindex="-1">&lt;</a>
+            </li>
+            {% endif %}
+
+            {% for page in page_range %}
+            <li class="page-item {% if page == page_obj.number %} activate {% endif %}">
+                <a class="page-link  page-link-circle" href="?type={{ type }}&q={{ q }}&page={{ page }}">{{ page }}</a>
+            </li>
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link page-link-2"
+                    href="?type={{ type }}&q={{ q }}&page={{ page_obj.next_page_number }}" style ="margin-left:-7px;">&gt;</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link page-link-2" href="#" style="margin-left:-7px;">&gt;</a>
+            </li>
+            {% endif %}
+        </ul>
+        {% endif %}
+    </div>
+</div>
+<script>
+    $(function () {
+        var availableTags = [
+            {% for plant in plants %}
+                "{{ plant.name|safe }}",
+        {% endfor %}
+        ];
+    $(".search-input").autocomplete({
+        source: function (request, response) {
+            var results = $.ui.autocomplete.filter(availableTags, request.term);
+            response(results.slice(0, 10));
+        },
+        focus: function (event, ui) {
+            return false;
+        },
+        autoFocus: true,
+        delay: 500,
+    });
         } );
-    </script>
+</script>
 {%endblock%}
 
 {% block js %}
-    <script src="{% static 'javascripts/scrap.js' %}"></script>
+<script src="{% static 'javascripts/scrap.js' %}"></script>
 {% endblock %}

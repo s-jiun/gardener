@@ -1,0 +1,112 @@
+* {
+  font-family: "Noto Sans KR" !important;
+  font-size: 62.5%; /*1rem : 10px*/
+}
+
+#container {
+  min-height: 60rem;
+}
+.issue-title {
+  font-size: 2.6rem;
+  margin-bottom: 2rem;
+  font-weight: bold;
+  color: #354847;
+}
+#issue-header {
+  margin-bottom: 3rem;
+}
+#issue-head {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+#issue-date {
+  margin-left: 0.5rem;
+  font-size: 1.4rem;
+  color: #8f8f8f;
+}
+
+#issue-detail-thumbnail {
+  overflow: hidden;
+  width: 30px;
+  height: 30px;
+  padding: 2px;
+  border-radius: 100%;
+}
+#issue-follow-button {
+  background-color: white;
+  border-radius: 20px;
+  border: 0.1rem solid #76b79c;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  color: #76b79c;
+}
+#issue-content {
+  margin-top: 4rem;
+}
+#issue-detail-content > * {
+  font-size: 1.6rem;
+}
+#issue-detail-content p {
+  overflow-x: auto;
+}
+#issue-detail-like * {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+.tags {
+  background-color: white;
+  border-radius: 20px;
+  padding: 0.6rem;
+  border: 0.1rem solid #8f8f8f;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  color: #8f8f8f;
+  min-width: 4.3rem;
+}
+.create-comment {
+  background-color: white;
+  border-radius: 20px;
+  padding: 0.6rem;
+  border: 0.1rem solid #8f8f8f;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  color: #8f8f8f;
+  min-width: 4.3rem;
+}
+#comment-head,
+#reply-head {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+#comment-body p,
+#comment-body span,
+#reply-body,
+#reply-body > * {
+  font-size: 1.4rem;
+}
+.create-reply {
+  background-color: white;
+  border-radius: 20px;
+  padding: 0.6rem;
+  border: 0.1rem solid #8f8f8f;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  color: #8f8f8f;
+  min-width: 4.3rem;
+}
+#collapseComment {
+  margin-top: 2rem;
+}
+.reply textarea {
+  width: 100%;
+}
+
+.reply-content {
+  background-color: #f8f8f8;
+}
+
+#trashImg {
+  width: 1.5rem;
+  cursor: pointer;
+}
