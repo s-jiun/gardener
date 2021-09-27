@@ -82,14 +82,13 @@
                                                     {% if follower.following_user_id in cur_users_followings_list %}
                                                         <div class="col follow-wraper-{{follower.following_user_id}} d-flex justify-content-end align-items-center" style="display:inline; width: 10rem; ">
                                                             <div class='following-{{follower.following_user_id}}' style="display:inline;">
-                                                                <button onclick="onClickFollowerDelete({{follower.following_user_id}})">삭제</button>
+                                                                <button class="follow-btn" onclick="onClickFollowerDelete({{follower.following_user_id}})">삭제</button>
                                                             </div>
                                                         </div>
                                                     {% else %}
                                                         <div class="col follow-wraper-{{follower.following_user_id}} d-flex justify-content-end align-items-center" style="display:inline; width: 10rem; ">
                                                             <div class="follow-{{follower.following_user_id}}" style="display:inline;">
                                                                 <button onclick="onClickFollow({{follower.following_user_id}})">팔로우</button>
-                                                                <button>삭제</button>
                                                             </div>
                                                         </div>
                                                     {% endif %}
@@ -99,13 +98,13 @@
                                                         {% if follower.following_user_id in cur_users_followings_list %}
                                                             <div class="col follow-wraper-{{follower.following_user_id}} d-flex justify-content-end align-items-center" style="display:inline; width: 10rem; ">
                                                                 <div class='following-{{follower.following_user_id}}' style="display:inline;">
-                                                                    <button>팔로우 취소</button>
+                                                                    <button class="follow-btn" onclick="onClickOtherDeleteFollow({{follower.following_user_id}})">팔로우 취소</button>
                                                                 </div>
                                                             </div>
                                                         {% else %}
                                                             <div class="col follow-wraper-{{follower.following_user_id}} d-flex justify-content-end align-items-center" style="display:inline; width: 10rem; ">
                                                                 <div class="follow-{{follower.following_user_id}}" style="display:inline;">
-                                                                    <button onclick="onClickOtherFollow({{follower.following_user_id}})">팔로우</button>
+                                                                    <button class="follow-btn" onclick="onClickOtherFollowing({{follower.following_user_id}})">팔로우</button>
                                                                 </div>
                                                             </div>
                                                         {% endif %}
@@ -139,13 +138,13 @@
                                                 {% if following.user_id in cur_users_followings_list %}
                                                     <div class="col follow-wraper-{{following.user_id}} d-flex justify-content-end align-items-center" style="display:inline; width: 10rem; ">
                                                         <div class='following-{{following.user_id}}' style="display:inline;">
-                                                            <button onclick="onClickFollowingDelete({{following.user_id}})" >삭제</button>
+                                                            <button class="follow-btn" onclick="onClickFollowingDelete({{following.user_id}})" >삭제</button>
                                                         </div>
                                                     </div>
                                                 {% else %}
                                                     <div class="col follow-wraper-{{following.user_id}} d-flex justify-content-end align-items-center" style="display:inline; width: 10rem; ">
                                                         <div class="follow-{{following.user_id}}" style="display:inline;">
-                                                            <button  onclick="onClickFollow({{following.user_id}})">팔로우</button>
+                                                            <button class="follow-btn"  onclick="onClickFollow({{following.user_id}})">팔로우</button>
                                                         </div>
                                                     </div>
                                                 {% endif %}
@@ -155,13 +154,13 @@
                                                 {% if following.user_id in cur_users_followings_list %}
                                                     <div class="col follow-wraper-{{following.user_id}} d-flex justify-content-end align-items-center" style="display:inline; width: 10rem; ">
                                                         <div class='following-{{following.user_id}}' style="display:inline;">
-                                                            <button onclick="onClickOtherDeleteFollow({{following.user_id}})">팔로우 취소</button>
+                                                            <button class="follow-btn" onclick="onClickOtherDeleteFollow({{following.user_id}})">팔로우 취소</button>
                                                         </div>
                                                     </div>
                                                 {% else %}
                                                     <div class="col follow-wraper-{{following.user_id}} d-flex justify-content-end align-items-center" style="display:inline; width: 10rem; ">
                                                         <div class="follow-{{following.user_id}}" style="display:inline;">
-                                                            <button  onclick="onClickOtherFollowing({{following.user_id}})">팔로우</button>
+                                                            <button class="follow-btn"  onclick="onClickOtherFollowing({{following.user_id}})">팔로우</button>
                                                         </div>
                                                     </div>
                                                 {% endif %}
