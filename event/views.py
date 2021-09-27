@@ -153,7 +153,6 @@ class NewsListView(ListView):
     def get_queryset(self):
 
         search_keyword = self.request.GET.get('q', '')
-        search_type = self.request.GET.get('type', '')
         issue_list = CardNews.objects.order_by('-id')
         if search_keyword:
             if len(search_keyword) > 1:
@@ -206,7 +205,7 @@ def delete_reply(request, pk):
         ChallengeReply.objects.filter(
             challenge_id=challenge_id, parent_reply=comment).delete()
         comment.delete()
-    
+
     commentCount = ChallengeReply.objects.filter(
         challenge_id=challenge_id).count()
-    return JsonResponse({'parent_reply_id': parent_reply_id, 'challenge_id': challenge_id, 'challengeReply_id': challengeReply_id, 'comment_count':commentCount})
+    return JsonResponse({'parent_reply_id': parent_reply_id, 'challenge_id': challenge_id, 'challengeReply_id': challengeReply_id, 'comment_count': commentCount})
