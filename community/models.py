@@ -55,9 +55,9 @@ class Postviews(models.Model):
         protocol='both', unpack_ipv4=False, null=True, verbose_name='사용자 Ip주소')
 
 
-class Reply(models.Model):  # 대댓글 까지 가능한 댓글?
+class Reply(models.Model):  
     user_id = models.ForeignKey(GeneralUser, on_delete=CASCADE)
-    post_id = models.ForeignKey(Post, on_delete=CASCADE)  # 게시글 번호
+    post_id = models.ForeignKey(Post, on_delete=CASCADE) 
     content = RichTextUploadingField(
         blank=True, null=True, config_name='answer_ckeditor')
     parent_reply = models.ForeignKey(
