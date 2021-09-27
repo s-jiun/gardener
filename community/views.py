@@ -304,14 +304,14 @@ def like_ajax(request,pk):
 
 class tagListView(ListView):
     model = Post
-    paginate_by = 4
+    paginate_by = 9
     template_name = 'community/tagged_list.html'
-    context_object_name = 'posts'
+    context_object_name = 'post_list'
 
     def get_queryset(self):
-        posts = Post.objects.filter(
+        post_list= Post.objects.filter(
             tags__name=self.kwargs['tag']).order_by('id')
-        return posts
+        return post_list
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
