@@ -29,7 +29,7 @@
 {% endblock %}
 
 {% block content %}
-<div id="left-container" class="col-5 d-flex flex-column justify-content-center" style="margin-right: 6.3125rem; width: 21.5rem;">
+<div id="left-container" class="col-5 d-flex flex-column justify-content-center">
     <div style="margin-bottom: 3.125rem;">
         <a href="{% url 'user:start_page' %}">
             <img src="{% static 'images/logo.png' %}" alt="">
@@ -41,7 +41,7 @@
                     <div>
                         <div class="d-flex flex-column">
                             <p>이름</p> 
-                            <input style="width: 20rem; height: 2.5rem;" type="text" name="name" class="" required="" id="id_name">
+                            <input type="text" name="name" class="regular-size" required="" id="id_name">
                         </div>
                     </div>
                     <div>
@@ -67,7 +67,7 @@
                     <div>
                         <div class="d-flex flex-column">
                             <p>아이디</p>
-                            <input style="width: 20rem; height: 2.5rem;" type="text" name="userid" class="" required="" id="id_userid">
+                            <input type="text" name="userid" class="regular-size" required="" id="id_userid">
                         </div>
                     </div>
                     <div>
@@ -78,13 +78,13 @@
                     <div>
                         <div class="d-flex flex-column mb-3">
                             <p>이메일</p>
-                            <input style="width: 20rem; height: 2.5rem;" type="email" name="email" class="" required="" id="id_email">
+                            <input type="email" name="email" class="regular-size" required="" id="id_email">
                         </div>
                     </div>
                     <div>
                         <div class="d-flex flex-column">
                             <p>비밀번호: 8자리 이상. 영문과 숫자를 섞어주세요.</p>
-                            <input style="width: 20rem; height: 2.5rem;" type="password" name="password1" class="" required="" id="id_password1">
+                            <input type="password" name="password1" class="regular-size" required="" id="id_password1">
                         </div>
                     </div>
                     <div>
@@ -95,11 +95,11 @@
                     <div>
                         <div class="d-flex flex-column">
                             <p>비밀번호 확인</p>
-                            <input style="width: 20rem; height: 2.5rem;" type="password" name="password2" class="" required="" id="id_password2">
+                            <input type="password" name="password2" class="regular-size" required="" id="id_password2">
                         </div>
                     </div>
                     <div class="d-flex justify-content-start">
-                        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#terms1Modal">
+                        <button style="width: 21rem;" type="button" class="btn" data-bs-toggle="modal" data-bs-target="#terms1Modal">
                             개인정보 처리방침 약관 동의 (자세히 보기)
                         </button>
                         
@@ -386,7 +386,7 @@
                         <input class="form-check-input" type="checkbox" value="" name="agreement2" id="flexCheckterm2">
                     </div>
                     <div>
-                        <button style="width: 20rem; height: 2.5rem; color: white; background-color: #354847;" class="btn" type="submit" onclick = "return CheckForm()"><span>회원가입</span></button>
+                        <button class="btn regular-size button-black" type="submit" onclick = "return CheckForm()"><span>회원가입</span></button>
                     </div>
         </form>
         {% if messages %}

@@ -29,7 +29,7 @@
 {% endblock %}
 
 {% block content %}
-<div id="left-container" class="col-5 d-flex flex-column justify-content-center" style="margin-right: 6.3125rem; width: 21.5rem;">
+<div id="left-container" class="col-5 d-flex flex-column justify-content-center">
     <div style="margin-bottom: 3.125rem;">
         <a href="{% url 'user:start_page' %}">
             <img src="{% static 'images/logo.png' %}" alt="">
@@ -39,6 +39,6 @@
         <p>{{email}}로 등록된 아이디:</p>
         <p style="font-weight:bold;">등록된 아이디가 존재하지 않습니다!</p>
     </div>
-    <a href="{% url 'user:login' %}"><button style="width: 20rem; height: 2.5rem; color: white; background-color: #354847;" class="btn">로그인 페이지로</button></a>
+    <a href="{% url 'user:login' %}"><button class="btn regular-size button-black">로그인 페이지로</button></a>
 </div>
 {% endblock %}

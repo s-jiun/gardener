@@ -156,6 +156,8 @@ class NewsListView(ListView):
         issue_list = CardNews.objects.order_by('-id')
         if search_keyword:
             if len(search_keyword) > 1:
+                issue_list = CardNews.objects.filter(
+                    title__icontains=search_keyword)
                 return issue_list
             else:
                 messages.error(self.request, '검색어는 2글자 이상 입력해주세요.')

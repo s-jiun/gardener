@@ -137,20 +137,20 @@ const otherFollowingHandleResponse = () => {
 
       element[0].innerHTML = `    
       <div class='follow-${user_id}' style="display:inline;">
-      <button onclick="onClickOtherDeleteFollow(${user_id})">팔로우 취소</button>
+      <button class="follow-btn" onclick="onClickOtherDeleteFollow(${user_id})">팔로우 취소</button>
       </div>
       `;
       
       element[1].innerHTML = `    
       <div class='follow-${user_id}' style="display:inline;">
-      <button onclick="onClickOtherDeleteFollow(${user_id})">팔로우 취소</button>
+      <button class="follow-btn" onclick="onClickOtherDeleteFollow(${user_id})">팔로우 취소</button>
       </div>
       `;
     }
     else {
       element[0].innerHTML = `    
       <div class='follow-${user_id}' style="display:inline;">
-      <button onclick="onClickOtherDeleteFollow(${user_id})">팔로우 취소</button>
+      <button class="follow-btn" onclick="onClickOtherDeleteFollow(${user_id})">팔로우 취소</button>
       </div>
       `;
     }
@@ -184,20 +184,20 @@ const otherFollowHandleResponse = () => {
 
       element[0].innerHTML = `    
       <div class='following-${user_id}' style="display:inline;">
-      <button onclick="onClickOtherFollowing(${user_id})">팔로우</button>
+      <button class="follow-btn" onclick="onClickOtherFollowing(${user_id})">팔로우</button>
       </div>
       `;
       
       element[1].innerHTML = `    
       <div class='following-${user_id}' style="display:inline;">
-      <button onclick="onClickOtherFollowing(${user_id})">팔로우</button>
+      <button class="follow-btn" onclick="onClickOtherFollowing(${user_id})">팔로우</button>
       </div>
       `;
     }
     else {
       element[0].innerHTML = `    
       <div class='following-${user_id}' style="display:inline;">
-      <button onclick="onClickOtherFollowing(${user_id})">팔로우</button>
+      <button class="follow-btn" onclick="onClickOtherFollowing(${user_id})">팔로우</button>
       </div>
       `;
     }

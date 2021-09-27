@@ -18,9 +18,15 @@ class PostListView(ListView):
     paginate_by = 9
     template_name = 'community/post_list.html'
     context_object_name = 'post_list'
-
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        cur_users_followings = self.request.user.followers.all()
+        cur_users_followings_list = []
+        for cur_users_following in cur_users_followings:
+            print(cur_users_following)
+            cur_users_followings_list.append(cur_users_following.user_id)
+        context['following_list'] = cur_users_followings_list
         paginator = context['paginator']
         page_numbers_range = 10
         max_index = len(paginator.page_range)
@@ -81,7 +87,12 @@ class FollowPostView(ListView):
             following_user=self.request.user.id)
         page_numbers_range = 10
         max_index = len(paginator.page_range)
-
+        cur_users_followings = self.request.user.followers.all()
+        cur_users_followings_list = []
+        for cur_users_following in cur_users_followings:
+            print(cur_users_following)
+            cur_users_followings_list.append(cur_users_following.user_id)
+        context['following_list'] = cur_users_followings_list
         page = self.request.GET.get('page')
         current_page = int(page) if page else 1
 
@@ -130,7 +141,6 @@ class FollowPostView(ListView):
                 messages.error(self.request, '검색어는 2글자 이상 입력해주세요.')
         return post_list
 
-# 사용자 ip 주소 받아오는 함수
 
 
 def get_client_ip(request):
@@ -281,14 +291,12 @@ def delete_comment(request, pk):
     Reply.objects.filter(post_id=post_id, parent_reply=comment).delete()
     comment.delete()
     comment_count = Reply.objects.filter(post_id=post_id).count()
-    print(comment_count)
     return JsonResponse({'post_id': post_id, 'comment_id': comment_id, 'comment_count':comment_count})
 
 
 @login_required
 @csrf_exempt
 def like_ajax(request,pk):
-    print("post_like")
     req = json.loads(request.body)
     post_id = req['id']
     post = Post.objects.get(id=post_id)
