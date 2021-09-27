@@ -151,6 +151,15 @@ footer {
 
 .page-link-circle {
   background: #f3f3f3;
+  border-radius: 100%;
+  border: none;
+  font-size: 12px;
+  margin-right: 7px;
+}
+
+.page-link-2 {
+  border: none;
+  font-size: 15px;
 }
 
 .line {
@@ -213,4 +222,14 @@ img {
   .profile-post-header__text {
     display: none;
   }
+}
+
+.label-font {
+  font-size: 1.6rem;
+  font-weight: bold;
+}
+
+.input-font {
+  font-size: 1.4rem;
+  color: #76b79c;
 }

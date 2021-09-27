@@ -130,7 +130,6 @@ class FollowPostView(ListView):
                 messages.error(self.request, '검색어는 2글자 이상 입력해주세요.')
         return post_list
 
-# 사용자 ip 주소 받아오는 함수
 
 
 def get_client_ip(request):
@@ -281,14 +280,12 @@ def delete_comment(request, pk):
     Reply.objects.filter(post_id=post_id, parent_reply=comment).delete()
     comment.delete()
     comment_count = Reply.objects.filter(post_id=post_id).count()
-    print(comment_count)
     return JsonResponse({'post_id': post_id, 'comment_id': comment_id, 'comment_count':comment_count})
 
 
 @login_required
 @csrf_exempt
 def like_ajax(request,pk):
-    print("post_like")
     req = json.loads(request.body)
     post_id = req['id']
     post = Post.objects.get(id=post_id)

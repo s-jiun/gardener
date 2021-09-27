@@ -14,30 +14,26 @@
                 <span id="issue-head"><img class="lazyload" id='issue-detail-thumbnail' data-src="{% static 'images/baseimg.jpg' %}">관리자</span>
                 <span>&#183</span>
                 <span id="issue-date">{{issue.created_at | date:"Y.m.d h:m"}}</span>
+                <span class="ms-2 me-1" id="issue-detail-views">조회수 {{views}}</span>
             </div>
-            {% comment %} <div class="col d-flex justify-content-end">
-                <button type="button" class="btn btn-outline-success" id="issue-follow-button">팔로우</button> 
-            </div> {% endcomment %}
         </div>
     </div>
     <div class="row d-flex border-bottom" id="issue-content">
         <div id="issue-detail-content">
             {{ issue.content|safe }}
         </div>
-        {% comment %} <div class="mt-4 mb-4">
+        <div class="mt-4 mb-4">
             {% for tag in issue.tags.all %}
                 <form action="{% url 'community:search_tag' tag %}" style="display: inline;">
                     <input class="tags" type="submit" value="{{ tag.name }}"></input>
                 </form>
             {% endfor %}
-        </div> {% endcomment %}
+        </div>
     </div>
     <div class="row mt-4 mb-4" id="issue-detail-like">
         <div>
-            <img class="me-1" src="{% static 'images/heart_line.svg' %}" alt="하트">15
-            <img class="me-1" src="{% static 'images/comment_line.svg' %}" alt="코멘트">2
-            <span class="ms-2 me-1" id="issue-detail-views">조회수 {{views}}</span>
-            {% comment %} <div style="display: inline">
+            <img class="me-1" src="{% static 'images/comment_line.svg' %}" alt="코멘트">
+            <div style="display: inline">
                 {% if user.is_authenticated %}
                     <button class="create-comment" type="button" data-bs-toggle="collapse" data-bs-target="#collapseComment" aria-expanded="false" aria-controls="collapseComment">
                         댓글 작성
@@ -46,7 +42,7 @@
                     <p>댓글 작성을 위해서는 로그인이 필요합니다</p>
                 {% endif %}
                 <div class="collapse" id="collapseComment">
-                    <form class="card card-body" action="." method="issue">
+                    <form class="card card-body" action="." method="post">
                         {% csrf_token %}
                         {{comment_form.media}}
                         {{ comment_form.as_p }}
@@ -55,10 +51,10 @@
                         </div>
                     </form>
                 </div>
-            </div> {% endcomment %}
+            </div>
         </div>
     </div>
-    {% comment %} <div class="row mt-4 mb-4" id="issue-detail-comment">
+    <div class="row mt-4 mb-4" id="issue-detail-comment">
         {% for comment in comments %}
         <div class="comment comment-{{comment.id}}">
             <div class="comment-content mb-2">
@@ -109,8 +105,7 @@
         </div>
         {% empty %}
         <p>아직 작성된 댓글이 없습니다</p>
-        {% endfor %} {% endcomment %}
-    {% comment %} </div> {% endcomment %}
+        {% endfor %}
 
     {% comment %} {{issue}}<br>
     {{issue.writer}}<br> {% endcomment %}

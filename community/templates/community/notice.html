@@ -100,27 +100,3 @@
 </div>
 {% endblock %}
 
-{% comment %}
-<div class='row'>
-    <div id='notice-header' class='d-flex flex-column justify-content-center'>
-        {% if q %}
-            <h1>'{{ q }}' 검색 결과입니다.</h1>
-        {% else %}
-            <h1>공지사항</h1>
-        {% endif %}
-        {% if messages %}
-            {% for message in messages %}
-                {{message}}
-            {% endfor %}
-        {% endif %}
-        <form action='' method="GET" style='height: 20%;'>
-            <select class='search-input-1' name="type" id="search-type">
-                <option value="title">제목</option>
-                <option value="content">내용</option>
-            </select>
-            <input class='search-input'  type="text" name='q' value="{{q}}" placeholder="공지사항을 검색해보세요"/>
-            <button class='search-input-1' id='search-input-button' type="submit">검색</button>
-        </form>
-    </div>
-</div>
-{% endcomment %}
