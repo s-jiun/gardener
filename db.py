@@ -9,8 +9,8 @@ django.setup()
 
 CSV_PATH = '식물백과사전.csv'
 
-with open(CSV_PATH, newline='', encoding='cp949') as csvfile:
-    data_reader = csv.DictReader(csvfile)
+with open(CSV_PATH, newline='') as csvfile:
+    data_reader = csv.DictReader(csvfile, encoding='cp949')
     static_url = '/static/plant_image/'
     for row in data_reader:
         print(row)
