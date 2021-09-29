@@ -136,6 +136,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(BASE_DIR, 'config', 'templates'),
+            os.path.join(BASE_DIR, 'config', 'templates', 'allauth'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -284,6 +285,6 @@ ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USER_MODEL_USERNAME_FIELD = 'userid'
 ACCOUNT_AUTHENTICATION_METHOD = 'username'
 # ACCOUNT_USERNAME_REQUIRED = False
-
+ACCOUNT_SESSION_REMEMBER = False
 
 ACCOUNT_FORMS = {'signup': 'user.forms.CustomUserCreationForm'}
