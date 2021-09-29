@@ -83,7 +83,7 @@
         <ul class="pagination justify-content-center">
             {% if page_obj.has_previous %}
             <li class="page-item">
-                <a class="page-link page-link-2" href="?type={{ type }}&q={{ q }}&page={{ page_obj.previous_page_number }}"
+                <a class="page-link page-link-2" href="?q={{ q }}&page={{ page_obj.previous_page_number }}"
                     tabindex="-1">&lt;</a>
             </li>
             {% else %}
@@ -94,14 +94,14 @@
 
             {% for page in page_range %}
             <li class="page-item {% if page == page_obj.number %} activate {% endif %}">
-                <a class="page-link  page-link-circle" href="?type={{ type }}&q={{ q }}&page={{ page }}">{{ page }}</a>
+                <a class="page-link  page-link-circle" href="?q={{ q }}&page={{ page }}">{{ page }}</a>
             </li>
             {% endfor %}
 
             {% if page_obj.has_next %}
             <li class="page-item">
                 <a class="page-link page-link-2"
-                    href="?type={{ type }}&q={{ q }}&page={{ page_obj.next_page_number }}" style ="margin-left:-7px;">&gt;</a>
+                    href="?q={{ q }}&page={{ page_obj.next_page_number }}" style ="margin-left:-7px;">&gt;</a>
             </li>
             {% else %}
             <li class="page-item disabled">

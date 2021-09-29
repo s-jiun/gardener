@@ -32,7 +32,7 @@
     </div>
     <div class="row mt-4 mb-4" id="issue-detail-like">
         <div>
-            <img class="me-1" src="{% static 'images/comment_line.svg' %}" alt="코멘트">
+            <img class="me-1" src="{% static 'images/comment_line.svg' %}" alt="코멘트"> <span id="comment_count">{{ comment_count }}</span>
             <div style="display: inline">
                 {% if user.is_authenticated %}
                     <button class="create-comment" type="button" data-bs-toggle="collapse" data-bs-target="#collapseComment" aria-expanded="false" aria-controls="collapseComment">
@@ -56,7 +56,7 @@
     </div>
     <div class="row mt-4 mb-4" id="issue-detail-comment">
         {% for comment in comments %}
-        <div class="comment comment-{{comment.id}}">
+        <div class="comment" id="comment-{{comment.id}}">
             <div class="comment-content mb-2">
                 <span id="comment-head"><img class="lazyload" id='issue-detail-thumbnail' data-src="{{ comment.user_id.Image.url }}"> {{ comment.user_id }}</span>
                 <div class="mt-2" id="comment-body">
@@ -64,7 +64,7 @@
                     <div class="mt-1" > 
                         <span>{{ comment.created_at }}</span>
                         {% if user == issue.user_id or user == comment.user_id %}
-                            <span class="trash" onclick="onClickDeleteComment({{issue.id}}, {{comment.id}})"><i class="far fa-trash-alt"></i></span>
+                            <span class="trash" onclick="onClickDeleteComment({{issue.id}}, {{comment.id}})"><img class="me-1" id="trashImg" src="{% static 'images/trash.svg' %}" alt="삭제"></span>
                         {% endif %}
                         <button class="create-reply" type="button" data-bs-toggle="collapse" data-bs-target="#collapseReply-{{comment.id}}" aria-expanded="false" aria-controls="collapseReply-{{comment.id}}">
                             답글
@@ -73,11 +73,10 @@
                 </div>
                 </p>
                 <div class="collapse" id="collapseReply-{{comment.id}}" >
-                    <form class="reply card card-body mb-4" action="." method="issue">
+                    <form class="reply card card-body mb-4" action="." method="POST">
                         {% csrf_token %}
                         {{comment_form.media}}
                         {{ comment_form.as_p }}
-
                         <input type="hidden" name="parent_id" value="{{ comment.id }}">
                         <div class="d-flex justify-content-end">
                             <input class="create-reply" type="submit" value="Submit">
@@ -85,31 +84,28 @@
                     </form>
                 </div>
             </div>
-
             {% for reply in comment.replies.all %}
             <div class="reply-{{reply.parent_reply.id}} reply-{{reply.parent_reply.id}}-{{reply.id}}">
                 <div class="reply-content mt-2 mb-2">
-                    ㄴ<span id="reply-head"><img class="lazyload" id='issue-detail-thumbnail' data-src="{{ reply.user_id.Image.url }}"> {{ reply.user_id }}</span>
+                    <span id="reply-head"><img class="lazyload" id='issue-detail-thumbnail' data-src="{{ reply.user_id.Image.url }}"> {{ reply.user_id }}</span>
                     <div class="mt-2" id="reply-body"  style="padding-left: 1rem;">
                         {{ reply.content|safe }}
                         <div class="mt-1">
                         {{ reply.created_at }}
                         {% if user == issue.user_id or user == reply.user_id %}
-                            <span class="trash" onclick="onClickDeleteReply({{reply.parent_reply.id}}, {{issue.id}}, {{reply.id}})"><i class="far fa-trash-alt"></i></span>
+                            <span class="trash" onclick="onClickDeleteReply({{reply.parent_reply.id}}, {{issue.id}}, {{reply.id}})"><img class="me-1" id="trashImg" src="{% static 'images/trash.svg' %}" alt="삭제"></span>
                         {% endif %}
                         </div>
                     </div>
                 </div>
             </div>
-        {% endfor %}
+            {% endfor %}
         </div>
         {% empty %}
-        <p>아직 작성된 댓글이 없습니다</p>
+            <p>아직 작성된 댓글이 없습니다</p>
         {% endfor %}
-
-    {% comment %} {{issue}}<br>
-    {{issue.writer}}<br> {% endcomment %}
 {% endblock %}
 
 {% block js %}
+    <script src="{% static 'javascripts/issue_comment.js' %}"></script>
 {% endblock %}
