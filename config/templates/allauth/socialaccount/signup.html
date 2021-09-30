@@ -1,0 +1,54 @@
+{% extends "login_base.html" %}
+{% load static %}
+{% load socialaccount %}
+{% block head %}
+<style>
+    *{
+        font-size: 100%;
+    }
+    @media screen and (max-width : 900px){
+        html {font-size:0.8rem}  
+    }
+
+    @media screen and (max-width : 560px){
+        html {font-size:0.6rem}  
+    }
+    @media screen and (max-width : 900px){
+    #image-container{
+      display: none;
+    }
+    #image-container img {
+      display: none;
+    }
+    #left-container{
+      margin-right: 0px!important;
+    } 
+}
+</style>
+    <link href="{% static 'style/css/login.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div id="left-container" class="col-5 d-flex flex-column justify-content-center">
+    <div style="margin-bottom: 3.125rem;">
+        <a href="{% url 'user:start_page' %}">
+            <img src="{% static 'images/logo.png' %}" alt="">
+        </a>
+    </div>
+    <div style="margin-bottom: 1.5rem;">
+        {{form.email.value}}로 가입하신 아이디가<br> 이미 존재합니다.
+    </div>
+    <div>
+        <a href="{% url 'user:login' %}"><button onclick="cookieRemove()" class="button-black regular-size">로그인으로 돌아가기</button></a>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block JS %}
+<script>
+function cookieRemove() {
+    kakao.auth.logout()
+}
+</script>
+{% endblock %}
