@@ -1,4 +1,4 @@
-from search.models import Plant
+
 import csv
 import os
 import django
@@ -6,11 +6,11 @@ import django
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
 django.setup()
 
-
+from search.models import Plant
 CSV_PATH = '식물백과사전.csv'
 
-with open(CSV_PATH, newline='') as csvfile:
-    data_reader = csv.DictReader(csvfile, encoding='cp949')
+with open(CSV_PATH, newline='', encoding='cp949') as csvfile:
+    data_reader = csv.DictReader(csvfile)
     static_url = '/static/plant_image/'
     for row in data_reader:
         print(row)
