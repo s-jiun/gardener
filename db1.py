@@ -8,7 +8,7 @@ django.setup()
 from search.models import Plant
 CSV_PATH = 'plantdic_dryGarden.csv'
 
-with open(CSV_PATH, newline='', encoding='cp949') as csvfile:
+with open(CSV_PATH, newline='', encoding='utf-8') as csvfile:
     data_reader = csv.DictReader(csvfile)
     static_url = '/static/dryplant_image/'
     for row in data_reader:
