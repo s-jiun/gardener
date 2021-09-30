@@ -1,4 +1,3 @@
-from search.models import Plant
 import csv
 import os
 import django
@@ -6,7 +5,7 @@ import django
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
 django.setup()
 
-
+from search.models import Plant
 CSV_PATH = 'plantdic_dryGarden.csv'
 
 with open(CSV_PATH, newline='', encoding='cp949') as csvfile:
