@@ -1,3 +1,4 @@
+from search.models import Plant
 import os
 import csv
 import django
@@ -5,7 +6,6 @@ import django
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
 django.setup()
 
-#from search.models import Plant
 CSV_PATH = '식물백과사전.csv'
 
 with open(CSV_PATH, newline='', encoding='cp949') as csvfile:
