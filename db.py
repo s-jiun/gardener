@@ -16,7 +16,7 @@ with open(CSV_PATH, newline='', encoding='cp949') as csvfile:
         print(row)
         Plant.objects.get_or_create(
             name=row["name"],
-            photo_url=static_url + row["name"].replace(' ', '') + '.jpg',
+            photo_url=static_url + row["name"].replace(' ', '') + '.jpeg',
             growth_form=row["growth_form"],
             care_difficulty=row["care_difficulty"],
             management_level=row["management_level"],
