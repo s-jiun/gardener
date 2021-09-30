@@ -72,7 +72,7 @@
                     {% if request.user.is_authenticated %}
                         <a class="nav-link" style="font-size:1.4rem" href="{% url 'user:search_gardener'%}">친구찾기</a>
                     {% else %}
-                        <a class="nav-link" style="font-size:1.4rem" onclick="alert('로그인이 필요합니다!')" href="{% url 'user:login'%}">친구찾기</a>
+                        <a class="nav-link" style="font-size:1.4rem" onclick="alert('로그인이 필요한 서비스입니다.')" href="{% url 'user:login'%}">친구찾기</a>
                     {% endif %}
                 </li>
                 <li class="nav-item">
@@ -85,10 +85,6 @@
         </div>
         {% block button %}
         {% endblock %}
-        <!-- <div>
-            <button style="background-color: white; border: solid 1px #76B79C; border-radius: 15px;"><a href="{% url 'QnA:makequestion' %}" style="font-size: 1.4rem; color:#76B79C;">질문하기</a></button>
-            <button style="background-color: white; border: solid 1px #76B79C; border-radius: 15px;"><a href="{% url 'QnA:makequestion' %}" style="font-size: 1.4rem; color:#76B79C;">질문하기</a></button>    
-        </div> -->
     </nav>
 </header>
 
