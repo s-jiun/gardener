@@ -1,6 +1,5 @@
-
-import csv
 import os
+import csv
 import django
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
