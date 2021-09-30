@@ -13,7 +13,7 @@ with open(CSV_PATH, newline='', encoding='utf-8') as csvfile:
     static_url = '/static/dryplant_image/'
     for row in data_reader:
         Plant.objects.get_or_create(
-            name=row['\ufeffname'],
+            name=row['name'],
             growth_form=0,
             photo_url=static_url + row["name"].replace(' ', '') + '.jpeg',
             care_difficulty=row["manageDemandNm"],
