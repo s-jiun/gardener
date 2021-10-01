@@ -40,17 +40,17 @@
     <div class='row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3'>
         {% for plant in plant_list %}
         <div class="col">
-            <div class="card p-2 m-3" id="plant-card" style="border:none;">
-                <div class="image">
-                    <a data-bs-toggle="modal" data-bs-target="#plantDetailModal-{{plant.pk}}">
+            <a data-bs-toggle="modal" data-bs-target="#plantDetailModal-{{plant.pk}}">
+                <div class="card p-2 m-3" id="plant-card" style="border:none;">
+                    <div class="image">
                         <img src={{plant.photo_url|safe}} class="lazyload card-img-top" id="plant-img" alt="...">
                         <h3>{{plant.name}}<br> 알아보기</h3>
-                    </a>
+                    </div>
+                    <div class="card-body" style="padding : 1rem 0 0 0;">
+                        <h5 class="card-title" style="font-size:1.7rem;">{{ plant.name }}</h5>
+                    </div>
                 </div>
-                <div class="card-body" style="padding : 1rem 0 0 0;">
-                    <h5 class="card-title" style="font-size:1.7rem;">{{ plant.name }}</h5>
-                </div>
-            </div>
+            </a>
         </div>
         {% if plant.growth_form != '0' %}
         <div class="modal fade" id="plantDetailModal-{{plant.pk}}" data-bs-backdrop="static" data-bs-keyboard="false"
