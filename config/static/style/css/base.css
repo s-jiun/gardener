@@ -233,3 +233,8 @@ img {
   font-size: 1.4rem;
   color: #76b79c;
 }
+
+#blah {
+  width: 30%;
+  height: auto;
+}

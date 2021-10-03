@@ -122,9 +122,15 @@
                         {% if user == post.user_id or user == comment.user_id %}
                             <span class="trash" onclick="onClickDeleteComment({{post.id}}, {{comment.id}})"><img class="me-1" id="trashImg" src="{% static 'images/trash.svg' %}" alt="삭제"></span>
                         {% endif %}
+                        {% if request.user.is_authenticated %}
                         <button class="create-reply" type="button" data-bs-toggle="collapse" data-bs-target="#collapseReply-{{comment.id}}" aria-expanded="false" aria-controls="collapseReply-{{comment.id}}">
                             답글
                         </button>
+                        {% else %}
+                        <button class="create-reply" type="button" >
+                            <a onclick="alert('로그인이 필요한 서비스입니다.')" href="{% url 'user:login' %}">답글</a>
+                        </button>
+                        {% endif %}
                     </div>
                 </div>
                 </p>
