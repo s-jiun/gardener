@@ -6,24 +6,22 @@
 {% endblock %}
 
 {% block button %}
+{% if request.user.is_authenticated %}
+{% if post.user_id == request.user %}
 <div>
     <button class="make-something">
-        {% if request.user.is_authenticated %}
-        <a href="{% url 'community:post_create' %}">포스트 작성</a>
-        {% else %}
-        <a onclick="alert('로그인이 필요한 서비스입니다.')" href="{% url 'user:login' %}">포스트 작성</a>
-        {% endif %}
+        <a href="{% url 'community:post_delete' post.pk %}">포스트 삭제</a>
     </button>
-    {% if post.user_id == request.user %}
     <button class="go-to-main">
-        {% if request.user.is_authenticated %}
-            <a href="{% url 'community:post_update' post.pk %}">포스트 수정</a>
-        {% else %}
-            <a onclick="alert('로그인이 필요한 서비스입니다.')" href="{% url 'user:login' %}">포스트 작성</a>
-        {% endif %}
+        <a href="{% url 'community:post_update' post.pk %}">포스트 수정</a>
     </button>
-    {% endif %}
 </div>
+{% else %}
+    <button class="make-something">
+        <a href="{% url 'community:post_create' %}">포스트 작성</a>
+    </button>
+{% endif %}
+{% endif %}
 {% endblock %}
 
 {% block content %}
