@@ -14,11 +14,13 @@ const otherFollowingHandleResponse = () => {
   if (requestOtherFollowing.status < 400) {
     const { user_id, user_name, user_point, user_image_url, user_userid } =
       JSON.parse(requestOtherFollowing.response);
-    const element = document.querySelector(`.postcard-${user_id}`);
-    console.log(element);
-    element.innerHTML = `    
+    const elements = document.querySelectorAll(`.postcard-${user_id}`);
+    for (var i =0; i<elements.length; i ++){
+      var element = elements.item(i);
+      element.innerHTML = `    
     <a onclick="onClickListDeleteFollow(${user_id})" >팔로우 취소</a>
     `;
+    }
   }
 };
 
@@ -44,10 +46,14 @@ const otherFollowHandleResponse = () => {
   if (requestOtherDeleteFollow.status < 400) {
     const { user_id, user_name, user_point, user_image_url, user_userid } =
       JSON.parse(requestOtherDeleteFollow.response);
-    const element = document.querySelector(`.postcard-${user_id}`);
-    element.innerHTML = `    
+    const elements = document.querySelectorAll(`.postcard-${user_id}`);
+    for (var i =0; i<elements.length; i ++){
+      var element = elements.item(i);
+      element.innerHTML = `    
     <a onclick="onClickListFollowing(${user_id})">팔로우</a>
     `;
+    }
+    
   }
 };
 requestOtherDeleteFollow.onreadystatechange = () => {
