@@ -107,7 +107,6 @@ INSTALLED_APPS = [
 
     # image-resize
     'imagekit',
-
 ]
 
 AUTHENTICATION_BACKENDS = (
