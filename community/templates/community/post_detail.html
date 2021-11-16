@@ -3,7 +3,8 @@
 
 {% block head %}
     <link rel="stylesheet" href="{% static 'style/css/post_detail.css' %}" />
-{% endblock %}
+    <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+    {% endblock %}
 
 {% block button %}
 {% if request.user.is_authenticated %}
@@ -50,6 +51,11 @@
                     {% endif %}    
                 {% endif %}
             {% endif %}
+            <span class="sociallink ml-1">
+                <a href="javascript:sendLinkKakao()" id="kakao-link-btn" title="카카오톡으로 공유">
+                    <img src="{% static 'images/kakaotalk.png' %}" width=30 alt="Kakaotalk">
+                </a>
+            </span>
             </div>
         </div>
     </div>
@@ -173,4 +179,5 @@
     <script src="{% static 'javascripts/post_comment.js' %}"></script>
     <script src="{% static 'javascripts/likes.js' %}"></script>
     <script src="{% static 'javascripts/post_follow.js' %}"></script>
+    <script src="{% static 'javascripts/kakaolink.js' %}"></script>
 {% endblock %}
