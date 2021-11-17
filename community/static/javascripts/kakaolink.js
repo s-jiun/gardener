@@ -5,7 +5,7 @@ function sendLinkKakao(){
         content: {
             title: '{{ post.title }}',
             description: '{{ post.content|truncatewords:15 }}',
-            imageUrl: '"https://ourplant.kr"+"{{post.image.url}}"',
+            imageUrl: 'https://ourplant.kr"+"{{post.image.url}}',
             link: {
                 mobileWebUrl: '{{ request.build_absolute_uri }}',
                 webUrl: '{{ request.build_absolute_uri }}'
