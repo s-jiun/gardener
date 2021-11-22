@@ -86,7 +86,21 @@
                                         {%endif%}
                                         <br>
                                     </span>
-                                </div><br>
+                                </div>
+                                <div class="d-flex align-items-center"> 
+                                    <span class="award-image">  
+                                        <span>
+                                            <img style="width: 3rem; height: 3rem; object-fit: fill;" src="/static/images/logo.svg" alt="">
+                                            입문 정원사
+                                        </span>
+                                    </span>
+                                    <div class="col px-2">
+                                        <div class="progress" style="height: 5px;">
+                                            <div class="progress-bar" role="progressbar" style="width: {{user.point}}%; background-color : green;" aria-valuenow={{user.point}} aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div> <span class="percent"> <span>{{user.point}}/100</span> </span>
+                                </div>
+
                                 <div id="user-follow" class="mt-2 mb-3">
                                     <a href="{% url 'user:follow' user.pk %}">팔로워 <span
                                             class="follower-count">{{follower}}</span></a>
