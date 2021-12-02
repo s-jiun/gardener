@@ -9,7 +9,9 @@ function sendLinkCustom(thumbnail, likeNum, commentNum, view, title) {
             imageUrl: 'https://ourplant.kr' + thumbnail, 
             likes: likeNum, 
             comments: commentNum, 
-            watch: view
+            watch: view,
+            mobileWebUrl = window.document.location.href,
+            webUrl = window.document.location.href
         }
 	});
 }
