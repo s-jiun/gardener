@@ -10,8 +10,8 @@ function sendLinkCustom(thumbnail, likeNum, commentNum, view, title) {
             likes: likeNum, 
             comments: commentNum, 
             watch: view,
-            mobileWebUrl = window.document.location.href,
-            webUrl = window.document.location.href
+            mobileWebUrl: window.document.location.href,
+            webUrl: window.document.location.href
         }
 	});
 }
