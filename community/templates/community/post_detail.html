@@ -53,7 +53,7 @@
                 {% endif %}
             {% endif %}
             <span class="sociallink ml-1" style="display: flex;">
-                <a href="#" onclick="sendLinkCustom('{{ post.image.url }}', {{post.like_set.all.count}}, {{post.reply_set.count}}, {{views}}, '{{ post.title }}');" id="kakao-link-btn" title="카카오톡으로 공유" style="padding-right: 1vh;">
+                <a href="#" onclick="sendLinkCustom('{{ post.image.url }}', {{post.like_set.all.count}}, {{post.reply_set.count}}, {{views}}, '{{ post.title }}', {{ post.pk }});" id="kakao-link-btn" title="카카오톡으로 공유" style="padding-right: 1vh;">
                     Share with Kakao
                 </a>
                 <span style="padding-right: 1vh;">{% post_to_facebook object_or_url '' %}</span>
