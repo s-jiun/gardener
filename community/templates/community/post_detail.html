@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% load static %}
-
+{% load social_share %}
 {% block head %}
     <link rel="stylesheet" href="{% static 'style/css/post_detail.css' %}" />
     <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+    <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
     {% endblock %}
 
 {% block button %}
@@ -55,6 +56,8 @@
                 <a href="#" onclick="sendLinkCustom('{{ post.image.url }}', {{post.like_set.all.count}}, {{post.reply_set.count}}, {{views}}, '{{ post.title }}');" id="kakao-link-btn" title="카카오톡으로 공유">
                     <img src="{% static 'images/kakaotalk.png' %}" width=30 alt="Kakaotalk">
                 </a>
+                {% post_to_facebook object_or_url '' %}
+                {% post_to_twitter "{{post.title}}. Check it out!" object_or_url "Post to Twitter" %}
             </span>
             </div>
         </div>
