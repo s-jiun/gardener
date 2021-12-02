@@ -1,4 +1,4 @@
-function sendLinkCustom(thumbnail, likeNum, commentNum, view, title) {
+function sendLinkCustom(thumbnail, likeNum, commentNum, view, title, postid) {
 	if (!Kakao.isInitialized()) {
 		Kakao.init('673bc569637b7dc9ae3111971d08e04a')
 	}
@@ -10,8 +10,8 @@ function sendLinkCustom(thumbnail, likeNum, commentNum, view, title) {
             likes: likeNum, 
             comments: commentNum, 
             watch: view,
-            mobileWebUrl: window.document.location.href,
-            webUrl: window.document.location.href
+            mobileWebUrl: 'community/post/' + postid,
+            webUrl: 'community/post/' + postid
         }
 	});
 }
