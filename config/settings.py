@@ -108,6 +108,9 @@ INSTALLED_APPS = [
     # image-resize
     'imagekit',
 
+    # social_share
+    'django_social_share'
+
 ]
 
 AUTHENTICATION_BACKENDS = (
