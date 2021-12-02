@@ -52,8 +52,8 @@
                     {% endif %}    
                 {% endif %}
             {% endif %}
-            <span class="sociallink ml-1 d-flex">
-                <a href="javascript:sendLinkKakao()" id="kakao-link-btn" title="카카오톡으로 공유">
+            <span class="sociallink ml-1">
+                <a href="#" onclick="sendLinkCustom('{{ post.image.url }}', {{post.like_set.all.count}}, {{post.reply_set.count}}, {{views}}, '{{ post.title }}');" id="kakao-link-btn" title="카카오톡으로 공유">
                     <img src="{% static 'images/kakaotalk.png' %}" width=30 alt="Kakaotalk">
                 </a>
                 {% post_to_facebook object_or_url '' %}
