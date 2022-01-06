@@ -76,6 +76,7 @@
                         <div class="btn btn-success btn-sm post__scrap">
                             {% if plant.plant_owner == request.user %}
                             <a href = "{% url 'search:edit_plant_wiki' plant.pk %}">편집하기</a>
+                            <a href = "{% url 'search:delete_plant_wiki' plant.pk %}">삭제하기</a>
                             {% endif %}
                         </div>
                         <h5 class="modal-title" id="plantDetailLabel">{{plant.name}}</h5>

@@ -150,6 +150,6 @@ def edit_plant_wiki(request, pk):
 def delete_plant_wiki(request, pk):
     plant = Plant.objects.get(pk=pk)
     plant.delete()
-    return redirect('search/main_plant.html')
+    return redirect('search:plant_list')
 
     
