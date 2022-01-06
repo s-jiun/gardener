@@ -22,6 +22,7 @@ class Plant(models.Model):
     humidity = models.CharField(blank=True, null=True, max_length=200)
     flower = models.CharField(blank=True, max_length=200)
     content = models.TextField(blank=True)
+    plant_owner = models.ForeignKey(GeneralUser, on_delete=CASCADE, null= True)
     # season = models.CharField(max_length=20, blank=True) >> 계절정보를 찾지 못함.
 
 

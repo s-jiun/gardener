@@ -1,13 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from .models import Plant, PlantScrap
-
+from .forms import PlantWikiForm
 from django.views.generic import ListView
 from django.db.models import Q
 from django.views.decorators.csrf import csrf_exempt
 from django.http.response import JsonResponse
 import json
-
+from django.contrib.auth.decorators import login_required
+from user.models import GeneralUser
 
 class PlantListView(ListView):
     model = Plant
@@ -111,3 +112,44 @@ def scrap_ajax(request):
         scrap.save()
         button_type = 'scrap'
     return JsonResponse({'id': plant.pk, 'type': button_type})
+
+@login_required
+def plant_wiki(request):
+    if request.method == "POST":
+        form = PlantWikiForm(request.POST, request.FILES)
+        if form.is_valid():
+            plant = form.save(commit=False)
+            plant.plant_owner = GeneralUser.objects.get(
+                userid=request.user.get_username())
+            plant = form.save()
+            return redirect('search:plant_list')
+    else:
+        form = PlantWikiForm()
+        ctx = {'form': form}
+    return render(request, 'search/make_plant_wiki.html', ctx)
+
+
+@login_required
+def edit_plant_wiki(request, pk):
+    plant = get_object_or_404(Plant, pk=pk)
+    if request.method == "POST":
+        form = PlantWikiForm(request.POST, request.FILES, instance = plant)
+        if form.is_valid():
+            plant = form.save(commit=False)
+            plant.plant_owner = GeneralUser.objects.get(
+                userid=request.user.get_username())
+            plant = form.save()
+            return redirect('search:plant_list')
+    else:
+        form = PlantWikiForm(instance=plant)
+        ctx = {'form': form, 'pk': pk}
+    return render(request, 'search/edit_plant_wiki.html', ctx)
+
+
+@login_required
+def delete_plant_wiki(request, pk):
+    plant = Plant.objects.get(pk=pk)
+    plant.delete()
+    return redirect('search/main_plant.html')
+
+    
