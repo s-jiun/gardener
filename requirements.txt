@@ -18,3 +18,5 @@ sqlparse==0.4.1
 django-allauth==0.45.0
 toml==0.10.2
 whitenoise==5.3.0
+django-social-share==2.2.1
+mysqlclient @ file:///C:/Users/user/Desktop/mysqlclient-1.4.6-cp38-cp38-win32.whl
