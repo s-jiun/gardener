@@ -33,12 +33,12 @@
 {% block content %}
 <div id="left-container" class="col-5 d-flex flex-column justify-content-center">
     <div style="margin-bottom: 3.125rem;">
-        <a href="{% url 'user:start_page' %}">
+        <a href="{% url 'user:start_page' %}" title="웰컴 페이지 이동">
             <img src="{% static 'images/logo.png' %}" alt="" class="logo-size">
         </a>
     </div>
     <div>
-		<p style="font-weight: bold;"> 
+		<p style="font-weight: bold;" title="탈퇴 경고 문구"> 
 			계정을 삭제하면 고객님의 프로필, 가드닝 사진,  댓글, 좋아요, 
 			<br> 팔로워가 영구적으로 삭제됩니다.
 			<br>
@@ -56,9 +56,9 @@
 	<div style="margin-top: 1rem;">
 		<form action="" method="POST">
 			{% csrf_token %}
-			<button style="margin-bottom:1rem;" class="btn regular-size button-black" type="submit">탈퇴하기</button>
+			<button title="탈퇴 버튼" style="margin-bottom:1rem;" class="btn regular-size button-black" type="submit">탈퇴하기</button>
 		</form>
-		<a href="{% url 'user:my_profile' %}" style="text-decoration: none;"><button class="btn regular-size button-black">취소</button></a>
+		<a title="마이프로필 페이지 이동" href="{% url 'user:my_profile' %}" style="text-decoration: none;"><button class="btn regular-size button-black">취소</button></a>
 	</div>
 </div>
 {%endblock%}

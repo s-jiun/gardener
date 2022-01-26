@@ -33,7 +33,7 @@
 {% block content %}
 <div id="left-container" class="col-6 d-flex flex-column justify-content-center">
     <div style="margin-bottom: 3.125rem;">
-        <a href="{% url 'user:start_page' %}">
+        <a href="{% url 'user:start_page' %}" title="웰컴 페이지 이동">
             <img src="{% static 'images/logo.png' %}" alt="">
         </a>
     </div>
@@ -48,7 +48,7 @@
             <div class="col-12">
                 <div class="d-flex flex-column mb-3">
                     <p class="text mb-1">아이디</p>
-                    <input class="regular-size" type="text" name="userid" value="{{user_change_form.userid.value}}" required="" id="id_userid">
+                    <input title="아이디 입력 칸" class="regular-size" type="text" name="userid" value="{{user_change_form.userid.value}}" required="" id="id_userid">
                 </div>
             </div>
             <div class="col-12">
@@ -59,13 +59,13 @@
             <div class="col-12">
                 <div class="d-flex flex-column mb-3">
                     <p class="text mb-1">이메일</p>
-                    <input class="regular-size" type="email" name="email" value="{{user_change_form.email.value}}" required="" id="id_email">
+                    <input title="이메일 입력 칸" class="regular-size" type="email" name="email" value="{{user_change_form.email.value}}" required="" id="id_email">
                 </div>
             </div>
             <div class="col-12">
                 <div class="d-flex flex-column mb-3">
                     <p class="text mb-1">비밀번호</p>
-                    <input class="regular-size" type="password" name="password1" required="" id="id_password1">
+                    <input title="비밀번호 입력 칸" class="regular-size" type="password" name="password1" required="" id="id_password1">
                 </div>
             </div>
             <div class="col-12">
@@ -74,19 +74,19 @@
             <div class="col-12">
                 <div class="d-flex flex-column mb-3">
                     <p class="text mb-1">비밀번호 확인</p>
-                    <input class="regular-size" type="password" name="password2"required="" id="id_password2">
+                    <input title="비밀번호 확인 입력 칸" class="regular-size" type="password" name="password2"required="" id="id_password2">
                 </div>
             </div>
             <div class="col-12">
-                <button class="btn mb-3 mt-3 regular-size button-black" type="submit"><span>저장하기</span></button>
+                <button title="회원정보 저장" class="btn mb-3 mt-3 regular-size button-black" type="submit"><span>저장하기</span></button>
             </div>
             <div class="col-12">
-                <a class="d-flex justify-content-center align-items-center regular-size button-black" href="{% url 'user:my_profile' %}">
+                <a title="마이 프로필 페이지 이동" class="d-flex justify-content-center align-items-center regular-size button-black" href="{% url 'user:my_profile' %}">
                     <span>취소하기</span>
                 </a>
             </div>
             <div class="col-12">
-                <a class="mt-3 d-flex justify-content-center align-items-center regular-size button-white" href="{% url 'user:signout' %}">
+                <a title="탈퇴 페이지 이동" class="mt-3 d-flex justify-content-center align-items-center regular-size button-white" href="{% url 'user:signout' %}">
                     <span>탈퇴하기</span>
                 </a>
             </div>

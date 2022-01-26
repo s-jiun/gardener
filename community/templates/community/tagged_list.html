@@ -9,16 +9,16 @@
 <div>
     <button class="make-something">
         {% if request.user.is_authenticated %}
-        <a href="{% url 'community:post_create' %}">포스트 작성</a>
+        <a title="게시물 작성 페이지 이동" href="{% url 'community:post_create' %}">포스트 작성</a>
         {% else %}
-        <a onclick="alert('로그인이 필요한 서비스입니다.')" href="{% url 'user:login' %}">포스트 작성</a>
+        <a title="게시물 작성 페이지 이동" onclick="alert('로그인이 필요한 서비스입니다.')" href="{% url 'user:login' %}">포스트 작성</a>
         {% endif %}
     </button>
     <button class="go-to-main">
         {% if request.user.is_authenticated %}
-        <a href= '{% url "community:follow_post_list" %}'>친구 게시물 보기</a>
+        <a title="친구 게시물 페이지 이동" href= '{% url "community:follow_post_list" %}'>친구 게시물 보기</a>
         {% else %}
-        <a onclick="alert('로그인이 필요한 서비스입니다.')" href="{% url 'user:login' %}">친구 게시물 보기</a>
+        <a title="친구 게시물 페이지 이동" onclick="alert('로그인이 필요한 서비스입니다.')" href="{% url 'user:login' %}">친구 게시물 보기</a>
         {% endif %}
     </button>
 </div>
@@ -44,7 +44,7 @@
                         <span id="postcard-head"><img class="lazyload" id='post-list-thumbnail' data-src="{{ post.user_id.Image.url }}"> {{ post.user_id }}</span>
                         <a id="postcard-follow">팔로우</a>                        
                     </div>
-                    <a href='{% url "community:post_detail" pk=post.pk %}'>
+                    <a title="게시물 상세 페이지 이동" href='{% url "community:post_detail" pk=post.pk %}'>
                     <figure class="snip1384">
                         {% if post.image %}
                             <image data-src='{{ post.image.url }}' class='lazyload img-thumbnail' id = "post-image"/>
@@ -79,7 +79,7 @@
         <div class='row row-cols-1' id='no-search-input'>
             {% if q %}
             <h3>일치하는 검색 결과가 없습니다.</h3>
-            <a href = '{% url "community:post_list" %}' class= 'button-a'>뒤로가기</a>
+            <a title="게시물 목록 페이지 이동" href = '{% url "community:post_list" %}' class= 'button-a'>뒤로가기</a>
 
             {% else %}
             <h3>작성된 게시글이 없습니다.</h3>
