@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from .models import Plant, PlantScrap
+from .models import Plant, Plant_register, PlantScrap
 from .forms import PlantWikiForm
 from django.views.generic import ListView
 from django.db.models import Q
@@ -22,6 +22,9 @@ class PlantListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        new_plant = Plant_register.objects.filter(check = True)
+        for new in new_plant :
+            Plant.objects.get_or_create(name = new.name, photo_url = "/media/"+ new.photo.name, growth_form = new.growth_form, management_level = new.management_level, water_period_spring= new.water_period_spring, water_period_summer = new.water_period_summer, water_period_autumn = new.water_period_autumn, water_period_winter = new.water_period_winter, growth_temp = new.growth_temp, sunlight = new.sunlight, humidity = new.humidity, flower = new.flower, content= new.content, plant_owner = new.plant_owner)
         context['plants'] = Plant.objects.all()
         paginator = context['paginator']
         page_numbers_range = 5
@@ -149,7 +152,9 @@ def edit_plant_wiki(request, pk):
 @login_required
 def delete_plant_wiki(request, pk):
     plant = Plant.objects.get(pk=pk)
+    wiki_plant = Plant_register.objects.get(name = plant.name)
     plant.delete()
+    wiki_plant.delete()
     return redirect('search:plant_list')
 
     
