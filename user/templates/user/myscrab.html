@@ -48,7 +48,7 @@
                                                             <div class="user-id-config">
                                                                 <span id="user-id"> {{user.userid}}</span>
                                                                 {%if user.id == request.user.id%}
-                                                                <a href="{% url 'user:profile_update' %}">
+                                                                <a title="회원정보 수정 페이지" href="{% url 'user:profile_update' %}">
                                                                     <img class=""
                                                                         src="{% static 'images/ios-settings 1.svg'%}" />
                                                                 </a>
@@ -82,9 +82,9 @@
                                                                 </span>
                                                             </div><br>
                                                             <div id="user-follow" class="mt-2 mb-3">
-                                                                <a href="{% url 'user:follow' user.pk %}">팔로워 <span
+                                                                <a title="팔로워 페이지" href="{% url 'user:follow' user.pk %}">팔로워 <span
                                                                         class="follower-count">{{follower}}</span></a>
-                                                                <a href="{% url 'user:follow' user.pk %}">&nbsp&nbsp&nbsp팔로잉
+                                                                <a title="팔로잉 페이지" href="{% url 'user:follow' user.pk %}">&nbsp&nbsp&nbsp팔로잉
                                                                     <span
                                                                         class="following-count">{{following}}</span></a>
                                                             </div>
@@ -94,7 +94,7 @@
                     <hr>
                     <div class="profile-post-header">
                         <div class="profile-post-header__item profile-post-header__like">
-                            <a href="{% url 'user:profile' user.pk %}">
+                            <a title="작성 게시글 페이지" href="{% url 'user:profile' user.pk %}">
                                 <img class="profile-post-header__img"
                                     src="{% static 'images/profile-create-line.svg'%}" />
                                 <span class="profile-post-header__text">작성 게시글</span>
@@ -102,7 +102,7 @@
                         </div>
                         {%if user.id == request.user.id%}
                         <div class="profile-post-header__item profile-post-header__like">
-                            <a href="{% url 'user:my_pick' user.pk %}">
+                            <a title="좋아요 누른 게시글 페이지" href="{% url 'user:my_pick' user.pk %}">
                                 <img class="profile-post-header__img"
                                     src="{% static 'images/profile-heart-line.svg'%}" />
                                 <span class="profile-post-header__text">좋아요</span>
@@ -114,7 +114,7 @@
                         </div>
                         {%endif%}
                         <div class="profile-post-header__item profile-post-header__myplant">
-                            <a href="{% url 'user:my_plants' user.pk %}">
+                            <a title="마이플랜트로 등록한 식물 페이지" href="{% url 'user:my_plants' user.pk %}">
                                 <img class="profile-post-header__img"
                                     src="{% static 'images/profile-leaf-line.svg'%}" />
                                 <span class="profile-post-header__text">마이 플랜트</span>

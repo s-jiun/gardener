@@ -12,7 +12,7 @@
 {% block search %}
 <form action='' method="GET" style="width:100%">
     <div class="d-flex align-items-center justify-content-center">
-        <select name="type" class="search-input-1">
+        <select title="검색 기준" name="type" class="search-input-1">
             <option value="name">식물명</option>
             <option value="content">내용</option>
         </select>
@@ -29,9 +29,9 @@
 
 <div class="level-con">
     <h5>관리 난이도</h5>
-    <div class="level-btn"><a href='?type=managelevel&q=초보자'>초보자</a></div>
-    <div class="level-btn"><a href='?type=managelevel&q=경험자'>경험자</a></div>
-    <div class="level-btn"><a href='?type=managelevel&q=전문가'>전문가</a></div>
+    <div class="level-btn"><a title="검색 기준" href='?type=managelevel&q=초보자'>초보자</a></div>
+    <div class="level-btn"><a title="검색 기준" href='?type=managelevel&q=경험자'>경험자</a></div>
+    <div class="level-btn"><a title="검색 기준" href='?type=managelevel&q=전문가'>전문가</a></div>
 </div>
 
 
@@ -40,7 +40,7 @@
     <div class='row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3'>
         {% for plant in plant_list %}
         <div class="col">
-            <a data-bs-toggle="modal" data-bs-target="#plantDetailModal-{{plant.pk}}">
+            <a title="식물 정보" data-bs-toggle="modal" data-bs-target="#plantDetailModal-{{plant.pk}}">
                 <div class="card p-2 m-3" id="plant-card" style="border:none;">
                     <div class="image">
                         <img src={{plant.photo_url|safe}} class="lazyload card-img-top" id="plant-img" alt="...">
@@ -302,7 +302,7 @@
                 <div class="text-center" style="font-size: 28px;">
                     일치하는 검색 결과가 없습니다.
                     <br />
-                    <a href='{% url "search:plant_list" %}' style='font-size:1.3rem; '>뒤로가기</a>
+                    <a title="식물 목록 페이지 이동" href='{% url "search:plant_list" %}' style='font-size:1.3rem; '>뒤로가기</a>
                 </div>
             </td>
         </tr>
