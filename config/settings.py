@@ -55,11 +55,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['ourplant.kr', '3.37.58.145', '127.0.0.1']
 
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # Email 전송
 # 메일을 호스트하는 서버
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'email-smtp.us-east-1.amazonaws.com'
 
 # gmail과의 통신하는 포트
 EMAIL_PORT = '587'

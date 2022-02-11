@@ -2,7 +2,7 @@ import user
 from search.models import Plant, PlantScrap
 from django.views.generic.list import ListView
 from user.models import GeneralUser, Follow, MyPlant
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from .forms import CustomUserCreationForm, CustomUserChangeForm, UserProfileChangeForm, UserAuthenticationForm, UserIdfindForm, MyPlantsForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
@@ -15,6 +15,8 @@ from django.db.models import Count
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
+from django.core.mail import send_mail as sm
+from django.template import loader
 
 
 def login(request):
@@ -296,6 +298,20 @@ def save_image_ajax(requset):
     return JsonResponse({'user_image': user.Image.url})
 
 
+def send_mail(request):
+    sm(
+        subject='Subject here',
+        message='Here is the message.',
+        from_email='support-ourplant@ourplant.kr',
+        recipient_list=['747miriyam@naver.com'],
+        fail_silently=False,
+        html_message=loader.render_to_string(
+            'user/password_reset/password_reset_email.html'
+        )
+    )
+    return HttpResponse("Email sent to members")
+
+
 class liked_post_ListView(ListView):
     model = Like
     paginate_by = 5
@@ -323,7 +339,7 @@ class liked_post_ListView(ListView):
             print(cur_users_following)
             cur_users_followings_list.append(cur_users_following.user_id)
         context['following_list'] = cur_users_followings_list
-        
+
         page = self.request.GET.get('page')
         current_page = int(page) if page else 1
 
