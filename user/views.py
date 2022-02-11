@@ -2,7 +2,7 @@ import user
 from search.models import Plant, PlantScrap
 from django.views.generic.list import ListView
 from user.models import GeneralUser, Follow, MyPlant
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
 from .forms import CustomUserCreationForm, CustomUserChangeForm, UserProfileChangeForm, UserAuthenticationForm, UserIdfindForm, MyPlantsForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
@@ -15,8 +15,18 @@ from django.db.models import Count
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
-from django.core.mail import send_mail as sm
 from django.template import loader
+from django.contrib.auth.views import PasswordResetView, PasswordContextMixin
+from django.urls import reverse_lazy
+
+
+class customPasswordResetConfirmView(PasswordResetView):
+    email_template_name = 'user/password_reset/password_reset_email.html'
+    template_name = 'user/password_reset/password_reset_form.html'
+
+    def form_valid(self, form):
+        self.success_url = reverse_lazy('user:password_reset_done')
+        return super().form_valid(form)
 
 
 def login(request):
