@@ -16,17 +16,21 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from django.template import loader
-from django.contrib.auth.views import PasswordResetView, PasswordContextMixin
+from django.contrib.auth.views import PasswordResetView
 from django.urls import reverse_lazy
 
 
 class customPasswordResetConfirmView(PasswordResetView):
     email_template_name = 'user/password_reset/password_reset_email.html'
     template_name = 'user/password_reset/password_reset_form.html'
+    subject_template_name = 'user/password_reset/password_reset_subject.txt'
 
     def form_valid(self, form):
         self.success_url = reverse_lazy('user:password_reset_done')
-        return super().form_valid(form)
+        if GeneralUser.objects.filter(email=self.request.POST.get("email")).exists():
+            return super().form_valid(form)
+        else:
+            return render(self.request, 'user/password_reset/password_reset_done_fail.html')
 
 
 def login(request):
