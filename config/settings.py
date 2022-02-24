@@ -290,7 +290,7 @@ ACCOUNT_AUTHENTICATION_METHOD = 'username'
 ACCOUNT_SESSION_REMEMBER = False
 
 ACCOUNT_FORMS = {'signup': 'user.forms.CustomUserCreationForm'}
-
+SOCIALACCOUNT_ADAPTER = 'user.adapter.customSocialAccountAdapter'
 # Django session timeout
 SESSION_COOKIE_AGE = 1200
 SESSION_SAVE_EVERY_REQUEST = True
