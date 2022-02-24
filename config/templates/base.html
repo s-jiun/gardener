@@ -80,12 +80,6 @@
                         <a class="nav-link" style="font-size:1.4rem" onclick="alert('로그인이 필요한 서비스입니다.')" href="{% url 'user:login'%}" title="로그인 페이지 이동">친구찾기</a>
                     {% endif %}
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" style="font-size:1.4rem" href="{% url 'event:issue' %}" title="카드뉴스 페이지 이동">카드뉴스</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" style="font-size:1.4rem" href="{% url 'event:challenge' %}" title="챌린지 페이지 이동">챌린지</a>
-                </li>
             </ul>
         </div>
         {% block button %}
