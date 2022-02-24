@@ -1,6 +1,6 @@
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
-
+from django.contrib.auth import views as auth_views
 from django.urls import path
 from . import views
 app_name = 'user'
@@ -18,8 +18,10 @@ urlpatterns = [
     path('', views.start_page, name="start_page"),
     path('other_delete_ajax/', views.other_delete_ajax, name='other_delete_ajax'),
     path('following_ajax/', views.following_ajax, name='follow_ajax'),
-    path('following_delete_ajax/', views.following_delete_ajax, name='following_delete_ajax'),
-    path('follower_delete_ajax/', views.follower_delete_ajax, name='follower_delete_ajax'),
+    path('following_delete_ajax/', views.following_delete_ajax,
+         name='following_delete_ajax'),
+    path('follower_delete_ajax/', views.follower_delete_ajax,
+         name='follower_delete_ajax'),
     path('find_id/', views.find_id, name='find_id'),
     path('profile/<int:pk>/my_pick',
          login_required(views.liked_post_ListView.as_view()), name='my_pick'),
@@ -36,4 +38,15 @@ urlpatterns = [
     path('base_image_ajax/', views.base_image_ajax, name='base_image_ajax'),
     path('save_image_ajax/', views.save_image_ajax, name='save_image_ajax'),
     path('about/', views.about, name='about'),
+
+    path('password_reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='user/password_reset/password_reset_done.html'),
+         name='password_reset_done'),
+
+    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(
+        template_name='user/password_reset/password_reset_confirm.html'), name='password_reset_confirm'),
+    path('password_reset/', views.customPasswordResetConfirmView.as_view(),
+         name='password_reset'),
+
+    path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='user/password_reset/password_reset_complete.html'),
+         name='password_reset_complete'),
 ]

@@ -55,11 +55,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['ourplant.kr', '3.37.58.145', '127.0.0.1']
 
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # Email 전송
 # 메일을 호스트하는 서버
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'email-smtp.us-east-1.amazonaws.com'
 
 # gmail과의 통신하는 포트
 EMAIL_PORT = '587'
@@ -74,7 +73,7 @@ EMAIL_HOST_PASSWORD = get_secret("EMAIL_HOST_PASSWORD")
 EMAIL_USE_TLS = True
 
 # # 사이트와 관련한 자동응답을 받을 이메일 주소
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = 'support-ourplant@ourplant.kr'
 # # Application definition
 
 INSTALLED_APPS = [
@@ -92,7 +91,7 @@ INSTALLED_APPS = [
     'community',
     'search',
     'QnA',
-    'event',
+
     # editor
     'ckeditor',
     'ckeditor_uploader',

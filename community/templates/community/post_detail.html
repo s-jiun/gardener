@@ -12,15 +12,15 @@
 {% if post.user_id == request.user %}
 <div>
     <button class="make-something">
-        <a href="{% url 'community:post_delete' post.pk %}">포스트 삭제</a>
+        <a title="게시물 삭제" href="{% url 'community:post_delete' post.pk %}">포스트 삭제</a>
     </button>
     <button class="go-to-main">
-        <a href="{% url 'community:post_update' post.pk %}">포스트 수정</a>
+        <a title="게시물 수정 페이지 이동" href="{% url 'community:post_update' post.pk %}">포스트 수정</a>
     </button>
 </div>
 {% else %}
     <button class="make-something">
-        <a href="{% url 'community:post_create' %}">포스트 작성</a>
+        <a title="게시물 작성 페이지 이동" href="{% url 'community:post_create' %}">포스트 작성</a>
     </button>
 {% endif %}
 {% endif %}
@@ -33,7 +33,7 @@
         <div class="row row-cols-1 row-cols-md-2 d-flex justify-content-between" id="post-header">
             <div class="col">
                 <span id="post-head"><img class="lazyload" id='post-detail-thumbnail' data-src="{{ post.user_id.Image.url }}"> 
-                    <a href="{% url 'user:profile' post.user_id.pk%}">
+                    <a title="유저 프로필 페이지 이동" href="{% url 'user:profile' post.user_id.pk%}">
                         {{ post.user_id }}
                     </a>
                 </span>
@@ -53,10 +53,10 @@
                 {% endif %}
             {% endif %}
             <span class="sociallink ml-1" style="display: flex;">
-                <a href="#" onclick="sendLinkCustom('{{ post.image.url }}', {{post.like_set.all.count}}, {{post.reply_set.count}}, {{views}}, '{{ post.title }}', {{ post.pk }});" id="kakao-link-btn" title="카카오톡으로 공유" style="padding-right: 1vh;">
+                <a title="카카오 공유" href="#" onclick="sendLinkCustom('{{ post.image.url }}', {{post.like_set.all.count}}, {{post.reply_set.count}}, {{views}}, '{{ post.title }}', {{ post.pk }});" id="kakao-link-btn" title="카카오톡으로 공유" style="padding-right: 1vh;">
                     Share with Kakao
                 </a>
-                <span style="padding-right: 1vh;">{% post_to_facebook object_or_url '' %}</span>
+                <span title="페이스북 공유" style="padding-right: 1vh;">{% post_to_facebook object_or_url '' %}</span>
                 {% post_to_twitter "{{post.title}}. Check it out!" object_or_url "Post to Twitter" %}
             </span>
             </div>
@@ -130,12 +130,12 @@
                             <span class="trash" onclick="onClickDeleteComment({{post.id}}, {{comment.id}})"><img class="me-1" id="trashImg" src="{% static 'images/trash.svg' %}" alt="삭제"></span>
                         {% endif %}
                         {% if request.user.is_authenticated %}
-                        <button class="create-reply" type="button" data-bs-toggle="collapse" data-bs-target="#collapseReply-{{comment.id}}" aria-expanded="false" aria-controls="collapseReply-{{comment.id}}">
+                        <button title="답글 달기" class="create-reply" type="button" data-bs-toggle="collapse" data-bs-target="#collapseReply-{{comment.id}}" aria-expanded="false" aria-controls="collapseReply-{{comment.id}}">
                             답글
                         </button>
                         {% else %}
                         <button class="create-reply" type="button" >
-                            <a onclick="alert('로그인이 필요한 서비스입니다.')" href="{% url 'user:login' %}">답글</a>
+                            <a title="답글 달기" onclick="alert('로그인이 필요한 서비스입니다.')" href="{% url 'user:login' %}">답글</a>
                         </button>
                         {% endif %}
                     </div>
@@ -163,7 +163,7 @@
                         <div class="mt-1">
                         {{ reply.created_at }}
                         {% if user == post.user_id or user == reply.user_id %}
-                            <span class="trash" onclick="onClickDeleteReply({{reply.parent_reply.id}}, {{post.id}}, {{reply.id}})"><img class="me-1" id="trashImg" src="{% static 'images/trash.svg' %}" alt="삭제"></span>
+                            <span title="댓글 삭제" class="trash" onclick="onClickDeleteReply({{reply.parent_reply.id}}, {{post.id}}, {{reply.id}})"><img class="me-1" id="trashImg" src="{% static 'images/trash.svg' %}" alt="삭제"></span>
                         {% endif %}
                         </div>
                     </div>
