@@ -4,6 +4,7 @@
     <link href="{% static 'style/css/make_plant_wiki.css' %}" rel="stylesheet">
 {% endblock %}
 {% block content %}
+    {% comment %}
     <form action = '', method="post", enctype="multipart/form-data">
         {% csrf_token %}
         <table>
@@ -11,4 +12,104 @@
         </table>
         <input type = "submit" />
     </form>
+    {% endcomment %}
+    <div class='container main-body mb-5' id='makequestion-body'>
+        <div class='row'>
+            <div style = "margin: 0 auto; align-items: center;" class='col col-12 container-fluid d-flex flex-column'>
+                <div style='width:80%;'>
+                    <div class="mt-5">
+                        <form action='' method='POST' enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div style="float:right;">
+                                <button class="go-to-main"><a href="{% url 'search:plant_list' %}">돌아가기</a></button>
+                                <input type="submit" value = '저장하기' class='make-something input-font'/>
+                            </div>
+
+                            <div class='form-group' style="margin-bottom:3rem;">
+                                <label for="id_name" class="form-label" style="font-size:1.6rem; font-weight:bold;">식물명</label>
+                                <input type="text" class='form-control' name="title" maxlength="100" required="" id="id_title" style="font-size:1.4rem;">
+                            </div>
+
+                            <div class='form-group' style="margin-bottom:3rem;">
+                                <label for="id_photo" class="form-label label-font">식물사진</label>
+                                <div>
+                                    <input type="file" name="photo" accept="image/*" id="id_photo">
+                                </div>
+                            </div>
+
+                            <div class='form-group' style="margin-bottom:3rem;">
+                                <label for="id_growth_form" class="form-label" style="font-size:1.6rem; font-weight:bold;">생장형</label>
+                                <br/>
+                                <select name="growth_form" id="id_growth_form">
+                                    <option value="" selected="">---------</option>
+                                    <option value="직립형">직립형</option>
+                                    <option value="관목형">관목형</option>
+                                    <option value="덩굴성">덩굴성</option>
+                                    <option value="로제트형">로제트형</option>
+                                    <option value="다육형">다육형</option>
+                                    <option value="기타">기타</option>
+                                </select>
+                            </div>
+
+                            <div class='form-group' style="margin-bottom:3rem;">
+                                <label for="id_management_level" class="form-label" style="font-size:1.6rem; font-weight:bold;">관리 수준</label>
+                                <br/>
+                                <select name="management_level" required="" id="id_management_level">
+                                    <option value="" selected="">---------</option>
+                                    <option value="lv1">낮음(잘견딤)</option>
+                                    <option value="lv2">보통(약간 돌봄)</option>
+                                    <option value="lv3">높음(세심한 관리 필요)</option>
+                                </select>
+                            </div>
+
+                            <div class='form-group' style="margin-bottom:3rem;">
+                                <label for="id_water_period_spring" class="form-label" style="font-size:1.6rem; font-weight:bold;">물주기(봄)</label>
+                                <input type="text" class='form-control' name="water_period_spring" maxlength="200" required="" id="id_water_period_spring" style="font-size:1.4rem;">
+                            </div>
+
+                            <div class='form-group' style="margin-bottom:3rem;">
+                                <label for="id_water_period_summer" class="form-label" style="font-size:1.6rem; font-weight:bold;">물주기(여름)</label>
+                                <input type="text" class='form-control' name="water_period_summer" maxlength="200" required="" id="id_water_period_summer" style="font-size:1.4rem;">
+                            </div>
+                            <div class='form-group' style="margin-bottom:3rem;">
+                                <label for="id_water_period_autumn" class="form-label" style="font-size:1.6rem; font-weight:bold;">물주기(가을)</label>
+                                <input type="text" class='form-control' name="water_period_autumn" maxlength="200" required="" id="id_water_period_autumn" style="font-size:1.4rem;">
+                            </div>
+                            
+                            <div class='form-group' style="margin-bottom:3rem;">
+                                <label for="id_water_period_winter" class="form-label" style="font-size:1.6rem; font-weight:bold;">물주기(겨울)</label>
+                                <input type="text" class='form-control' name="water_period_winter" maxlength="200" required="" id="id_water_period_winter" style="font-size:1.4rem;">
+                            </div>
+
+                            <div class='form-group' style="margin-bottom:3rem;">
+                                <label for="id_growth_temp" class="form-label" style="font-size:1.6rem; font-weight:bold;">생장주기</label>
+                                <input type="text" class='form-control' name="growth_temp" maxlength="200" required="" id="id_growth_temp" style="font-size:1.4rem;">
+                            </div>
+
+                            <div class='form-group' style="margin-bottom:3rem;">
+                                <label for="id_sunlight" class="form-label" style="font-size:1.6rem; font-weight:bold;">광도</label>
+                                <input type="text" class='form-control' name="sunlight" maxlength="200" required="" id="id_sunlight" style="font-size:1.4rem;">
+                            </div>
+
+                            <div class='form-group' style="margin-bottom:3rem;">
+                                <label for="id_humidity" class="form-label" style="font-size:1.6rem; font-weight:bold;">습도</label>
+                                <input type="text" class='form-control' name="humidity" maxlength="200" required="" id="id_humidity" style="font-size:1.4rem;">
+                            </div>
+
+                            <div class='form-group' style="margin-bottom:3rem;">
+                                <label for="id_flower" class="form-label" style="font-size:1.6rem; font-weight:bold;">개화</label>
+                                <input type="text" class='form-control' name="flower" maxlength="200" required="" id="id_flower" style="font-size:1.4rem;">
+                            </div>
+
+                            <div class='form-group' style="margin-bottom:3rem;">
+                                <label for="id_content" class="form-label" style="font-size:1.6rem; font-weight:bold;">기타내용</label>
+                                <input type="text" class='form-control' name="content" required="" id="id_content" style="font-size:1.4rem;">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+            </div>
+        </div>    
+    </div>  
 {% endblock %}
