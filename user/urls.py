@@ -12,6 +12,7 @@ urlpatterns = [
     path('signout/', views.member_del, name='signout'),
     path('update/', views.member_modification, name='update'),
     path('profile/<int:pk>', views.profile, name='profile'),
+    path('activate/<uid64>/<token>/', views.activate, name='activate'),
     path('profile/<int:pk>/follow', views.follow_list, name='follow'),
     path('profile/update', views.profile_update, name='profile_update'),
     path('myprofile', views.my_profile, name='my_profile'),
