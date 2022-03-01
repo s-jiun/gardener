@@ -130,6 +130,15 @@
         </button>
       </div>
     </form>
+    {% if messages %}
+    {% for message in messages %}
+    {% if message.tags %}
+    <script>
+        alert("{{ message.message }}")
+    </script>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
     <hr />
   </div>
   <div class="col-12 d-flex flex-column justify-content-center">
