@@ -50,7 +50,8 @@ def login(request):
         # 검증
         if form.is_valid():
             # 검증 완료시 로그인!
-            auth_login(request, form.get_user())
+            user = form.get_user()
+            auth_login(request, user)
             return redirect('community:post_list')
     else:
         form = UserAuthenticationForm()
