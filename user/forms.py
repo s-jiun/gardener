@@ -1,3 +1,5 @@
+from unicodedata import name
+from urllib import request
 from django.core.exceptions import ValidationError
 from .models import GeneralUser, UserManager, MyPlant
 from django import forms
@@ -22,9 +24,14 @@ class UserAuthenticationForm(AuthenticationForm):
         password = self.cleaned_data.get('password')
 
         if username is not None and password:
-            if authenticate(self.request, username=username, password=password) is None:
-                raise ValidationError('아이디와 비밀번호가 일치하지 않습니다!')
-            return password
+            if authenticate(self.request, username=username, password=password) is not None:
+                return password
+            else:
+                user = GeneralUser.objects.get(userid=username)
+                if(user.is_active == False):
+                    raise ValidationError('이메일 인증을 완료해주세요!')
+                else:
+                    raise ValidationError('아이디와 비밀번호가 일치하지 않습니다!')
 
 
 Year_choices = list()
@@ -130,7 +137,6 @@ class CustomUserChangeForm(UserChangeForm):
         )
     )
 
-    
     Date_of_birth = forms.DateField(
         label=("Birth"),
         required=True,

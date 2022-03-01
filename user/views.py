@@ -18,6 +18,13 @@ from datetime import datetime
 from django.template import loader
 from django.contrib.auth.views import PasswordResetView
 from django.urls import reverse_lazy
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes
+from django.core.mail import EmailMessage
+from .tokens import account_activation_token
+from django.utils.encoding import force_bytes, force_text
 
 
 class customPasswordResetConfirmView(PasswordResetView):
@@ -43,7 +50,8 @@ def login(request):
         # 검증
         if form.is_valid():
             # 검증 완료시 로그인!
-            auth_login(request, form.get_user())
+            user = form.get_user()
+            auth_login(request, user)
             return redirect('community:post_list')
     else:
         form = UserAuthenticationForm()
@@ -84,16 +92,45 @@ def signup(request):
             if age(form.cleaned_data["Date_of_birth"].year, form.cleaned_data["Date_of_birth"].month, form.cleaned_data["Date_of_birth"].day) < 14:
                 messages.error(request, "만 14세 이상만 이용가능한 서비스입니다.")
                 return redirect('user:signup')
-
             user = form.save(commit=False)
             user.set_password(form.cleaned_data['password1'])
+            user.is_active = False
             user.save()
-            return redirect('user:login')
+            current_site = get_current_site(request)
+            # localhost:8000
+            message = render_to_string('user/account/user_activate_email.html',
+                                       {
+                                           'user': user,
+                                           'domain': current_site.domain,
+                                           'uid': urlsafe_base64_encode(force_bytes(user.pk)).encode().decode(),
+                                           'token': account_activation_token.make_token(user),
+                                       }
+                                       )
+            mail_subject = "[OURPLANT] 회원가입 인증 메일입니다."
+            user_email = user.email
+            email = EmailMessage(mail_subject, message, to=[user_email])
+            email.send()
+            return render(request, 'user/account/email_send_done.html')
 
     elif request.method == 'GET':
         form = CustomUserCreationForm()
 
     return render(request, 'user/signup.html', {'form': form})
+
+
+def activate(request, uid64, token):
+
+    uid = force_text(urlsafe_base64_decode(uid64))
+    user = GeneralUser.objects.get(pk=uid)
+
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        auth_login(request, user)
+        return redirect('user:start_page')
+    else:
+        messages.error(request, "비정상적인 접근입니다.")
+        return redirect('user:signup')
 
 
 def member_del(request):
@@ -316,20 +353,6 @@ def save_image_ajax(requset):
     user.Image = '..' + src
     user.save()
     return JsonResponse({'user_image': user.Image.url})
-
-
-def send_mail(request):
-    sm(
-        subject='Subject here',
-        message='Here is the message.',
-        from_email='support-ourplant@ourplant.kr',
-        recipient_list=['747miriyam@naver.com'],
-        fail_silently=False,
-        html_message=loader.render_to_string(
-            'user/password_reset/password_reset_email.html'
-        )
-    )
-    return HttpResponse("Email sent to members")
 
 
 class liked_post_ListView(ListView):
