@@ -129,6 +129,18 @@ class CustomUserChangeForm(UserChangeForm):
 
         )
     )
+
+    
+    Date_of_birth = forms.DateField(
+        label=("Birth"),
+        required=True,
+        widget=forms.SelectDateWidget(
+            empty_label=("Choose Year", "Choose Month", "Choose Day"),
+            years=Year_choices,
+            attrs={'class': 'signup-form-control'}
+        )
+    )
+
     password1 = forms.CharField(
         label=('Password'),
         widget=forms.PasswordInput(
@@ -146,7 +158,7 @@ class CustomUserChangeForm(UserChangeForm):
 
     class Meta:
         model = get_user_model()
-        fields = ['userid', 'email', 'password']
+        fields = ['userid', 'email', 'password', 'Date_of_birth']
 
     def clean_password2(self):
         # 두 비밀번호 입력 일치 확인

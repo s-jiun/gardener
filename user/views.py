@@ -152,6 +152,10 @@ def member_modification(request):
         user_change_form = CustomUserChangeForm(
             request.POST, instance=request.user)
         if user_change_form.is_valid():
+            if age(user_change_form.cleaned_data["Date_of_birth"].year, user_change_form.cleaned_data["Date_of_birth"].month, user_change_form.cleaned_data["Date_of_birth"].day) < 14:
+                messages.error(request, "만 14세 이상만 이용가능한 서비스입니다.")
+                auth_logout(request)
+                return render(request, 'user/login.html')
             user = user_change_form.save(commit=False)
             user.set_password(user_change_form.cleaned_data['password1'])
             user.save()
@@ -255,6 +259,8 @@ def start_page(request):
     if request.user.is_authenticated:
         if request.user.name == "":
             return redirect('user:profile_update')
+        if not request.user.Date_of_birth:
+            return redirect('user:update')
 
     return render(request, template_name='welcome.html')
 
