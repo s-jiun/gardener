@@ -5,6 +5,9 @@
     <link rel="stylesheet" href="{% static 'style/css/post_detail.css' %}" />
     <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
     <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+    <script src="javascripts/ckeditor.js"></script>
+
+    <script src="https://cdn.ckeditor.com/ckeditor5/33.0.0/decoupled-document/ckeditor.js"></script>
     {% endblock %}
 
 {% block button %}
@@ -27,7 +30,7 @@
 {% endblock %}
 
 {% block content %}
-<div class='container-fluid mt-4 mb-3' id="container" style='width:70%;'>
+{% comment %} <div class='container-fluid mt-4 mb-3' id="container" style='width:70%;'>
     <div class="row border-bottom">
         <span class="post-title"> {{ post.title }}</span>
         <div class="row row-cols-1 row-cols-md-2 d-flex justify-content-between" id="post-header">
@@ -175,7 +178,89 @@
         <p>아직 작성된 댓글이 없습니다</p>
         {% endfor %}
     </div>
-</div>
+</div> {% endcomment %}
+<h1>Document editor</h1>
+
+    <!-- The toolbar will be rendered in this container. -->
+    <div id="toolbar-container"></div>
+
+    <!-- This container will become the editable. -->
+    <form>
+        <div id="editor">
+            <p>This is the initial editor content.</p>
+        </div>
+        <button type="submit">등록</button>
+    </form>
+    <script>
+        class UploadAdapter {
+            constructor(loader) {
+              this.loader = loader;
+            }
+          
+            upload() {
+              return this.loader.file.then(
+                (file) =>
+                  new Promise((resolve, reject) => {
+                    this._initRequest();
+                    this._initListeners(resolve, reject, file);
+                    this._sendRequest(file);
+                  })
+              );
+            }
+          
+            _initRequest() {
+              const xhr = (this.xhr = new XMLHttpRequest());
+              xhr.open("POST", "http://localhost:8000/api/image/upload", true);
+              xhr.responseType = "json";
+            }
+          
+            _initListeners(resolve, reject, file) {
+              const xhr = this.xhr;
+              const loader = this.loader;
+              const genericErrorText = "파일을 업로드 할 수 없습니다.";
+          
+              xhr.addEventListener("error", () => {
+                reject(genericErrorText);
+              });
+              xhr.addEventListener("abort", () => reject());
+              xhr.addEventListener("load", () => {
+                const response = xhr.response;
+                if (!response || response.error) {
+                  return reject(
+                    response && response.error ? response.error.message : genericErrorText
+                  );
+                }
+          
+                resolve({
+                  default: response.url, //업로드된 파일 주소
+                });
+              });
+            }
+          
+            _sendRequest(file) {
+              const data = new FormData();
+              data.append("upload", file);
+              this.xhr.send(data);
+            }
+          }
+          
+        function MyCustomUploadAdapterPlugin(editor) {
+            editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+                return new UploadAdapter(loader)
+            }
+        }
+
+        DecoupledEditor
+            .create( document.querySelector( '#editor' ), {extraPlugins: [MyCustomUploadAdapterPlugin]} )
+            .then( editor => {
+                const toolbarContainer = document.querySelector( '#toolbar-container' );
+
+                toolbarContainer.appendChild( editor.ui.view.toolbar.element );
+            } )
+            .catch( error => {
+                console.error( error );
+            } );
+    </script>
 {% endblock %}
 
 {% block js %}
