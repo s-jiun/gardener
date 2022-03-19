@@ -84,6 +84,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'six',
     # taggit
     'taggit',
 
@@ -93,8 +94,8 @@ INSTALLED_APPS = [
     'QnA',
 
     # editor
-    'ckeditor',
-    'ckeditor_uploader',
+    'django_ckeditor_5',
+
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -107,7 +108,10 @@ INSTALLED_APPS = [
     'imagekit',
 
     # social_share
-    'django_social_share'
+    'django_social_share',
+
+    # template mathfilter
+    'mathfilters',
 
 ]
 
@@ -241,37 +245,89 @@ TAGGIT_STRING_FROM_TAGS = 'community.utils.hashtag_joiner'
 
 
 # texteditor
-CKEDITOR_UPLOAD_PATH = 'uploads/'
-CKEDITOR_IMAGE_BACKEND = 'pillow'
-CKEDITOR_CONFIGS = {
-    'config.language': "ko",
-    'answer_ckeditor': {
-        # 'skin': 'moono',
-        # 'skin': 'office2013',
-        'toolbar': 'Custom',
-        'toolbar_Custom': [
-            ['Font', 'FontSize'],
+customColorPalette = [
+    {
+        'color': 'hsl(4, 90%, 58%)',
+        'label': 'Red'
+    },
+    {
+        'color': 'hsl(340, 82%, 52%)',
+        'label': 'Pink'
+    },
+    {
+        'color': 'hsl(291, 64%, 42%)',
+        'label': 'Purple'
+    },
+    {
+        'color': 'hsl(262, 52%, 47%)',
+        'label': 'Deep Purple'
+    },
+    {
+        'color': 'hsl(231, 48%, 48%)',
+        'label': 'Indigo'
+    },
+    {
+        'color': 'hsl(207, 90%, 54%)',
+        'label': 'Blue'
+    },
+]
 
-            ['BGColor', 'TextColor'],
+# CKEDITOR_5_CUSTOM_CSS = 'path_to.css'  # optional
+CKEDITOR_5_CONFIGS = {
+    'default': {
+        'toolbar': ['heading', '|', 'bold', 'italic', 'link',
+                    'bulletedList', 'numberedList', 'blockQuote', 'imageUpload', ],
 
-            ['Bold', 'Italic', 'Strike', 'Superscript',
-                'Subscript', 'Underline', 'RemoveFormat'],
-
-            ['BidiLtr', 'BidiRtl'],
-
-            '/',
-
-            ['Image', 'SpecialChar', 'Smiley'],
-
-            ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
-
-            ['Blockquote', 'NumberedList', 'BulletedList'],
-
-            ['Link', 'Unlink'],
-
-            ['Undo', 'Redo']
+    },
+    'extends': {
+        'blockToolbar': [
+            'paragraph', 'heading1', 'heading2', 'heading3',
+            '|',
+            'bulletedList', 'numberedList',
+            '|',
+            'blockQuote', 'imageUpload'
         ],
-        'width': '100%',
+        'toolbar': ['heading', '|', 'outdent', 'indent', '|', 'bold', 'italic', 'link', 'underline', 'strikethrough',
+                    'code', 'subscript', 'superscript', 'highlight', '|', 'codeBlock',
+                    'bulletedList', 'numberedList', 'todoList', '|',  'blockQuote', 'imageUpload', '|',
+                    'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'mediaEmbed', 'removeFormat',
+                    'insertTable', ],
+        'image': {
+            'toolbar': ['imageTextAlternative', 'imageTitle', '|', 'imageStyle:alignLeft', 'imageStyle:full',
+                        'imageStyle:alignRight', 'imageStyle:alignCenter', 'imageStyle:side',  '|'],
+            'styles': [
+                'full',
+                'side',
+                'alignLeft',
+                'alignRight',
+                'alignCenter',
+            ]
+
+        },
+        'table': {
+            'contentToolbar': ['tableColumn', 'tableRow', 'mergeTableCells',
+                               'tableProperties', 'tableCellProperties'],
+            'tableProperties': {
+                'borderColors': customColorPalette,
+                'backgroundColors': customColorPalette
+            },
+            'tableCellProperties': {
+                'borderColors': customColorPalette,
+                'backgroundColors': customColorPalette
+            }
+        },
+        'heading': {
+            'options': [
+                   {'model': 'paragraph', 'title': 'Paragraph',
+                    'class': 'ck-heading_paragraph'},
+                   {'model': 'heading1', 'view': 'h1', 'title': 'Heading 1',
+                    'class': 'ck-heading_heading1'},
+                   {'model': 'heading2', 'view': 'h2', 'title': 'Heading 2',
+                    'class': 'ck-heading_heading2'},
+                   {'model': 'heading3', 'view': 'h3',
+                    'title': 'Heading 3', 'class': 'ck-heading_heading3'}
+            ]
+        }
     }
 }
 
@@ -304,7 +360,7 @@ ACCOUNT_AUTHENTICATION_METHOD = 'username'
 ACCOUNT_SESSION_REMEMBER = False
 
 ACCOUNT_FORMS = {'signup': 'user.forms.CustomUserCreationForm'}
-
+SOCIALACCOUNT_ADAPTER = 'user.adapter.customSocialAccountAdapter'
 # Django session timeout
 SESSION_COOKIE_AGE = 1200
 SESSION_SAVE_EVERY_REQUEST = True

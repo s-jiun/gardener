@@ -26,6 +26,8 @@
 }
 </style>
     <link href="{% static 'style/css/login.css' %}" rel="stylesheet">
+    <script src="{% static 'javascripts/signup.js'%}"></script>
+
 {% endblock %}
 
 {% block content %}
@@ -36,7 +38,7 @@
         </a>
     </div>
     <div>
-        <form action="" method="POST">
+        <form action="" method="POST" id="signup_form">
             {% csrf_token %}         
                     <div>
                         <div class="d-flex flex-column">
@@ -66,8 +68,9 @@
                     </div>
                     <div>
                         <div class="d-flex flex-column">
-                            <p>아이디</p>
+                            <p id="user_id">아이디</p>
                             <input title="아이디 입력 칸" type="text" name="userid" class="regular-size" required="" id="id_userid">
+                            <button onclick="checkId()">중복확인</button>
                         </div>
                     </div>
                     <div>
@@ -386,7 +389,7 @@
                         <input title="사이트 이용방침 동의 버튼" class="form-check-input" type="checkbox" value="" name="agreement2" id="flexCheckterm2">
                     </div>
                     <div>
-                        <button title="회원가입 버튼" class="btn regular-size button-black" type="submit" onclick = "return CheckForm()"><span>회원가입</span></button>
+                        <button title="회원가입 버튼" id="sign_up" class="btn regular-size button-black" type="submit"><span>회원가입</span></button>
                     </div>
         </form>
         {% if messages %}
@@ -405,8 +408,21 @@
 {% block js %}
 
     <script type="text/javascript">
-        function CheckForm(){
-        
+
+        document.querySelector("#sign_up").addEventListener("click", function(event) {
+            event.preventDefault();
+            var txt = document.getElementById("id_password1").value;
+            console.log(txt);
+            var form = document.getElementById("signup_form");
+            const result = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/.test(txt);
+
+            var check = true;
+            console.log("checking")
+            if (!result) {
+              alert("비밀번호: 8자리 이상. 영문과 숫자, 특수문자를 섞어주세요.");
+              check=false;
+              return false;
+            }
             var chk1=document.getElementById('flexCheckterm1').checked;
             console.log(chk1);
             var chk2=document.getElementById('flexCheckterm2').checked;
@@ -414,13 +430,21 @@
 
             if(!chk1){
                 alert('개인정보 처리방침 약관에 동의해 주세요');
+                check=false;
                 return false;
             } 
             if(!chk2) {
                 alert('사이트 이용 약관에 동의해 주세요');
+                check=false;
                 return false;
             }
-        }
+            if(check===true){
+                form.submit();
+            }
+
+        }, true);
+
+        
     </script>
 
 {% endblock %}

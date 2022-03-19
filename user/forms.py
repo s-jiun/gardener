@@ -1,3 +1,5 @@
+from unicodedata import name
+from urllib import request
 from django.core.exceptions import ValidationError
 from .models import GeneralUser, UserManager, MyPlant
 from django import forms
@@ -18,13 +20,22 @@ class UserAuthenticationForm(AuthenticationForm):
     )
 
     def clean_password(self):
-        username = self.cleaned_data.get('username')
+        username = self.cleaned_data.get('username') # 우리가 입력한 값
         password = self.cleaned_data.get('password')
+        
+        if username is not None:
+            if authenticate(self.request, username=username, password=password) is not None:
+                return password
+            else:
+                user = GeneralUser.objects.get(userid=username)
+                if(user.is_active == False):
+                    raise ValidationError('이메일 인증을 완료해주세요!')
+                else:
+                    if(user.userid != username):
+                        raise ValidationError('아이디가 없습니다.')
+                    else:
+                        raise ValidationError('비밀번호가 일치하지 않습니다!')
 
-        if username is not None and password:
-            if authenticate(self.request, username=username, password=password) is None:
-                raise ValidationError('아이디와 비밀번호가 일치하지 않습니다!')
-            return password
 
 
 Year_choices = list()
@@ -129,6 +140,17 @@ class CustomUserChangeForm(UserChangeForm):
 
         )
     )
+
+    Date_of_birth = forms.DateField(
+        label=("Birth"),
+        required=True,
+        widget=forms.SelectDateWidget(
+            empty_label=("Choose Year", "Choose Month", "Choose Day"),
+            years=Year_choices,
+            attrs={'class': 'signup-form-control'}
+        )
+    )
+
     password1 = forms.CharField(
         label=('Password'),
         widget=forms.PasswordInput(
@@ -146,7 +168,7 @@ class CustomUserChangeForm(UserChangeForm):
 
     class Meta:
         model = get_user_model()
-        fields = ['userid', 'email', 'password']
+        fields = ['userid', 'email', 'password', 'Date_of_birth']
 
     def clean_password2(self):
         # 두 비밀번호 입력 일치 확인

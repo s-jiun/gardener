@@ -4,7 +4,9 @@ from user.models import GeneralUser
 from taggit.managers import TaggableManager
 from taggit.models import (TagBase, TaggedItemBase)
 # editor
-from ckeditor_uploader.fields import RichTextUploadingField
+# from ckeditor_uploader.fields import RichTextUploadingField
+from django_ckeditor_5.fields import CKEditor5Field
+
 # Create your models here.
 
 
@@ -27,8 +29,8 @@ class TaggedQuestion(TaggedItemBase):
 class CommunityQuestion(models.Model):
     user_id = models.ForeignKey(GeneralUser, on_delete=CASCADE)
     title = models.CharField(max_length=100)
-    content = RichTextUploadingField(
-        blank=True, null=True, config_name='answer_ckeditor')
+    content = CKEditor5Field(
+        blank=True, null=True, config_name='extends')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     tags = TaggableManager(
@@ -46,7 +48,7 @@ class CommunityAnswer(models.Model):
     user_id = models.ForeignKey(GeneralUser, on_delete=CASCADE)
     question = models.ForeignKey(CommunityQuestion, on_delete=CASCADE)
     title = models.CharField(max_length=100)
-    content = RichTextUploadingField(
-        blank=True, null=True, config_name='answer_ckeditor')
+    content = CKEditor5Field(
+        blank=True, null=True, config_name='extends')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

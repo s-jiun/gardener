@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load mathfilters %}
 {%block head%}
 <link href="{% static 'style/css/profile.css' %}" rel="stylesheet">
 <link href="{% static 'style/css/community_list.css' %}" rel="stylesheet">
@@ -90,15 +91,31 @@
                                 <div class="d-flex align-items-center"> 
                                     <span class="award-image">  
                                         <span>
-                                            <img style="width: 3rem; height: 3rem; object-fit: fill;" src="/static/images/logo.svg" alt="">
-                                            입문 정원사
+                                            {% if user.point < 100 %}
+                                            <img style="width: 3rem; height: 3rem; object-fit: fill;" src="/static/images/grade_1.svg" alt="">
+                                            <text id="status-text">입문 정원사</text>
+                                            {% elif user.point < 300 %}
+                                            <img style="width: 3rem; height: 3rem; object-fit: fill;" src="/static/images/grade_2.svg" alt="">
+                                            <text id="status-text">초보 정원사</text>
+                                            {% elif user.point < 600 %}
+                                            <img style="width: 3rem; height: 3rem; object-fit: fill;" src="/static/images/grade_3.svg" alt="">
+                                            <text id="status-text">아마추어 정원사</text>
+                                            {% elif user.point < 1000 %}
+                                            <img style="width: 3rem; height: 3rem; object-fit: fill;" src="/static/images/grade_4.svg" alt="">
+                                            <text id="status-text">프로 정원사</text>
+                                            {% else %}
+                                            <img style="width: 3rem; height: 3rem; object-fit: fill;" src="/static/images/grade_5.svg" alt="">
+                                            <text  style="font-weight: bold">국가대표 정원사</text>
+                                            {%endif%}
                                         </span>
                                     </span>
                                     <div class="col px-2">
                                         <div class="progress" style="height: 5px;">
-                                            <div class="progress-bar" role="progressbar" style="width: {{user.point}}%; background-color : green;" aria-valuenow={{user.point}} aria-valuemin="0" aria-valuemax="100"></div>
+                                            {% with denominator=10 %}
+                                            <div class="progress-bar" role="progressbar" style="width: {{user.point|div:denominator}}%; background-color : green;" aria-valuenow={{user.point}} aria-valuemin="0" aria-valuemax="100"></div>
+                                            {% endwith %}
                                         </div>
-                                    </div> <span class="percent"> <span>{{user.point}}/100</span> </span>
+                                    </div> <span class="percent"> <span>{{user.point}}/1000</span> </span>
                                 </div>
 
                                 <div id="user-follow" class="mt-2 mb-3">
@@ -177,8 +194,6 @@
                                     </div>
                                 </div>
                             </div>
-                                {% comment %} {% if forloop.counter|divisibleby 3%} {% endcomment %}
-                        {% comment %} <hr> {% endcomment %}
                         {% endfor %}
                         </div>
                     {% else %}
