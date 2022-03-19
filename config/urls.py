@@ -24,7 +24,7 @@ urlpatterns = [
     path('', include('user.urls', namespace='user')),
     path('community/', include('community.urls')),
     path('search/', include('search.urls')),
-    path('ckeditor/', include('ckeditor_uploader.urls')),
+    path("ckeditor5/", include('django_ckeditor_5.urls')),
     path('accounts/', include('allauth.urls'))
 ]
 
