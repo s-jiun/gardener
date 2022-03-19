@@ -20,10 +20,10 @@ class UserAuthenticationForm(AuthenticationForm):
     )
 
     def clean_password(self):
-        username = self.cleaned_data.get('username')
+        username = self.cleaned_data.get('username') # 우리가 입력한 값
         password = self.cleaned_data.get('password')
-
-        if username is not None and password:
+        
+        if username is not None:
             if authenticate(self.request, username=username, password=password) is not None:
                 return password
             else:
@@ -31,7 +31,11 @@ class UserAuthenticationForm(AuthenticationForm):
                 if(user.is_active == False):
                     raise ValidationError('이메일 인증을 완료해주세요!')
                 else:
-                    raise ValidationError('아이디와 비밀번호가 일치하지 않습니다!')
+                    if(user.userid != username):
+                        raise ValidationError('아이디가 없습니다.')
+                    else:
+                        raise ValidationError('비밀번호가 일치하지 않습니다!')
+
 
 
 Year_choices = list()

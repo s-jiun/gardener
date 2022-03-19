@@ -548,3 +548,16 @@ def add_myplant(request):
         form = MyPlantsForm()
         ctx = {'form': form}
         return render(request, template_name='user/add_myplant.html', context=ctx)
+
+
+@csrf_exempt
+def checkId(request):
+    req = json.loads(request.body)
+    userid = req['user_id'] 
+    try:
+        user = GeneralUser.objects.get(userid=userid)
+        if user:
+            return JsonResponse({'return_code': 0}) #사용할 수 없음
+    
+    except:
+        return JsonResponse({'return_code': 1}) # 사용할 수 있음
