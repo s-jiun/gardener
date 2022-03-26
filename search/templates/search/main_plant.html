@@ -29,9 +29,12 @@
 
 <div class="level-con">
     <h5>관리 난이도</h5>
-    <div class="level-btn"><a title="검색 기준" href='?type=managelevel&q=초보자'>초보자</a></div>
-    <div class="level-btn"><a title="검색 기준" href='?type=managelevel&q=경험자'>경험자</a></div>
-    <div class="level-btn"><a title="검색 기준" href='?type=managelevel&q=전문가'>전문가</a></div>
+
+    <div class="level-btn"><a href='?type=managelevel&q=초보자'>초보자</a></div>
+    <div class="level-btn"><a href='?type=managelevel&q=경험자'>경험자</a></div>
+    <div class="level-btn"><a href='?type=managelevel&q=전문가'>전문가</a></div>
+    <div class="level-btn"><a href="{% url 'search:plant_wiki' %}" >내 식물 등록하기</a></div>
+
 </div>
 
 
@@ -72,6 +75,12 @@
                         </div>
                         {% endif %}
                         {% endif %}
+                        <div class="btn btn-success btn-sm post__scrap">
+                            {% if plant.plant_owner == request.user %}
+                            <a href = "{% url 'search:edit_plant_wiki' plant.pk %}">편집하기</a>
+                            <a href = "{% url 'search:delete_plant_wiki' plant.pk %}">삭제하기</a>
+                            {% endif %}
+                        </div>
                         <h5 class="modal-title" id="plantDetailLabel">{{plant.name}}</h5>
                     </div>
                     <div class="modal-body text-center"

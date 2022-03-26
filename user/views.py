@@ -2,7 +2,10 @@ import user
 from search.models import Plant, PlantScrap
 from django.views.generic.list import ListView
 from user.models import GeneralUser, Follow, MyPlant
+
+from community.models import NoticeAlert
 from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
+
 from .forms import CustomUserCreationForm, CustomUserChangeForm, UserProfileChangeForm, UserAuthenticationForm, UserIdfindForm, MyPlantsForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
@@ -297,6 +300,9 @@ def follower_delete_ajax(request):
     user = GeneralUser.objects.get(id=user_id)
     following = Follow.objects.filter(following_user_id=user_id).filter(
         user_id=request.user.id)
+    notice = NoticeAlert.objects.get_or_create(
+        user=request.user, to=following.user, follow_alert=following)
+    notice.delete()
     following.delete()
     return JsonResponse({'user_id': user_id, 'user_userid': user.userid, 'user_name': user.name, 'user_point': user.point, 'user_image_url': user.Image.url})
 
@@ -319,6 +325,8 @@ def following_ajax(request):
     user = GeneralUser.objects.get(id=user_id)
     follow = Follow(user=user, following_user=request.user)
     follow.save()
+    NoticeAlert.objects.create(
+        user=request.user, to=follow.user, follow_alert=follow)
     return JsonResponse({'user_id': user_id, 'user_userid': user.userid, 'user_name': user.name, 'user_point': user.point, 'user_image_url': user.Image.url})
 
 

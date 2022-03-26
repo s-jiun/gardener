@@ -1,13 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from .models import Plant, PlantScrap
-
+from .models import Plant, Plant_register, PlantScrap
+from .forms import PlantWikiForm
 from django.views.generic import ListView
 from django.db.models import Q
 from django.views.decorators.csrf import csrf_exempt
 from django.http.response import JsonResponse
 import json
-
+from django.contrib.auth.decorators import login_required
+from user.models import GeneralUser
 
 class PlantListView(ListView):
     model = Plant
@@ -21,6 +22,9 @@ class PlantListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        new_plant = Plant_register.objects.filter(check = True)
+        for new in new_plant :
+            Plant.objects.get_or_create(name = new.name, photo_url = "/media/"+ new.photo.name, growth_form = new.growth_form, management_level = new.management_level, water_period_spring= new.water_period_spring, water_period_summer = new.water_period_summer, water_period_autumn = new.water_period_autumn, water_period_winter = new.water_period_winter, growth_temp = new.growth_temp, sunlight = new.sunlight, humidity = new.humidity, flower = new.flower, content= new.content, plant_owner = new.plant_owner)
         context['plants'] = Plant.objects.all()
         paginator = context['paginator']
         page_numbers_range = 5
@@ -111,3 +115,46 @@ def scrap_ajax(request):
         scrap.save()
         button_type = 'scrap'
     return JsonResponse({'id': plant.pk, 'type': button_type})
+
+@login_required
+def plant_wiki(request):
+    if request.method == "POST":
+        form = PlantWikiForm(request.POST, request.FILES)
+        if form.is_valid():
+            plant = form.save(commit=False)
+            plant.plant_owner = GeneralUser.objects.get(
+                userid=request.user.get_username())
+            plant = form.save()
+            return redirect('search:plant_list')
+    else:
+        form = PlantWikiForm()
+        ctx = {'form': form}
+    return render(request, 'search/make_plant_wiki.html', ctx)
+
+
+@login_required
+def edit_plant_wiki(request, pk):
+    plant = get_object_or_404(Plant, pk=pk)
+    if request.method == "POST":
+        form = PlantWikiForm(request.POST, request.FILES, instance = plant)
+        if form.is_valid():
+            plant = form.save(commit=False)
+            plant.plant_owner = GeneralUser.objects.get(
+                userid=request.user.get_username())
+            plant = form.save()
+            return redirect('search:plant_list')
+    else:
+        form = PlantWikiForm(instance=plant)
+        ctx = {'form': form, 'pk': pk}
+    return render(request, 'search/edit_plant_wiki.html', ctx)
+
+
+@login_required
+def delete_plant_wiki(request, pk):
+    plant = Plant.objects.get(pk=pk)
+    wiki_plant = Plant_register.objects.get(name = plant.name)
+    plant.delete()
+    wiki_plant.delete()
+    return redirect('search:plant_list')
+
+    
