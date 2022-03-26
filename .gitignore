@@ -589,3 +589,4 @@ Temporary Items
 # End of https://www.toptal.com/developers/gitignore/api/macos,visualstudiocode,django,python
 
 user/migrations/
+community/static/javascripts/secret.js

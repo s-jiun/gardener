@@ -1,6 +1,8 @@
+import * as myAPI from "./secret.js";
+
 function sendLinkCustom(thumbnail, likeNum, commentNum, view, title, postid) {
 	if (!Kakao.isInitialized()) {
-		Kakao.init('673bc569637b7dc9ae3111971d08e04a')
+		Kakao.init(myAPI.KAKAOAPIKEY)
 	}
 	Kakao.Link.sendCustom({
 		templateId: 66239,

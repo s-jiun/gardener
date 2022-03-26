@@ -2,8 +2,10 @@ import user
 from search.models import Plant, PlantScrap
 from django.views.generic.list import ListView
 from user.models import GeneralUser, Follow, MyPlant
+
 from community.models import NoticeAlert
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
+
 from .forms import CustomUserCreationForm, CustomUserChangeForm, UserProfileChangeForm, UserAuthenticationForm, UserIdfindForm, MyPlantsForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
@@ -16,6 +18,29 @@ from django.db.models import Count
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
+from django.template import loader
+from django.contrib.auth.views import PasswordResetView
+from django.urls import reverse_lazy
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes
+from django.core.mail import EmailMessage
+from .tokens import account_activation_token
+from django.utils.encoding import force_bytes, force_text
+
+
+class customPasswordResetConfirmView(PasswordResetView):
+    email_template_name = 'user/password_reset/password_reset_email.html'
+    template_name = 'user/password_reset/password_reset_form.html'
+    subject_template_name = 'user/password_reset/password_reset_subject.txt'
+
+    def form_valid(self, form):
+        self.success_url = reverse_lazy('user:password_reset_done')
+        if GeneralUser.objects.filter(email=self.request.POST.get("email")).exists():
+            return super().form_valid(form)
+        else:
+            return render(self.request, 'user/password_reset/password_reset_done_fail.html')
 
 
 def login(request):
@@ -28,7 +53,8 @@ def login(request):
         # 검증
         if form.is_valid():
             # 검증 완료시 로그인!
-            auth_login(request, form.get_user())
+            user = form.get_user()
+            auth_login(request, user)
             return redirect('community:post_list')
     else:
         form = UserAuthenticationForm()
@@ -69,16 +95,45 @@ def signup(request):
             if age(form.cleaned_data["Date_of_birth"].year, form.cleaned_data["Date_of_birth"].month, form.cleaned_data["Date_of_birth"].day) < 14:
                 messages.error(request, "만 14세 이상만 이용가능한 서비스입니다.")
                 return redirect('user:signup')
-
             user = form.save(commit=False)
             user.set_password(form.cleaned_data['password1'])
+            user.is_active = False
             user.save()
-            return redirect('user:login')
+            current_site = get_current_site(request)
+            # localhost:8000
+            message = render_to_string('user/account/user_activate_email.html',
+                                       {
+                                           'user': user,
+                                           'domain': current_site.domain,
+                                           'uid': urlsafe_base64_encode(force_bytes(user.pk)).encode().decode(),
+                                           'token': account_activation_token.make_token(user),
+                                       }
+                                       )
+            mail_subject = "[OURPLANT] 회원가입 인증 메일입니다."
+            user_email = user.email
+            email = EmailMessage(mail_subject, message, to=[user_email])
+            email.send()
+            return render(request, 'user/account/email_send_done.html')
 
     elif request.method == 'GET':
         form = CustomUserCreationForm()
 
     return render(request, 'user/signup.html', {'form': form})
+
+
+def activate(request, uid64, token):
+
+    uid = force_text(urlsafe_base64_decode(uid64))
+    user = GeneralUser.objects.get(pk=uid)
+
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        auth_login(request, user)
+        return redirect('user:start_page')
+    else:
+        messages.error(request, "비정상적인 접근입니다.")
+        return redirect('user:signup')
 
 
 def member_del(request):
@@ -101,6 +156,10 @@ def member_modification(request):
         user_change_form = CustomUserChangeForm(
             request.POST, instance=request.user)
         if user_change_form.is_valid():
+            if age(user_change_form.cleaned_data["Date_of_birth"].year, user_change_form.cleaned_data["Date_of_birth"].month, user_change_form.cleaned_data["Date_of_birth"].day) < 14:
+                messages.error(request, "만 14세 이상만 이용가능한 서비스입니다.")
+                auth_logout(request)
+                return render(request, 'user/login.html')
             user = user_change_form.save(commit=False)
             user.set_password(user_change_form.cleaned_data['password1'])
             user.save()
@@ -204,6 +263,8 @@ def start_page(request):
     if request.user.is_authenticated:
         if request.user.name == "":
             return redirect('user:profile_update')
+        if not request.user.Date_of_birth:
+            return redirect('user:update')
 
     return render(request, template_name='welcome.html')
 
@@ -495,3 +556,16 @@ def add_myplant(request):
         form = MyPlantsForm()
         ctx = {'form': form}
         return render(request, template_name='user/add_myplant.html', context=ctx)
+
+
+@csrf_exempt
+def checkId(request):
+    req = json.loads(request.body)
+    userid = req['user_id'] 
+    try:
+        user = GeneralUser.objects.get(userid=userid)
+        if user:
+            return JsonResponse({'return_code': 0}) #사용할 수 없음
+    
+    except:
+        return JsonResponse({'return_code': 1}) # 사용할 수 있음
