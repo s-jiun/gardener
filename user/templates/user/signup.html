@@ -69,8 +69,14 @@
                     <div>
                         <div class="d-flex flex-column">
                             <p id="user_id">아이디</p>
-                            <input title="아이디 입력 칸" type="text" name="userid" class="regular-size" required="" id="id_userid">
-                            <button onclick="checkId()">중복확인</button>
+                            <div class="row row-cols-2">
+                                <div class="col-8">
+                                <input title="아이디 입력 칸" type="text" name="userid" style="height:2.5rem;" required="" id="id_userid">
+                                </div>
+                                <div class="col-4">
+                                    <button id="checkDuplicateBtn" onclick="checkId()">중복확인</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div>
@@ -86,7 +92,7 @@
                     </div>
                     <div>
                         <div class="d-flex flex-column">
-                            <p>비밀번호: 8자리 이상. 영문과 숫자를 섞어주세요.</p>
+                            <p>비밀번호 <br> (8자리 이상. 영문,숫자,특수문자를 섞어주세요.)</p>
                             <input title="비밀번호 입력 칸" type="password" name="password1" class="regular-size" required="" id="id_password1">
                         </div>
                     </div>
@@ -427,6 +433,16 @@
             console.log(chk1);
             var chk2=document.getElementById('flexCheckterm2').checked;
             console.log(chk2);
+
+            var pass1 = document.getElementById('id_password1').value;
+            var pass2 = document.getElementById('id_password2').value;
+            
+            if(pass1 !==pass2){
+
+                alert('비밀번호가 일치하지 않습니다.');
+                check=false;
+                return false;
+            }
 
             if(!chk1){
                 alert('개인정보 처리방침 약관에 동의해 주세요');

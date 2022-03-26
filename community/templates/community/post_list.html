@@ -4,6 +4,31 @@
 {% block head %}
     <link href="{% static 'style/css/community_list.css' %}" rel="stylesheet">
 {% endblock %}
+
+{% block Notice %}
+<a data-bs-toggle="modal" data-bs-target="#plantDetailModal-{{plant.pk}}">알림</a>
+<div class="modal fade" id="plantDetailModal-{{plant.pk}}" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content" id="plantDetailModal-content">
+            <div class="modal-header" style="border: none; padding-right: 3rem; padding-top:3rem;">
+                <button onclick = 'onClickNoticeDelete({{request.user.pk}})' type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center" id="notice_alert_modal"
+                style="padding-left:40px; padding-right:40px; padding-bottom:40px;">
+                {% if alert %}
+                {% for notice in alert %}
+                {{notice}}
+                {% endfor %}
+                {% else %}
+                알림이 없습니다.
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
 {%block search%}
             <form action='' method="GET" style="width:100%" >
                 <div class="d-flex align-items-center justify-content-center"> 
@@ -153,4 +178,30 @@
     {% comment %} <script src="{% static 'javascripts/post_comment.js' %}"></script> {% endcomment %}
     <script src="{% static 'javascripts/likes.js' %}"></script>
     <script src="{% static 'javascripts/post_list_follow.js' %}"></script>
+    <script>
+        const requestNotice = new XMLHttpRequest();
+
+        const onClickNoticeDelete = (User) => {
+        const url = "notice_alert_ajax/";
+        requestNotice.open("POST", url, true);
+        requestNotice.setRequestHeader(
+            "Content-Type",
+            "application/x-www-form-urlencoded"
+        );
+        requestNotice.send(JSON.stringify({ User: User }));
+        };
+
+        const NoticeHandleResponse = () => {
+        if (requestNotice.status < 400) {
+            const element = document.getElementById('notice_alert_modal');
+            element.innerHTML ='알림이 없습니다.';
+        }
+        };
+
+        requestNotice.onreadystatechange = () => {
+        if (requestNotice.readyState === XMLHttpRequest.DONE) {
+            NoticeHandleResponse();
+        }
+        };
+    </script>
 {% endblock %}

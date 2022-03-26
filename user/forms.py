@@ -98,6 +98,7 @@ class CustomUserCreationForm(UserCreationForm):
         password2 = self.cleaned_data.get("password2")
         if password1 and password2 and password1 != password2:
             raise forms.ValidationError("비밀번호가 일치하지 않습니다.")
+
         return password2
 
     def clean_email(self):
@@ -109,6 +110,8 @@ class CustomUserCreationForm(UserCreationForm):
         if GeneralUser.objects.filter(userid=self.cleaned_data['userid']).exists():
             raise forms.ValidationError('이미 존재하는 아이디입니다.')
         return self.cleaned_data['userid']
+
+    
 
     # def clean_Date_of_birth(self):
     #     if age(self.cleaned_data['Date_of_birth'].year, self.cleaned_data['Date_of_birth'].month, self.cleaned_data['Date_of_birth'].day) < 14:

@@ -110,8 +110,11 @@ INSTALLED_APPS = [
     # social_share
     'django_social_share',
 
+
+
     # template mathfilter
     'mathfilters',
+
 
 ]
 
