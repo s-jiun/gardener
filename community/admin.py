@@ -1,6 +1,7 @@
 from django.contrib import admin
 from . import models
 
+
 @admin.register(models.Post)
 class PostAdmin(admin.ModelAdmin):
     pass
@@ -23,4 +24,9 @@ class LikeAdmin(admin.ModelAdmin):
 
 @admin.register(models.Notice)
 class NoticeAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(models.NoticeAlert)
+class NoticeAlertAdmin(admin.ModelAdmin):
     pass

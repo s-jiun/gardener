@@ -23,3 +23,7 @@
 #new-post-comment {
   writing-mode: vertical-rl;
 }
+
+#makepost-main > div > div > form > div:nth-child(5) > div > p > label{
+  display: none;
+}

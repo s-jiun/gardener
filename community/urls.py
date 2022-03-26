@@ -23,4 +23,6 @@ urlpatterns = [
          name='follow_post_list'),
     path('notice/', view=views.NoticeListView.as_view(), name='notice'),
     path('notice/<int:pk>/', view=views.notice_detail, name='notice_detail'),
+    path('notice_alert_ajax/', view=views.notice_alert_ajax,
+         name='notice_alert_ajax')
 ]
