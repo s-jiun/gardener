@@ -2,3 +2,7 @@
   margin: 0 auto;
   align-items: center;
 }
+
+#makequestion-main > div > div > form > div:nth-child(4) > div > p > label{
+  display: none;
+}
