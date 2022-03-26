@@ -81,6 +81,7 @@ def age(birth_year, birth_month, birth_day):
         return now.year - birth_year - 1
 
 
+@csrf_exempt
 def signup(request):
     if request.user.is_authenticated:
         # 수정 필요
