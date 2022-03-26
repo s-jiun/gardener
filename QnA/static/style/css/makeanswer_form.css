@@ -10,3 +10,7 @@ main {
   margin: 0 auto;
   align-items: center;
 }
+
+#makeanswer-main > div > div > form > div.form-group.mb-3 > div > p > label{
+  display: none;
+}
