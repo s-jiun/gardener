@@ -41,7 +41,7 @@
                                 <div class="user-id-config">
                                     <span id="user-id"> {{user.userid}}</span>
                                     {%if user.id == request.user.id%}
-                                    <a href="{% url 'user:profile_update' %}">
+                                    <a title="회원정보 수정 페이지 이동" href="{% url 'user:profile_update' %}">
                                         <img class=""
                                             src="{% static 'images/ios-settings 1.svg'%}" />
                                     </a>
@@ -64,7 +64,7 @@
                                     {% endif %}
                                 </div>
 
-                                <div id="profile-content">
+                                <div id="profile-content" title="회원정보">
                                     <span style='overflow:auto;'>
                                         {%if user.profile%}
                                         {{user.profile|linebreaksbr}}
@@ -75,9 +75,9 @@
                                     </span>
                                 </div><br>
                                 <div id="user-follow" class="mt-2 mb-3">
-                                    <a href="{% url 'user:follow' user.pk %}">팔로워 <span
+                                    <a title="팔로워 페이지" href="{% url 'user:follow' user.pk %}">팔로워 <span
                                             class="follower-count">{{follower}}</span></a>
-                                    <a href="{% url 'user:follow' user.pk %}">&nbsp&nbsp&nbsp팔로잉
+                                    <a title="팔로잉 페이지" href="{% url 'user:follow' user.pk %}">&nbsp&nbsp&nbsp팔로잉
                                         <span
                                             class="following-count">{{following}}</span></a>
                                 </div>

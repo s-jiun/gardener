@@ -99,7 +99,7 @@ a {
   vertical-align: text-top;
 }
 #user-level a {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   font-weight: 300;
 }
 #profile-content span {
@@ -216,4 +216,9 @@ span {
 
 .card-body #post-title {
   font-size: 1.7rem;
+}
+
+#status-text{
+  font-weight: 500;
+  font-size: 1.8rem;
 }

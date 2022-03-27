@@ -1,4 +1,3 @@
-
 {% extends "login_base.html" %}
 {% load static %}
 {% load socialaccount %}
@@ -36,16 +35,16 @@
     </div>
     <div>
 		<div class="d-flex flex-column" style="font-size: 0.875rem; font-weight: bold;">
-			<p> 입력한 이메일에 계정이 있는 경우 비밀번호 설정에 <br>대한 안내를 이메일로 발송했습니다.
+			<p> 입력해주신 이메일로 인증링크를 발송했습니다.
 				<br><br>
 				1~2분 시간이 소요될 수 있으니 잠시만 기다려주세요.</p> <br>
 			<p> 			
-				이메일을 받지 못한 경우 가입 시 입력한 이메일과 <br>동일한지 확인해주세요.
+				이메일을 받지 못한 경우 가입 시 입력한 이메일이 <br>정확한지 확인해주세요.
 				<br><br>
 				안내 이메일이 스팸 메일로 분류될 수 있으니<br> 스팸 폴더를 확인해주세요.
 			</p><br>
 		</div>
     </div>
-	<a href="{% url 'user:login' %}"><button class="btn regular-size button-black">로그인 페이지로</button></a>
+	<a href="{% url 'user:start_page' %}"><button class="btn regular-size button-black">첫 페이지로</button></a>
 </div>
 {%endblock%}

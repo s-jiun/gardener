@@ -54,3 +54,7 @@ html {font-size:0.8rem}
 .logo-size {
   height: 4.8125rem;
 }
+
+body > main > header > div.row.d-flex.justify-content-end > div > a:nth-child(2){
+  padding-right: 1rem;
+}

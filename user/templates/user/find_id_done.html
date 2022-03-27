@@ -31,7 +31,7 @@
 {% block content %}
 <div id="left-container" class="col-5 d-flex flex-column justify-content-center">
     <div style="margin-bottom: 3.125rem;">
-        <a href="{% url 'user:start_page' %}">
+        <a title="웰컴 페이지 이동" href="{% url 'user:start_page' %}">
             <img src="{% static 'images/logo.png' %}" alt="" class="logo-size">
         </a>
     </div>
@@ -39,6 +39,6 @@
         <p>{{email}}로 등록된 아이디:</p>
         <p style="font-weight:bold;">{{user.userid}}</p>
     </div>
-    <a href="{% url 'user:login' %}"><button class="btn regular-size button-black">로그인 페이지로</button></a>
+    <a title="로그인 페이지 이동" href="{% url 'user:login' %}"><button class="btn regular-size button-black">로그인 페이지로</button></a>
 </div>
 {% endblock %}

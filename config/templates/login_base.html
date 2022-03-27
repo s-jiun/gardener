@@ -25,24 +25,24 @@
         <div class="row d-flex justify-content-end"  style="margin: auto; width: 80%; margin-top: 1.6rem; padding-right:3rem;">
             {% if request.user.is_authenticated %}
                 <div class="col d-flex justify-content-end">
-                    <a href="{% url 'user:logout' %}" style="margin-right:1rem;">로그아웃</a>
-                    <a href="{% url 'user:my_profile' %}">{{ request.user.userid }}</a>
+                    <a href="{% url 'user:logout' %}" style="margin-right:1rem;" title="로그아웃">로그아웃</a>
+                    <a href="{% url 'user:my_profile' %}" title="마이프로필 페이지 이동">{{ request.user.userid }}</a>
                     <img class="lazyload" data-src="{{ request.user.Image.url }}" style="width: 1.5rem; height: 1.5rem; border-radius: 50%;">
                 </div>
                 {% else %}
                 <div class="col d-flex justify-content-end">
-                    <a href="{% url 'user:signup' %}" style="padding-right:5px">회원가입</a>
-                    <a href="{% url 'user:login'%}">로그인</a>
+                    <a href="{% url 'user:signup' %}" style="padding-right:5px" title="회원가입 페이지 이동">회원가입</a>
+                    <a href="{% url 'user:login'%}" title="로그인 페이지 이동">로그인</a>
                 </div>
                 {% endif %} 
             </div>
     </header>
     
-    <div class="row justify-content-center align-items-center" style="width:100vw; height:100vh;">
+    <div class="row justify-content-center align-items-center" style="width:100vw;">
         {% block content %}
         {% endblock %}
         <div id="image-container" class="col-6" style="width: 470px; height: 610px;">
-            <img src="{% static  'images/welcome_image.png'%}" alt="">
+            <img src="{% static  'images/welcome_image.png'%}" alt="" title="웰컴 페이지 이미지">
         </div>
     </div>
 </main>
@@ -57,7 +57,7 @@
         <div style="font-size: 0.875rem;" class="text-end p-3" style="color: 8F8F8F;">
             © Our Plant All rights reserved <br>
             plants images : 
-            <a href="http://www.nongsaro.go.kr">www.nongsaro.go.kr</a>
+            <a href="http://www.nongsaro.go.kr" title="농사로 페이지 이동">www.nongsaro.go.kr</a>
         </div>
     </div>
     <!-- Copyright -->
