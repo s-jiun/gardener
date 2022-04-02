@@ -15,17 +15,19 @@ const checkId = () => {
 const checkIdHandleResponse = () => {
   if (requestCheckId.status < 400) {
     const { return_code } = JSON.parse(requestCheckId.response);
-    const element = document.getElementById("user_id");
+    const element = document.getElementById("id_message");
     const button = document.getElementById("sign_up");
     if (return_code === 0) {
       element.innerHTML = `
-        아이디 : 이미 사용중인 아이디입니다.
+      이미 사용중인 아이디입니다.
       `;
+      element.style.color = "red";
       button.disabled = true;
     } else {
       element.innerHTML = `
-        아이디 : 사용 가능한 아이디입니다. 
+      사용 가능한 아이디입니다. 
       `;
+      element.style.color = "blue";
       button.disabled = false;
     }
   }

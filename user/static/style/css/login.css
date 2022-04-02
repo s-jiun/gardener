@@ -1,6 +1,5 @@
 #checkDuplicateBtn{
-    height:2.5rem;
-    border: 1px solid greenyellow;
-    background-color: none;
-    margin-left: 5px;
+    color: white;
+    background-color: #354847;
+    height: 2.5rem;
 }
