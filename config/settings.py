@@ -68,7 +68,6 @@ EMAIL_PORT = '587'
 EMAIL_HOST_USER = get_secret("EMAIL_HOST_USER")
 
 EMAIL_HOST_PASSWORD = get_secret("EMAIL_HOST_PASSWORD")
-# get_secret("EMAIL_HOST_PASSWORD")
 
 # TLS 보안 방법
 EMAIL_USE_TLS = True
@@ -165,13 +164,28 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.environ['DB_INSTANCE_ID'],
+        'USER': os.environ['DB_USERNAME'],
+        'PASSWORD': os.environ['DB_PW'],
+        'HOST': os.environ['DB_ENDPOINT'],
+        'PORT': '3306',
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+            'charset': 'utf8mb4',
+            'use_unicode': True,
+        },
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
