@@ -3,3 +3,16 @@
     background-color: #354847;
     height: 2.5rem;
 }
+
+li{
+    list-style:none;
+    color: #76b79c;
+    font-weight: bold;
+}
+
+ul{
+    padding: 0;
+    display: inline-block;
+    padding-left: 0.5rem;
+    padding-bottom: 1rem;
+}

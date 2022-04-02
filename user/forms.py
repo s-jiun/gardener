@@ -20,22 +20,21 @@ class UserAuthenticationForm(AuthenticationForm):
     )
 
     def clean_password(self):
-        username = self.cleaned_data.get('username') # 우리가 입력한 값
+        username = self.cleaned_data.get('username')  # 우리가 입력한 값
         password = self.cleaned_data.get('password')
-        
+
         if username is not None:
             if authenticate(self.request, username=username, password=password) is not None:
                 return password
             else:
-                user = GeneralUser.objects.get(userid=username)
-                if(user.is_active == False):
-                    raise ValidationError('이메일 인증을 완료해주세요!')
-                else:
-                    if(user.userid != username):
-                        raise ValidationError('아이디가 없습니다.')
+                try:
+                    user = GeneralUser.objects.get(userid=username)
+                    if(user.is_active == False):
+                        raise ValidationError('이메일 인증을 완료해주세요!')
                     else:
                         raise ValidationError('비밀번호가 일치하지 않습니다!')
-
+                except:
+                    raise ValidationError('아이디가 없습니다.')
 
 
 Year_choices = list()
@@ -101,22 +100,20 @@ class CustomUserCreationForm(UserCreationForm):
 
         return password2
 
-    def clean_email(self):
-        if GeneralUser.objects.filter(email=self.cleaned_data['email']).exists():
-            raise forms.ValidationError('이미 존재하는 이메일입니다.')
-        return self.cleaned_data['email']
+    # def clean_email(self):
+    #     if GeneralUser.objects.filter(email=self.cleaned_data['email']).exists():
+    #         raise forms.ValidationError('이미 존재하는 이메일입니다.')
+    #     return self.cleaned_data['email']
 
     def clean_userid(self):
         if GeneralUser.objects.filter(userid=self.cleaned_data['userid']).exists():
             raise forms.ValidationError('이미 존재하는 아이디입니다.')
         return self.cleaned_data['userid']
 
-    
-
-    # def clean_Date_of_birth(self):
-    #     if age(self.cleaned_data['Date_of_birth'].year, self.cleaned_data['Date_of_birth'].month, self.cleaned_data['Date_of_birth'].day) < 14:
-    #         raise forms.ValidationError('만 14세 이상만 이용가능한 서비스입니다.')
-    #     return self.cleaned_data['Date_of_birth']
+    def clean_Date_of_birth(self):
+        if age(self.cleaned_data['Date_of_birth'].year, self.cleaned_data['Date_of_birth'].month, self.cleaned_data['Date_of_birth'].day) < 14:
+            raise forms.ValidationError('만 14세 이상만 이용가능한 서비스입니다.')
+        return self.cleaned_data['Date_of_birth']
 
     def save(self, commit=True):
         # Save the provided password in hashed format

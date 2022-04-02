@@ -56,6 +56,10 @@ def login(request):
             user = form.get_user()
             auth_login(request, user)
             return redirect('community:post_list')
+        # else:
+        #     if messages.error.code == 'test':
+        #         messages.error(request, "이메일 인증을 완료해주세요!")
+        #         return redirect('user:login')
     else:
         form = UserAuthenticationForm()
     context = {
@@ -562,11 +566,11 @@ def add_myplant(request):
 @csrf_exempt
 def checkId(request):
     req = json.loads(request.body)
-    userid = req['user_id'] 
+    userid = req['user_id']
     try:
         user = GeneralUser.objects.get(userid=userid)
         if user:
-            return JsonResponse({'return_code': 0}) #사용할 수 없음
-    
+            return JsonResponse({'return_code': 0})  # 사용할 수 없음
+
     except:
-        return JsonResponse({'return_code': 1}) # 사용할 수 있음
+        return JsonResponse({'return_code': 1})  # 사용할 수 있음
