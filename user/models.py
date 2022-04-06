@@ -36,7 +36,7 @@ class GeneralUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(
         verbose_name='Email address',
         max_length=255,
-        # unique=True,
+        unique=True,
     )
     userid = models.CharField(
         verbose_name='userid',

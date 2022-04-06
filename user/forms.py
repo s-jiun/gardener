@@ -100,10 +100,10 @@ class CustomUserCreationForm(UserCreationForm):
 
         return password2
 
-    # def clean_email(self):
-    #     if GeneralUser.objects.filter(email=self.cleaned_data['email']).exists():
-    #         raise forms.ValidationError('이미 존재하는 이메일입니다.')
-    #     return self.cleaned_data['email']
+    def clean_email(self):
+        if GeneralUser.objects.filter(email=self.cleaned_data['email']).exists():
+            raise forms.ValidationError('이미 존재하는 이메일입니다.')
+        return self.cleaned_data['email']
 
     def clean_userid(self):
         if GeneralUser.objects.filter(userid=self.cleaned_data['userid']).exists():

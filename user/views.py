@@ -56,10 +56,6 @@ def login(request):
             user = form.get_user()
             auth_login(request, user)
             return redirect('community:post_list')
-        # else:
-        #     if messages.error.code == 'test':
-        #         messages.error(request, "이메일 인증을 완료해주세요!")
-        #         return redirect('user:login')
     else:
         form = UserAuthenticationForm()
     context = {
