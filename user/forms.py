@@ -1,3 +1,4 @@
+from asyncio import constants
 from unicodedata import name
 from urllib import request
 from django.core.exceptions import ValidationError
@@ -28,13 +29,21 @@ class UserAuthenticationForm(AuthenticationForm):
                 return password
             else:
                 try:
+                    user = None
                     user = GeneralUser.objects.get(userid=username)
+                    if not user:
+                        raise ValidationError('아이디가 없습니다.')
                     if(user.is_active == False):
                         raise ValidationError('이메일 인증을 완료해주세요!')
                     else:
                         raise ValidationError('비밀번호가 일치하지 않습니다!')
                 except:
-                    raise ValidationError('아이디가 없습니다.')
+                    if not user:
+                        raise ValidationError('아이디가 없습니다!')
+                    if(user.is_active == False):
+                        raise ValidationError('이메일 인증을 완료해주세요!')
+                    else:
+                        raise ValidationError('비밀번호가 일치하지 않습니다!')
 
 
 Year_choices = list()
