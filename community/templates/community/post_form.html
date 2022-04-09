@@ -16,10 +16,10 @@
                         {% csrf_token %}
                         <div style="float:right;">
                             {% if form.title.value%}
-                            <button class="go-to-main" style="margin-right:10px;"><a href="{% url 'community:post_detail' pk %}">취소하기</a></button>
+                            <button class="go-to-main" style="margin-right:10px;"><a title="게시물 상세 페이지 이동" href="{% url 'community:post_detail' pk %}">취소하기</a></button>
                             <input type="submit" value = '수정하기' class='make-something' style="font-size:1.4rem; color:#76b79c;"/>
                             {% else %}
-                            <button class="go-to-main" style="margin-right:10px;"><a href="{% url 'community:post_list' %}">돌아가기</a></button>
+                            <button class="go-to-main" style="margin-right:10px;"><a title="게시물 목록 페이지 이동" href="{% url 'community:post_list' %}">돌아가기</a></button>
                             <input type="submit" value = '저장하기' class='make-something' style="font-size:1.4rem; color:#76b79c;"/>
                             {% endif %}
                         </div>
@@ -53,7 +53,7 @@
                             <label for="content" class="form-label" style="font-size:1.6rem; font-weight:bold;">내용</label>
                             <div style='width: 100%;'>
                                 {{ form.media }}
-                                {{ form.content }}
+                                {{ form.as_p }}
                             </div>
                         </div>
                         <div class='form-group'>

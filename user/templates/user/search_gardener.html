@@ -11,8 +11,8 @@
 <form action='' method="GET" style="width:100%;">
     <div class="d-flex align-items-center justify-content-center">
         <div class="d-flex  justify-content-between" id="search" style="width:80%;">
-            <input class='search-input' type="text" name='q' value="{{q}}" placeholder="가드너의 아이디를 검색해보세요."/>
-            <button class='searchbtn' type="submit"><img class='me-1' src='{% static 'images/search.svg' %}' alt='하트'></button>
+            <input title="아이디 검색 칸" class='search-input' type="text" name='q' value="{{q}}" placeholder="가드너의 아이디를 검색해보세요."/>
+            <button title="검색 버튼" class='searchbtn' type="submit"><img class='me-1' src='{% static 'images/search.svg' %}' alt='하트'></button>
         </div>
     </div>
 
@@ -22,34 +22,34 @@
 {% block content %}
 <div class="container-fluid main-body mt-4 mb-4 text-center" id="gardener-body">
 {% if gardener_list %}
-<div class='row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3'>
+<div class='row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3 mt-5'>
     {% for gardener in gardener_list %}
         <div class="col col-design">
-            <a href="{% url 'user:profile' gardener.pk%} ">
+            <a title="유저 프로필 이동" href="{% url 'user:profile' gardener.pk%} ">
                 <div id ="gardener-image-box" style= "margin-bottom:16px;">
                     <img src = {{gardener.Image.url}} id = "gardener-img">
                 </div>
                 <div class="text-center" style="margin-bottom:10px;">
                     {% if gardener.point < 100 %}
-                    <span class= "gardener-ranking">입문 정원사</span>
+                    <span title="유저 등급" class= "gardener-ranking">입문 정원사</span>
                     <br/>
-                    <span class="gardener-name">{{ gardener.name}}</span>
+                    <span title="유저 이름" class="gardener-name">{{ gardener.name}}</span>
                     {% elif gardener.point < 300 %}
-                    <span class= "gardener-ranking">초보 정원사 </span>
+                    <span title="유저 등급" class= "gardener-ranking">초보 정원사 </span>
                     <br/>
-                    <span class="gardener-name">{{ gardener.name}}</span>
+                    <span title="유저 이름" class="gardener-name">{{ gardener.name}}</span>
                     {% elif gardener.point < 600 %}
-                    <span class= "gardener-ranking">아마추어 정원사</span>
+                    <span title="유저 등급" class= "gardener-ranking">아마추어 정원사</span>
                     <br/>
-                    <span class="gardener-name">{{ gardener.name}}</span>
+                    <span title="유저 이름" class="gardener-name">{{ gardener.name}}</span>
                     {% elif gardener.point < 1000 %}
-                    <span class= "gardener-ranking">프로 정원사</span>
+                    <span title="유저 등급" class= "gardener-ranking">프로 정원사</span>
                     <br/>
-                    <span class="gardener-name">{{ gardener.name}}</span>
+                    <span title="유저 이름" class="gardener-name">{{ gardener.name}}</span>
                     {% else %}
-                    <span class= "gardener-ranking">국가대표 정원사</span>
+                    <span title="유저 등급" class= "gardener-ranking">국가대표 정원사</span>
                     <br/>
-                    <span class="gardener-name">{{ gardener.name}}</span>
+                    <span title="유저 이름" class="gardener-name">{{ gardener.name}}</span>
                     {% endif %}
                 </div>
                 <div class = "mb-1 gardener-profile" style="height:50px;">
@@ -212,8 +212,8 @@ if (requestFollow.readyState === XMLHttpRequest.DONE) {
             <div id='gardener-header-form'>
                 <form action = '' method="GET" >
                     <div id="search_option" style="display:inline">
-                        <input class="gardener-input" type="text" name ='q' value="{{q}}" placeholder="가드너의 아이디를 검색해 보세요." />
-                        <button class="gardener-input-1" type="submit">검색</button>
+                        <input title="아이디 입력 칸" class="gardener-input" type="text" name ='q' value="{{q}}" placeholder="가드너의 아이디를 검색해 보세요." />
+                        <button title="검색 버튼" class="gardener-input-1" type="submit">검색</button>
                     </div>
                 </form>
             </div>
@@ -229,21 +229,21 @@ if (requestFollow.readyState === XMLHttpRequest.DONE) {
                 <div class="image" >
                     <a href="{% url 'user:profile' gardener.pk%} ">
                     <img data-src={{gardener.Image.url}} class="lazyload card-img-top"  id="gardener-img" alt="..." >
-                    <span><h3 style="font-weight:bold">😉 {{gardener.name}} 님 😉 </h3><br> {{gardener.profile | truncatechars:20}}</span>
+                    <span><h3 title="유저 이름" style="font-weight:bold">😉 {{gardener.name}} 님 😉 </h3><br> {{gardener.profile | truncatechars:20}}</span>
                     </a>
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title" style="width:50%; display:inline">{{ gardener.name }}
+                    <h5 title="유저 이름" class="card-title" style="width:50%; display:inline">{{ gardener.name }}
                     {% if gardener.point < 100 %}
-                    <h6 style="display: inline;  float: right;">  <img class='lazyload rank-image' data-src = "{% static 'images/sf.png'%}" style="width:1rem; heigth:auto"> 입문 정원사 <img class='rank-image' src = "{% static 'images/sf.png'%}"></h6>
+                    <h6 title="유저 등급" style="display: inline;  float: right;">  <img class='lazyload rank-image' data-src = "{% static 'images/sf.png'%}" style="width:1rem; heigth:auto"> 입문 정원사 <img class='rank-image' src = "{% static 'images/sf.png'%}"></h6>
                     {% elif gardener.point < 300 %}
-                    <h6 style="display: inline;  float: right;"> <img class='lazyload rank-image' data-src = "{% static 'images/dy.png'%}"> 초보 정원사 <img class='rank-image' src = "{% static 'images/dy.png'%}"></h6>
+                    <h6 title="유저 등급" style="display: inline;  float: right;"> <img class='lazyload rank-image' data-src = "{% static 'images/dy.png'%}"> 초보 정원사 <img class='rank-image' src = "{% static 'images/dy.png'%}"></h6>
                     {% elif gardener.point < 600 %}
-                    <h6 style="display: inline;  float: right;"> <img class='lazyload rank-image' data-src = "{% static 'images/cm.png'%}"> 아마추어 정원사 <img class='rank-image' src = "{% static 'images/cm.png'%}"></h6>
+                    <h6 title="유저 등급" style="display: inline;  float: right;"> <img class='lazyload rank-image' data-src = "{% static 'images/cm.png'%}"> 아마추어 정원사 <img class='rank-image' src = "{% static 'images/cm.png'%}"></h6>
                     {% elif gardener.point < 1000 %}
-                    <h6 style="display: inline;  float: right;"> <img class='lazyload rank-image' data-src = "{% static 'images/cs.png'%}"> 프로 정원사 <img class='rank-image' src = "{% static 'images/cs.png'%}"></h6>
+                    <h6 title="유저 등급" style="display: inline;  float: right;"> <img class='lazyload rank-image' data-src = "{% static 'images/cs.png'%}"> 프로 정원사 <img class='rank-image' src = "{% static 'images/cs.png'%}"></h6>
                     {% else %}
-                    <h6 style="display: inline;  float: right;"> <img class='lazyload rank-image' data-src = "{% static 'images/hs.png'%}"> 국가대표 정원사 <img class='rank-image' src = "{% static 'images/hs.png'%}"></h6>
+                    <h6 title="유저 등급" style="display: inline;  float: right;"> <img class='lazyload rank-image' data-src = "{% static 'images/hs.png'%}"> 국가대표 정원사 <img class='rank-image' src = "{% static 'images/hs.png'%}"></h6>
                     {% endif %}
                     </h5>
                     <hr class="m-0">
@@ -282,18 +282,18 @@ if (requestFollow.readyState === XMLHttpRequest.DONE) {
 <ul class="pagination">
 {% if page_obj.has_previous %}
 <li class="page-item">
-    <a class="page-link" href="?q={{q}}&page={{ page_obj.previous_page_number }}"
+    <a title="이전" class="page-link" href="?q={{q}}&page={{ page_obj.previous_page_number }}"
     tabindex="-1">이전</a>
  </li>
 {% else %}
 <li class="page-item disabled">
-    <a class="page-link" href="#" tabindex="-1">이전</a>
+    <a title="이전 목록" class="page-link" href="#" tabindex="-1">이전</a>
  </li>
 {% endif %}
 
 {% for page in page_range %}
 <li class="page-item {% if page == page_obj.number %} activate {% endif %}">
-    <a class="page-link" href="?q={{q}}&page={{ page }}">{{ page }}</a>
+    <a title="{{page}}번 페이지 이동" class="page-link" href="?q={{q}}&page={{ page }}">{{ page }}</a>
 </li>
 {% endfor %}
 
@@ -304,7 +304,7 @@ if (requestFollow.readyState === XMLHttpRequest.DONE) {
 </li>
 {% else %}
 <li class="page-item disabled">
-    <a class="page-link" href="#">다음</a>
+    <a title="다음 목록" class="page-link" href="#">다음</a>
 </li>
 {% endif %}
 </ul>

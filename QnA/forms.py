@@ -12,11 +12,11 @@ class QuestionForm(forms.ModelForm):
 
     class Meta:
         model = CommunityQuestion
-        fields = ['title', 'content', 'tags']
+        fields = ['content']
 
 
 class AnswerForm(forms.ModelForm):
 
     class Meta:
         model = CommunityAnswer
-        fields = ['title', 'content']
+        fields = ['content']

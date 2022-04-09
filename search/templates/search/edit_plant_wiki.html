@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+{% block head %}
+    <link href="{% static 'style/css/make_plant_wiki.css' %}" rel="stylesheet">
+{% endblock %}
+{% block content %}
+    <form action = '', method="post", enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+            {{form.as_table}}
+        </table>
+        <input type = "submit" />
+    </form>
+    
+{% endblock %}
