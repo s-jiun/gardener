@@ -570,3 +570,16 @@ def checkId(request):
 
     except:
         return JsonResponse({'return_code': 1})  # 사용할 수 있음
+
+
+@csrf_exempt
+def checkEmail(request):
+    req = json.loads(request.body)
+    useremail = req['user_email']
+    try:
+        user = GeneralUser.objects.get(email=useremail)
+        if user:
+            return JsonResponse({'return_code': 0})  # 사용할 수 없음
+
+    except:
+        return JsonResponse({'return_code': 1})  # 사용할 수 있음
