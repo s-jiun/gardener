@@ -54,7 +54,8 @@ def login(request):
         if form.is_valid():
             # 검증 완료시 로그인!
             user = form.get_user()
-            auth_login(request, user)
+            auth_login(request, user,
+                       backend='django.contrib.auth.backends.ModelBackend')
             return redirect('community:post_list')
     else:
         form = UserAuthenticationForm()
