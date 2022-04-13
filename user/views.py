@@ -131,7 +131,8 @@ def activate(request, uid64, token):
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
-        auth_login(request, user)
+        auth_login(request, user,
+                   backend='django.contrib.auth.backends.ModelBackend')
         return redirect('user:start_page')
     else:
         messages.error(request, "비정상적인 접근입니다.")
