@@ -38,7 +38,11 @@ const followerDeleteHandleResponse = () => {
     const followers = document.querySelector(`.follower-div`);
     if (followers == null) {
       const follower_box = document.querySelector(`#follower-box`);
-      follower_box.innerHTML = `아직 함께하는 팔로워가 없어요.`
+      follower_box.innerHTML = `
+      <div style="text-align: center;">
+      <h4 style="margin-top: 1rem;">함께하는 플랜테리어가 없습니다.</h4>
+      </div>
+      `
     }
       
   }
@@ -105,7 +109,11 @@ const followingDeleteHandleResponse = () => {
     const followings = document.querySelector(`.following-div`);
     if (followings == null) {
       const following_box = document.querySelector(`#following-box`);
-      following_box.innerHTML = `아직 함께하는 팔로워가 없어요.`
+      following_box.innerHTML = `
+      <div style="text-align: center;">
+      <h4 style="margin-top: 1rem;">함께하는 플랜테리어가 없습니다.</h4>
+      </div>
+      `
     }
   }
 };
@@ -137,20 +145,20 @@ const otherFollowingHandleResponse = () => {
 
       element[0].innerHTML = `    
       <div class='follow-${user_id}' style="display:inline;">
-      <button onclick="onClickOtherDeleteFollow(${user_id})">팔로우 취소</button>
+      <button class="follow-btn" onclick="onClickOtherDeleteFollow(${user_id})">팔로우 취소</button>
       </div>
       `;
       
       element[1].innerHTML = `    
       <div class='follow-${user_id}' style="display:inline;">
-      <button onclick="onClickOtherDeleteFollow(${user_id})">팔로우 취소</button>
+      <button class="follow-btn" onclick="onClickOtherDeleteFollow(${user_id})">팔로우 취소</button>
       </div>
       `;
     }
     else {
       element[0].innerHTML = `    
       <div class='follow-${user_id}' style="display:inline;">
-      <button onclick="onClickOtherDeleteFollow(${user_id})">팔로우 취소</button>
+      <button class="follow-btn" onclick="onClickOtherDeleteFollow(${user_id})">팔로우 취소</button>
       </div>
       `;
     }
@@ -184,20 +192,20 @@ const otherFollowHandleResponse = () => {
 
       element[0].innerHTML = `    
       <div class='following-${user_id}' style="display:inline;">
-      <button onclick="onClickOtherFollowing(${user_id})">팔로우</button>
+      <button class="follow-btn" onclick="onClickOtherFollowing(${user_id})">팔로우</button>
       </div>
       `;
       
       element[1].innerHTML = `    
       <div class='following-${user_id}' style="display:inline;">
-      <button onclick="onClickOtherFollowing(${user_id})">팔로우</button>
+      <button class="follow-btn" onclick="onClickOtherFollowing(${user_id})">팔로우</button>
       </div>
       `;
     }
     else {
       element[0].innerHTML = `    
       <div class='following-${user_id}' style="display:inline;">
-      <button onclick="onClickOtherFollowing(${user_id})">팔로우</button>
+      <button class="follow-btn" onclick="onClickOtherFollowing(${user_id})">팔로우</button>
       </div>
       `;
     }

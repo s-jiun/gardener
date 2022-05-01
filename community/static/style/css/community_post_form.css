@@ -3,11 +3,6 @@
   align-items: center;
 }
 
-#blah {
-  width: 30%;
-  height: auto;
-}
-
 #submit-input {
   background-color: #ccdfcc;
   border-radius: 10px;
@@ -27,4 +22,8 @@
 
 #new-post-comment {
   writing-mode: vertical-rl;
+}
+
+#makepost-main > div > div > form > div:nth-child(5) > div > p > label{
+  display: none;
 }

@@ -4,19 +4,21 @@
 
 {%block head%}
 <link href="{% static 'style/css/main_plant.css' %}" rel="stylesheet">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 {%endblock%}
 
 {% block search %}
 <form action='' method="GET" style="width:100%">
     <div class="d-flex align-items-center justify-content-center">
-        <select name="type" class="search-input-1">
+        <select title="검색 기준" name="type" class="search-input-1">
             <option value="name">식물명</option>
             <option value="content">내용</option>
         </select>
         <div class="d-flex  justify-content-between" id="search" style="width:80%;">
             <input class='search-input' type="text" name='q' value="{{q}}" placeholder="반려식물의 정보를 입력해보세요" />
-            <button class='searchbtn' type="submit"><img class='me-1' src='{% static ' images/search.svg' %}'
-                    alt='하트'></button>
+            <button class='searchbtn' type="submit"><img class='me-1' src="{% static 'images/search.svg' %}" alt='하트'></button>
         </div>
     </div>
 
@@ -27,9 +29,12 @@
 
 <div class="level-con">
     <h5>관리 난이도</h5>
+
     <div class="level-btn"><a href='?type=managelevel&q=초보자'>초보자</a></div>
     <div class="level-btn"><a href='?type=managelevel&q=경험자'>경험자</a></div>
-    <div class="level-btn"><a href='?type=managelevel&q=초보자'>전문가</a></div>
+    <div class="level-btn"><a href='?type=managelevel&q=전문가'>전문가</a></div>
+    <div class="level-btn"><a href="{% url 'search:plant_wiki' %}" >내 식물 등록하기</a></div>
+
 </div>
 
 
@@ -38,17 +43,17 @@
     <div class='row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3'>
         {% for plant in plant_list %}
         <div class="col">
-            <div class="card p-2 m-3" id="plant-card" style="border:none;">
-                <div class="image">
-                    <a data-bs-toggle="modal" data-bs-target="#plantDetailModal-{{plant.pk}}">
+            <a title="식물 정보" data-bs-toggle="modal" data-bs-target="#plantDetailModal-{{plant.pk}}">
+                <div class="card p-2 m-3" id="plant-card" style="border:none;">
+                    <div class="image">
                         <img src={{plant.photo_url|safe}} class="lazyload card-img-top" id="plant-img" alt="...">
                         <h3>{{plant.name}}<br> 알아보기</h3>
-                    </a>
+                    </div>
+                    <div class="card-body" style="padding : 1rem 0 0 0;">
+                        <h5 class="card-title" style="font-size:1.7rem;">{{ plant.name }}</h5>
+                    </div>
                 </div>
-                <div class="card-body" style="padding : 1rem 0 0 0;">
-                    <h5 class="card-title" style="font-size:1.7rem;">{{ plant.name }}</h5>
-                </div>
-            </div>
+            </a>
         </div>
         {% if plant.growth_form != '0' %}
         <div class="modal fade" id="plantDetailModal-{{plant.pk}}" data-bs-backdrop="static" data-bs-keyboard="false"
@@ -70,6 +75,12 @@
                         </div>
                         {% endif %}
                         {% endif %}
+                        <div class="btn btn-success btn-sm post__scrap">
+                            {% if plant.plant_owner == request.user %}
+                            <a href = "{% url 'search:edit_plant_wiki' plant.pk %}">편집하기</a>
+                            <a href = "{% url 'search:delete_plant_wiki' plant.pk %}">삭제하기</a>
+                            {% endif %}
+                        </div>
                         <h5 class="modal-title" id="plantDetailLabel">{{plant.name}}</h5>
                     </div>
                     <div class="modal-body text-center"
@@ -147,7 +158,7 @@
                                     </tr>
                                     <tr>
                                         <td class="p-2 table-con">
-                                            {{plant.water_period_autumn}}
+                                            {{plant.water_period_spring}}
                                         </td>
                                     </tr>
                                     <td class="p-2 table-title">
@@ -228,12 +239,60 @@
                                     {% comment %} 건조식물 db 확인해서 tr/td 추가 {% endcomment %}
                                         <tr>
                                             <td class="p-2 table-title">
-                                                <span>생육형태<span>
+                                                <span>관리 난이도<span>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="p-2 table-con">
-                                                {{plant.growth_form}}
+                                                {{plant.name}}의 관리 난이도는 {{plant.care_difficulty}} 입니다.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-2 table-title">
+    
+                                                <span>관리 요구 수준<span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-2 table-con">
+                                                {%if plant.management_level == "경험자" %}
+                                                식물을 키워본 경험이 좀 있다면 어렵지 않아요! 도전해보세요!
+                                                {%elif plant.management_level == "초보자" %}
+                                                {{plant.management_level}}도 쉽게 키울 수 있어요! 어렵지 않아요!
+                                                {% else %}
+                                                {{plant.management_level}} 정도의 수준이 요구되어요!
+                                                {%endif%}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-2 table-title">
+                                                <span>물주기<span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-2 table-con">
+                                                {{plant.water_period_spring}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-2 table-title">
+    
+                                                <span>광도<span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-2 table-con">
+                                                {{plant.sunlight}}
+                                            </td>
+                                        </tr>
+                                        <td class="p-2 table-title">
+
+                                            <span>기타사항<span>
+                                        </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-2 table-con">
+                                                {{plant.content}}
                                             </td>
                                         </tr>
                                     </tbody>
@@ -252,7 +311,7 @@
                 <div class="text-center" style="font-size: 28px;">
                     일치하는 검색 결과가 없습니다.
                     <br />
-                    <a href='{% url "search:plant_list" %}' style='font-size:1.3rem; '>뒤로가기</a>
+                    <a title="식물 목록 페이지 이동" href='{% url "search:plant_list" %}' style='font-size:1.3rem; '>뒤로가기</a>
                 </div>
             </td>
         </tr>
@@ -270,30 +329,29 @@
         <ul class="pagination justify-content-center">
             {% if page_obj.has_previous %}
             <li class="page-item">
-                <a class="page-link" href="?type={{ type }}&q={{ q }}&page={{ page_obj.previous_page_number }}"
-                    tabindex="-1" style="border:none; font-size: 15px;">&lt;</a>
+                <a class="page-link page-link-2" href="?type={{ type }}&q={{ q }}&page={{ page_obj.previous_page_number }}"
+                    tabindex="-1">&lt;</a>
             </li>
             {% else %}
             <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1" style="font-size: 15px; border:none;">&lt;</a>
+                <a class="page-link page-link-2" href="#" tabindex="-1">&lt;</a>
             </li>
             {% endif %}
 
             {% for page in page_range %}
             <li class="page-item {% if page == page_obj.number %} activate {% endif %}">
-                <a class="page-link page-link-circle" href="?type={{ type }}&q={{ q }}&page={{ page }}"
-                    style="border-radius:100%; border:none; font-size: 12px; margin-right:7px;">{{ page }}</a>
+                <a class="page-link  page-link-circle" href="?type={{ type }}&q={{ q }}&page={{ page }}">{{ page }}</a>
             </li>
             {% endfor %}
 
             {% if page_obj.has_next %}
             <li class="page-item">
-                <a class="page-link" href="?type={{ type }}&q={{ q }}&page={{ page_obj.next_page_number }}"
-                    style="border:none; font-size: 15px; margin-left:-7px;">&gt;</a>
+                <a class="page-link page-link-2"
+                    href="?type={{ type }}&q={{ q }}&page={{ page_obj.next_page_number }}" style ="margin-left:-7px;">&gt;</a>
             </li>
             {% else %}
             <li class="page-item disabled">
-                <a class="page-link" href="#" style="border:none; font-size: 15px; margin-left:-7px;">&gt;</a>
+                <a class="page-link page-link-2" href="#" style="margin-left:-7px;">&gt;</a>
             </li>
             {% endif %}
         </ul>
@@ -307,7 +365,7 @@
                 "{{ plant.name|safe }}",
         {% endfor %}
         ];
-    $(".plant-input").autocomplete({
+    $(".search-input").autocomplete({
         source: function (request, response) {
             var results = $.ui.autocomplete.filter(availableTags, request.term);
             response(results.slice(0, 10));

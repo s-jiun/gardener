@@ -7,8 +7,8 @@
 
 {% block button %}
 <div>
-    <button class="make-something"><a href="{% url 'QnA:makeanswer' question.pk %}">답글달기</a></button>
-    <button class="go-to-main"><a href="{% url 'QnA:communityquestion_list' %}">목록으로</a></button>
+    <button class="make-something"><a title="답글 작성 페이지 이동" href="{% url 'QnA:makeanswer' question.pk %}">답글달기</a></button>
+    <button class="go-to-main"><a title="질문 목록 페이지 이동" href="{% url 'QnA:communityquestion_list' %}">목록으로</a></button>
 </div>
 {% endblock %}
 
@@ -67,7 +67,7 @@
                 </div>
                 {% endif %}
                 <div class='mb-4'>
-                    <span style="font-size: 1.7rem; font-weight:bold;">{{ans.title}}</span>
+                    <span class="ans-title">{{ans.title}}</span>
                 </div>
                 <span id="ans-head"><img class="lazyload" id='question-detail-thumbnail' data-src="{{ ans.user_id.Image.url }}"> {{ ans.user_id }}</span>
                 <div class="mt-2" id="ans-body">

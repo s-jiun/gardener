@@ -5,13 +5,13 @@
     <link href="{% static 'style/css/tagged_question.css' %}" rel="stylesheet">
 {% endblock %}
 {% block content %}
-<div class = 'container-fluid mt-4 text-center' style='width:80%;'>
+<div class = 'container-fluid mt-4 text-center' style='width:80%; font-size: 15px;'>
     <div class="mb-3">
         <span style="font-weight:bold; font-size:1.5rem;">{{tag}}를 태그한 질문은 총 {{taggedquestion_list|length}}개 입니다. </span>
     </div>
     <table class='table table-borderless table-hover'>
         <thead>
-            <tr style="color:#8F8F8F;">
+            <tr style="color:#8F8F8F;" class="list-header">
                 <th scope='col col-1'>번호</th>
                 <th scope='col col-7' style="text-align:start;">제목</th>
                 <th scope='col-2'>작성자</th>
@@ -21,7 +21,7 @@
         <tbody>
             {% if taggedquestion_list %}
             {% for question in taggedquestion_list %}
-            <tr class="text-center">
+            <tr class="text-center list-main">
                 <th scope='row' style="font-weight: normal;">{{ paginator.count|sub:page_obj.start_index|sub:forloop.counter0|add:1 }}</th>
                 <td style="text-align:start;">
                     {% if request.user.is_authenticated %}
@@ -46,29 +46,29 @@
         <ul class="pagination justify-content-center">
             {% if page_obj.has_previous %}
             <li class="page-item">
-                <a class="page-link" href="?type={{ type }}&q={{ q }}&page={{ page_obj.previous_page_number }}"
-                    tabindex="-1" style="border:none; font-size: 15px;">&lt;</a>
+                <a class="page-link page-link-2" href="?type={{ type }}&q={{ q }}&page={{ page_obj.previous_page_number }}"
+                    tabindex="-1">&lt;</a>
             </li>
             {% else %}
             <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1" style="font-size: 15px; border:none;">&lt;</a>
+                <a class="page-link page-link-2" href="#" tabindex="-1">&lt;</a>
             </li>
             {% endif %}
 
             {% for page in page_range %}
             <li class="page-item {% if page == page_obj.number %} activate {% endif %}">
-                <a class="page-link" href="?type={{ type }}&q={{ q }}&page={{ page }}" style="border-radius:100%;font-size: 12px; margin-right:7px;">{{ page }}</a>
+                <a class="page-link page-link-circle" href="?type={{ type }}&q={{ q }}&page={{ page }}" style="border-radius:100%;font-size: 12px; margin-right:7px;">{{ page }}</a>
             </li>
             {% endfor %}
 
             {% if page_obj.has_next %}
             <li class="page-item">
-                <a class="page-link"
-                    href="?type={{ type }}&q={{ q }}&page={{ page_obj.next_page_number }}" style="border:none; font-size: 15px; margin-left:-7px;">&gt;</a>
+                <a class="page-link page-link-2" style="margin-left:-7px;"
+                    href="?type={{ type }}&q={{ q }}&page={{ page_obj.next_page_number }}">&gt;</a>
             </li>
             {% else %}
             <li class="page-item disabled">
-                <a class="page-link" href="#" style="border:none; font-size: 15px; margin-left:-7px;">&gt;</a>
+                <a class="page-link page-link-2" href="#" style="margin-left:-7px;">&gt;</a>
             </li>
             {% endif %}
         </ul>

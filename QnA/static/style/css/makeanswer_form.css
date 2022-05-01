@@ -11,34 +11,6 @@ main {
   align-items: center;
 }
 
-#makeanswer-input {
-  background-color: #ccdfcc;
-  border-radius: 10px;
-  border: 0;
-}
-
-#makeanswer-button {
-  background-color: #c4c4c4;
-  border-radius: 10px;
-  border: 0;
-}
-
-#makeanswer-button a {
-  text-decoration: none;
-  color: black;
-}
-
-#makeanswer-writing {
-  writing-mode: vertical-rl;
-}
-
-#makeanswer-writing h4 {
-  margin-left: 1vw;
-  margin-right: 1vw;
-}
-
-@media screen and (max-width: 800px) {
-  #makeanswer-writing {
-    display: none;
-  }
+#makeanswer-main > div > div > form > div.form-group.mb-3 > div > p > label{
+  display: none;
 }

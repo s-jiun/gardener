@@ -1,9 +1,3 @@
-@media screen and (max-width: 560px) {
-  header {
-    display: none;
-  }
-}
-
 .main-container {
   width: 100vw;
   height: 100vh;
@@ -22,6 +16,7 @@
   justify-content: center;
   max-height: 800px;
   background-color: rgba(0, 0, 0, 0.2);
+  border-style: double;
   border-width: 8px;
   border-color: #a0cab5;
   background: #dae7dd;
@@ -107,6 +102,5 @@ p {
   border-radius: 100%;
   width: 140px;
   height: 140px;
-  border-width: 5px;
-  border-color: #3b260f;
+  border: solid 1px #8f8f8f;
 }

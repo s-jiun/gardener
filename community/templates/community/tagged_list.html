@@ -2,70 +2,122 @@
 {% load static %}
 
 {% block head %}
-    <link rel="stylesheet" href="{% static 'style/css/tagged_list.css' %}" />
+    <link href="{% static 'style/css/community_list.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block button %}
+<div>
+    <button class="make-something">
+        {% if request.user.is_authenticated %}
+        <a title="게시물 작성 페이지 이동" href="{% url 'community:post_create' %}">포스트 작성</a>
+        {% else %}
+        <a title="게시물 작성 페이지 이동" onclick="alert('로그인이 필요한 서비스입니다.')" href="{% url 'user:login' %}">포스트 작성</a>
+        {% endif %}
+    </button>
+    <button class="go-to-main">
+        {% if request.user.is_authenticated %}
+        <a title="친구 게시물 페이지 이동" href= '{% url "community:follow_post_list" %}'>친구 게시물 보기</a>
+        {% else %}
+        <a title="친구 게시물 페이지 이동" onclick="alert('로그인이 필요한 서비스입니다.')" href="{% url 'user:login' %}">친구 게시물 보기</a>
+        {% endif %}
+    </button>
+</div>
 {% endblock %}
 
 {% block content %}
-<div class="row row-cols-3 container-fluid" style="padding-left: 0;">
-    <div class="col" style="max-width: 20vw;">
-        <img class="lazyload page-image" data-src="{% static 'images/tagged_list.jpg' %}" />
-    </div>
-    <div class="col page-phrase">
-        <h4 class='mt-3'>
-            게시물 입니다
-        </h4>
-        <h4 class='mt-3'>
-            <span class="tag">#{{ tag }}</span>와 관련된
-        </h4>
-    </div>
-    <div class="col" style="width: 50vw;">
-        {% for post in posts %}
-            <div class="content-box">
-                <div class="d-flex">
-                    <a href="{% url 'community:post_detail' post.pk %}"><img class="lazyload content-img" data-src = '{{ post.image.url }}' /></a>
-                    <div class="d-flex flex-column" style="width: -webkit-fill-available;">
-                        <a href="{% url 'community:post_detail' post.pk %}"><h4><img class="lazyload title-img" data-src="{% static 'images/title_img.svg' %}"/>{{post.title}}</h4></a>
-                        <hr style="width: 100%;"/>
-                        <span class="d-flex">
-                            <img class="lazyload profile-img" data-src="{{ post.user_id.Image.url }}" />
-                            <p>{{ post.user_id }}</p>
-                        </span>
+<div class='container-fluid mt-4 mb-3' style='width:80%;'>
+        {% if q %}
+        <h1>'{{ q }}' 검색 결과입니다.</h1>
+        {% endif %}
+         {% if messages%}
+            {% for message in messages %}
+                {% if message.tags == 'error'%}
+                    {{message}}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        {% if post_list %}
+            <div class='row d-flex' style='flex-wrap:wrap;' >
+            {% for post in post_list %}
+                <div class="card border-0 border-bottom col-sm-12 col-md-6 col-lg-4" id="postcard">
+                    <div class="row d-flex p-1 justify-content-between" >
+                        <span id="postcard-head"><img class="lazyload" id='post-list-thumbnail' data-src="{{ post.user_id.Image.url }}"> {{ post.user_id }}</span>
+                        <a id="postcard-follow">팔로우</a>                        
+                    </div>
+                    <a title="게시물 상세 페이지 이동" href='{% url "community:post_detail" pk=post.pk %}'>
+                    <figure class="snip1384">
+                        {% if post.image %}
+                            <image data-src='{{ post.image.url }}' class='lazyload img-thumbnail' id = "post-image"/>
+                        {% endif %}
+                        <figcaption>
+                        <span id="postcard-title">{{post.title|truncatechars:10 }}</span>
+                        <p>
+                            {% for tag in post.tags.all %}
+                                <button type="button" class="btn btn-outline-success" id="post-tag-button">{{tag.name}}</button> 
+                            {% endfor %}
+                        </p>
+                        </figcaption>
+                    </figure>
+                    </a> 
+                    <div class="row d-flex justify-content-between">
+                        <div class="col pe-4">
+                            <div class='likes post-id-{{ post.id }} d-flex ps-2'>
+                                <img class='me-1' src='{% static 'images/heart_line.svg' %}' alt='하트'>
+                                <span class='like_num me-3'>{{post.like_set.all.count}}</span>
+                                <img class='me-1' src='{% static 'images/comment_line.svg' %}' alt='댓글'>
+                                <span class='like_num'>{{post.reply_set.count}}</span>
+                            </div>
+                        </div>
+                        <div class="col text-end">
+                            <span id="postcard-date">{{post.created_at | date:"Y.m.d"}}</span>
+                        </div>
                     </div>
                 </div>
+            {% endfor %}
             </div>
-        {% endfor %}
-        <div id='list-paginator'>
+        {% else %}
+        <div class='row row-cols-1' id='no-search-input'>
+            {% if q %}
+            <h3>일치하는 검색 결과가 없습니다.</h3>
+            <a title="게시물 목록 페이지 이동" href = '{% url "community:post_list" %}' class= 'button-a'>뒤로가기</a>
+
+            {% else %}
+            <h3>작성된 게시글이 없습니다.</h3>
+            {% endif %}
+        </div>
+        {% endif %}
+        <div class="col-md-offset-6">
             {% if is_paginated %}
-            <ul class="pagination">
+            <ul class="pagination justify-content-center">
                 {% if page_obj.has_previous %}
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}"
-                        tabindex="-1">이전</a>
+                    <a class="page-link" href="?type={{ type }}&q={{ q }}&page={{ page_obj.previous_page_number }}"
+                        tabindex="-1" style="border:none; font-size: 15px;">&lt;</a>
                 </li>
                 {% else %}
                 <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1">이전</a>
+                    <a class="page-link" href="#" tabindex="-1" style="font-size: 15px; border:none;">&lt;</a>
                 </li>
                 {% endif %}
     
                 {% for page in page_range %}
                 <li class="page-item {% if page == page_obj.number %} activate {% endif %}">
-                    <a class="page-link" href="?page={{ page }}">{{ page }}</a>
+                    <a class="page-link  page-link-circle" href="?type={{ type }}&q={{ q }}&page={{ page }}" style="border-radius:100%; border:none; font-size: 12px; margin-right:7px;">{{ page }}</a>
                 </li>
                 {% endfor %}
     
                 {% if page_obj.has_next %}
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">다음</a>
+                    <a class="page-link"
+                        href="?type={{ type }}&q={{ q }}&page={{ page_obj.next_page_number }}" style="border:none; font-size: 15px; margin-left:-7px;">&gt;</a>
                 </li>
                 {% else %}
                 <li class="page-item disabled">
-                    <a class="page-link" href="#">다음</a>
+                    <a class="page-link" href="#" style="border:none; font-size: 15px; margin-left:-7px;">&gt;</a>
                 </li>
                 {% endif %}
             </ul>
             {% endif %}
         </div>
-    </div>
-</div>
+        </div>
 {% endblock %}

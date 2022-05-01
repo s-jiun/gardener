@@ -8,13 +8,13 @@
 {% block search %}
 <form action='' method="GET" style="width:100%">
     <div class="d-flex align-items-center justify-content-center">
-    <select name="type" class="search-input-1">
+    <select title="검색 기준" name="type" class="search-input-1">
         <option value="title">제목</option>
         <option value="content">내용</option>
     </select>
     <div class="d-flex  justify-content-between" id="search" style="width:80%;">
-        <input class='search-input' type="text" name='q' value="{{q}}" placeholder="공지사항을 검색해보세요"/>
-        <button class='searchbtn' type="submit"><img class='me-1' src='{% static 'images/search.svg' %}' alt='하트'></button>
+        <input title="검색 입력 칸" class='search-input' type="text" name='q' value="{{q}}" placeholder="공지사항을 검색해보세요"/>
+        <button title="검색 버튼" class='searchbtn' type="submit"><img class='me-1' src='{% static 'images/search.svg' %}' alt='하트'></button>
     </div>
     </div>
 </form>
@@ -37,21 +37,21 @@
             {% for notice in notice %}
             <tr class="list-main text-center">
                 <th scope='row'style="font-weight: normal;">{{ paginator.count|sub:page_obj.start_index|sub:forloop.counter0|add:1 }}</th>
-                <td style="text-align:start;"><a href='{% url "community:notice_detail" notice.pk %}' class='moveto-other-page'>{{ notice.title|truncatechars:30 }}</a></td>
+                <td style="text-align:start;"><a title="공지사항 상세 페이지 이동" href='{% url "community:notice_detail" notice.pk %}' class='moveto-other-page'>{{ notice.title|truncatechars:30 }}</a></td>
                 <td>관리자</td>
                 <td>{{ notice.created_at|date:'Y. m. d' }}</td>
             </tr>
             {% endfor %}
             {% else %}
             {% if q %}
-                <tr class='text-center'>
+                <tr class='list-main text-center'>
                     <th scope='row' style="font-weight: normal;">0</th>
                     <td style="text-align:start;">일치하는 게시글이 없습니다.</td>
                     <td>관리자</td>
                     <td></td>
                 </tr>
             {% else %}
-                <tr class='text-center'>
+                <tr class='list-main text-center'>
                     <th scope='row' style="font-weight: normal;">0</th>
                     <td style="text-align:start;">작성된 게시글이 없습니다.</td>
                     <td>관리자</td>
@@ -100,27 +100,3 @@
 </div>
 {% endblock %}
 
-{% comment %}
-<div class='row'>
-    <div id='notice-header' class='d-flex flex-column justify-content-center'>
-        {% if q %}
-            <h1>'{{ q }}' 검색 결과입니다.</h1>
-        {% else %}
-            <h1>공지사항</h1>
-        {% endif %}
-        {% if messages %}
-            {% for message in messages %}
-                {{message}}
-            {% endfor %}
-        {% endif %}
-        <form action='' method="GET" style='height: 20%;'>
-            <select class='search-input-1' name="type" id="search-type">
-                <option value="title">제목</option>
-                <option value="content">내용</option>
-            </select>
-            <input class='search-input'  type="text" name='q' value="{{q}}" placeholder="공지사항을 검색해보세요"/>
-            <button class='search-input-1' id='search-input-button' type="submit">검색</button>
-        </form>
-    </div>
-</div>
-{% endcomment %}

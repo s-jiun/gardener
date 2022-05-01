@@ -10,3 +10,7 @@ class PlantAdmin(admin.ModelAdmin):
 @admin.register(models.PlantScrap)
 class PlantScrapAdmin(admin.ModelAdmin):
     pass
+
+@admin.register(models.Plant_register)
+class PlantRegisterAdmin(admin.ModelAdmin):
+    pass

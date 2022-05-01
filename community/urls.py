@@ -13,7 +13,6 @@ urlpatterns = [
          view=views.post_update, name='post_update'),
     path('post/<int:pk>/delete/',
          view=views.post_delete, name='post_delete'),
-
     path('post/<int:pk>/delete_comment/',
          view=views.delete_comment, name='delete_comment'),
     path('post/<int:pk>/delete_reply/',
@@ -24,4 +23,6 @@ urlpatterns = [
          name='follow_post_list'),
     path('notice/', view=views.NoticeListView.as_view(), name='notice'),
     path('notice/<int:pk>/', view=views.notice_detail, name='notice_detail'),
+    path('notice_alert_ajax/', view=views.notice_alert_ajax,
+         name='notice_alert_ajax')
 ]

@@ -29,7 +29,7 @@
 {% endblock %}
 
 {% block content %}
-<div id="left-container" class="col-6 d-flex flex-column justify-content-center" style="margin-right: 6.3125rem; width: 21.5rem;">
+<div id="left-container" class="col-6 d-flex flex-column justify-content-center">
     <form action="" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <div>
@@ -43,25 +43,25 @@
                 <div class="col-12 mb-2">
                     <div class="d-flex flex-column">
                         <p class="text mb-1">프로필 사진</p>
-                        <input type="file" name="Image" class="" onchange="readURL(this);" accept="image/*" id="id_Image">
+                        <input title="프로필 사진 선택" type="file" name="Image" class="" onchange="readURL(this);" accept="image/*" id="id_Image">
                     </div>
                 </div>
                 <div class="col-12 mb-2">
                     <div class="d-flex flex-column">
                         <p class="text">닉네임</p>
-                        <input style="width: 20rem; height: 2.5rem;" type="text" name="name" value="{{form.name.value}}" class="" required="" id="id_name"> 
+                        <input title="닉네임 입력 칸" class="regular-size" type="text" name="name" value="{{form.name.value}}" class="" required="" id="id_name"> 
                     </div>
                 </div>
                 <div class="col-12 mb-2">
                     <div class="d-flex flex-column">
                         <p class="text">소개</p>
-                        <textarea style="width: 20rem; height: 5rem;" value="{{form.profile.text}}" name="profile" cols="40" rows="10" id="id_profile">{{form.profile.value}}</textarea>
+                        <textarea title="소개 입력 칸" class="regular-size" value="{{form.profile.text}}" name="profile" cols="40" rows="10" id="id_profile">{{form.profile.value}}</textarea>
                     </div>
                 </div>
                 <div class="col flex-column text-center mt-2">
-                    <button style="width: 20rem; height: 2.5rem; color: white; background-color: #354847;" onclick="onClickSaveImage({{user.id}})" class="btn btn-primary mb-3" type="submit" ><span>저장하기</span></button>
-                    <a style="width: 20rem; height: 2.5rem; color: white; background-color: #354847;" class="btn btn-primary mb-3 d-flex justify-content-center align-items-center" href ="{% url 'user:my_profile' %}" ><span style="margin-top: 5px; position: relative; top: 13px;"></span>취소하기</span></a>
-                    <a style="width: 20rem; height: 2.5rem; color: #354847; background-color: white; border: solid 1px #354847;" class="btn btn-primary mb-3 d-flex justify-content-center align-items-center" href ="{% url 'user:update' %}" ><span style="margin-top: 5px; position: relative; top: 13px;"></span>회원정보 수정하기</span></a>
+                    <button style="width: 20rem; height: 2.5rem; color: white; background-color: #354847;" onclick="onClickSaveImage({{user.id}})" class="btn btn-primary mb-3" type="submit" >저장하기</button>
+                    <a title="마이프로필 페이지 이동" class="btn button-black regular-size mb-3 d-flex justify-content-center align-items-center" href ="{% url 'user:my_profile' %}">취소하기</a>
+                    <a title="회원정보 수정" class="btn button-white regular-size mb-3 d-flex justify-content-center align-items-center" href ="{% url 'user:update' %}" >회원정보 수정하기</a>
                 </div>
             </div>
         </div>
