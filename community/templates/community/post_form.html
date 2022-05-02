@@ -15,7 +15,7 @@
                     <form action='' method='POST' enctype="multipart/form-data">
                         {% csrf_token %}
                         <div style="float:right;">
-                            {% if form.title.value%}
+                            {% if post.title %}
                             <button class="go-to-main" style="margin-right:10px;"><a title="게시물 상세 페이지 이동" href="{% url 'community:post_detail' pk %}">취소하기</a></button>
                             <input type="submit" value = '수정하기' class='make-something' style="font-size:1.4rem; color:#76b79c;"/>
                             {% else %}
@@ -25,18 +25,18 @@
                         </div>
                         <div class='form-group' style="margin-bottom:3rem;">
                             <label for="id_title" class="form-label" style="font-size:1.6rem; font-weight:bold;">제목</label>
-                            {% if form.title.value %}
-                            <input type="text" class='form-control' name="title" maxlength="100" required="" id="id_title" value = "{{form.title.value}}" style="font-size:1.4rem;">
+                            {% if post.title %}
+                            <input type="text" class='form-control' name="title" maxlength="100" required="" id="id_title" value = "{{post.title}}" style="font-size:1.4rem;">
                             {% else %}
                             <input type="text" class='form-control' name="title" maxlength="100" required="" id="id_title" style="font-size:1.4rem;">
                             {% endif %}
                         </div>
                         <div class='form-group' style="margin-bottom:3rem;">
                             <label for="id_image" class="form-label" style="font-size:1.6rem; font-weight:bold;">썸네일</label>
-                            {% if form.title.value %}
+                            {% if post.title %}
                             현재                           
-                            {% if form.image.value != '../static/images/baseimg.png' %}
-                                <a href="{{ form.image.value.url }}">{{ form.image.value }}</a><br/>
+                            {% if post.image.url != '../static/images/baseimg.png' %}
+                                <a href="{{ post.image.url }}">{{ post.image.url }}</a><br/>
                             {% else %}
                                 기본 이미지 입니다.
                             {% endif %}
@@ -58,7 +58,7 @@
                         </div>
                         <div class='form-group'>
                             <label for = 'id_tags' class = 'form-label' style="font-size:1.6rem; font-weight:bold;">태그</label>
-                            <input type="text"class="form-control" name="tags" placeholder="{{form.tags.help_text}}"value="{%for tag in form.tags.value %}#{{tag}}{%endfor%}" id="id_tags" style="font-size:1.4rem;">
+                            <input type="text"class="form-control" name="tags" placeholder="{{post.tags.help_text}}"value="{%for tag in post.tags.value %}#{{tag}}{%endfor%}" id="id_tags" style="font-size:1.4rem;">
                         </div>                        
                     </form>
                 </div>

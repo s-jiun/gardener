@@ -228,6 +228,10 @@ def post_create(request, post=None):
         if form.is_valid():
             post = form.save(commit=False)
             post.user_id = request.user
+            post.title = request.POST.get("title")
+            post.image = request.FILES.get("image")
+            print(request.POST.get("tags"))
+            post.tags = request.POST.get("tags")
             post = form.save()
             request.user.point += 30
             request.user.save()
@@ -251,6 +255,9 @@ def post_update(request, pk):
 
         if form.is_valid():
             post = form.save(commit=False)
+            post.title = request.POST.get("title")
+            post.image = request.FILES.get("image")
+            post.tags = request.POST.get("tags")
             post.user_id = request.user
             post = form.save()
             return redirect('community:post_detail', pk=post.pk)
@@ -260,7 +267,7 @@ def post_update(request, pk):
     elif request.method == 'GET':
         form = PostForm(instance=post)
         pk = post.pk
-        ctx = {'form': form, 'is_post': post, 'pk': pk}
+        ctx = {'form': form, 'post': post, 'is_post': post, 'pk': pk}
 
     return render(request, template_name='community/post_form.html', context=ctx)
 

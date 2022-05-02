@@ -74,6 +74,8 @@ def make_question(request, question=None):
         form = QuestionForm(request.POST, request.FILES, instance=question)
         if form.is_valid():
             question = form.save(commit=False)
+            question.title = request.POST.get("title")
+            question.tags = request.POST.get("tags")
             question.user_id = GeneralUser.objects.get(
                 userid=request.user.get_username())
             question = form.save()
@@ -108,6 +110,7 @@ def make_answer(request, pk, answer=None):
         form = AnswerForm(request.POST, request.FILES)
         if form.is_valid():
             answer = form.save(commit=False)
+            answer.title = request.POST.get("title")
             answer.user_id = GeneralUser.objects.get(
                 userid=request.user.get_username())
             answer.question = CommunityQuestion.objects.get(pk=pk)
