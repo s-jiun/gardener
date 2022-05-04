@@ -20,5 +20,5 @@ jobs:
         comment: Deploy the main branch
         working-directory: /home/ubuntu/gardener
         command: source venv/bin/activate
-        command: /bin/sh ./deploy.sh
-        command: deactivate
+          /bin/sh ./deploy.sh
+          deactivate
