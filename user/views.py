@@ -54,7 +54,8 @@ def login(request):
         if form.is_valid():
             # 검증 완료시 로그인!
             user = form.get_user()
-            auth_login(request, user)
+            auth_login(request, user,
+                       backend='django.contrib.auth.backends.ModelBackend')
             return redirect('community:post_list')
     else:
         form = UserAuthenticationForm()
@@ -130,7 +131,8 @@ def activate(request, uid64, token):
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
-        auth_login(request, user)
+        auth_login(request, user,
+                   backend='django.contrib.auth.backends.ModelBackend')
         return redirect('user:start_page')
     else:
         messages.error(request, "비정상적인 접근입니다.")
@@ -562,11 +564,24 @@ def add_myplant(request):
 @csrf_exempt
 def checkId(request):
     req = json.loads(request.body)
-    userid = req['user_id'] 
+    userid = req['user_id']
     try:
         user = GeneralUser.objects.get(userid=userid)
         if user:
-            return JsonResponse({'return_code': 0}) #사용할 수 없음
-    
+            return JsonResponse({'return_code': 0})  # 사용할 수 없음
+
     except:
-        return JsonResponse({'return_code': 1}) # 사용할 수 있음
+        return JsonResponse({'return_code': 1})  # 사용할 수 있음
+
+
+@csrf_exempt
+def checkEmail(request):
+    req = json.loads(request.body)
+    useremail = req['user_email']
+    try:
+        user = GeneralUser.objects.get(email=useremail)
+        if user:
+            return JsonResponse({'return_code': 0})  # 사용할 수 없음
+
+    except:
+        return JsonResponse({'return_code': 1})  # 사용할 수 있음

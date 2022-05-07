@@ -41,9 +41,12 @@
   <div>
     <form action="" method="POST">
       {% csrf_token %}
+      {% if form.password.errors %}
       <div class="col-12">
-        <p class="text mb-1">{{form.password.errors}}</p>
+        <img src="{% static 'images/warning.png' %}" style="display: inline-block;">
+        {{form.password.errors}}
       </div>
+      {% endif %}
       <div class="col-12" style="margin-bottom: 1.25rem">
         <div class="d-flex flex-column">
           <p class="text mb-1">아이디</p>

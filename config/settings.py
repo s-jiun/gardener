@@ -275,7 +275,6 @@ customColorPalette = [
     },
 ]
 
-# CKEDITOR_5_CUSTOM_CSS = 'path_to.css'  # optional
 CKEDITOR_5_CONFIGS = {
     'default': {
         'toolbar': ['heading', '|', 'bold', 'italic', 'link',
@@ -291,7 +290,7 @@ CKEDITOR_5_CONFIGS = {
             'blockQuote', 'imageUpload'
         ],
         'toolbar': ['heading', '|', 'outdent', 'indent', '|', 'bold', 'italic', 'link', 'underline', 'strikethrough',
-                    'code', 'subscript', 'superscript', 'highlight', '|', 'codeBlock',
+                    'subscript', 'superscript', 'highlight', '|',
                     'bulletedList', 'numberedList', 'todoList', '|',  'blockQuote', 'imageUpload', '|',
                     'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'mediaEmbed', 'removeFormat',
                     'insertTable', ],
@@ -330,6 +329,18 @@ CKEDITOR_5_CONFIGS = {
                    {'model': 'heading3', 'view': 'h3',
                     'title': 'Heading 3', 'class': 'ck-heading_heading3'}
             ]
+        },
+        'fontSize': {
+            'options': [
+                9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20
+            ]
+        },
+        'list': {
+            'properties': {
+                'styles': 'true',
+                'startIndex': 'true',
+                'reversed': 'true',
+            }
         }
     }
 }
