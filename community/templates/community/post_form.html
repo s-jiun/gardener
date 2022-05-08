@@ -51,15 +51,16 @@
                         </div>
                         <div class='form-group' style="margin-bottom:3rem;">
                             <label for="content" class="form-label" style="font-size:1.6rem; font-weight:bold;">내용</label>
+    
                             <div style='width: 100%;'>
                                 {{ form.media }}
                                 {{ form.as_p }}
                             </div>
                         </div>
-                        <div class='form-group'>
+                        <!-- <div class='form-group'>
                             <label for = 'id_tags' class = 'form-label' style="font-size:1.6rem; font-weight:bold;">태그</label>
                             <input type="text"class="form-control" name="tags" placeholder="{{post.tags.help_text}}"value="{%for tag in post.tags.value %}#{{tag}}{%endfor%}" id="id_tags" style="font-size:1.4rem;">
-                        </div>                        
+                        </div>                         -->
                     </form>
                 </div>
             </div>
