@@ -6,3 +6,16 @@
 #makequestion-main > div > div > form > div:nth-child(4) > div > p > label{
   display: none;
 }
+
+#id_tags {
+  width:100%;
+}
+#makequestion-main > div > div > form > div:nth-child(4) > div > p:nth-child(4) > label {
+  display: block !important;
+  margin-top: 3rem;
+  font-size: 1.6rem;
+  font-weight: bold;
+}
+.helptext {
+  display:none;
+}

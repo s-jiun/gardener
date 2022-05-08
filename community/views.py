@@ -230,8 +230,8 @@ def post_create(request, post=None):
             post.user_id = request.user
             post.title = request.POST.get("title")
             post.image = request.FILES.get("image")
-            print(request.POST.get("tags"))
-            post.tags = request.POST.get("tags")
+            # print(request.POST.get("tags"))
+            # post.tags = request.POST.get("tags")
             post = form.save()
             request.user.point += 30
             request.user.save()
@@ -257,7 +257,7 @@ def post_update(request, pk):
             post = form.save(commit=False)
             post.title = request.POST.get("title")
             post.image = request.FILES.get("image")
-            post.tags = request.POST.get("tags")
+            # post.tags = request.POST.get("tags")
             post.user_id = request.user
             post = form.save()
             return redirect('community:post_detail', pk=post.pk)

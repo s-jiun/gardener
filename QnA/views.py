@@ -75,7 +75,7 @@ def make_question(request, question=None):
         if form.is_valid():
             question = form.save(commit=False)
             question.title = request.POST.get("title")
-            question.tags = request.POST.get("tags")
+            # question.tags = request.POST.get("tags")
             question.user_id = GeneralUser.objects.get(
                 userid=request.user.get_username())
             question = form.save()
