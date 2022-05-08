@@ -229,7 +229,10 @@ def post_create(request, post=None):
             post = form.save(commit=False)
             post.user_id = request.user
             post.title = request.POST.get("title")
-            post.image = request.FILES.get("image")
+            print(request.FILES.get("image"))
+            if request.FILES.get("image"):
+                post.image = request.FILES.get("image")
+            # post.image = request.FILES.get("image")
             # print(request.POST.get("tags"))
             # post.tags = request.POST.get("tags")
             post = form.save()
@@ -256,7 +259,9 @@ def post_update(request, pk):
         if form.is_valid():
             post = form.save(commit=False)
             post.title = request.POST.get("title")
-            post.image = request.FILES.get("image")
+            print(request.FILES.get("image"))
+            if request.FILES.get("image"):
+                post.image = request.FILES.get("image")
             # post.tags = request.POST.get("tags")
             post.user_id = request.user
             post = form.save()
