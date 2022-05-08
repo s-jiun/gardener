@@ -1,60 +1,75 @@
-{% extends 'login_base.html' %}
-{% load static %}
-
-{% block head %}
+{% extends 'login_base.html' %} {% load static %} {% block head %}
 <style>
-    * {
-        font-size: 100%;
+  * {
+    font-size: 100%;
+  }
+
+  @media screen and (max-width: 900px) {
+    html {
+      font-size: 0.8rem;
+    }
+  }
+
+  @media screen and (max-width: 560px) {
+    html {
+      font-size: 0.6rem;
+    }
+  }
+
+  @media screen and (max-width: 900px) {
+    #image-container {
+      display: none;
     }
 
-    @media screen and (max-width : 900px) {
-        html {
-            font-size: 0.8rem
-        }
+    #image-container img {
+      display: none;
     }
 
-    @media screen and (max-width : 560px) {
-        html {
-            font-size: 0.6rem
-        }
+    #left-container {
+      margin-right: 0px !important;
     }
-
-    @media screen and (max-width : 900px) {
-        #image-container {
-            display: none;
-        }
-
-        #image-container img {
-            display: none;
-        }
-
-        #left-container {
-            margin-right: 0px !important;
-        }
-    }
+  }
 </style>
-{%endblock%}
-
-{% block content %}
-<div id="left-container" class="col-6 d-flex flex-column justify-content-center"
-    style="margin-right: 6.3125rem; width: 23rem;">
-    <div>
-        <img src="{% static 'images/logo.svg' %}" alt="" class="logo-size" title="아워플랜트 로고 이미지">
-    </div>
-    <div style="margin-bottom: 1.5rem;" title="웰컴 페이지 문구">
-        <p class="mt-3 pt-3 pb-3" style="font-size: 1.5rem; font-weight: 900;">"나와 지구의 환경을 위한 방법"</p>
-        <p style="font-size:0.875rem; width: 28rem;line-height: 1.5rem;">
-         작은 관심들이 모여 세상을 바꾼다. <br>
-         'Ourplant'의 존재 이유이자 성장 모토입니다. <br>
-         참여를 통해 당신의 삶과 세상을 바꾸어보세요.
-         </p>
-    </div>
-    <div>
-        <a href="{% url 'community:post_list' %}" title="메인 페이지 이동">
-            <button
-                style="height: 2.625rem; width: 9.18rem; color:white; background-color: #354847; border: none; border-radius: 10px;">둘러보기</button>
-        </a>
-    </div>
+{%endblock%} {% block content %}
+<div
+  id="left-container"
+  class="col-6 d-flex flex-column justify-content-center"
+  style="margin-right: 6.3125rem; width: 23rem"
+>
+  <div>
+    <img
+      src="{% static 'images/logo.svg' %}"
+      alt=""
+      class="logo-size"
+      title="아워플랜트 로고 이미지"
+    />
+  </div>
+  <div style="margin-bottom: 1.5rem" title="웰컴 페이지 문구">
+    <p class="mt-3 pt-3 pb-3" style="font-size: 1.5rem; font-weight: 900">
+      "나와 지구의 환경을 위한 방법"
+    </p>
+    <p style="font-size: 0.875rem; width: 28rem; line-height: 1.5rem">
+      작은 관심들이 모여 세상을 바꾼다. <br />
+      'Ourplant'의 존재 이유이자 성장 모토입니다. <br />
+      참여를 통해 당신의 삶과 세상을 바꾸어보세요.
+    </p>
+  </div>
+  <div>
+    <a href="{% url 'community:post_list' %}" title="메인 페이지 이동">
+      <button
+        style="
+          height: 2.625rem;
+          width: 9.18rem;
+          color: white;
+          background-color: #354847;
+          border: none;
+          border-radius: 1.3rem;
+        "
+      >
+        둘러보기
+      </button>
+    </a>
+  </div>
 </div>
 
 {% endblock %}
