@@ -341,6 +341,9 @@ CKEDITOR_5_CONFIGS = {
                 'startIndex': 'true',
                 'reversed': 'true',
             }
+        },
+        'mediaEmbed': {
+            'previewsInData': 'true'
         }
     }
 }

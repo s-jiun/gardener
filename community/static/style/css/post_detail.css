@@ -116,3 +116,8 @@
 form > p > label{
   display: none;
 }
+
+#post-detail-content > figure > img {
+  width: inherit;
+  height: inherit;
+}
