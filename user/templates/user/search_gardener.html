@@ -159,7 +159,7 @@ if (requestFollowing.readyState === XMLHttpRequest.DONE) {
 const requestFollow = new XMLHttpRequest()
 
 const onClickFollow = (user_id) => {
-    const url = '/follow_ajax/';
+    const url = '/following_ajax/';
     requestFollow.open('POST', url, true);
     requestFollow.setRequestHeader(
         'Content-Type',
@@ -172,7 +172,6 @@ const followHandleResponse = () => {
     if (requestFollow.status < 400) {
         const {user_id} = JSON.parse(requestFollow.response);
         const element = document.getElementById(`follow-buttons-${user_id}`)
-        console.log(element)
         element.innerHTML = `    
             <button class="following-button" onclick="onClickFollowing(${user_id})">팔로잉 끊기</button>
             `
