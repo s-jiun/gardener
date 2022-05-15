@@ -21,6 +21,7 @@
                 <span id="question-detail-head"><img class="lazyload" id='question-detail-thumbnail' data-src="{{ question.user_id.Image.url }}"> {{ question.user_id }}</span>
                 <span>&#183</span>
                 <span id="question-detail-date">{{question.created_at | date:"Y.m.d h:m"}}</span>
+                <span class="ms-2 me-1" id="post-detail-views">조회수 {{views}}</span>
             </div>
             {% if request.user == ans.user_id or request.user == question.user_id %}
             <div class="col d-flex justify-content-end">
@@ -49,7 +50,6 @@
     <div class="row mt-4" id="question-detail-like">
         <div>
             <img class="me-1" src="{% static 'images/comment_line.svg' %}" alt="코멘트">{{answer|length}}
-            <span class="ms-2 me-1" id="post-detail-views">조회수 {{views}}</span>
         </div>
     </div>
     <div class="row mt-4 mb-4" id="question-detail-comment">
