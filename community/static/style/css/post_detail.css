@@ -156,3 +156,8 @@ blockquote {
   font-style: italic;
   border-left: 5px solid #ccc;
 }
+
+#reply-body>figure>img {
+  width: inherit;
+  height: inherit;
+}

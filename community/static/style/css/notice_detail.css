@@ -1,6 +1,7 @@
 * {
   font-family: "Noto Sans KR" !important;
-  font-size: 62.5%; /*1rem : 10px*/
+  font-size: 62.5%;
+  /*1rem : 10px*/
 }
 
 #container {
@@ -46,4 +47,19 @@
 #notice-detail-views {
   font-weight: bold;
   font-size: 1.4rem;
+}
+
+#notice-detail-content>figure.image.image_resized>img {
+  width: inherit;
+  height: inherit;
+}
+
+blockquote {
+  overflow: hidden;
+  padding-right: 1.5em;
+  padding-left: 1.5em;
+  margin-left: 0;
+  margin-right: 0;
+  font-style: italic;
+  border-left: 5px solid #ccc;
 }
