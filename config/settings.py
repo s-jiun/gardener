@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+from faulthandler import is_enabled
 import os
 import json
 import environ
@@ -50,7 +51,7 @@ def get_secret(setting, secrets=secrets):
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 
 ALLOWED_HOSTS = ['ourplant.kr', '3.37.58.145', '127.0.0.1']
@@ -341,6 +342,9 @@ CKEDITOR_5_CONFIGS = {
                 'startIndex': 'true',
                 'reversed': 'true',
             }
+        },
+        'mediaEmbed': {
+            'previewsInData': 'true'
         }
     }
 }
