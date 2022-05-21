@@ -136,8 +136,9 @@
     }
     });
 
+    CKEDITOR.replace('editor0'), {extraPlugins : 'stylesheetparser',contentsCss : '/static/tm/style2.css'};
+    CKEDITOR.replace('editor0',{contentsCss :'/static/tm/style3.css'});
         
-
 </script>
 <script src="{% static 'javascripts/lazysizes.min.js' %}"></script>
 {% block js %}
