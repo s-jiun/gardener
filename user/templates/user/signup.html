@@ -368,12 +368,10 @@
         document.querySelector("#sign_up").addEventListener("click", function(event) {
             event.preventDefault();
             var txt = document.getElementById("id_password1").value;
-            console.log(txt);
             var form = document.getElementById("signup_form");
             const result = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/.test(txt);
 
             var check = true;
-            console.log("checking")
             if (!result) {
               alert("비밀번호: 8자리 이상. 영문과 숫자, 특수문자를 섞어주세요.");
               check=false;
@@ -383,7 +381,7 @@
             var chk1=document.getElementById('flexCheckterm1').checked;
             var chk2=document.getElementById('flexCheckterm2').checked;
             var chk3=document.getElementById('id_message').innerHTML;
-            var chk4=document.getElementById('id_email').innerHTML;
+            var chk4=document.getElementById('email_message').innerHTML;
 
             var pass1 = document.getElementById('id_password1').value;
             var pass2 = document.getElementById('id_password2').value;

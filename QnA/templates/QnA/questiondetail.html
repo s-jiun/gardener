@@ -3,6 +3,8 @@
 
 {% block head %}
     <link href="{% static 'style/css/question_detail.css' %}" rel="stylesheet">
+    <link href="/static/django_ckeditor_5/dist/styles.css" type="text/css" media="all" rel="stylesheet">
+    <script src="/static/django_ckeditor_5/dist/bundle.js"></script>
 {% endblock %}
 
 {% block button %}
@@ -36,7 +38,7 @@
         </div>
     </div>
     <div class="row d-flex border-bottom" id="question-detail-box">
-        <div id="question-detail-content">
+        <div id="question-detail-content" class="ck-content">
             {{ question.content|safe }}
         </div>
         <div >
@@ -55,7 +57,7 @@
     <div class="row mt-4 mb-4" id="question-detail-comment">
         {% for ans in answer %}
         <div class="answer answer-{{ans.id}}" style="margin-bottom:2rem;">
-            <div class="ans-content" style="margin-bottom: 3rem;">
+            <div class="ans-content ck-content"  style="margin-bottom: 3rem;">
                 {% if request.user == ans.user_id %}
                 <div style="float:right;">
                     <button class="edit-button me-3" >
