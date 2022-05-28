@@ -19,4 +19,6 @@ jobs:
         instance-ids: ${{ secrets.INSTANCE_ID  }}
         comment: Deploy the main branch
         working-directory: /home/ubuntu/gardener
-        command: /bin/sh ./deploy.sh
+        command: source venv/bin/activate
+          /bin/sh ./deploy.sh
+          deactivate
