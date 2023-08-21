@@ -27,22 +27,9 @@ OurPlant 서비스는 실제로 배포되어 6개월 간 운영된 서비스입�
 ### ✨My Role✨
 - 팀 리더
 - 프로젝트 기획 및 아키텍처 설계
-- 프로젝트 개발 과제 설정 및 로드맵 수립
 - MTV 패턴(Django) 설계
-- 식물 데이터 수집
-- JQuery를 활용한 검색어 자동완성 설계
-- JavaScript를 활용한 카카오톡 공유하기 기능 개발
+- 식물 데이터 수집 (Python Crawling)
 - 이미지 lazyload 기능 구현
 - 자동 로그아웃 기능 추가
-- DB(AWS RDS) 관리
-- 배포 및 서버 관리(AWS EC2)
-- 도메인 연결 및 관리
-- 도메인 메일 생성 및 관리(AWS SES)
+- AWS RDS(MySQL), EC2, SES 관리
 
-### ✨Contributors✨
-
-- 김승주🥰
-- 구건모🥰
-- 서지운🥰
-- 최도윤🥰
-- 양정연🥰
