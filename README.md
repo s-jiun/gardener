@@ -31,5 +31,6 @@ OurPlant 서비스는 실제로 배포되어 6개월 간 운영된 서비스입�
 - 식물 데이터 수집 (Python Crawling)
 - 이미지 lazyload 기능 구현
 - 자동 로그아웃 기능 추가
-- AWS RDS(MySQL), EC2, SES 관리
+- AWS RDS(MySQL), EC2를 활용한 서버 관리
+- AWS Lambda, S3, SES를 활용한 도메인 메일 구축
 
